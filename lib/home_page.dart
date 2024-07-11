@@ -25,6 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('h'),
+      ),
       body: Container(
         color: Theme.of(context).colorScheme.primaryContainer,
         child: page,
