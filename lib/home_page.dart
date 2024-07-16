@@ -20,14 +20,17 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
         break;
+      case 2:
+        page = FavoritesPage();
+        break;
       default:
         throw UnimplementedError('Unknown index: $selectedIndex');
     }
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-        title: Text('h'),
+        centerTitle: true,
+        title: Text('TransDIY'),
       ),
       body: Container(
         child: page,
@@ -41,14 +44,22 @@ class _MyHomePageState extends State<MyHomePage> {
         selectedIndex: selectedIndex,
         destinations: const <Widget>[
           NavigationDestination(
+            // accueil : prises à venir & niveau d'œstrogène
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
-            label: 'Generator',
+            label: 'Accueil',
           ),
           NavigationDestination(
+            // suivi : prises futures et passées, ajout manuel, régime habituel
             selectedIcon: Icon(Icons.favorite),
             icon: Icon(Icons.favorite_border_outlined),
-            label: 'Favorites',
+            label: 'Suivi',
+          ),
+          NavigationDestination(
+            // pharmacie : liste des médicaments, expiration, ajout de médicaments
+            selectedIcon: Icon(Icons.favorite),
+            icon: Icon(Icons.favorite_border_outlined),
+            label: 'Pharmacie',
           ),
         ],
       ),
