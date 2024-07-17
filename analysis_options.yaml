@@ -7,7 +7,9 @@
 
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
-include: package:flutter_lints/flutter.yaml
+include: 
+  - package:flutter_lints/flutter.yaml
+  - test/analysis_options_test.yaml
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -27,6 +29,14 @@ linter:
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
     avoid_print: false
+    directives_ordering: true
+    file_names: true
+    package_names: true
+    library_prefixes: true
+    non_constant_identifier_names: true
+    constant_identifier_names: true
+    
+
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
 # Additional information about this file can be found at

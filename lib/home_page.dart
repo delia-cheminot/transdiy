@@ -1,68 +1,94 @@
 import 'package:flutter/material.dart';
-import 'generator_page.dart';
 import 'favorites_page.dart';
+import 'generator_page.dart';
+import 'pharmacy_page.dart';
 
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+class _HomePageState extends State<HomePage> {
+  var _selectedIndex = 0;
+
+  void _selectIndex(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  Widget _getPage(int index) {
+    switch (index) {
+      case 0:
+        return GeneratorPage();
+      case 1:
+        return FavoritesPage();
+      case 2:
+        return PharmacyPage();
+      default:
+        throw UnimplementedError('Unknown index: $index');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    switch (selectedIndex) {
-      case 0:
-        page = GeneratorPage();
-        break;
-      case 1:
-        page = FavoritesPage();
-        break;
-      case 2:
-        page = FavoritesPage();
-        break;
-      default:
-        throw UnimplementedError('Unknown index: $selectedIndex');
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('TransDIY'),
-      ),
-      body: Container(
-        child: page,
-      ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            selectedIndex = index;
-          });
-        },
-        selectedIndex: selectedIndex,
+    Widget _buildNavigationBar() {
+      return NavigationBar(
+        onDestinationSelected: _selectIndex,
+        selectedIndex: _selectedIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            // accueil : prises à venir & niveau d'œstrogène
             selectedIcon: Icon(Icons.home),
             icon: Icon(Icons.home_outlined),
             label: 'Accueil',
           ),
           NavigationDestination(
-            // suivi : prises futures et passées, ajout manuel, régime habituel
             selectedIcon: Icon(Icons.favorite),
             icon: Icon(Icons.favorite_border_outlined),
             label: 'Suivi',
           ),
           NavigationDestination(
-            // pharmacie : liste des médicaments, expiration, ajout de médicaments
             selectedIcon: Icon(Icons.favorite),
             icon: Icon(Icons.favorite_border_outlined),
             label: 'Pharmacie',
           ),
         ],
-      ),
+      );
+    }
+
+    PreferredSizeWidget _buildAppBar() {
+      return AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.menu,
+            semanticLabel: 'menu',
+          ),
+          onPressed: () {},
+        ),
+        title: Text('TransDIY'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              semanticLabel: 'search',
+            ),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.tune,
+              semanticLabel: 'filter',
+            ),
+            onPressed: () {},
+          ),
+        ],
+      );
+    }
+
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: SafeArea(child: _getPage(_selectedIndex)),
+      bottomNavigationBar: _buildNavigationBar(),
     );
   }
 }

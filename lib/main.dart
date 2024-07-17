@@ -1,59 +1,32 @@
-import 'package:dynamic_color/dynamic_color.dart';
+//   _______
+//  |_     _|.----.---.-.-----.-----.
+//    |   |  |   _|  _  |     |__ --|
+//    |___|  |__| |___._|__|__|_____|
+//
+//        _____ _______ ___ ___
+//       |     \_     _|   |   |
+//       |  --  ||   |_ \     /
+//       |_____/_______| |___|
+//
+//
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'app_state.dart';
-import 'home_page.dart';
+import 'app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // make navigation bar transparent
+  // make navigation bar transparent and draw behind it
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
     ),
   );
-  // make flutter draw behind navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(const MyApp());
+  runApp(const TransDiyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        ColorScheme lightColorScheme;
-        ColorScheme darkColorScheme;
-
-        if (lightDynamic != null && darkDynamic != null) {
-          lightColorScheme = lightDynamic;
-          darkColorScheme = darkDynamic;
-        } else {
-          lightColorScheme = ColorScheme.fromSeed(seedColor: Colors.deepPurple);
-          darkColorScheme = ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple, brightness: Brightness.dark);
-        }
-
-        return ChangeNotifierProvider(
-          create: (context) => MyAppState(),
-          child: MaterialApp(
-            title: 'TransDIY',
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: lightColorScheme,
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: darkColorScheme,
-            ),
-            themeMode: ThemeMode.system,
-            home: MyHomePage(),
-          ),
-        );
-      },
-    );
-  }
-}
+//  /|、 meow
+//（ﾟ､ ｡ ７
+//  l  ~ヽ
+//  じしf_,)ノ
