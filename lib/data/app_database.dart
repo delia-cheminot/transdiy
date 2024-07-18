@@ -32,7 +32,9 @@ class AppDatabase {
   Future _createDB(Database db, int version) async {
     await db.execute('''
     CREATE TABLE supply_items(
-      id INTEGER PRIMARY KEY AUTOINCREMENT
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      volume REAL NOT NULL,
+      usedVolume REAL NOT NULL
     )
     ''');
   }

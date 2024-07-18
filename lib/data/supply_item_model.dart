@@ -3,40 +3,52 @@ import 'app_database.dart';
 
 class SupplyItem {
   final int? id;
+  final double volume;
+  double usedVolume;
+  bool get isUsed => usedVolume > 0;
 
-  const SupplyItem({
+  SupplyItem({
     this.id,
+    required this.volume,
+    this.usedVolume = 0,
   });
 
   Map<String, Object?> toMap() {
     return {
       'id': id,
+      'volume': volume,
+      'usedVolume': usedVolume,
     };
   }
 
   factory SupplyItem.fromMap(Map<String, Object?> map) {
     return SupplyItem(
       id: map['id'] as int?,
+      volume: map['volume'] as double,
+      usedVolume: map['usedVolume'] as double,
     );
   }
 
   @override
   String toString() {
-    return 'SupplyItem{id: $id}';
+    return 'SupplyItem{id: $id volume: $volume} usedVolume: $usedVolume';
   }
 
-  static Future<void> insertItem(SupplyItem item) async {
+  /// Inserts or replaces the [SupplyItem] into the database table and returns the id of the inserted item.
+  static Future<int> insertItem(SupplyItem item) async {
     final db = await AppDatabase.instance.database;
-    await db.insert(
+    int id = await db.insert(
       'supply_items',
       item.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    return id;
   }
 
   static Future<List<SupplyItem>> getItems() async {
     final db = await AppDatabase.instance.database;
-    final List<Map<String, Object?>> supplyItemMap = await db.query('supply_items');
+    final List<Map<String, Object?>> supplyItemMap =
+        await db.query('supply_items');
     return supplyItemMap.map((e) => SupplyItem.fromMap(e)).toList();
   }
 
@@ -57,5 +69,15 @@ class SupplyItem {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+  /// Uses a portion of the volume of the [SupplyItem] and updates the database.
+  Future<void> useVolume(double volume) async {
+    assert(id != null);
+    if (usedVolume + volume > this.volume) {
+      throw Exception('Volume exceeded');
+    }
+    usedVolume += volume;
+    await updateItem(this);
   }
 }
