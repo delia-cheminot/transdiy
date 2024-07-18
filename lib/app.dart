@@ -2,7 +2,7 @@ import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app_state.dart';
-import 'home_page.dart';
+import 'pages/home_page.dart';
 
 class TransDiyApp extends StatelessWidget {
   const TransDiyApp({super.key});
