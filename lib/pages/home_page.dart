@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'favorites_page.dart';
-import 'generator_page.dart';
-import 'new_item_dialog.dart';
-import 'pharmacy_page.dart';
+import 'generator/generator_page.dart';
+import 'supplies/new_item_dialog.dart';
+import 'supplies/pharmacy_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -88,11 +88,7 @@ class _HomePageState extends State<HomePage> {
     void _newItem() {
       showDialog(
         context: context,
-        builder: (context) => NewItemDialog(
-          onItemAdded: () {
-            setState(() {});
-          },
-        ),
+        builder: (context) => NewItemDialog(),
       );
     }
 

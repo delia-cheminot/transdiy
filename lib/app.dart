@@ -1,7 +1,5 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'app_state.dart';
 import 'pages/home_page.dart';
 
 class TransDiyApp extends StatelessWidget {
@@ -12,10 +10,11 @@ class TransDiyApp extends StatelessWidget {
   }
 
   ColorScheme _getDarkColorScheme(ColorScheme? darkDynamic) {
-    return darkDynamic ?? ColorScheme.fromSeed(
-      seedColor: Colors.deepPurple,
-      brightness: Brightness.dark,
-    );
+    return darkDynamic ??
+        ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        );
   }
 
   @override
@@ -25,21 +24,18 @@ class TransDiyApp extends StatelessWidget {
         final lightColorScheme = _getLightColorScheme(lightDynamic);
         final darkColorScheme = _getDarkColorScheme(darkDynamic);
 
-        return ChangeNotifierProvider(
-          create: (context) => AppState(),
-          child: MaterialApp(
-            title: 'TransDIY',
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: lightColorScheme,
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: darkColorScheme,
-            ),
-            themeMode: ThemeMode.system,
-            home: HomePage(),
+        return MaterialApp(
+          title: 'TransDIY',
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: lightColorScheme,
           ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: darkColorScheme,
+          ),
+          themeMode: ThemeMode.system,
+          home: HomePage(),
         );
       },
     );

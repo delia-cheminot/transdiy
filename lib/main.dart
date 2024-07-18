@@ -12,6 +12,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:transdiy/providers/app_state.dart';
+import 'package:transdiy/providers/supplies_state.dart';
 import 'app.dart';
 
 void main() {
@@ -23,7 +26,15 @@ void main() {
     ),
   );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(const TransDiyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => SuppliesState()),
+      ],
+      child: const TransDiyApp(),
+    ),
+  );
 }
 
 //  /|、 meow
