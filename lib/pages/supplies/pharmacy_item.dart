@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:transdiy/data/supply_item_model.dart';
+import 'package:transdiy/pages/supplies/edit_item_dialog.dart';
 
 class PharmacyItem extends StatelessWidget {
   final SupplyItem item;
-  final VoidCallback onDelete;
 
-  PharmacyItem({required this.item, required this.onDelete});
+  PharmacyItem({required this.item});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Item numéro ${item.id.toString()}'),
+      title: Text('Fiole d\'œstrogène (id ${item.id.toString()})'),
       subtitle: Text(
-        'Volume: ${item.volume.toString()} (${item.usedVolume.toString()} utilisés)',
+        'Volume: ${item.volume.toString()} (${(item.volume - item.usedVolume).toString()} restant)',
       ),
-      trailing: IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: onDelete,
-      ),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute<void>(
+          fullscreenDialog: true,
+          builder: (context) => EditItemDialog(item: item),
+        ));
+      },
     );
   }
 }

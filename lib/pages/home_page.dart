@@ -86,10 +86,14 @@ class _HomePageState extends State<HomePage> {
 
   FloatingActionButton? _buildFloatingActionButton() {
     void _newItem() {
-      showDialog(
-        context: context,
+      // showDialog(
+      //   context: context,
+      //   builder: (context) => NewItemDialog(),
+      // );
+      Navigator.of(context).push(MaterialPageRoute<void>(
+        fullscreenDialog: true,
         builder: (context) => NewItemDialog(),
-      );
+      ));
     }
 
     return _selectedIndex == 2

@@ -15,7 +15,7 @@ class PharmacyPage extends StatelessWidget {
 
     if (pharmacyState.items.isEmpty) {
       return Center(
-        child: Text('No items in pharmacy'),
+        child: Text('Ajoutez un élément pour commencer'),
       );
     }
 
@@ -25,9 +25,6 @@ class PharmacyPage extends StatelessWidget {
         SupplyItem item = pharmacyState.items[index];
         return PharmacyItem(
           item: item,
-          onDelete: () async {
-            await pharmacyState.deleteItem(item.id!);
-          },
         );
       },
     );

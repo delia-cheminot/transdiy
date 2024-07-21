@@ -3,7 +3,7 @@ import 'app_database.dart';
 
 class SupplyItem {
   final int? id;
-  final double volume;
+  double volume;
   double usedVolume;
   bool get isUsed => usedVolume > 0;
 
@@ -53,6 +53,10 @@ class SupplyItem {
   }
 
   static Future<void> updateItem(SupplyItem item) async {
+    assert(item.id != null);
+    if (item.usedVolume > item.volume) {
+      throw ArgumentError('Used volume cannot exceed total volume');
+    }
     final db = await AppDatabase.instance.database;
     await db.update(
       'supply_items',
@@ -72,12 +76,28 @@ class SupplyItem {
   }
 
   /// Uses a portion of the volume of the [SupplyItem] and updates the database.
-  Future<void> useVolume(double volume) async {
-    assert(id != null);
-    if (usedVolume + volume > this.volume) {
-      throw Exception('Volume exceeded');
+  Future<void> useVolume(double volumeToUse) async {
+    if (usedVolume + volumeToUse > this.volume) {
+      throw ArgumentError('Volume exceeded');
     }
-    usedVolume += volume;
+    usedVolume += volumeToUse;
     await updateItem(this);
+  }
+
+  Future<void> setFields({
+    double? newVolume,
+    double? newUsedVolume,
+    String? newName,
+    DateTime? newExpirationDate,
+  }) async {
+    if (newVolume != null) {
+      volume = newVolume;
+    }
+    if (newUsedVolume != null) {
+      if (newUsedVolume > volume) {
+        throw ArgumentError('Used volume cannot exceed total volume');
+      }
+      usedVolume = newUsedVolume;
+    }
   }
 }

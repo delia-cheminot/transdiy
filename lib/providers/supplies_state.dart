@@ -9,7 +9,6 @@ class SuppliesState extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   SuppliesState() {
-    print('PharmacyState init');
     _init();
   }
 
@@ -31,6 +30,11 @@ class SuppliesState extends ChangeNotifier {
 
   Future<void> addItem(double volume) async {
     await SupplyItem.insertItem(SupplyItem(volume: volume));
+    fetchItems();
+  }
+
+  Future<void> updateItem(SupplyItem item) async {
+    await SupplyItem.updateItem(item);
     fetchItems();
   }
 }
