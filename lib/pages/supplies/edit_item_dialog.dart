@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/supply_item_model.dart';
 import 'package:transdiy/providers/supplies_state.dart';
@@ -33,22 +34,32 @@ class _EditItemDialogState extends State<EditItemDialog> {
     super.dispose();
   }
 
-  bool _validateInputs() {
-    final volume =
-        double.tryParse(_volumeController.text.replaceAll(',', '.')) ?? 0;
-    final usedVolume =
-        double.tryParse(_usedVolumeController.text.replaceAll(',', '.')) ?? 0;
+  double? _parseDouble(String text) {
+    final sanitizedText = text.replaceAll(',', '.');
+    return double.tryParse(sanitizedText);
+  }
 
-    if (usedVolume > volume) {
-      setState(() {
-        _usedVolumeError =
-            'Volume utilisé ne peut pas dépasser le volume total';
-      });
+  void _setError(String? error) {
+    setState(() {
+      _usedVolumeError = error;
+    });
+  }
+
+  bool _validateInputs() {
+    final volume = _parseDouble(_volumeController.text);
+    final usedVolume = _parseDouble(_usedVolumeController.text);
+
+    if (volume == null || usedVolume == null) {
+      _setError(null);
       return false;
     }
-    setState(() {
-      _usedVolumeError = null;
-    });
+
+    if (usedVolume > volume) {
+      _setError('Volume utilisé ne peut pas dépasser le volume total');
+      return false;
+    }
+
+    _setError(null);
     return true;
   }
 
@@ -56,9 +67,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
     if (!_validateInputs()) return;
 
     widget.item.setFields(
-      newVolume: double.parse(_volumeController.text.replaceAll(',', '.')),
-      newUsedVolume:
-          double.parse(_usedVolumeController.text.replaceAll(',', '.')),
+      newVolume: _parseDouble(_volumeController.text)!,
+      newUsedVolume: _parseDouble(_usedVolumeController.text)!,
     );
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
     suppliesState.updateItem(widget.item);
@@ -76,11 +86,11 @@ class _EditItemDialogState extends State<EditItemDialog> {
               'Voulez-vous vraiment supprimer cet élément ? Cette action est irréversible.'),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false), // Annuler
+              onPressed: () => Navigator.of(context).pop(false),
               child: Text('Annuler'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true), // Confirmer
+              onPressed: () => Navigator.of(context).pop(true),
               child: Text('Supprimer'),
             ),
           ],
@@ -91,7 +101,6 @@ class _EditItemDialogState extends State<EditItemDialog> {
     if (confirmed == true) {
       final suppliesState = Provider.of<SuppliesState>(context, listen: false);
       // We edit the item in the database, so it must have an ID already.
-      assert(widget.item.id != null);
       suppliesState.deleteItem(widget.item.id!);
       Navigator.of(context).pop();
     }
@@ -129,6 +138,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
               child: TextField(
                 controller: _volumeController,
                 keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                ],
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Volume',
@@ -142,6 +154,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
               child: TextField(
                 controller: _usedVolumeController,
                 keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                ],
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Volume utilisé',
@@ -160,7 +175,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
             Container(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               width: double.infinity,
-              child: FilledButton(
+              child: OutlinedButton(
                 onPressed: _confirmDelete,
                 child: Text('Supprimer'),
               ),

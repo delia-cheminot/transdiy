@@ -57,30 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      leading: IconButton(
-        icon: const Icon(
-          Icons.menu,
-          semanticLabel: 'menu',
-        ),
-        onPressed: () {},
-      ),
       title: Text('TransDIY'),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(
-            Icons.search,
-            semanticLabel: 'search',
-          ),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.tune,
-            semanticLabel: 'filter',
-          ),
-          onPressed: () {},
-        ),
-      ],
     );
   }
 

@@ -23,14 +23,25 @@ class _NewItemDialogState extends State<NewItemDialog> {
     super.dispose();
   }
 
+  double? _parseDouble(String text) {
+    final sanitizedText = text.replaceAll(',', '.');
+    return double.tryParse(sanitizedText);
+  }
+
   void _addItem() async {
-    // check if text controller is empty
-    if (_volumeController.text.isEmpty) return;
-    // check if text controller is not empty
     final volume = double.parse(_volumeController.text.replaceAll(',', '.'));
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
     suppliesState.addItem(volume);
     Navigator.pop(context);
+  }
+
+  bool _validateInputs() {
+    if (_parseDouble(_volumeController.text) == null) {
+      setState(() {});
+      return false;
+    }
+    setState(() {});
+    return true;
   }
 
   @override
@@ -48,7 +59,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
-              onPressed: _addItem,
+              onPressed: _validateInputs() ? _addItem : null,
               child: Text(
                 'Ajouter',
               ),
@@ -73,6 +84,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
                 labelText: 'Contenance',
                 suffixText: 'ml',
               ),
+              onChanged: (value) => _validateInputs(),
             ),
           ],
         ),

@@ -20,6 +20,11 @@ import 'app.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // Make navigation bar transparent and draw behind it.
+   SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   runApp(
