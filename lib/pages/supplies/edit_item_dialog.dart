@@ -10,7 +10,7 @@ class EditItemDialog extends StatefulWidget {
   EditItemDialog({required this.item});
 
   @override
-  _EditItemDialogState createState() => _EditItemDialogState();
+  State<EditItemDialog> createState() => _EditItemDialogState();
 }
 
 class _EditItemDialogState extends State<EditItemDialog> {
@@ -99,6 +99,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
     );
 
     if (confirmed == true) {
+      // Check if the widget is still mounted before using the context.
+      if (!mounted) return;
       final suppliesState = Provider.of<SuppliesState>(context, listen: false);
       // We edit the item in the database, so it must have an ID already.
       suppliesState.deleteItem(widget.item.id!);

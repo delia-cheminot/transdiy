@@ -5,7 +5,7 @@ import 'package:transdiy/providers/supplies_state.dart';
 
 class NewItemDialog extends StatefulWidget {
   @override
-  _NewItemDialogState createState() => _NewItemDialogState();
+  State<NewItemDialog> createState() => _NewItemDialogState();
 }
 
 class _NewItemDialogState extends State<NewItemDialog> {

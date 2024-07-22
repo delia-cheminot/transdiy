@@ -1,3 +1,6 @@
+// mmmm so uh this page is only an example from a tutorial i followed.
+// it won't be there in the future, very soon hopefully :3
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 

@@ -62,11 +62,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   FloatingActionButton? _buildFloatingActionButton() {
-    void _newItem() {
-      // showDialog(
-      //   context: context,
-      //   builder: (context) => NewItemDialog(),
-      // );
+    void newItem() {
       Navigator.of(context).push(MaterialPageRoute<void>(
         fullscreenDialog: true,
         builder: (context) => NewItemDialog(),
@@ -75,7 +71,7 @@ class _HomePageState extends State<HomePage> {
 
     return _selectedIndex == 2
         ? FloatingActionButton(
-            onPressed: _newItem,
+            onPressed: newItem,
             tooltip: 'Add Item',
             child: Icon(Icons.add),
           )

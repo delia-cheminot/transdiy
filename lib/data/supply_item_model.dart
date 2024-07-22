@@ -77,7 +77,7 @@ class SupplyItem {
 
   /// Uses a portion of the volume of the [SupplyItem] and updates the database.
   Future<void> useVolume(double volumeToUse) async {
-    if (usedVolume + volumeToUse > this.volume) {
+    if (usedVolume + volumeToUse > volume) {
       throw ArgumentError('Volume exceeded');
     }
     usedVolume += volumeToUse;

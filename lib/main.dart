@@ -8,6 +8,12 @@
 //       |  --  ||   |_ \     /
 //       |_____/_______| |___|
 //
+// Special Thanks to:
+// - The Flutter Fairies for their enchanting SDK
+// - The Dart Wizards for their spellbinding language
+// - You, for being awesome and checking out the code! :3
+//
+// Developed by Délia Cheminot
 //
 
 import 'package:flutter/material.dart';
@@ -19,6 +25,7 @@ import 'app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   // Make navigation bar transparent and draw behind it.
    SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
