@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/data/supply_item_model.dart';
+import 'package:transdiy/models/supply_item.dart';
 import 'package:transdiy/pages/supplies/edit_item_dialog.dart';
 
 class PharmacyItem extends StatelessWidget {
@@ -12,8 +12,7 @@ class PharmacyItem extends StatelessWidget {
     return ListTile(
       title: Text('Fiole de potion (id ${item.id.toString()})'),
       subtitle: Text(
-        'Volume: ${item.volume.toString()} (${(item.volume - item.usedVolume).toString()} restant)',
-      ),
+          'Volume: ${item.volume.toString()} (${(item.volume - item.usedVolume).toString()} restant)'),
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute<void>(
           fullscreenDialog: true,

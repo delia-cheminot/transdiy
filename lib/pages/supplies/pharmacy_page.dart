@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/supply_item_model.dart';
+import 'package:transdiy/models/supply_item.dart';
 import 'package:transdiy/pages/supplies/pharmacy_item.dart';
 import 'package:transdiy/providers/supplies_state.dart';
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/supply_item_model.dart';
+import 'package:transdiy/managers/supply_item_manager.dart';
+import 'package:transdiy/models/supply_item.dart';
 import 'package:transdiy/providers/supplies_state.dart';
 
 class EditItemDialog extends StatefulWidget {
@@ -65,13 +66,12 @@ class _EditItemDialogState extends State<EditItemDialog> {
 
   void _saveChanges() {
     if (!_validateInputs()) return;
-
-    widget.item.setFields(
+    final suppliesState = Provider.of<SuppliesState>(context, listen: false);
+    SupplyItemManager(suppliesState).setFields(
+      widget.item,
       newVolume: _parseDouble(_volumeController.text)!,
       newUsedVolume: _parseDouble(_usedVolumeController.text)!,
     );
-    final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-    suppliesState.updateItem(widget.item);
     Navigator.of(context).pop();
   }
 
@@ -99,11 +99,11 @@ class _EditItemDialogState extends State<EditItemDialog> {
     );
 
     if (confirmed == true) {
-      // Check if the widget is still mounted before using the context.
       if (!mounted) return;
       final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-      // We edit the item in the database, so it must have an ID already.
-      suppliesState.deleteItem(widget.item.id!);
+      // All editions should be made on items from the database,
+      // they have an ID already.
+      suppliesState.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
   }

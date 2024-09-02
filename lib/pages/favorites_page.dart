@@ -20,14 +20,13 @@ class FavoritesPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text('your favorites :3 (you have ${appState.favorites.length})'),
+          child: Text(
+              'your favorites :3 (you have ${appState.favorites.length})'),
         ),
-        ...appState.favorites.map((pair) =>
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asCamelCase),
-          )
-        ),
+        ...appState.favorites.map((pair) => ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text(pair.asCamelCase),
+            )),
       ],
     );
   }

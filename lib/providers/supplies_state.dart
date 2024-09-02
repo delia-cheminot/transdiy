@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/data/supply_item_model.dart';
+import 'package:transdiy/models/supply_item.dart';
+import 'package:transdiy/repositories/supply_item_repository.dart';
 
 class SuppliesState extends ChangeNotifier {
   List<SupplyItem> _items = [];
@@ -13,28 +14,33 @@ class SuppliesState extends ChangeNotifier {
   }
 
   Future<void> _init() async {
-    _items = await SupplyItem.getItems();
+    _items = await SupplyItemRepository.getItems();
     _isLoading = false;
     notifyListeners();
   }
 
   Future<void> fetchItems() async {
-    _items = await SupplyItem.getItems();
+    _items = await SupplyItemRepository.getItems();
     notifyListeners();
   }
 
-  Future<void> deleteItem(int id) async {
-    await SupplyItem.deleteItem(id);
+  Future<void> deleteItemFromId(int id) async {
+    await SupplyItemRepository.deleteItemFromId(id);
+    fetchItems();
+  }
+
+  Future<void> deleteItem(SupplyItem item) async {
+    await SupplyItemRepository.deleteItem(item);
     fetchItems();
   }
 
   Future<void> addItem(double volume) async {
-    await SupplyItem.insertItem(SupplyItem(volume: volume));
+    await SupplyItemRepository.insertItem(SupplyItem(volume: volume));
     fetchItems();
   }
 
   Future<void> updateItem(SupplyItem item) async {
-    await SupplyItem.updateItem(item);
+    await SupplyItemRepository.updateItem(item);
     fetchItems();
   }
 }
