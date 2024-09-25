@@ -10,7 +10,7 @@ class PharmacyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('Fiole de potion (id ${item.id.toString()})'),
+      title: Text(item.name),
       subtitle: Text(
           'Volume: ${item.volume.toString()} (${(item.volume - item.usedVolume).toString()} restant)'),
       onTap: () {

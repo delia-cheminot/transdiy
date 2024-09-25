@@ -10,16 +10,19 @@ class NewItemDialog extends StatefulWidget {
 
 class _NewItemDialogState extends State<NewItemDialog> {
   late TextEditingController _volumeController;
+  late TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
     _volumeController = TextEditingController();
+    _nameController = TextEditingController();
   }
 
   @override
   void dispose() {
     _volumeController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -30,18 +33,33 @@ class _NewItemDialogState extends State<NewItemDialog> {
 
   void _addItem() async {
     final volume = double.parse(_volumeController.text.replaceAll(',', '.'));
+    final name = _nameController.text;
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-    suppliesState.addItem(volume);
+    suppliesState.addItem(volume, name);
     Navigator.pop(context);
   }
 
   bool _validateInputs() {
-    if (_parseDouble(_volumeController.text) == null) {
+    if (!_isNameValid()) {
       setState(() {});
       return false;
     }
+
+    if (!_isVolumeValid()) {
+      setState(() {});
+      return false;
+    }
+
     setState(() {});
     return true;
+  }
+
+  bool _isVolumeValid() {
+    return _parseDouble(_volumeController.text) != null;
+  }
+
+  bool _isNameValid() {
+    return _nameController.text.isNotEmpty;
   }
 
   @override
@@ -73,18 +91,33 @@ class _NewItemDialogState extends State<NewItemDialog> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: _volumeController,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-              ],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Contenance',
-                suffixText: 'ml',
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: TextField(
+                controller: _nameController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Nom',
+                ),
+                onChanged: (value) => _validateInputs(),
               ),
-              onChanged: (value) => _validateInputs(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: TextField(
+                controller: _volumeController,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Contenance',
+                  suffixText: 'ml',
+                ),
+                onChanged: (value) => _validateInputs(),
+              ),
             ),
           ],
         ),

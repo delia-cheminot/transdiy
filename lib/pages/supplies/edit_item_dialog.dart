@@ -17,7 +17,15 @@ class EditItemDialog extends StatefulWidget {
 class _EditItemDialogState extends State<EditItemDialog> {
   late TextEditingController _volumeController;
   late TextEditingController _usedVolumeController;
-  String? _usedVolumeError;
+  late TextEditingController _nameController;
+
+  bool _isFormValid = false;
+
+  Map<String, String?> _fieldErrors = {
+    'name': null,
+    'volume': null,
+    'usedVolume': null,
+  };
 
   @override
   void initState() {
@@ -26,12 +34,14 @@ class _EditItemDialogState extends State<EditItemDialog> {
         TextEditingController(text: widget.item.volume.toString());
     _usedVolumeController =
         TextEditingController(text: widget.item.usedVolume.toString());
+    _nameController = TextEditingController(text: widget.item.name);
   }
 
   @override
   void dispose() {
     _volumeController.dispose();
     _usedVolumeController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -40,35 +50,50 @@ class _EditItemDialogState extends State<EditItemDialog> {
     return double.tryParse(sanitizedText);
   }
 
-  void _setError(String? error) {
+  String? _validateName(String value) {
+    if (value.isEmpty) {
+      return 'Le nom est obligatoire';
+    }
+    return null;
+  }
+
+  String? _validateVolume(String value) {
+    if (_parseDouble(value) == null) {
+      return 'Champ est obligatoire';
+    }
+    return null;
+  }
+
+  String? _validateUsedVolume(String value, String volume) {
+    if (_parseDouble(value) == null) {
+      return 'Champ obligatoire';
+    }
+    if (_parseDouble(volume) != null &&
+        _parseDouble(value)! > _parseDouble(volume)!) {
+      return 'Le volume utilisé ne peut pas dépasser la contenance';
+    }
+    return null;
+  }
+
+  void _validateInputs() {
     setState(() {
-      _usedVolumeError = error;
+      _fieldErrors['name'] = _validateName(_nameController.text);
+      _fieldErrors['volume'] = _validateVolume(_volumeController.text);
+      _fieldErrors['usedVolume'] = _validateUsedVolume(
+        _usedVolumeController.text,
+        _volumeController.text,
+      );
+
+      _isFormValid = _fieldErrors.values.every((error) => error == null);
     });
   }
 
-  bool _validateInputs() {
-    final volume = _parseDouble(_volumeController.text);
-    final usedVolume = _parseDouble(_usedVolumeController.text);
-
-    if (volume == null || usedVolume == null) {
-      _setError(null);
-      return false;
-    }
-
-    if (usedVolume > volume) {
-      _setError('Volume utilisé ne peut pas dépasser le volume total');
-      return false;
-    }
-
-    _setError(null);
-    return true;
-  }
-
   void _saveChanges() {
-    if (!_validateInputs()) return;
+    if (!_isFormValid) return;
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
     SupplyItemManager(suppliesState).setFields(
       widget.item,
+      newName: _nameController.text,
       newVolume: _parseDouble(_volumeController.text)!,
       newUsedVolume: _parseDouble(_usedVolumeController.text)!,
     );
@@ -123,66 +148,83 @@ class _EditItemDialogState extends State<EditItemDialog> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
-              onPressed: _validateInputs() ? _saveChanges : null,
+              onPressed: _isFormValid ? _saveChanges : null,
               child: Text('Sauvegarder'),
             ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: TextField(
-                controller: _volumeController,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Volume',
-                  suffixText: 'ml',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: TextField(
+                  controller: _nameController,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nom',
+                    errorText: _fieldErrors['name'],
+                    suffixIcon:
+                        _fieldErrors['name'] != null ? Icon(Icons.error) : null,
+                  ),
+                  onChanged: (value) => _validateInputs(),
                 ),
-                onChanged: (value) => _validateInputs(),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: TextField(
-                controller: _usedVolumeController,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Volume utilisé',
-                  suffixText: 'ml',
-                  errorText: _usedVolumeError,
-                  suffixIcon:
-                      _usedVolumeError != null ? Icon(Icons.error) : null,
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: TextField(
+                  controller: _volumeController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                  ],
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Volume',
+                    suffixText: 'ml',
+                  ),
+                  onChanged: (value) => _validateInputs(),
                 ),
-                onChanged: (value) => _validateInputs(),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: Divider(),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: _confirmDelete,
-                child: Text('Supprimer'),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: TextField(
+                  controller: _usedVolumeController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                  ],
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Volume utilisé',
+                    suffixText: 'ml',
+                    errorText: _fieldErrors['usedVolume'],
+                    suffixIcon:
+                        _fieldErrors['usedVolume'] != null ? Icon(Icons.error) : null,
+                  ),
+                  onChanged: (value) => _validateInputs(),
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Divider(),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: _confirmDelete,
+                  child: Text('Supprimer'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

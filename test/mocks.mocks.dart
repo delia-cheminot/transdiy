@@ -80,10 +80,17 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> addItem(double? volume) => (super.noSuchMethod(
+  _i4.Future<void> addItem(
+    double? volume,
+    String? name,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
           #addItem,
-          [volume],
+          [
+            volume,
+            name,
+          ],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

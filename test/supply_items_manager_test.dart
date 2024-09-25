@@ -15,7 +15,7 @@ void main() {
 
   group('SupplyItemManager', () {
     test('should update volume correctly', () async {
-      final item = SupplyItem(id: 1, volume: 10, usedVolume: 2);
+      final item = SupplyItem(name: 'h', id: 1, volume: 10, usedVolume: 2);
 
       await manager.setFields(
         item,
@@ -28,8 +28,10 @@ void main() {
       verify(mockSuppliesState.updateItem(item)).called(1);
     });
 
-    test('should throw ArgumentError when newUsedVolume exceeds volume', () {
-      final item = SupplyItem(volume: 10, usedVolume: 2);
+    test(
+        'should throw ArgumentError when invalid fields and item should remain unchanged',
+        () {
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 2);
 
       expect(
         () => manager.setFields(
@@ -38,10 +40,12 @@ void main() {
         ),
         throwsArgumentError,
       );
+
+      expect(item.usedVolume, 2);
     });
 
     test('should use volume correctly', () async {
-      final item = SupplyItem(volume: 20, usedVolume: 5);
+      final item = SupplyItem(name: 'h', volume: 20, usedVolume: 5);
 
       await manager.useVolume(item, 5);
 
@@ -49,8 +53,9 @@ void main() {
       verify(mockSuppliesState.updateItem(item)).called(1);
     });
 
-    test('should throw ArgumentError when using more volume than available', () {
-      final item = SupplyItem(volume: 10, usedVolume: 5);
+    test('should throw ArgumentError when using more volume than available',
+        () {
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5);
 
       expect(
         () => manager.useVolume(item, 6),
@@ -63,7 +68,7 @@ void main() {
     });
 
     test('use zero volume', () async {
-      final item = SupplyItem(volume: 10, usedVolume: 5);
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5);
 
       await manager.useVolume(item, 0);
 

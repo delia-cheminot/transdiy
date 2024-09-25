@@ -12,21 +12,22 @@ class SupplyItemManager {
 
   Future<void> setFields(
     SupplyItem item, {
+    String? newName,
     double? newVolume,
     double? newUsedVolume,
-    String? newName,
-    DateTime? newExpirationDate,
+    int? newQuantity,
   }) async {
-    if (newVolume != null) {
-      item.volume = newVolume;
-    }
-    if (newUsedVolume != null) {
-      if (newUsedVolume > item.volume) {
-        throw ArgumentError('Used volume cannot exceed total volume');
-      }
-      item.usedVolume = newUsedVolume;
-    }
+    SupplyItem newItem = item.copy();
 
+    newItem.volume = newVolume ?? item.volume;
+    newItem.usedVolume = newUsedVolume ?? item.usedVolume;
+    newItem.quantity = newQuantity ?? item.quantity;
+    newItem.name = newName ?? item.name;
+
+    if (!newItem.isValid()) {
+      throw ArgumentError('Invalid item');
+    }
+    item = newItem;
     await _suppliesState.updateItem(item);
   }
 

@@ -41,7 +41,7 @@ void main() {
 
     test('Insert and retrieve a SupplyItem', () async {
       // Create a SupplyItem instance with an ID
-      final item = SupplyItem(volume: 1.0);
+      final item = SupplyItem(name: 'h', volume: 1.0);
 
       // Insert the item
       int insertedId = await SupplyItemRepository.insertItem(item);
@@ -56,11 +56,11 @@ void main() {
 
     test('Update a SupplyItem', () async {
       // Create and insert a SupplyItem
-      final item = SupplyItem(volume: 1.0);
+      final item = SupplyItem(name: 'h', volume: 1.0);
       int id = await SupplyItemRepository.insertItem(item);
 
       // Update the item
-      final updatedItem = SupplyItem(id: id, volume: 2.0);
+      final updatedItem = SupplyItem(name: 'h', id: id, volume: 2.0);
       await SupplyItemRepository.updateItem(updatedItem);
 
       // Retrieve the updated items
@@ -74,7 +74,7 @@ void main() {
 
     test('Delete a SupplyItem', () async {
       // Create and insert a SupplyItem
-      final item = SupplyItem(volume: 1.0);
+      final item = SupplyItem(name: 'h', volume: 1.0);
       int id  = await SupplyItemRepository.insertItem(item);
 
       // Delete the item
@@ -89,8 +89,8 @@ void main() {
 
     test('Only delete the specified SupplyItem', () async {
       // Create and insert two SupplyItems
-      final item1 = SupplyItem(volume: 1.0);
-      final item2 = SupplyItem(volume: 2.0);
+      final item1 = SupplyItem(name: 'g', volume: 1.0);
+      final item2 = SupplyItem(name: 'h', volume: 2.0);
       int id1 = await SupplyItemRepository.insertItem(item1);
       int id2 = await SupplyItemRepository.insertItem(item2);
 

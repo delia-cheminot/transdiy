@@ -33,7 +33,9 @@ class AppDatabase {
     CREATE TABLE supply_items(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       volume REAL NOT NULL,
-      usedVolume REAL NOT NULL
+      usedVolume REAL NOT NULL,
+      name TEXT NOT NULL,
+      quantity INTEGER NOT NULL
     )
     ''');
   }
