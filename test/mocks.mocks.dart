@@ -7,8 +7,10 @@ import 'dart:async' as _i4;
 import 'dart:ui' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:transdiy/supply_item/supply_item.dart' as _i3;
+import 'package:transdiy/medication_intake/medication_intake.dart' as _i7;
+import 'package:transdiy/medication_intake/medication_intake_state.dart' as _i6;
 import 'package:transdiy/supply_item/supplies_state.dart' as _i2;
+import 'package:transdiy/supply_item/supply_item.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -101,6 +103,123 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
         Invocation.method(
           #updateItem,
           [item],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [MedicationIntakeState].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMedicationIntakeState extends _i1.Mock
+    implements _i6.MedicationIntakeState {
+  MockMedicationIntakeState() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  List<_i7.MedicationIntake> get intakes => (super.noSuchMethod(
+        Invocation.getter(#intakes),
+        returnValue: <_i7.MedicationIntake>[],
+      ) as List<_i7.MedicationIntake>);
+
+  @override
+  bool get isLoading => (super.noSuchMethod(
+        Invocation.getter(#isLoading),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i4.Future<void> fetchIntakes() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchIntakes,
+          [],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> deleteIntakeFromId(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteIntakeFromId,
+          [id],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> deleteIntake(_i7.MedicationIntake? intake) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteIntake,
+          [intake],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> addIntake(DateTime? scheduledDateTime) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addIntake,
+          [scheduledDateTime],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<void> updateIntake(_i7.MedicationIntake? intake) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateIntake,
+          [intake],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),

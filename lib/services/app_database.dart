@@ -38,6 +38,14 @@ class AppDatabase {
       quantity INTEGER NOT NULL
     )
     ''');
+
+    await db.execute('''
+    CREATE TABLE medication_intakes(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      scheduledDateTime TEXT NOT NULL,
+      takenDateTime TEXT
+    )
+    ''');
   }
 
   Future<void> close() async {

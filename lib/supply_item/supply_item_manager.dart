@@ -10,7 +10,7 @@ class SupplyItemManager {
     return SupplyItemManager(suppliesState);
   }
 
-  Future<void> setFields(
+  Future<SupplyItem> setFields(
     SupplyItem item, {
     String? newName,
     double? newVolume,
@@ -24,11 +24,12 @@ class SupplyItemManager {
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
 
-    if (!newItem.isValid()) {
+    if (!newItem.isValid()) { 
       throw ArgumentError('Invalid item');
     }
-    item = newItem;
-    await _suppliesState.updateItem(item);
+
+    await _suppliesState.updateItem(newItem);
+    return newItem;
   }
 
   /// Uses a portion of the volume of the [SupplyItem] and updates the database.

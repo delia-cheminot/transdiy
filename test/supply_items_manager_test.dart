@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:transdiy/supply_item/supply_item_manager.dart';
 import 'package:transdiy/supply_item/supply_item.dart';
+import 'package:transdiy/supply_item/supply_item_manager.dart';
 import 'mocks.mocks.dart';
 
 void main() {
@@ -17,15 +17,15 @@ void main() {
     test('should update volume correctly', () async {
       final item = SupplyItem(name: 'h', id: 1, volume: 10, usedVolume: 2);
 
-      await manager.setFields(
+      final newItem = await manager.setFields(
         item,
         newVolume: 20,
         newUsedVolume: 5,
       );
 
-      expect(item.volume, 20);
-      expect(item.usedVolume, 5);
-      verify(mockSuppliesState.updateItem(item)).called(1);
+      expect(newItem.volume, 20);
+      expect(newItem.usedVolume, 5);
+      verify(mockSuppliesState.updateItem(newItem)).called(1);
     });
 
     test(
