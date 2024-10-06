@@ -53,4 +53,34 @@ class SupplyItem {
   bool isValid() {
     return volume > 0 && usedVolume >= 0 && usedVolume <= volume && name != '';
   }
+
+  static String? validateVolume(String value) {
+    if (_parseDouble(value) == null) {
+      return 'Champ obligatoire';
+    }
+    return null;
+  }
+
+  static String? validateName(String value) {
+    if (value.isEmpty) {
+      return 'Champ obligatoire';
+    }
+    return null;
+  }
+
+  static String? validateUsedVolume(String value, String volume) {
+    if (_parseDouble(value) == null) {
+      return 'Champ obligatoire';
+    }
+    if (_parseDouble(volume) != null &&
+        _parseDouble(value)! > _parseDouble(volume)!) {
+      return 'Le volume utilisé ne peut pas dépasser la contenance';
+    }
+    return null;
+  }
+
+  static double? _parseDouble(String text) {
+    final sanitizedText = text.replaceAll(',', '.');
+    return double.tryParse(sanitizedText);
+  }
 }

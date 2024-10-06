@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import '../models/supply_item.dart';
+import 'supply_item.dart';
 import '../services/app_database.dart';
 
 class SupplyItemRepository {

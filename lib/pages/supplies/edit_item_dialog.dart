@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/managers/supply_item_manager.dart';
-import 'package:transdiy/models/supply_item.dart';
-import 'package:transdiy/providers/supplies_state.dart';
+import 'package:transdiy/supply_item/supply_item_manager.dart';
+import 'package:transdiy/supply_item/supply_item.dart';
+import 'package:transdiy/supply_item/supplies_state.dart';
+import 'package:transdiy/services/dialog_service.dart';
 
 class EditItemDialog extends StatefulWidget {
   final SupplyItem item;
@@ -45,41 +46,12 @@ class _EditItemDialogState extends State<EditItemDialog> {
     super.dispose();
   }
 
-  double? _parseDouble(String text) {
-    final sanitizedText = text.replaceAll(',', '.');
-    return double.tryParse(sanitizedText);
-  }
-
-  String? _validateName(String value) {
-    if (value.isEmpty) {
-      return 'Le nom est obligatoire';
-    }
-    return null;
-  }
-
-  String? _validateVolume(String value) {
-    if (_parseDouble(value) == null) {
-      return 'Champ est obligatoire';
-    }
-    return null;
-  }
-
-  String? _validateUsedVolume(String value, String volume) {
-    if (_parseDouble(value) == null) {
-      return 'Champ obligatoire';
-    }
-    if (_parseDouble(volume) != null &&
-        _parseDouble(value)! > _parseDouble(volume)!) {
-      return 'Le volume utilisé ne peut pas dépasser la contenance';
-    }
-    return null;
-  }
-
   void _validateInputs() {
     setState(() {
-      _fieldErrors['name'] = _validateName(_nameController.text);
-      _fieldErrors['volume'] = _validateVolume(_volumeController.text);
-      _fieldErrors['usedVolume'] = _validateUsedVolume(
+      _fieldErrors['name'] = SupplyItem.validateName(_nameController.text);
+      _fieldErrors['volume'] =
+          SupplyItem.validateVolume(_volumeController.text);
+      _fieldErrors['usedVolume'] = SupplyItem.validateUsedVolume(
         _usedVolumeController.text,
         _volumeController.text,
       );
@@ -89,45 +61,28 @@ class _EditItemDialogState extends State<EditItemDialog> {
   }
 
   void _saveChanges() {
+    double? parseDouble(String text) {
+      final sanitizedText = text.replaceAll(',', '.');
+      return double.tryParse(sanitizedText);
+    }
+
     if (!_isFormValid) return;
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
     SupplyItemManager(suppliesState).setFields(
       widget.item,
       newName: _nameController.text,
-      newVolume: _parseDouble(_volumeController.text)!,
-      newUsedVolume: _parseDouble(_usedVolumeController.text)!,
+      newVolume: parseDouble(_volumeController.text)!,
+      newUsedVolume: parseDouble(_usedVolumeController.text)!,
     );
     Navigator.of(context).pop();
   }
 
   Future<void> _confirmDelete() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Supprimer ?'),
-          content: Text(
-              'Voulez-vous vraiment supprimer cet élément ? Cette action est irréversible.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Annuler'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: Text('Supprimer'),
-            ),
-          ],
-        );
-      },
-    );
+    final confirmed = await DialogService.confirmDelete(context);
 
     if (confirmed == true) {
       if (!mounted) return;
       final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-      // All editions should be made on items from the database,
-      // they have an ID already.
       suppliesState.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
@@ -205,8 +160,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
                     labelText: 'Volume utilisé',
                     suffixText: 'ml',
                     errorText: _fieldErrors['usedVolume'],
-                    suffixIcon:
-                        _fieldErrors['usedVolume'] != null ? Icon(Icons.error) : null,
+                    suffixIcon: _fieldErrors['usedVolume'] != null
+                        ? Icon(Icons.error)
+                        : null,
                   ),
                   onChanged: (value) => _validateInputs(),
                 ),

@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/providers/app_state.dart';
-import 'package:transdiy/providers/supplies_state.dart';
+import 'package:transdiy/supply_item/supplies_state.dart';
 import 'app.dart';
 
 void main() {
