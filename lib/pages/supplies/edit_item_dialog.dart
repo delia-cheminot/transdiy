@@ -18,7 +18,7 @@ class EditItemDialog extends StatefulWidget {
 class _EditItemDialogState extends State<EditItemDialog> {
   late TextEditingController _totalAmountController;
   late TextEditingController _usedAmountController;
-  late TextEditingController _dosagePerUnitController;
+  late TextEditingController _dosePerUnitController;
   late TextEditingController _nameController;
 
   bool _isFormValid = false;
@@ -27,7 +27,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
     'name': null,
     'totalAmount': null,
     'usedAmount': null,
-    'dosagePerUnit': null,
+    'dosePerUnit': null,
   };
 
   @override
@@ -37,8 +37,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
         TextEditingController(text: widget.item.totalAmount.toString());
     _usedAmountController =
         TextEditingController(text: widget.item.usedAmount.toString());
-    _dosagePerUnitController =
-        TextEditingController(text: widget.item.dosagePerUnit.toString());
+    _dosePerUnitController =
+        TextEditingController(text: widget.item.dosePerUnit.toString());
     _nameController = TextEditingController(text: widget.item.name);
   }
 
@@ -46,7 +46,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
   void dispose() {
     _totalAmountController.dispose();
     _usedAmountController.dispose();
-    _dosagePerUnitController.dispose();
+    _dosePerUnitController.dispose();
     _nameController.dispose();
     super.dispose();
   }
@@ -60,8 +60,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
         _usedAmountController.text,
         _totalAmountController.text,
       );
-      _fieldErrors['dosagePerUnit'] =
-          SupplyItem.validateDosagePerUnit(_dosagePerUnitController.text);
+      _fieldErrors['dosePerUnit'] =
+          SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
 
       _isFormValid = _fieldErrors.values.every((error) => error == null);
     });
@@ -80,7 +80,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
       newName: _nameController.text,
       newTotalAmount: parseDouble(_totalAmountController.text)!,
       newUsedAmount: parseDouble(_usedAmountController.text)!,
-      newDosagePerUnit: parseDouble(_dosagePerUnitController.text)!,
+      newDosePerUnit: parseDouble(_dosePerUnitController.text)!,
     );
     Navigator.of(context).pop();
   }
@@ -181,7 +181,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: TextField(
-                  controller: _dosagePerUnitController,
+                  controller: _dosePerUnitController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
@@ -190,8 +190,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
                     border: OutlineInputBorder(),
                     labelText: 'Dosage par unité',
                     suffixText: 'mg/ml',
-                    errorText: _fieldErrors['dosagePerUnit'],
-                    suffixIcon: _fieldErrors['dosagePerUnit'] != null
+                    errorText: _fieldErrors['dosePerUnit'],
+                    suffixIcon: _fieldErrors['dosePerUnit'] != null
                         ? Icon(Icons.error)
                         : null,
                   ),

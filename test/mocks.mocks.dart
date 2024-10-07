@@ -96,7 +96,7 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemState {
   _i4.Future<void> addItem(
     double? totalAmount,
     String? name,
-    double? dosagePerUnit,
+    double? dosePerUnit,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -104,7 +104,7 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemState {
           [
             totalAmount,
             name,
-            dosagePerUnit,
+            dosePerUnit,
           ],
         ),
         returnValue: _i4.Future<void>.value(),
@@ -295,7 +295,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
     String? newName,
     double? newTotalAmount,
     double? newUsedAmount,
-    double? newDosagePerUnit,
+    double? newDosePerUnit,
     int? newQuantity,
   }) =>
       (super.noSuchMethod(
@@ -306,7 +306,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
             #newName: newName,
             #newTotalAmount: newTotalAmount,
             #newUsedAmount: newUsedAmount,
-            #newDosagePerUnit: newDosagePerUnit,
+            #newDosePerUnit: newDosePerUnit,
             #newQuantity: newQuantity,
           },
         ),
@@ -319,7 +319,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
               #newName: newName,
               #newTotalAmount: newTotalAmount,
               #newUsedAmount: newUsedAmount,
-              #newDosagePerUnit: newDosagePerUnit,
+              #newDosePerUnit: newDosePerUnit,
               #newQuantity: newQuantity,
             },
           ),

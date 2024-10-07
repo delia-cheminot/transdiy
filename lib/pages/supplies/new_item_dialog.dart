@@ -11,21 +11,21 @@ class NewItemDialog extends StatefulWidget {
 class _NewItemDialogState extends State<NewItemDialog> {
   late TextEditingController _totalAmountController;
   late TextEditingController _nameController;
-  late TextEditingController _dosagePerUnitController;
+  late TextEditingController _dosePerUnitController;
 
   @override
   void initState() {
     super.initState();
     _totalAmountController = TextEditingController();
     _nameController = TextEditingController();
-    _dosagePerUnitController = TextEditingController();
+    _dosePerUnitController = TextEditingController();
   }
 
   @override
   void dispose() {
     _totalAmountController.dispose();
     _nameController.dispose();
-    _dosagePerUnitController.dispose();
+    _dosePerUnitController.dispose();
     super.dispose();
   }
 
@@ -36,10 +36,10 @@ class _NewItemDialogState extends State<NewItemDialog> {
 
   void _addItem() async {
     final totalAmount = double.parse(_totalAmountController.text.replaceAll(',', '.'));
-    final dosagePerUnit = double.parse(_dosagePerUnitController.text.replaceAll(',', '.'));
+    final dosePerUnit = double.parse(_dosePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
     final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
-    supplyItemState.addItem(totalAmount, name, dosagePerUnit);
+    supplyItemState.addItem(totalAmount, name, dosePerUnit);
     Navigator.pop(context);
   }
 
@@ -54,7 +54,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
       return false;
     }
 
-    if (!_isDosagePerUnitValid()) {
+    if (!_isDosePerUnitValid()) {
       setState(() {});
       return false;
     }
@@ -71,8 +71,8 @@ class _NewItemDialogState extends State<NewItemDialog> {
     return _nameController.text.isNotEmpty;
   }
 
-  bool _isDosagePerUnitValid() {
-    return _parseDouble(_dosagePerUnitController.text) != null;
+  bool _isDosePerUnitValid() {
+    return _parseDouble(_dosePerUnitController.text) != null;
   }
 
   @override
@@ -135,7 +135,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: TextField(
-                controller: _dosagePerUnitController,
+                controller: _dosePerUnitController,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),

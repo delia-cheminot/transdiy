@@ -15,14 +15,14 @@ class SupplyItemManager {
     String? newName,
     double? newTotalAmount,
     double? newUsedAmount,
-    double? newDosagePerUnit,
+    double? newDosePerUnit,
     int? newQuantity,
   }) async {
     SupplyItem newItem = item.copy();
 
     newItem.totalAmount = newTotalAmount ?? item.totalAmount;
     newItem.usedAmount = newUsedAmount ?? item.usedAmount;
-    newItem.dosagePerUnit = newDosagePerUnit ?? item.dosagePerUnit;
+    newItem.dosePerUnit = newDosePerUnit ?? item.dosePerUnit;
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
 

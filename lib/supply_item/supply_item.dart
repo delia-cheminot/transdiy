@@ -3,7 +3,7 @@ class SupplyItem {
   String name;
   double totalAmount;
   double usedAmount;
-  double dosagePerUnit;
+  double dosePerUnit;
   int quantity;
   bool get isUsed => usedAmount > 0;
   bool get isInStock => quantity > 0;
@@ -12,7 +12,7 @@ class SupplyItem {
     this.id,
     required this.name,
     required this.totalAmount,
-    required this.dosagePerUnit,
+    required this.dosePerUnit,
     this.usedAmount = 0,
     this.quantity = 1,
   });
@@ -23,7 +23,7 @@ class SupplyItem {
       'name': name,
       'totalAmount': totalAmount,
       'usedAmount': usedAmount,
-      'dosagePerUnit': dosagePerUnit,
+      'dosePerUnit': dosePerUnit,
       'quantity': quantity,
     };
   }
@@ -34,7 +34,7 @@ class SupplyItem {
       name: map['name'] as String,
       totalAmount: map['totalAmount'] as double,
       usedAmount: map['usedAmount'] as double,
-      dosagePerUnit: map['dosagePerUnit'] as double,
+      dosePerUnit: map['dosePerUnit'] as double,
       quantity: map['quantity'] as int,
     );
   }
@@ -45,7 +45,7 @@ class SupplyItem {
       name: name,
       totalAmount: totalAmount,
       usedAmount: usedAmount,
-      dosagePerUnit: dosagePerUnit,
+      dosePerUnit: dosePerUnit,
       quantity: quantity,
     );
   }
@@ -60,7 +60,7 @@ class SupplyItem {
         usedAmount >= 0 &&
         usedAmount <= totalAmount &&
         name != '' &&
-        dosagePerUnit > 0;
+        dosePerUnit > 0;
   }
 
   static String? validateTotalAmount(String value) {
@@ -88,7 +88,7 @@ class SupplyItem {
     return null;
   }
 
-  static String? validateDosagePerUnit(String value) {
+  static String? validateDosePerUnit(String value) {
     if (_parseDouble(value) == null) {
       return 'Champ obligatoire';
     }

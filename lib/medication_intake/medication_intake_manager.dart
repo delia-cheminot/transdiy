@@ -21,12 +21,12 @@ class MedicationIntakeManager {
       throw ArgumentError('Medication already taken');
     }
 
-    double amountToUse = intake.dose / supplyItem.dosagePerUnit;
+    double amountToUse = intake.dose / supplyItem.dosePerUnit;
 
     if (supplyItem.usedAmount + amountToUse > supplyItem.totalAmount) {
       // Uses only possible amount and creates a new intake with the remaining dose
       double remainingDose = (supplyItem.totalAmount - supplyItem.usedAmount) *
-          supplyItem.dosagePerUnit; // remaining dose in mg in the supply
+          supplyItem.dosePerUnit; // remaining dose in mg in the supply
       double doseToAdd = intake.dose - remainingDose;
       intake.dose = remainingDose;
       await _medicationIntakeState.addIntake(

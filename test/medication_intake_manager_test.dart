@@ -29,10 +29,10 @@ void main() {
         name: 'TestSupply',
         totalAmount: 10.0,
         usedAmount: 2.0,
-        dosagePerUnit: 5.0,
+        dosePerUnit: 5.0,
       );
 
-      final amountToUse = intake.dose / supplyItem.dosagePerUnit;
+      final amountToUse = intake.dose / supplyItem.dosePerUnit;
 
       await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
 
@@ -54,7 +54,7 @@ void main() {
         name: 'TestSupply',
         totalAmount: 10.0,
         usedAmount: 2.0,
-        dosagePerUnit: 5.0,
+        dosePerUnit: 5.0,
       );
 
       expect(
@@ -75,7 +75,7 @@ void main() {
         name: 'TestSupply',
         totalAmount: 10.0,
         usedAmount: 2.0,
-        dosagePerUnit: 5.0,
+        dosePerUnit: 5.0,
       );
 
       final customDate = DateTime.now().add(Duration(days: 1));
@@ -99,7 +99,7 @@ void main() {
         name: 'TestSupply',
         totalAmount: 10.0,
         usedAmount: 9.0,
-        dosagePerUnit: 1.0,
+        dosePerUnit: 1.0,
       );
 
       double remainingDose = 1.0; // 1mg remaining in the supply

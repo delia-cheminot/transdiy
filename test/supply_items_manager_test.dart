@@ -15,7 +15,7 @@ void main() {
 
   group('SupplyItemManager', () {
     test('should update totalAmount correctly', () async {
-      final item = SupplyItem(name: 'h', id: 1, totalAmount: 10, usedAmount: 2, dosagePerUnit: 1);
+      final item = SupplyItem(name: 'h', id: 1, totalAmount: 10, usedAmount: 2, dosePerUnit: 1);
 
       final newItem = await manager.setFields(
         item,
@@ -31,7 +31,7 @@ void main() {
     test(
         'should throw ArgumentError when invalid fields and item should remain unchanged',
         () {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 2, dosagePerUnit: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 2, dosePerUnit: 1);
 
       expect(
         () => manager.setFields(
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('should use amount correctly', () async {
-      final item = SupplyItem(name: 'h', totalAmount: 20, usedAmount: 5, dosagePerUnit: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 20, usedAmount: 5, dosePerUnit: 1);
 
       await manager.useAmount(item, 5);
 
@@ -55,7 +55,7 @@ void main() {
 
     test('should throw ArgumentError when using more amount than available',
         () {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosagePerUnit: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosePerUnit: 1);
 
       expect(
         () => manager.useAmount(item, 6),
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('use zero amount', () async {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosagePerUnit: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosePerUnit: 1);
 
       await manager.useAmount(item, 0);
 

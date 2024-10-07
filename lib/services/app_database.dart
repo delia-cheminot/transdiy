@@ -34,7 +34,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       totalAmount REAL NOT NULL,
       usedAmount REAL NOT NULL,
-      dosagePerUnit REAL NOT NULL,
+      dosePerUnit REAL NOT NULL,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL
     )
