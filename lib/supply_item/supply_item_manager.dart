@@ -15,12 +15,14 @@ class SupplyItemManager {
     String? newName,
     double? newVolume,
     double? newUsedVolume,
+    double? newConcentration,
     int? newQuantity,
   }) async {
     SupplyItem newItem = item.copy();
 
     newItem.volume = newVolume ?? item.volume;
     newItem.usedVolume = newUsedVolume ?? item.usedVolume;
+    newItem.concentration = newConcentration ?? item.concentration;
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
 

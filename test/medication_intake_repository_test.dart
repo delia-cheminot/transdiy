@@ -40,7 +40,8 @@ void main() {
     });
 
     test('Insert and retrieve a MedicationIntake', () async {
-      final intake = MedicationIntake(scheduledDateTime: DateTime.now());
+      final intake =
+          MedicationIntake(scheduledDateTime: DateTime.now(), quantity: 1.0);
       int insertedId = await MedicationIntakeRepository.insertIntake(intake);
       final intakes = await MedicationIntakeRepository.getIntakes();
       expect(intakes.length, 1);
@@ -50,12 +51,14 @@ void main() {
     test('Update a MedicationIntake', () async {
       DateTime firstDateTime = DateTime.now();
       DateTime secondDateTime = firstDateTime.add(Duration(days: 1));
-      final intake = MedicationIntake(scheduledDateTime: firstDateTime);
+      final intake =
+          MedicationIntake(scheduledDateTime: firstDateTime, quantity: 1.0);
       int insertedId = await MedicationIntakeRepository.insertIntake(intake);
       final updatedIntake = MedicationIntake(
         id: insertedId,
         scheduledDateTime: firstDateTime,
         takenDateTime: secondDateTime,
+        quantity: 1.0,
       );
       await MedicationIntakeRepository.updateIntake(updatedIntake);
       final intakes = await MedicationIntakeRepository.getIntakes();
@@ -66,7 +69,7 @@ void main() {
     });
 
     test('Delete a MedicationIntake', () async {
-      final intake = MedicationIntake(scheduledDateTime: DateTime.now());
+      final intake = MedicationIntake(scheduledDateTime: DateTime.now(), quantity: 1.0);
       int insertedId = await MedicationIntakeRepository.insertIntake(intake);
       await MedicationIntakeRepository.deleteIntakeFromId(insertedId);
       final intakesAfterDelete = await MedicationIntakeRepository.getIntakes();
@@ -74,8 +77,8 @@ void main() {
     });
 
     test('Only delete the specified MedicationIntake', () async {
-      final intake1 = MedicationIntake(scheduledDateTime: DateTime.now());
-      final intake2 = MedicationIntake(scheduledDateTime: DateTime.now());
+      final intake1 = MedicationIntake(scheduledDateTime: DateTime.now(), quantity: 1.0);
+      final intake2 = MedicationIntake(scheduledDateTime: DateTime.now(), quantity: 1.0);
       int insertedId1 = await MedicationIntakeRepository.insertIntake(intake1);
       int insertedId2 = await MedicationIntakeRepository.insertIntake(intake2);
       await MedicationIntakeRepository.deleteIntakeFromId(insertedId1);

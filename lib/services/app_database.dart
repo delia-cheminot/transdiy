@@ -34,6 +34,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       volume REAL NOT NULL,
       usedVolume REAL NOT NULL,
+      concentration REAL NOT NULL,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL
     )
@@ -43,7 +44,8 @@ class AppDatabase {
     CREATE TABLE medication_intakes(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
-      takenDateTime TEXT
+      takenDateTime TEXT,
+      quantity REAL NOT NULL
     )
     ''');
   }

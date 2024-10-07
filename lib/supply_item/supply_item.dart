@@ -3,6 +3,7 @@ class SupplyItem {
   String name;
   double volume;
   double usedVolume;
+  double concentration;
   int quantity;
   bool get isUsed => usedVolume > 0;
   bool get isInStock => quantity > 0;
@@ -11,6 +12,7 @@ class SupplyItem {
     this.id,
     required this.name,
     required this.volume,
+    required this.concentration,
     this.usedVolume = 0,
     this.quantity = 1,
   });
@@ -21,6 +23,7 @@ class SupplyItem {
       'name': name,
       'volume': volume,
       'usedVolume': usedVolume,
+      'concentration': concentration,
       'quantity': quantity,
     };
   }
@@ -31,6 +34,7 @@ class SupplyItem {
       name: map['name'] as String,
       volume: map['volume'] as double,
       usedVolume: map['usedVolume'] as double,
+      concentration: map['concentration'] as double,
       quantity: map['quantity'] as int,
     );
   }
@@ -41,6 +45,7 @@ class SupplyItem {
       name: name,
       volume: volume,
       usedVolume: usedVolume,
+      concentration: concentration,
       quantity: quantity,
     );
   }
@@ -51,7 +56,11 @@ class SupplyItem {
   }
 
   bool isValid() {
-    return volume > 0 && usedVolume >= 0 && usedVolume <= volume && name != '';
+    return volume > 0 &&
+        usedVolume >= 0 &&
+        usedVolume <= volume &&
+        name != '' &&
+        concentration > 0;
   }
 
   static String? validateVolume(String value) {
@@ -75,6 +84,16 @@ class SupplyItem {
     if (_parseDouble(volume) != null &&
         _parseDouble(value)! > _parseDouble(volume)!) {
       return 'Le volume utilisé ne peut pas dépasser la contenance';
+    }
+    return null;
+  }
+
+  static String? validateConcentration(String value) {
+    if (_parseDouble(value) == null) {
+      return 'Champ obligatoire';
+    }
+    if (_parseDouble(value)! <= 0) {
+      return 'La concentration doit être supérieure à 0';
     }
     return null;
   }

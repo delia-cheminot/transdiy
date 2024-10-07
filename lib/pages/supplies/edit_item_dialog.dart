@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/supply_item/supply_item_manager.dart';
-import 'package:transdiy/supply_item/supply_item.dart';
-import 'package:transdiy/supply_item/supplies_state.dart';
 import 'package:transdiy/services/dialog_service.dart';
+import 'package:transdiy/supply_item/supplies_state.dart';
+import 'package:transdiy/supply_item/supply_item.dart';
+import 'package:transdiy/supply_item/supply_item_manager.dart';
 
 class EditItemDialog extends StatefulWidget {
   final SupplyItem item;
@@ -18,6 +18,7 @@ class EditItemDialog extends StatefulWidget {
 class _EditItemDialogState extends State<EditItemDialog> {
   late TextEditingController _volumeController;
   late TextEditingController _usedVolumeController;
+  late TextEditingController _concentrationController;
   late TextEditingController _nameController;
 
   bool _isFormValid = false;
@@ -26,6 +27,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
     'name': null,
     'volume': null,
     'usedVolume': null,
+    'concentration': null,
   };
 
   @override
@@ -35,6 +37,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
         TextEditingController(text: widget.item.volume.toString());
     _usedVolumeController =
         TextEditingController(text: widget.item.usedVolume.toString());
+    _concentrationController =
+        TextEditingController(text: widget.item.concentration.toString());
     _nameController = TextEditingController(text: widget.item.name);
   }
 
@@ -42,6 +46,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
   void dispose() {
     _volumeController.dispose();
     _usedVolumeController.dispose();
+    _concentrationController.dispose();
     _nameController.dispose();
     super.dispose();
   }
@@ -55,6 +60,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
         _usedVolumeController.text,
         _volumeController.text,
       );
+      _fieldErrors['concentration'] =
+          SupplyItem.validateConcentration(_concentrationController.text);
 
       _isFormValid = _fieldErrors.values.every((error) => error == null);
     });
@@ -73,6 +80,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
       newName: _nameController.text,
       newVolume: parseDouble(_volumeController.text)!,
       newUsedVolume: parseDouble(_usedVolumeController.text)!,
+      newConcentration: parseDouble(_concentrationController.text)!,
     );
     Navigator.of(context).pop();
   }
@@ -161,6 +169,26 @@ class _EditItemDialogState extends State<EditItemDialog> {
                     suffixText: 'ml',
                     errorText: _fieldErrors['usedVolume'],
                     suffixIcon: _fieldErrors['usedVolume'] != null
+                        ? Icon(Icons.error)
+                        : null,
+                  ),
+                  onChanged: (value) => _validateInputs(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: TextField(
+                  controller: _concentrationController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                  ],
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Concentration',
+                    suffixText: 'mg/ml',
+                    errorText: _fieldErrors['concentration'],
+                    suffixIcon: _fieldErrors['concentration'] != null
                         ? Icon(Icons.error)
                         : null,
                   ),

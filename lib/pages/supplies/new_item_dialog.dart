@@ -11,18 +11,21 @@ class NewItemDialog extends StatefulWidget {
 class _NewItemDialogState extends State<NewItemDialog> {
   late TextEditingController _volumeController;
   late TextEditingController _nameController;
+  late TextEditingController _concentrationController;
 
   @override
   void initState() {
     super.initState();
     _volumeController = TextEditingController();
     _nameController = TextEditingController();
+    _concentrationController = TextEditingController();
   }
 
   @override
   void dispose() {
     _volumeController.dispose();
     _nameController.dispose();
+    _concentrationController.dispose();
     super.dispose();
   }
 
@@ -33,9 +36,10 @@ class _NewItemDialogState extends State<NewItemDialog> {
 
   void _addItem() async {
     final volume = double.parse(_volumeController.text.replaceAll(',', '.'));
+    final concentration = double.parse(_concentrationController.text.replaceAll(',', '.'));
     final name = _nameController.text;
     final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-    suppliesState.addItem(volume, name);
+    suppliesState.addItem(volume, name, concentration);
     Navigator.pop(context);
   }
 
@@ -50,6 +54,11 @@ class _NewItemDialogState extends State<NewItemDialog> {
       return false;
     }
 
+    if (!_isConcentrationValid()) {
+      setState(() {});
+      return false;
+    }
+
     setState(() {});
     return true;
   }
@@ -60,6 +69,10 @@ class _NewItemDialogState extends State<NewItemDialog> {
 
   bool _isNameValid() {
     return _nameController.text.isNotEmpty;
+  }
+
+  bool _isConcentrationValid() {
+    return _parseDouble(_concentrationController.text) != null;
   }
 
   @override
@@ -115,6 +128,22 @@ class _NewItemDialogState extends State<NewItemDialog> {
                   border: OutlineInputBorder(),
                   labelText: 'Contenance',
                   suffixText: 'ml',
+                ),
+                onChanged: (value) => _validateInputs(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: TextField(
+                controller: _concentrationController,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                ],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Concentration',
+                  suffixText: 'mg/ml',
                 ),
                 onChanged: (value) => _validateInputs(),
               ),

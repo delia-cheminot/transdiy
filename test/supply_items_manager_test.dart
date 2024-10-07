@@ -15,7 +15,7 @@ void main() {
 
   group('SupplyItemManager', () {
     test('should update volume correctly', () async {
-      final item = SupplyItem(name: 'h', id: 1, volume: 10, usedVolume: 2);
+      final item = SupplyItem(name: 'h', id: 1, volume: 10, usedVolume: 2, concentration: 1);
 
       final newItem = await manager.setFields(
         item,
@@ -31,7 +31,7 @@ void main() {
     test(
         'should throw ArgumentError when invalid fields and item should remain unchanged',
         () {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 2);
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 2, concentration: 1);
 
       expect(
         () => manager.setFields(
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('should use volume correctly', () async {
-      final item = SupplyItem(name: 'h', volume: 20, usedVolume: 5);
+      final item = SupplyItem(name: 'h', volume: 20, usedVolume: 5, concentration: 1);
 
       await manager.useVolume(item, 5);
 
@@ -55,7 +55,7 @@ void main() {
 
     test('should throw ArgumentError when using more volume than available',
         () {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5);
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5, concentration: 1);
 
       expect(
         () => manager.useVolume(item, 6),
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('use zero volume', () async {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5);
+      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5, concentration: 1);
 
       await manager.useVolume(item, 0);
 

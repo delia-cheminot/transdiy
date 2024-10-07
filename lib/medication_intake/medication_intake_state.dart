@@ -34,9 +34,9 @@ class MedicationIntakeState extends ChangeNotifier {
     fetchIntakes();
   }
 
-  Future<void> addIntake(DateTime scheduledDateTime) async {
-    await MedicationIntakeRepository.insertIntake(
-        MedicationIntake(scheduledDateTime: scheduledDateTime));
+  Future<void> addIntake(DateTime scheduledDateTime, double quantity) async {
+    await MedicationIntakeRepository.insertIntake(MedicationIntake(
+        scheduledDateTime: scheduledDateTime, quantity: quantity));
     fetchIntakes();
   }
 

@@ -9,8 +9,9 @@ import 'dart:ui' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:transdiy/medication_intake/medication_intake.dart' as _i7;
 import 'package:transdiy/medication_intake/medication_intake_state.dart' as _i6;
-import 'package:transdiy/supply_item/supplies_state.dart' as _i2;
-import 'package:transdiy/supply_item/supply_item.dart' as _i3;
+import 'package:transdiy/supply_item/supplies_state.dart' as _i3;
+import 'package:transdiy/supply_item/supply_item.dart' as _i2;
+import 'package:transdiy/supply_item/supply_item_manager.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -25,19 +26,29 @@ import 'package:transdiy/supply_item/supply_item.dart' as _i3;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeSupplyItem_0 extends _i1.SmartFake implements _i2.SupplyItem {
+  _FakeSupplyItem_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [SuppliesState].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
+class MockSuppliesState extends _i1.Mock implements _i3.SuppliesState {
   MockSuppliesState() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i3.SupplyItem> get items => (super.noSuchMethod(
+  List<_i2.SupplyItem> get items => (super.noSuchMethod(
         Invocation.getter(#items),
-        returnValue: <_i3.SupplyItem>[],
-      ) as List<_i3.SupplyItem>);
+        returnValue: <_i2.SupplyItem>[],
+      ) as List<_i2.SupplyItem>);
 
   @override
   bool get isLoading => (super.noSuchMethod(
@@ -72,7 +83,7 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> deleteItem(_i3.SupplyItem? item) => (super.noSuchMethod(
+  _i4.Future<void> deleteItem(_i2.SupplyItem? item) => (super.noSuchMethod(
         Invocation.method(
           #deleteItem,
           [item],
@@ -85,6 +96,7 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
   _i4.Future<void> addItem(
     double? volume,
     String? name,
+    double? concentration,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -92,6 +104,7 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
           [
             volume,
             name,
+            concentration,
           ],
         ),
         returnValue: _i4.Future<void>.value(),
@@ -99,7 +112,7 @@ class MockSuppliesState extends _i1.Mock implements _i2.SuppliesState {
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> updateItem(_i3.SupplyItem? item) => (super.noSuchMethod(
+  _i4.Future<void> updateItem(_i2.SupplyItem? item) => (super.noSuchMethod(
         Invocation.method(
           #updateItem,
           [item],
@@ -204,11 +217,17 @@ class MockMedicationIntakeState extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> addIntake(DateTime? scheduledDateTime) =>
+  _i4.Future<void> addIntake(
+    DateTime? scheduledDateTime,
+    double? quantity,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addIntake,
-          [scheduledDateTime],
+          [
+            scheduledDateTime,
+            quantity,
+          ],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
@@ -260,4 +279,67 @@ class MockMedicationIntakeState extends _i1.Mock
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [SupplyItemManager].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
+  MockSupplyItemManager() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.SupplyItem> setFields(
+    _i2.SupplyItem? item, {
+    String? newName,
+    double? newVolume,
+    double? newUsedVolume,
+    double? newConcentration,
+    int? newQuantity,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setFields,
+          [item],
+          {
+            #newName: newName,
+            #newVolume: newVolume,
+            #newUsedVolume: newUsedVolume,
+            #newConcentration: newConcentration,
+            #newQuantity: newQuantity,
+          },
+        ),
+        returnValue: _i4.Future<_i2.SupplyItem>.value(_FakeSupplyItem_0(
+          this,
+          Invocation.method(
+            #setFields,
+            [item],
+            {
+              #newName: newName,
+              #newVolume: newVolume,
+              #newUsedVolume: newUsedVolume,
+              #newConcentration: newConcentration,
+              #newQuantity: newQuantity,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.SupplyItem>);
+
+  @override
+  _i4.Future<void> useVolume(
+    _i2.SupplyItem? item,
+    double? volumeToUse,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #useVolume,
+          [
+            item,
+            volumeToUse,
+          ],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

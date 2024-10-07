@@ -34,9 +34,9 @@ class SuppliesState extends ChangeNotifier {
     fetchItems();
   }
 
-  Future<void> addItem(double volume, String name) async {
+  Future<void> addItem(double volume, String name, double concentration) async {
     await SupplyItemRepository.insertItem(
-        SupplyItem(volume: volume, name: name));
+        SupplyItem(volume: volume, concentration: concentration, name: name));
     fetchItems();
   }
 

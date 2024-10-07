@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/supply_item/supply_item.dart';
 import 'package:transdiy/pages/supplies/pharmacy_item.dart';
 import 'package:transdiy/supply_item/supplies_state.dart';
+import 'package:transdiy/supply_item/supply_item.dart';
 
 class PharmacyPage extends StatelessWidget {
   @override

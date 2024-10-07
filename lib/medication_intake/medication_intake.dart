@@ -2,11 +2,13 @@ class MedicationIntake {
   final int? id;
   DateTime scheduledDateTime;
   DateTime? takenDateTime;
+  double quantity;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
     this.id,
     required this.scheduledDateTime,
+    required this.quantity,
     this.takenDateTime,
   });
 
@@ -14,7 +16,9 @@ class MedicationIntake {
     return {
       'id': id,
       'scheduledDateTime': scheduledDateTime.toIso8601String(),
-      'takenDateTime': takenDateTime?.toIso8601String(),};
+      'takenDateTime': takenDateTime?.toIso8601String(),
+      'quantity': quantity,
+    };
   }
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
@@ -24,6 +28,7 @@ class MedicationIntake {
       takenDateTime: map['takenDateTime'] == null
           ? null
           : DateTime.parse(map['takenDateTime'] as String),
+      quantity: map['quantity'] as double,
     );
   }
 
@@ -32,6 +37,7 @@ class MedicationIntake {
       id: id,
       scheduledDateTime: scheduledDateTime,
       takenDateTime: takenDateTime,
+      quantity: quantity,
     );
   }
 

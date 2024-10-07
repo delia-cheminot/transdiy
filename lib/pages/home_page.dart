@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'favorites_page.dart';
+import 'package:transdiy/pages/intakes/intakes_page.dart';
 import 'generator/generator_page.dart';
 import 'supplies/new_item_dialog.dart';
 import 'supplies/pharmacy_page.dart';
@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return SafeArea(child: GeneratorPage());
       case 1:
-        return SafeArea(child: FavoritesPage());
+        return SafeArea(child: IntakesPage());
       case 2:
         return SafeArea(child: PharmacyPage());
       default:
