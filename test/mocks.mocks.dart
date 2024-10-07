@@ -9,9 +9,9 @@ import 'dart:ui' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:transdiy/medication_intake/medication_intake.dart' as _i7;
 import 'package:transdiy/medication_intake/medication_intake_state.dart' as _i6;
-import 'package:transdiy/supply_item/supplies_state.dart' as _i3;
 import 'package:transdiy/supply_item/supply_item.dart' as _i2;
 import 'package:transdiy/supply_item/supply_item_manager.dart' as _i8;
+import 'package:transdiy/supply_item/supply_item_state.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -36,11 +36,11 @@ class _FakeSupplyItem_0 extends _i1.SmartFake implements _i2.SupplyItem {
         );
 }
 
-/// A class which mocks [SuppliesState].
+/// A class which mocks [SupplyItemState].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSuppliesState extends _i1.Mock implements _i3.SuppliesState {
-  MockSuppliesState() {
+class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemState {
+  MockSupplyItemState() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -94,17 +94,17 @@ class MockSuppliesState extends _i1.Mock implements _i3.SuppliesState {
 
   @override
   _i4.Future<void> addItem(
-    double? volume,
+    double? totalAmount,
     String? name,
-    double? concentration,
+    double? dosagePerUnit,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addItem,
           [
-            volume,
+            totalAmount,
             name,
-            concentration,
+            dosagePerUnit,
           ],
         ),
         returnValue: _i4.Future<void>.value(),
@@ -219,14 +219,14 @@ class MockMedicationIntakeState extends _i1.Mock
   @override
   _i4.Future<void> addIntake(
     DateTime? scheduledDateTime,
-    double? quantity,
+    double? dose,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addIntake,
           [
             scheduledDateTime,
-            quantity,
+            dose,
           ],
         ),
         returnValue: _i4.Future<void>.value(),
@@ -293,9 +293,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
   _i4.Future<_i2.SupplyItem> setFields(
     _i2.SupplyItem? item, {
     String? newName,
-    double? newVolume,
-    double? newUsedVolume,
-    double? newConcentration,
+    double? newTotalAmount,
+    double? newUsedAmount,
+    double? newDosagePerUnit,
     int? newQuantity,
   }) =>
       (super.noSuchMethod(
@@ -304,9 +304,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
           [item],
           {
             #newName: newName,
-            #newVolume: newVolume,
-            #newUsedVolume: newUsedVolume,
-            #newConcentration: newConcentration,
+            #newTotalAmount: newTotalAmount,
+            #newUsedAmount: newUsedAmount,
+            #newDosagePerUnit: newDosagePerUnit,
             #newQuantity: newQuantity,
           },
         ),
@@ -317,9 +317,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
             [item],
             {
               #newName: newName,
-              #newVolume: newVolume,
-              #newUsedVolume: newUsedVolume,
-              #newConcentration: newConcentration,
+              #newTotalAmount: newTotalAmount,
+              #newUsedAmount: newUsedAmount,
+              #newDosagePerUnit: newDosagePerUnit,
               #newQuantity: newQuantity,
             },
           ),
@@ -327,16 +327,16 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
       ) as _i4.Future<_i2.SupplyItem>);
 
   @override
-  _i4.Future<void> useVolume(
+  _i4.Future<void> useAmount(
     _i2.SupplyItem? item,
-    double? volumeToUse,
+    double? amountToUse,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #useVolume,
+          #useAmount,
           [
             item,
-            volumeToUse,
+            amountToUse,
           ],
         ),
         returnValue: _i4.Future<void>.value(),

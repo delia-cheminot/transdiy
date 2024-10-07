@@ -21,21 +21,21 @@ class MedicationIntakeManager {
       throw ArgumentError('Medication already taken');
     }
 
-    double volumeToUse = intake.quantity / supplyItem.concentration;
+    double amountToUse = intake.dose / supplyItem.dosagePerUnit;
 
-    if (supplyItem.usedVolume + volumeToUse > supplyItem.volume) {
-      // Uses only possible volume and creates a new intake with the remaining quantity
-      double remainingQuantity = (supplyItem.volume - supplyItem.usedVolume) *
-          supplyItem.concentration; // remaining quantity in mg in the supply
-      double quantityToAdd = intake.quantity - remainingQuantity;
-      intake.quantity = remainingQuantity;
+    if (supplyItem.usedAmount + amountToUse > supplyItem.totalAmount) {
+      // Uses only possible amount and creates a new intake with the remaining dose
+      double remainingDose = (supplyItem.totalAmount - supplyItem.usedAmount) *
+          supplyItem.dosagePerUnit; // remaining dose in mg in the supply
+      double doseToAdd = intake.dose - remainingDose;
+      intake.dose = remainingDose;
       await _medicationIntakeState.addIntake(
-          intake.scheduledDateTime, quantityToAdd);
-      volumeToUse = supplyItem.volume - supplyItem.usedVolume;
+          intake.scheduledDateTime, doseToAdd);
+      amountToUse = supplyItem.totalAmount - supplyItem.usedAmount;
     }
 
-    // use volume
-    supplyItemManager.useVolume(supplyItem, volumeToUse);
+    // use amount
+    supplyItemManager.useAmount(supplyItem, amountToUse);
     intake.takenDateTime = takenDate ?? DateTime.now();
     await _medicationIntakeState.updateIntake(intake);
   }

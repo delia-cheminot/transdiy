@@ -32,9 +32,9 @@ class AppDatabase {
     await db.execute('''
     CREATE TABLE supply_items(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      volume REAL NOT NULL,
-      usedVolume REAL NOT NULL,
-      concentration REAL NOT NULL,
+      totalAmount REAL NOT NULL,
+      usedAmount REAL NOT NULL,
+      dosagePerUnit REAL NOT NULL,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL
     )
@@ -45,7 +45,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
-      quantity REAL NOT NULL
+      dose REAL NOT NULL
     )
     ''');
   }

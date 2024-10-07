@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:transdiy/medication_intake/medication_intake.dart';
 import 'package:transdiy/medication_intake/medication_intake_manager.dart';
 import 'package:transdiy/medication_intake/medication_intake_state.dart';
-import 'package:transdiy/supply_item/supplies_state.dart';
+import 'package:transdiy/supply_item/supply_item_state.dart';
 import 'package:transdiy/supply_item/supply_item_manager.dart';
 
 class IntakeDialog extends StatefulWidget {
@@ -25,15 +25,15 @@ class _IntakeDialogState extends State<IntakeDialog> {
       body: Column(
         children: [
           Text(widget.intake.scheduledDateTime.toString()),
-          Text(widget.intake.quantity.toString()),
+          Text(widget.intake.dose.toString()),
           // button to take medication
           ElevatedButton(
             onPressed: () {
               MedicationIntakeManager(context.read<MedicationIntakeState>())
                   .takeMedication(
                       widget.intake,
-                      context.read<SuppliesState>().items[0],
-                      SupplyItemManager(context.read<SuppliesState>()));
+                      context.read<SupplyItemState>().items[0],
+                      SupplyItemManager(context.read<SupplyItemState>()));
               Navigator.of(context).pop();
             },
             child: Text('Prendre'),

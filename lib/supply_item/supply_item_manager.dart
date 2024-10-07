@@ -1,28 +1,28 @@
-import 'supplies_state.dart';
 import 'supply_item.dart';
+import 'supply_item_state.dart';
 
 class SupplyItemManager {
-  final SuppliesState _suppliesState;
+  final SupplyItemState _supplyItemState;
 
-  SupplyItemManager(this._suppliesState);
+  SupplyItemManager(this._supplyItemState);
 
-  static SupplyItemManager create(SuppliesState suppliesState) {
-    return SupplyItemManager(suppliesState);
+  static SupplyItemManager create(SupplyItemState supplyItemState) {
+    return SupplyItemManager(supplyItemState);
   }
 
   Future<SupplyItem> setFields(
     SupplyItem item, {
     String? newName,
-    double? newVolume,
-    double? newUsedVolume,
-    double? newConcentration,
+    double? newTotalAmount,
+    double? newUsedAmount,
+    double? newDosagePerUnit,
     int? newQuantity,
   }) async {
     SupplyItem newItem = item.copy();
 
-    newItem.volume = newVolume ?? item.volume;
-    newItem.usedVolume = newUsedVolume ?? item.usedVolume;
-    newItem.concentration = newConcentration ?? item.concentration;
+    newItem.totalAmount = newTotalAmount ?? item.totalAmount;
+    newItem.usedAmount = newUsedAmount ?? item.usedAmount;
+    newItem.dosagePerUnit = newDosagePerUnit ?? item.dosagePerUnit;
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
 
@@ -30,19 +30,19 @@ class SupplyItemManager {
       throw ArgumentError('Invalid item');
     }
 
-    await _suppliesState.updateItem(newItem);
+    await _supplyItemState.updateItem(newItem);
     return newItem;
   }
 
-  /// Uses a portion of the volume of the [SupplyItem] and updates the database.
-  Future<void> useVolume(SupplyItem item, double volumeToUse) async {
-    if (volumeToUse == 0) {
+  /// Uses a portion of the amount of the [SupplyItem] and updates the database.
+  Future<void> useAmount(SupplyItem item, double amountToUse) async {
+    if (amountToUse == 0) {
       return;
     }
-    if (item.usedVolume + volumeToUse > item.volume) {
-      throw ArgumentError('Volume exceeded');
+    if (item.usedAmount + amountToUse > item.totalAmount) {
+      throw ArgumentError('Item capacity exceeded');
     }
-    item.usedVolume += volumeToUse;
-    await _suppliesState.updateItem(item);
+    item.usedAmount += amountToUse;
+    await _supplyItemState.updateItem(item);
   }
 }

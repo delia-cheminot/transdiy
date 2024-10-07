@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:transdiy/supply_item/supply_item.dart';
 import 'package:transdiy/supply_item/supply_item_repository.dart';
 
-class SuppliesState extends ChangeNotifier {
+class SupplyItemState extends ChangeNotifier {
   List<SupplyItem> _items = [];
   bool _isLoading = true;
 
   List<SupplyItem> get items => _items;
   bool get isLoading => _isLoading;
 
-  SuppliesState() {
+  SupplyItemState() {
     _init();
   }
 
@@ -34,9 +34,9 @@ class SuppliesState extends ChangeNotifier {
     fetchItems();
   }
 
-  Future<void> addItem(double volume, String name, double concentration) async {
+  Future<void> addItem(double totalAmount, String name, double dosagePerUnit) async {
     await SupplyItemRepository.insertItem(
-        SupplyItem(volume: volume, concentration: concentration, name: name));
+        SupplyItem(totalAmount: totalAmount, dosagePerUnit: dosagePerUnit, name: name));
     fetchItems();
   }
 

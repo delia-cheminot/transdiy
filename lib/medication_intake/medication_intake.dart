@@ -2,13 +2,13 @@ class MedicationIntake {
   final int? id;
   DateTime scheduledDateTime;
   DateTime? takenDateTime;
-  double quantity;
+  double dose;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
     this.id,
     required this.scheduledDateTime,
-    required this.quantity,
+    required this.dose,
     this.takenDateTime,
   });
 
@@ -17,7 +17,7 @@ class MedicationIntake {
       'id': id,
       'scheduledDateTime': scheduledDateTime.toIso8601String(),
       'takenDateTime': takenDateTime?.toIso8601String(),
-      'quantity': quantity,
+      'dose': dose,
     };
   }
 
@@ -28,7 +28,7 @@ class MedicationIntake {
       takenDateTime: map['takenDateTime'] == null
           ? null
           : DateTime.parse(map['takenDateTime'] as String),
-      quantity: map['quantity'] as double,
+      dose: map['dose'] as double,
     );
   }
 
@@ -37,7 +37,7 @@ class MedicationIntake {
       id: id,
       scheduledDateTime: scheduledDateTime,
       takenDateTime: takenDateTime,
-      quantity: quantity,
+      dose: dose,
     );
   }
 

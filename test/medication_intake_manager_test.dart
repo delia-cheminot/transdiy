@@ -21,25 +21,24 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        quantity: 1.0,
+        dose: 1.0,
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        volume: 10.0,
-        usedVolume: 2.0,
-        quantity: 1,
-        concentration: 5.0,
+        totalAmount: 10.0,
+        usedAmount: 2.0,
+        dosagePerUnit: 5.0,
       );
 
-      final volumeToUse = intake.quantity / supplyItem.concentration;
+      final amountToUse = intake.dose / supplyItem.dosagePerUnit;
 
       await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
 
       expect(intake.isTaken, true);
       verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
-      verify(mockSupplyItemManager.useVolume(supplyItem, volumeToUse)).called(1);
+      verify(mockSupplyItemManager.useAmount(supplyItem, amountToUse)).called(1);
     });
 
     test('should throw ArgumentError when taking medication already taken', () async {
@@ -47,16 +46,15 @@ void main() {
         id: 1,
         scheduledDateTime: DateTime.now(),
         takenDateTime: DateTime.now(),
-        quantity: 1.0,
+        dose: 1.0,
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        volume: 10.0,
-        usedVolume: 2.0,
-        quantity: 1,
-        concentration: 5.0,
+        totalAmount: 10.0,
+        usedAmount: 2.0,
+        dosagePerUnit: 5.0,
       );
 
       expect(
@@ -69,16 +67,15 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        quantity: 1.0,
+        dose: 1.0,
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        volume: 10.0,
-        usedVolume: 2.0,
-        quantity: 1,
-        concentration: 5.0,
+        totalAmount: 10.0,
+        usedAmount: 2.0,
+        dosagePerUnit: 5.0,
       );
 
       final customDate = DateTime.now().add(Duration(days: 1));
@@ -94,34 +91,33 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        quantity: 15.0,
+        dose: 15.0,
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        volume: 10.0,
-        usedVolume: 9.0,
-        quantity: 1,
-        concentration: 1.0,
+        totalAmount: 10.0,
+        usedAmount: 9.0,
+        dosagePerUnit: 1.0,
       );
 
-      double remainingQuantity = 1.0; // 1mg remaining in the supply
-      double quantityToAdd = 14.0; // 14mg to be added in a new intake
+      double remainingDose = 1.0; // 1mg remaining in the supply
+      double doseToAdd = 14.0; // 14mg to be added in a new intake
 
       when(mockMedicationIntakeState.addIntake(intake.scheduledDateTime, any))
           .thenAnswer((_) async {});
 
       await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
 
-      expect(intake.quantity, remainingQuantity);
+      expect(intake.dose, remainingDose);
 
       verify(mockMedicationIntakeState.addIntake(
         intake.scheduledDateTime,
-        quantityToAdd,
+        doseToAdd,
       )).called(1);
 
-      verify(mockSupplyItemManager.useVolume(supplyItem, supplyItem.volume - supplyItem.usedVolume)).called(1);
+      verify(mockSupplyItemManager.useAmount(supplyItem, supplyItem.totalAmount - supplyItem.usedAmount)).called(1);
       expect(intake.isTaken, true);
     });
   });

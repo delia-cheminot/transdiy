@@ -6,74 +6,74 @@ import 'mocks.mocks.dart';
 
 void main() {
   late SupplyItemManager manager;
-  late MockSuppliesState mockSuppliesState;
+  late MockSupplyItemState mockSupplyItemState;
 
   setUp(() {
-    mockSuppliesState = MockSuppliesState();
-    manager = SupplyItemManager(mockSuppliesState);
+    mockSupplyItemState = MockSupplyItemState();
+    manager = SupplyItemManager(mockSupplyItemState);
   });
 
   group('SupplyItemManager', () {
-    test('should update volume correctly', () async {
-      final item = SupplyItem(name: 'h', id: 1, volume: 10, usedVolume: 2, concentration: 1);
+    test('should update totalAmount correctly', () async {
+      final item = SupplyItem(name: 'h', id: 1, totalAmount: 10, usedAmount: 2, dosagePerUnit: 1);
 
       final newItem = await manager.setFields(
         item,
-        newVolume: 20,
-        newUsedVolume: 5,
+        newTotalAmount: 20,
+        newUsedAmount: 5,
       );
 
-      expect(newItem.volume, 20);
-      expect(newItem.usedVolume, 5);
-      verify(mockSuppliesState.updateItem(newItem)).called(1);
+      expect(newItem.totalAmount, 20);
+      expect(newItem.usedAmount, 5);
+      verify(mockSupplyItemState.updateItem(newItem)).called(1);
     });
 
     test(
         'should throw ArgumentError when invalid fields and item should remain unchanged',
         () {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 2, concentration: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 2, dosagePerUnit: 1);
 
       expect(
         () => manager.setFields(
           item,
-          newUsedVolume: 15,
+          newUsedAmount: 15,
         ),
         throwsArgumentError,
       );
 
-      expect(item.usedVolume, 2);
+      expect(item.usedAmount, 2);
     });
 
-    test('should use volume correctly', () async {
-      final item = SupplyItem(name: 'h', volume: 20, usedVolume: 5, concentration: 1);
+    test('should use amount correctly', () async {
+      final item = SupplyItem(name: 'h', totalAmount: 20, usedAmount: 5, dosagePerUnit: 1);
 
-      await manager.useVolume(item, 5);
+      await manager.useAmount(item, 5);
 
-      expect(item.usedVolume, 10);
-      verify(mockSuppliesState.updateItem(item)).called(1);
+      expect(item.usedAmount, 10);
+      verify(mockSupplyItemState.updateItem(item)).called(1);
     });
 
-    test('should throw ArgumentError when using more volume than available',
+    test('should throw ArgumentError when using more amount than available',
         () {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5, concentration: 1);
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosagePerUnit: 1);
 
       expect(
-        () => manager.useVolume(item, 6),
+        () => manager.useAmount(item, 6),
         throwsArgumentError,
       );
 
-      expect(item.volume, 10);
-      expect(item.usedVolume, 5);
-      verifyNever(mockSuppliesState.updateItem(any));
+      expect(item.totalAmount, 10);
+      expect(item.usedAmount, 5);
+      verifyNever(mockSupplyItemState.updateItem(any));
     });
 
-    test('use zero volume', () async {
-      final item = SupplyItem(name: 'h', volume: 10, usedVolume: 5, concentration: 1);
+    test('use zero amount', () async {
+      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosagePerUnit: 1);
 
-      await manager.useVolume(item, 0);
+      await manager.useAmount(item, 0);
 
-      expect(item.usedVolume, 5);
-      verifyNever(mockSuppliesState.updateItem(item));
+      expect(item.usedAmount, 5);
+      verifyNever(mockSupplyItemState.updateItem(item));
     });
   });
 }

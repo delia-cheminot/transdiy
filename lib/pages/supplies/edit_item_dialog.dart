@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/services/dialog_service.dart';
-import 'package:transdiy/supply_item/supplies_state.dart';
 import 'package:transdiy/supply_item/supply_item.dart';
 import 'package:transdiy/supply_item/supply_item_manager.dart';
+import 'package:transdiy/supply_item/supply_item_state.dart';
 
 class EditItemDialog extends StatefulWidget {
   final SupplyItem item;
@@ -16,37 +16,37 @@ class EditItemDialog extends StatefulWidget {
 }
 
 class _EditItemDialogState extends State<EditItemDialog> {
-  late TextEditingController _volumeController;
-  late TextEditingController _usedVolumeController;
-  late TextEditingController _concentrationController;
+  late TextEditingController _totalAmountController;
+  late TextEditingController _usedAmountController;
+  late TextEditingController _dosagePerUnitController;
   late TextEditingController _nameController;
 
   bool _isFormValid = false;
 
   Map<String, String?> _fieldErrors = {
     'name': null,
-    'volume': null,
-    'usedVolume': null,
-    'concentration': null,
+    'totalAmount': null,
+    'usedAmount': null,
+    'dosagePerUnit': null,
   };
 
   @override
   void initState() {
     super.initState();
-    _volumeController =
-        TextEditingController(text: widget.item.volume.toString());
-    _usedVolumeController =
-        TextEditingController(text: widget.item.usedVolume.toString());
-    _concentrationController =
-        TextEditingController(text: widget.item.concentration.toString());
+    _totalAmountController =
+        TextEditingController(text: widget.item.totalAmount.toString());
+    _usedAmountController =
+        TextEditingController(text: widget.item.usedAmount.toString());
+    _dosagePerUnitController =
+        TextEditingController(text: widget.item.dosagePerUnit.toString());
     _nameController = TextEditingController(text: widget.item.name);
   }
 
   @override
   void dispose() {
-    _volumeController.dispose();
-    _usedVolumeController.dispose();
-    _concentrationController.dispose();
+    _totalAmountController.dispose();
+    _usedAmountController.dispose();
+    _dosagePerUnitController.dispose();
     _nameController.dispose();
     super.dispose();
   }
@@ -54,14 +54,14 @@ class _EditItemDialogState extends State<EditItemDialog> {
   void _validateInputs() {
     setState(() {
       _fieldErrors['name'] = SupplyItem.validateName(_nameController.text);
-      _fieldErrors['volume'] =
-          SupplyItem.validateVolume(_volumeController.text);
-      _fieldErrors['usedVolume'] = SupplyItem.validateUsedVolume(
-        _usedVolumeController.text,
-        _volumeController.text,
+      _fieldErrors['totalAmount'] =
+          SupplyItem.validateTotalAmount(_totalAmountController.text);
+      _fieldErrors['usedAmount'] = SupplyItem.validateUsedAmount(
+        _usedAmountController.text,
+        _totalAmountController.text,
       );
-      _fieldErrors['concentration'] =
-          SupplyItem.validateConcentration(_concentrationController.text);
+      _fieldErrors['dosagePerUnit'] =
+          SupplyItem.validateDosagePerUnit(_dosagePerUnitController.text);
 
       _isFormValid = _fieldErrors.values.every((error) => error == null);
     });
@@ -74,13 +74,13 @@ class _EditItemDialogState extends State<EditItemDialog> {
     }
 
     if (!_isFormValid) return;
-    final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-    SupplyItemManager(suppliesState).setFields(
+    final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+    SupplyItemManager(supplyItemState).setFields(
       widget.item,
       newName: _nameController.text,
-      newVolume: parseDouble(_volumeController.text)!,
-      newUsedVolume: parseDouble(_usedVolumeController.text)!,
-      newConcentration: parseDouble(_concentrationController.text)!,
+      newTotalAmount: parseDouble(_totalAmountController.text)!,
+      newUsedAmount: parseDouble(_usedAmountController.text)!,
+      newDosagePerUnit: parseDouble(_dosagePerUnitController.text)!,
     );
     Navigator.of(context).pop();
   }
@@ -90,8 +90,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
 
     if (confirmed == true) {
       if (!mounted) return;
-      final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-      suppliesState.deleteItem(widget.item);
+      final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+      supplyItemState.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
   }
@@ -142,15 +142,18 @@ class _EditItemDialogState extends State<EditItemDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: TextField(
-                  controller: _volumeController,
+                  controller: _totalAmountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                   ],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Volume',
+                    labelText: 'Quantité totale',
                     suffixText: 'ml',
+                    errorText: _fieldErrors['totalAmount'],
+                    suffixIcon:
+                        _fieldErrors['totalAmount'] != null ? Icon(Icons.error) : null,
                   ),
                   onChanged: (value) => _validateInputs(),
                 ),
@@ -158,17 +161,17 @@ class _EditItemDialogState extends State<EditItemDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: TextField(
-                  controller: _usedVolumeController,
+                  controller: _usedAmountController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                   ],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Volume utilisé',
+                    labelText: 'Quantité utilisée',
                     suffixText: 'ml',
-                    errorText: _fieldErrors['usedVolume'],
-                    suffixIcon: _fieldErrors['usedVolume'] != null
+                    errorText: _fieldErrors['usedAmount'],
+                    suffixIcon: _fieldErrors['usedAmount'] != null
                         ? Icon(Icons.error)
                         : null,
                   ),
@@ -178,17 +181,17 @@ class _EditItemDialogState extends State<EditItemDialog> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                 child: TextField(
-                  controller: _concentrationController,
+                  controller: _dosagePerUnitController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
                   ],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Concentration',
+                    labelText: 'Dosage par unité',
                     suffixText: 'mg/ml',
-                    errorText: _fieldErrors['concentration'],
-                    suffixIcon: _fieldErrors['concentration'] != null
+                    errorText: _fieldErrors['dosagePerUnit'],
+                    suffixIcon: _fieldErrors['dosagePerUnit'] != null
                         ? Icon(Icons.error)
                         : null,
                   ),

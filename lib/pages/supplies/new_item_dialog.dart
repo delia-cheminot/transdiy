@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/supply_item/supplies_state.dart';
+import 'package:transdiy/supply_item/supply_item_state.dart';
 
 class NewItemDialog extends StatefulWidget {
   @override
@@ -9,23 +9,23 @@ class NewItemDialog extends StatefulWidget {
 }
 
 class _NewItemDialogState extends State<NewItemDialog> {
-  late TextEditingController _volumeController;
+  late TextEditingController _totalAmountController;
   late TextEditingController _nameController;
-  late TextEditingController _concentrationController;
+  late TextEditingController _dosagePerUnitController;
 
   @override
   void initState() {
     super.initState();
-    _volumeController = TextEditingController();
+    _totalAmountController = TextEditingController();
     _nameController = TextEditingController();
-    _concentrationController = TextEditingController();
+    _dosagePerUnitController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _volumeController.dispose();
+    _totalAmountController.dispose();
     _nameController.dispose();
-    _concentrationController.dispose();
+    _dosagePerUnitController.dispose();
     super.dispose();
   }
 
@@ -35,11 +35,11 @@ class _NewItemDialogState extends State<NewItemDialog> {
   }
 
   void _addItem() async {
-    final volume = double.parse(_volumeController.text.replaceAll(',', '.'));
-    final concentration = double.parse(_concentrationController.text.replaceAll(',', '.'));
+    final totalAmount = double.parse(_totalAmountController.text.replaceAll(',', '.'));
+    final dosagePerUnit = double.parse(_dosagePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
-    final suppliesState = Provider.of<SuppliesState>(context, listen: false);
-    suppliesState.addItem(volume, name, concentration);
+    final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+    supplyItemState.addItem(totalAmount, name, dosagePerUnit);
     Navigator.pop(context);
   }
 
@@ -49,12 +49,12 @@ class _NewItemDialogState extends State<NewItemDialog> {
       return false;
     }
 
-    if (!_isVolumeValid()) {
+    if (!_isTotalAmountValid()) {
       setState(() {});
       return false;
     }
 
-    if (!_isConcentrationValid()) {
+    if (!_isDosagePerUnitValid()) {
       setState(() {});
       return false;
     }
@@ -63,16 +63,16 @@ class _NewItemDialogState extends State<NewItemDialog> {
     return true;
   }
 
-  bool _isVolumeValid() {
-    return _parseDouble(_volumeController.text) != null;
+  bool _isTotalAmountValid() {
+    return _parseDouble(_totalAmountController.text) != null;
   }
 
   bool _isNameValid() {
     return _nameController.text.isNotEmpty;
   }
 
-  bool _isConcentrationValid() {
-    return _parseDouble(_concentrationController.text) != null;
+  bool _isDosagePerUnitValid() {
+    return _parseDouble(_dosagePerUnitController.text) != null;
   }
 
   @override
@@ -119,7 +119,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: TextField(
-                controller: _volumeController,
+                controller: _totalAmountController,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
@@ -135,7 +135,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: TextField(
-                controller: _concentrationController,
+                controller: _dosagePerUnitController,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),

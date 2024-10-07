@@ -1,19 +1,19 @@
 class SupplyItem {
   final int? id;
   String name;
-  double volume;
-  double usedVolume;
-  double concentration;
+  double totalAmount;
+  double usedAmount;
+  double dosagePerUnit;
   int quantity;
-  bool get isUsed => usedVolume > 0;
+  bool get isUsed => usedAmount > 0;
   bool get isInStock => quantity > 0;
 
   SupplyItem({
     this.id,
     required this.name,
-    required this.volume,
-    required this.concentration,
-    this.usedVolume = 0,
+    required this.totalAmount,
+    required this.dosagePerUnit,
+    this.usedAmount = 0,
     this.quantity = 1,
   });
 
@@ -21,9 +21,9 @@ class SupplyItem {
     return {
       'id': id,
       'name': name,
-      'volume': volume,
-      'usedVolume': usedVolume,
-      'concentration': concentration,
+      'totalAmount': totalAmount,
+      'usedAmount': usedAmount,
+      'dosagePerUnit': dosagePerUnit,
       'quantity': quantity,
     };
   }
@@ -32,9 +32,9 @@ class SupplyItem {
     return SupplyItem(
       id: map['id'] as int?,
       name: map['name'] as String,
-      volume: map['volume'] as double,
-      usedVolume: map['usedVolume'] as double,
-      concentration: map['concentration'] as double,
+      totalAmount: map['totalAmount'] as double,
+      usedAmount: map['usedAmount'] as double,
+      dosagePerUnit: map['dosagePerUnit'] as double,
       quantity: map['quantity'] as int,
     );
   }
@@ -43,9 +43,9 @@ class SupplyItem {
     return SupplyItem(
       id: id,
       name: name,
-      volume: volume,
-      usedVolume: usedVolume,
-      concentration: concentration,
+      totalAmount: totalAmount,
+      usedAmount: usedAmount,
+      dosagePerUnit: dosagePerUnit,
       quantity: quantity,
     );
   }
@@ -56,14 +56,14 @@ class SupplyItem {
   }
 
   bool isValid() {
-    return volume > 0 &&
-        usedVolume >= 0 &&
-        usedVolume <= volume &&
+    return totalAmount > 0 &&
+        usedAmount >= 0 &&
+        usedAmount <= totalAmount &&
         name != '' &&
-        concentration > 0;
+        dosagePerUnit > 0;
   }
 
-  static String? validateVolume(String value) {
+  static String? validateTotalAmount(String value) {
     if (_parseDouble(value) == null) {
       return 'Champ obligatoire';
     }
@@ -77,23 +77,23 @@ class SupplyItem {
     return null;
   }
 
-  static String? validateUsedVolume(String value, String volume) {
+  static String? validateUsedAmount(String value, String totalAmount) {
     if (_parseDouble(value) == null) {
       return 'Champ obligatoire';
     }
-    if (_parseDouble(volume) != null &&
-        _parseDouble(value)! > _parseDouble(volume)!) {
-      return 'Le volume utilisé ne peut pas dépasser la contenance';
+    if (_parseDouble(totalAmount) != null &&
+        _parseDouble(value)! > _parseDouble(totalAmount)!) {
+      return 'Ne peut pas dépasser la contenance totale';
     }
     return null;
   }
 
-  static String? validateConcentration(String value) {
+  static String? validateDosagePerUnit(String value) {
     if (_parseDouble(value) == null) {
       return 'Champ obligatoire';
     }
     if (_parseDouble(value)! <= 0) {
-      return 'La concentration doit être supérieure à 0';
+      return 'Doit être supérieur à 0';
     }
     return null;
   }
