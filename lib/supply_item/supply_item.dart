@@ -102,4 +102,17 @@ class SupplyItem {
     final sanitizedText = text.replaceAll(',', '.');
     return double.tryParse(sanitizedText);
   }
+
+  static double roundAmount(double amount) {
+    // Amount is rounded to two decimal places
+    return double.parse(amount.toStringAsFixed(2));
+  }
+
+  bool canUseAmount(double amountToUse) {
+    return roundAmount(usedAmount + amountToUse) <= totalAmount;
+  }
+
+  double getRemainingAmount() {
+    return roundAmount(totalAmount - usedAmount);
+  }
 }

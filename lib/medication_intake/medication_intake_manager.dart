@@ -23,18 +23,19 @@ class MedicationIntakeManager {
 
     double amountToUse = intake.dose / supplyItem.dosePerUnit;
 
-    if (supplyItem.usedAmount + amountToUse > supplyItem.totalAmount) {
+    if (!supplyItem.canUseAmount(amountToUse)) {
       // Uses only possible amount and creates a new intake with the remaining dose
-      double remainingDose = (supplyItem.totalAmount - supplyItem.usedAmount) *
-          supplyItem.dosePerUnit; // remaining dose in mg in the supply
-      double doseToAdd = intake.dose - remainingDose;
+      double remainingDose = MedicationIntake.roundDose(
+          supplyItem.getRemainingAmount() * supplyItem.dosePerUnit);
+      double doseToAdd =
+          MedicationIntake.roundDose(intake.dose - remainingDose);
+      // Rounded to avoid floating point errors
       intake.dose = remainingDose;
       await _medicationIntakeState.addIntake(
           intake.scheduledDateTime, doseToAdd);
-      amountToUse = supplyItem.totalAmount - supplyItem.usedAmount;
+      amountToUse = supplyItem.getRemainingAmount();
     }
 
-    // use amount
     supplyItemManager.useAmount(supplyItem, amountToUse);
     intake.takenDateTime = takenDate ?? DateTime.now();
     await _medicationIntakeState.updateIntake(intake);

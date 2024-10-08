@@ -26,7 +26,7 @@ class SupplyItemManager {
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
 
-    if (!newItem.isValid()) { 
+    if (!newItem.isValid()) {
       throw ArgumentError('Invalid item');
     }
 
@@ -39,10 +39,11 @@ class SupplyItemManager {
     if (amountToUse == 0) {
       return;
     }
-    if (item.usedAmount + amountToUse > item.totalAmount) {
+    if (!item.canUseAmount(amountToUse)) {
       throw ArgumentError('Item capacity exceeded');
     }
-    item.usedAmount += amountToUse;
+    item.usedAmount = SupplyItem.roundAmount(item.usedAmount + amountToUse);
+    // Rounded to avoid floating point errors
     await _supplyItemState.updateItem(item);
   }
 }

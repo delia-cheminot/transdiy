@@ -45,4 +45,9 @@ class MedicationIntake {
   String toString() {
     return 'MedicationIntake{id: $id dateTime: $scheduledDateTime} taken: $isTaken';
   }
+
+  static double roundDose(double dose) {
+    // Rounds the dose to the closest integer.
+    return dose.roundToDouble();
+  }
 }
