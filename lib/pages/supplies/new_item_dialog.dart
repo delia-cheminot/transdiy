@@ -138,7 +138,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
                 controller: _dosePerUnitController,
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 ],
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

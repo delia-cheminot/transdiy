@@ -12,7 +12,7 @@ class PharmacyItem extends StatelessWidget {
     return ListTile(
       title: Text(item.name),
       subtitle: Text(
-          'Contenance: ${item.totalAmount.toString()} (${(item.totalAmount - item.usedAmount).toString()} restant)'),
+          'Contenance: ${item.totalAmount.toString()} (${(item.getRemainingAmount()).toString()} restant)'),
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute<void>(
           fullscreenDialog: true,

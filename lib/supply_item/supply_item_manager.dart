@@ -20,6 +20,13 @@ class SupplyItemManager {
   }) async {
     SupplyItem newItem = item.copy();
 
+    if (newTotalAmount != null) {
+      newTotalAmount = SupplyItem.roundAmount(newTotalAmount);
+    }
+    if (newUsedAmount != null) {
+      newUsedAmount = SupplyItem.roundAmount(newUsedAmount);
+    }
+
     newItem.totalAmount = newTotalAmount ?? item.totalAmount;
     newItem.usedAmount = newUsedAmount ?? item.usedAmount;
     newItem.dosePerUnit = newDosePerUnit ?? item.dosePerUnit;

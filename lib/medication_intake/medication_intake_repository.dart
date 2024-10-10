@@ -3,6 +3,8 @@ import '../services/app_database.dart';
 import 'medication_intake.dart';
 
 class MedicationIntakeRepository {
+  /// Inserts a new [MedicationIntake] into the database.
+  /// Returns the id of the newly inserted intake.
   static Future<int> insertIntake(MedicationIntake intake) async {
     final db = await AppDatabase.instance.database;
     return await db.insert(

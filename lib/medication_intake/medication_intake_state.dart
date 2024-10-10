@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/medication_intake/medication_intake.dart';
-import 'package:transdiy/medication_intake/medication_intake_repository.dart';
+import 'medication_intake.dart';
+import 'medication_intake_repository.dart';
 
 class MedicationIntakeState extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];

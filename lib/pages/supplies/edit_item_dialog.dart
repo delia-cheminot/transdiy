@@ -184,7 +184,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
                   controller: _dosePerUnitController,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ],
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),

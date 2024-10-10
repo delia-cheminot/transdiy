@@ -48,6 +48,15 @@ class AppDatabase {
       dose REAL NOT NULL
     )
     ''');
+
+    await db.execute('''
+    CREATE TABLE medication_schedules(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      dose REAL NOT NULL,
+      intervalDays INTEGER NOT NULL,
+    )
+    ''');
   }
 
   Future<void> close() async {
