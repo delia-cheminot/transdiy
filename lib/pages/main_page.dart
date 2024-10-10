@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/pages/intakes/intakes_page.dart';
 import 'home/home_page.dart';
+import 'home/profile_page.dart';
+import 'intakes/intakes_history_page.dart';
+import 'intakes/intakes_page.dart';
 import 'supplies/new_item_dialog.dart';
 import 'supplies/pharmacy_page.dart';
 
@@ -42,13 +44,13 @@ class _MainPageState extends State<MainPage> {
           label: 'Accueil',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.favorite),
-          icon: Icon(Icons.favorite_border_outlined),
-          label: 'Suivi',
+          selectedIcon: Icon(Icons.event_rounded),
+          icon: Icon(Icons.event_outlined),
+          label: 'Prises',
         ),
         NavigationDestination(
-          selectedIcon: Icon(Icons.favorite),
-          icon: Icon(Icons.favorite_border_outlined),
+          selectedIcon: Icon(Icons.medication),
+          icon: Icon(Icons.medication_outlined),
           label: 'Pharmacie',
         ),
       ],
@@ -64,14 +66,27 @@ class _MainPageState extends State<MainPage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.account_circle),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ProfilePage(),
+                ));
+              },
             )
           ],
         );
       case 1:
         return AppBar(
-          title: Text('Suivi'),
-          
+          title: Text('Prises'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.history),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => IntakesHistoryPage(),
+                ));
+              },
+            ),
+          ],
         );
       case 2:
         return AppBar(

@@ -1,6 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'pages/main_page.dart';
 
 class TransDiyApp extends StatelessWidget {
   const TransDiyApp({super.key});
@@ -35,7 +35,7 @@ class TransDiyApp extends StatelessWidget {
             colorScheme: darkColorScheme,
           ),
           themeMode: ThemeMode.system,
-          home: HomePage(),
+          home: MainPage(),
         );
       },
     );

@@ -7,8 +7,10 @@ import 'dart:async' as _i4;
 import 'dart:ui' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:transdiy/models/medication_intake/medication_intake.dart' as _i7;
-import 'package:transdiy/models/medication_intake/medication_intake_state.dart' as _i6;
+import 'package:transdiy/models/medication_intake/medication_intake.dart'
+    as _i7;
+import 'package:transdiy/models/medication_intake/medication_intake_state.dart'
+    as _i6;
 import 'package:transdiy/models/supply_item/supply_item.dart' as _i2;
 import 'package:transdiy/models/supply_item/supply_item_manager.dart' as _i8;
 import 'package:transdiy/models/supply_item/supply_item_state.dart' as _i3;
@@ -170,6 +172,18 @@ class MockMedicationIntakeState extends _i1.Mock
   @override
   List<_i7.MedicationIntake> get intakes => (super.noSuchMethod(
         Invocation.getter(#intakes),
+        returnValue: <_i7.MedicationIntake>[],
+      ) as List<_i7.MedicationIntake>);
+
+  @override
+  List<_i7.MedicationIntake> get takenIntakes => (super.noSuchMethod(
+        Invocation.getter(#takenIntakes),
+        returnValue: <_i7.MedicationIntake>[],
+      ) as List<_i7.MedicationIntake>);
+
+  @override
+  List<_i7.MedicationIntake> get notTakenIntakes => (super.noSuchMethod(
+        Invocation.getter(#notTakenIntakes),
         returnValue: <_i7.MedicationIntake>[],
       ) as List<_i7.MedicationIntake>);
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/services/dialog_service.dart';
 import 'package:transdiy/models/supply_item/supply_item.dart';
 import 'package:transdiy/models/supply_item/supply_item_manager.dart';
 import 'package:transdiy/models/supply_item/supply_item_state.dart';
+import 'package:transdiy/services/dialog_service.dart';
 
 class EditItemDialog extends StatefulWidget {
   final SupplyItem item;

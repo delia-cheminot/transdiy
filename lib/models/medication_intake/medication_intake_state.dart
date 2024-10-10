@@ -7,6 +7,10 @@ class MedicationIntakeState extends ChangeNotifier {
   bool _isLoading = true;
 
   List<MedicationIntake> get intakes => _intakes;
+  List<MedicationIntake> get takenIntakes =>
+      _intakes.where((intake) => intake.isTaken).toList();
+  List<MedicationIntake> get notTakenIntakes =>
+      _intakes.where((intake) => !intake.isTaken).toList();
   bool get isLoading => _isLoading;
 
   MedicationIntakeState() {

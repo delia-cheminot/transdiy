@@ -20,32 +20,26 @@ class IntakesPage extends StatelessWidget {
         Expanded(
           child: medicationIntakeState.isLoading
               ? Center(child: CircularProgressIndicator())
-              : medicationIntakeState.intakes.isEmpty
+              : medicationIntakeState.notTakenIntakes.isEmpty
                   ? Center(
                       child: Text('No intakes yet'),
                     )
                   : ListView.builder(
-                      itemCount: medicationIntakeState.intakes.length,
+                      itemCount: medicationIntakeState.notTakenIntakes.length,
                       itemBuilder: (context, index) {
                         MedicationIntake intake =
-                            medicationIntakeState.intakes[index];
+                            medicationIntakeState.notTakenIntakes[index];
                         return ListTile(
                           title: Text(intake.scheduledDateTime.toString()),
-                          subtitle:
-                              Text(intake.isTaken ? 'Prise' : 'Prévue'),
-                          trailing: intake.isTaken
-                              ? Text(intake.takenDateTime.toString())
-                              : null,
+                          subtitle: Text('Prévue'),
                           onTap: () {
-                            intake.isTaken
-                                ? medicationIntakeState.deleteIntake(intake)
-                                : Navigator.of(context).push(
-                                    MaterialPageRoute<void>(
-                                      fullscreenDialog: true,
-                                      builder: (context) =>
-                                          IntakeDialog(intake: intake),
-                                    ),
-                                  );
+                            Navigator.of(context).push(
+                              MaterialPageRoute<void>(
+                                //fullscreenDialog: true,
+                                builder: (context) =>
+                                    IntakeDialog(intake: intake),
+                              ),
+                            );
                           },
                         );
                       },
