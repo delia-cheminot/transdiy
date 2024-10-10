@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/supply_item/supply_item_state.dart';
+import 'package:transdiy/models/supply_item/supply_item_state.dart';
 
 class NewItemDialog extends StatefulWidget {
   @override

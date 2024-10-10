@@ -7,11 +7,11 @@ import 'dart:async' as _i4;
 import 'dart:ui' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:transdiy/medication_intake/medication_intake.dart' as _i7;
-import 'package:transdiy/medication_intake/medication_intake_state.dart' as _i6;
-import 'package:transdiy/supply_item/supply_item.dart' as _i2;
-import 'package:transdiy/supply_item/supply_item_manager.dart' as _i8;
-import 'package:transdiy/supply_item/supply_item_state.dart' as _i3;
+import 'package:transdiy/models/medication_intake/medication_intake.dart' as _i7;
+import 'package:transdiy/models/medication_intake/medication_intake_state.dart' as _i6;
+import 'package:transdiy/models/supply_item/supply_item.dart' as _i2;
+import 'package:transdiy/models/supply_item/supply_item_manager.dart' as _i8;
+import 'package:transdiy/models/supply_item/supply_item_state.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

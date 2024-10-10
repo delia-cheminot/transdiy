@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/supply_item/supply_item.dart';
-import 'package:transdiy/supply_item/supply_item_repository.dart';
+import 'package:transdiy/models/supply_item/supply_item.dart';
+import 'package:transdiy/models/supply_item/supply_item_repository.dart';
 
 class SupplyItemState extends ChangeNotifier {
   List<SupplyItem> _items = [];
