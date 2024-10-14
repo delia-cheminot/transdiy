@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/models/supply_item/supply_item.dart';
 import 'package:transdiy/models/supply_item/supply_item_manager.dart';
 import 'package:transdiy/models/supply_item/supply_item_state.dart';
 import 'package:transdiy/services/dialog_service.dart';
+import 'package:transdiy/widgets/form_text_field.dart';
 
 class EditItemDialog extends StatefulWidget {
   final SupplyItem item;
@@ -74,7 +74,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
     }
 
     if (!_isFormValid) return;
-    final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+    final supplyItemState =
+        Provider.of<SupplyItemState>(context, listen: false);
     SupplyItemManager(supplyItemState).setFields(
       widget.item,
       newName: _nameController.text,
@@ -90,7 +91,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
 
     if (confirmed == true) {
       if (!mounted) return;
-      final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+      final supplyItemState =
+          Provider.of<SupplyItemState>(context, listen: false);
       supplyItemState.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
@@ -124,79 +126,40 @@ class _EditItemDialogState extends State<EditItemDialog> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: TextField(
-                  controller: _nameController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Nom',
-                    errorText: _fieldErrors['name'],
-                    suffixIcon:
-                        _fieldErrors['name'] != null ? Icon(Icons.error) : null,
-                  ),
-                  onChanged: (value) => _validateInputs(),
-                ),
+              FormTextField(
+                controller: _nameController,
+                label: 'Nom',
+                validator: _validateInputs,
+                inputType: TextInputType.text,
+                isFirst: true,
+                errorText: _fieldErrors['name'],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: TextField(
-                  controller: _totalAmountController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Quantité totale',
-                    suffixText: 'ml',
-                    errorText: _fieldErrors['totalAmount'],
-                    suffixIcon:
-                        _fieldErrors['totalAmount'] != null ? Icon(Icons.error) : null,
-                  ),
-                  onChanged: (value) => _validateInputs(),
-                ),
+              FormTextField(
+                controller: _totalAmountController,
+                label: 'Quantité totale',
+                validator: _validateInputs,
+                inputType: TextInputType.number,
+                suffixText: 'ml',
+                errorText: _fieldErrors['totalAmount'],
+                regexFormatter: r'[0-9.,]',
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: TextField(
-                  controller: _usedAmountController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Quantité utilisée',
-                    suffixText: 'ml',
-                    errorText: _fieldErrors['usedAmount'],
-                    suffixIcon: _fieldErrors['usedAmount'] != null
-                        ? Icon(Icons.error)
-                        : null,
-                  ),
-                  onChanged: (value) => _validateInputs(),
-                ),
+              FormTextField(
+                controller: _usedAmountController,
+                label: 'Quantité utilisée',
+                validator: _validateInputs,
+                inputType: TextInputType.number,
+                suffixText: 'ml',
+                errorText: _fieldErrors['usedAmount'],
+                regexFormatter: r'[0-9.,]',
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: TextField(
-                  controller: _dosePerUnitController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Dosage par unité',
-                    suffixText: 'mg/ml',
-                    errorText: _fieldErrors['dosePerUnit'],
-                    suffixIcon: _fieldErrors['dosePerUnit'] != null
-                        ? Icon(Icons.error)
-                        : null,
-                  ),
-                  onChanged: (value) => _validateInputs(),
-                ),
+              FormTextField(
+                controller: _dosePerUnitController,
+                label: 'Dosage par unité',
+                validator: _validateInputs,
+                inputType: TextInputType.number,
+                suffixText: 'mg/ml',
+                errorText: _fieldErrors['dosePerUnit'],
+                regexFormatter: r'[0-9]',
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/models/supply_item/supply_item_state.dart';
+import 'package:transdiy/widgets/form_text_field.dart';
 
 class NewItemDialog extends StatefulWidget {
   @override
@@ -35,10 +35,13 @@ class _NewItemDialogState extends State<NewItemDialog> {
   }
 
   void _addItem() async {
-    final totalAmount = double.parse(_totalAmountController.text.replaceAll(',', '.'));
-    final dosePerUnit = double.parse(_dosePerUnitController.text.replaceAll(',', '.'));
+    final totalAmount =
+        double.parse(_totalAmountController.text.replaceAll(',', '.'));
+    final dosePerUnit =
+        double.parse(_dosePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
-    final supplyItemState = Provider.of<SupplyItemState>(context, listen: false);
+    final supplyItemState =
+        Provider.of<SupplyItemState>(context, listen: false);
     supplyItemState.addItem(totalAmount, name, dosePerUnit);
     Navigator.pop(context);
   }
@@ -104,49 +107,28 @@ class _NewItemDialogState extends State<NewItemDialog> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: TextField(
-                controller: _nameController,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Nom',
-                ),
-                onChanged: (value) => _validateInputs(),
-              ),
+            FormTextField(
+              controller: _nameController,
+              label: 'Nom',
+              validator: _validateInputs,
+              inputType: TextInputType.text,
+              isFirst: true,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: TextField(
-                controller: _totalAmountController,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Contenance',
-                  suffixText: 'ml',
-                ),
-                onChanged: (value) => _validateInputs(),
-              ),
+            FormTextField(
+              controller: _totalAmountController,
+              label: 'Contenance',
+              validator: _validateInputs,
+              inputType: TextInputType.number,
+              suffixText: 'ml',
+              regexFormatter: r'[0-9.,]',
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: TextField(
-                controller: _dosePerUnitController,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                ],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Concentration',
-                  suffixText: 'mg/ml',
-                ),
-                onChanged: (value) => _validateInputs(),
-              ),
+            FormTextField(
+              controller: _dosePerUnitController,
+              label: 'Concentration',
+              validator: _validateInputs,
+              inputType: TextInputType.number,
+              suffixText: 'mg/ml',
+              regexFormatter: r'[0-9]',
             ),
           ],
         ),

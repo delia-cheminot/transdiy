@@ -54,7 +54,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       dose REAL NOT NULL,
-      intervalDays INTEGER NOT NULL,
+      intervalDays INTEGER NOT NULL
     )
     ''');
   }
