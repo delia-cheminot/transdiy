@@ -1,3 +1,5 @@
+import 'package:transdiy/utils/math_helper.dart';
+
 class MedicationSchedule {
   final int? id;
   String name;
@@ -41,5 +43,38 @@ class MedicationSchedule {
   @override
   String toString() {
     return 'MedicationSchedule{id: $id name: $name}';
+  }
+
+  bool isValid() {
+    return dose > 0 && intervalDays > 0 && name.isNotEmpty;
+  }
+
+  static String? validateName(String? name) {
+    if (name == null || name.isEmpty) {
+      return 'Champ obligatoire';
+    }
+    return null;
+  }
+
+  static String? validateDose(String? dose) {
+    if (dose == null || dose.isEmpty) {
+      return 'Champ obligatoire';
+    }
+    final parsedDose = MathHelper.parseDouble(dose);
+    if (parsedDose == null || parsedDose <= 0) {
+      return 'Doit être un nombre positif';
+    }
+    return null;
+  }
+
+  static String? validateIntervalDays(String? intervalDays) {
+    if (intervalDays == null || intervalDays.isEmpty) {
+      return 'Champ obligatoire';
+    }
+    final parsedIntervalDays = int.tryParse(intervalDays);
+    if (parsedIntervalDays == null || parsedIntervalDays <= 0) {
+      return 'Doit être un nombre positif';
+    }
+    return null;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transdiy/models/supply_item/supply_item.dart';
 import 'package:transdiy/models/supply_item/supply_item_state.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
@@ -12,6 +13,14 @@ class _NewItemDialogState extends State<NewItemDialog> {
   late TextEditingController _totalAmountController;
   late TextEditingController _nameController;
   late TextEditingController _dosePerUnitController;
+
+  bool _isFormValid = false;
+
+  Map<String, String?> _fieldErrors = {
+    'name': null,
+    'totalAmount': null,
+    'dosePerUnit': null,
+  };
 
   @override
   void initState() {
@@ -29,9 +38,17 @@ class _NewItemDialogState extends State<NewItemDialog> {
     super.dispose();
   }
 
-  double? _parseDouble(String text) {
-    final sanitizedText = text.replaceAll(',', '.');
-    return double.tryParse(sanitizedText);
+  /// Updates the error messages for each field and the form validity.
+  void _validateInputs() {
+    setState(() {
+      _fieldErrors['name'] = SupplyItem.validateName(_nameController.text);
+      _fieldErrors['totalAmount'] =
+          SupplyItem.validateTotalAmount(_totalAmountController.text);
+      _fieldErrors['dosePerUnit'] =
+          SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
+
+      _isFormValid = _fieldErrors.values.every((error) => error == null);
+    });
   }
 
   void _addItem() async {
@@ -44,38 +61,6 @@ class _NewItemDialogState extends State<NewItemDialog> {
         Provider.of<SupplyItemState>(context, listen: false);
     supplyItemState.addItem(totalAmount, name, dosePerUnit);
     Navigator.pop(context);
-  }
-
-  bool _validateInputs() {
-    if (!_isNameValid()) {
-      setState(() {});
-      return false;
-    }
-
-    if (!_isTotalAmountValid()) {
-      setState(() {});
-      return false;
-    }
-
-    if (!_isDosePerUnitValid()) {
-      setState(() {});
-      return false;
-    }
-
-    setState(() {});
-    return true;
-  }
-
-  bool _isTotalAmountValid() {
-    return _parseDouble(_totalAmountController.text) != null;
-  }
-
-  bool _isNameValid() {
-    return _nameController.text.isNotEmpty;
-  }
-
-  bool _isDosePerUnitValid() {
-    return _parseDouble(_dosePerUnitController.text) != null;
   }
 
   @override
@@ -93,7 +78,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
-              onPressed: _validateInputs() ? _addItem : null,
+              onPressed: _isFormValid ? _addItem : null,
               child: Text(
                 'Ajouter',
               ),

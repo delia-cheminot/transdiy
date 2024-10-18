@@ -1,3 +1,5 @@
+import 'package:transdiy/utils/math_helper.dart';
+
 class SupplyItem {
   final int? id;
   String name;
@@ -63,49 +65,55 @@ class SupplyItem {
         dosePerUnit > 0;
   }
 
-  static String? validateTotalAmount(String value) {
-    if (_parseDouble(value) == null) {
+  static String? validateTotalAmount(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Champ obligatoire';
+    }
+    final parsedValue = MathHelper.parseDouble(value);
+    if (parsedValue == null || parsedValue <= 0) {
+      return 'Doit être un nombre positif';
+    }
+    return null;
+  }
+
+  static String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
     return null;
   }
 
-  static String? validateName(String value) {
-    if (value.isEmpty) {
+  static String? validateUsedAmount(String? value, String totalAmount) {
+    if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
-    return null;
-  }
-
-  static String? validateUsedAmount(String value, String totalAmount) {
-    if (_parseDouble(value) == null) {
-      return 'Champ obligatoire';
+    final parsedValue = MathHelper.parseDouble(value);
+    if (parsedValue == null || parsedValue < 0) {
+      return 'Doit être un nombre positif';
     }
-    if (_parseDouble(totalAmount) != null &&
-        _parseDouble(value)! > _parseDouble(totalAmount)!) {
+    if (validateTotalAmount(totalAmount) != null) {
+      return 'Quantité totale invalide';
+    }
+    if (parsedValue > MathHelper.parseDouble(totalAmount)!) {
       return 'Ne peut pas dépasser la contenance totale';
     }
     return null;
   }
 
-  static String? validateDosePerUnit(String value) {
-    if (_parseDouble(value) == null) {
+  static String? validateDosePerUnit(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
-    if (_parseDouble(value)! <= 0) {
+    final parsedValue = MathHelper.parseDouble(value);
+    if (parsedValue == null || parsedValue <= 0) {
       return 'Doit être supérieur à 0';
     }
     return null;
   }
 
-  static double? _parseDouble(String text) {
-    final sanitizedText = text.replaceAll(',', '.');
-    return double.tryParse(sanitizedText);
-  }
-
   static double roundAmount(double amount) {
     // Amount is rounded to two decimal places
-    return double.parse(amount.toStringAsFixed(2));
+    return MathHelper.roundDouble(amount, 2);
   }
 
   bool canUseAmount(double amountToUse) {
