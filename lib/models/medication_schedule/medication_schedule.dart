@@ -50,10 +50,9 @@ class MedicationSchedule {
   }
 
   static String? validateName(String? name) {
-    if (name == null || name.isEmpty) {
-      return 'Champ obligatoire';
-    }
-    return null;
+    return name == null || name.isEmpty
+        ? 'Champ obligatoire'
+        : null;
   }
 
   static String? validateDose(String? dose) {
@@ -61,10 +60,9 @@ class MedicationSchedule {
       return 'Champ obligatoire';
     }
     final parsedDose = MathHelper.parseDouble(dose);
-    if (parsedDose == null || parsedDose <= 0) {
-      return 'Doit être un nombre positif';
-    }
-    return null;
+    return parsedDose == null || parsedDose <= 0
+        ? 'Doit être un nombre positif'
+        : null;
   }
 
   static String? validateIntervalDays(String? intervalDays) {
@@ -72,9 +70,8 @@ class MedicationSchedule {
       return 'Champ obligatoire';
     }
     final parsedIntervalDays = int.tryParse(intervalDays);
-    if (parsedIntervalDays == null || parsedIntervalDays <= 0) {
-      return 'Doit être un nombre positif';
-    }
-    return null;
+    return (parsedIntervalDays == null || parsedIntervalDays <= 0)
+        ? 'Doit être un nombre positif'
+        : null;
   }
 }
