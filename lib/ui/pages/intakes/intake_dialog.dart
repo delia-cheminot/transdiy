@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/models/medication_intake/medication_intake.dart';
-import 'package:transdiy/models/medication_intake/medication_intake_manager.dart';
-import 'package:transdiy/models/medication_intake/medication_intake_state.dart';
-import 'package:transdiy/models/supply_item/supply_item_manager.dart';
-import 'package:transdiy/models/supply_item/supply_item_state.dart';
+import 'package:transdiy/controllers/medication_intake_manager.dart';
+import 'package:transdiy/controllers/supply_item_manager.dart';
+import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:transdiy/data/providers/medication_intake_state.dart';
+import 'package:transdiy/data/providers/supply_item_state.dart';
 
 class IntakeDialog extends StatefulWidget {
   final MedicationIntake intake;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'medication_intake.dart';
-import 'medication_intake_repository.dart';
-
-// TODO merger ça avec le repository
+import '../model/medication_intake.dart';
+import '../repositories/medication_intake_repository.dart';
 
 class MedicationIntakeState extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];

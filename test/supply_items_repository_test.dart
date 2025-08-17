@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
-import 'package:transdiy/models/supply_item/supply_item_repository.dart';
+import 'package:transdiy/data/model/supply_item.dart';
+import 'package:transdiy/data/repositories/supply_item_repository.dart';
 import 'package:transdiy/services/app_database.dart';
 
 void main() {

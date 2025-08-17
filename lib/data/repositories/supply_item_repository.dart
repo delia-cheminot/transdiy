@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import '../../services/app_database.dart';
-import 'supply_item.dart';
+import '../model/supply_item.dart';
 
 class SupplyItemRepository {
   /// Inserts or replaces the [SupplyItem] into the database table

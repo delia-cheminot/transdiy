@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:transdiy/models/medication_intake/medication_intake.dart';
-import 'package:transdiy/models/medication_intake/medication_intake_repository.dart';
+import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:transdiy/data/repositories/medication_intake_repository.dart';
 import 'package:transdiy/services/app_database.dart';
 
 void main() {

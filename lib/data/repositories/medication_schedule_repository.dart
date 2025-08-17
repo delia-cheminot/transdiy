@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import '../../services/app_database.dart';
-import 'medication_schedule.dart';
+import '../model/medication_schedule.dart';
 
 class MedicationScheduleRepository {
   /// Inserts a new [MedicationSchedule] into the database.

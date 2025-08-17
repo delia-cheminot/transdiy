@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
-import 'package:transdiy/models/supply_item/supply_item_manager.dart';
-import 'package:transdiy/models/supply_item/supply_item_state.dart';
-import 'package:transdiy/services/dialog_service.dart';
+import 'package:transdiy/controllers/supply_item_manager.dart';
+import 'package:transdiy/data/model/supply_item.dart';
+import 'package:transdiy/data/providers/supply_item_state.dart';
+import 'package:transdiy/ui/widgets/dialogs.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
 class EditItemDialog extends StatefulWidget {
@@ -87,7 +87,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
   }
 
   Future<void> _confirmDelete() async {
-    final confirmed = await DialogService.confirmDelete(context);
+    final confirmed = await Dialogs.confirmDelete(context);
 
     if (confirmed == true) {
       if (!mounted) return;

@@ -1,5 +1,5 @@
-import 'supply_item.dart';
-import 'supply_item_state.dart';
+import '../data/model/supply_item.dart';
+import '../data/providers/supply_item_state.dart';
 
 class SupplyItemManager {
   final SupplyItemState _supplyItemState;

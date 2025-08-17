@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/models/medication_schedule/medication_schedule_state.dart';
+import 'package:transdiy/data/providers/medication_schedule_state.dart';
 
 class NewScheduleDialog extends StatefulWidget {
   @override

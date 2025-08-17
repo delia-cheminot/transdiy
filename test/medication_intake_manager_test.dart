@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:transdiy/models/medication_intake/medication_intake.dart';
-import 'package:transdiy/models/medication_intake/medication_intake_manager.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
+import 'package:transdiy/controllers/medication_intake_manager.dart';
+import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:transdiy/data/model/supply_item.dart';
 import 'mocks.mocks.dart';
 
 void main() {

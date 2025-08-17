@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
-import 'package:transdiy/models/supply_item/supply_item_state.dart';
+import 'package:transdiy/data/model/supply_item.dart';
+import 'package:transdiy/data/providers/supply_item_state.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
 class NewItemDialog extends StatefulWidget {

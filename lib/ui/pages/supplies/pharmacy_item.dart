@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
-import 'package:transdiy/pages/supplies/edit_item_dialog.dart';
+import 'package:transdiy/data/model/supply_item.dart';
+import 'package:transdiy/ui/pages/supplies/edit_item_dialog.dart';
 
 class PharmacyItem extends StatelessWidget {
   final SupplyItem item;

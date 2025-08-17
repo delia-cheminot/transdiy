@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DialogService {
+class Dialogs {
   static Future<bool?> confirmDelete(BuildContext context) {
     return showDialog<bool>(
       context: context,

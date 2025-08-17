@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:transdiy/models/supply_item/supply_item.dart';
-import 'package:transdiy/models/supply_item/supply_item_manager.dart';
+import 'package:transdiy/controllers/supply_item_manager.dart';
+import 'package:transdiy/data/model/supply_item.dart';
 import 'mocks.mocks.dart';
 
 void main() {

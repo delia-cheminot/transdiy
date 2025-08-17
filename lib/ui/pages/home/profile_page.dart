@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/models/medication_schedule/medication_schedule_state.dart';
+import 'package:transdiy/data/providers/medication_schedule_state.dart';
 import 'new_schedule_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
