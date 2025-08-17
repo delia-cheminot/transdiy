@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../model/medication_intake.dart';
 import '../repositories/medication_intake_repository.dart';
 
-class MedicationIntakeState extends ChangeNotifier {
+class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
   bool _isLoading = true;
 
@@ -13,7 +13,7 @@ class MedicationIntakeState extends ChangeNotifier {
       _intakes.where((intake) => !intake.isTaken).toList();
   bool get isLoading => _isLoading;
 
-  MedicationIntakeState() {
+  MedicationIntakeProvider() {
     _init();
   }
 

@@ -9,11 +9,11 @@ import 'dart:ui' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:transdiy/data/model/medication_intake.dart'
     as _i7;
-import 'package:transdiy/data/providers/medication_intake_state.dart'
+import 'package:transdiy/data/providers/medication_intake_provider.dart'
     as _i6;
 import 'package:transdiy/data/model/supply_item.dart' as _i2;
 import 'package:transdiy/controllers/supply_item_manager.dart' as _i8;
-import 'package:transdiy/data/providers/supply_item_state.dart' as _i3;
+import 'package:transdiy/data/providers/supply_item_provider.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -41,7 +41,7 @@ class _FakeSupplyItem_0 extends _i1.SmartFake implements _i2.SupplyItem {
 /// A class which mocks [SupplyItemState].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemState {
+class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
   MockSupplyItemState() {
     _i1.throwOnMissingStub(this);
   }
@@ -164,7 +164,7 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemState {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMedicationIntakeState extends _i1.Mock
-    implements _i6.MedicationIntakeState {
+    implements _i6.MedicationIntakeProvider {
   MockMedicationIntakeState() {
     _i1.throwOnMissingStub(this);
   }

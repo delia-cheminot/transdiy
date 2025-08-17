@@ -12,9 +12,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/providers/medication_intake_state.dart';
-import 'package:transdiy/data/providers/medication_schedule_state.dart';
-import 'package:transdiy/data/providers/supply_item_state.dart';
+import 'package:transdiy/data/providers/medication_intake_provider.dart';
+import 'package:transdiy/data/providers/medication_schedule_provider.dart';
+import 'package:transdiy/data/providers/supply_item_provider.dart';
 import 'app.dart';
 
 void main() {
@@ -31,9 +31,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SupplyItemState()),
-        ChangeNotifierProvider(create: (_) => MedicationIntakeState()),
-        ChangeNotifierProvider(create: (_) => MedicationScheduleState()),
+        ChangeNotifierProvider(create: (_) => SupplyItemProvider()),
+        ChangeNotifierProvider(create: (_) => MedicationIntakeProvider()),
+        ChangeNotifierProvider(create: (_) => MedicationScheduleProvider()),
       ],
       child: const TransDiyApp(),
     ),

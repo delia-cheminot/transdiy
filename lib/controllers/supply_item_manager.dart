@@ -1,12 +1,12 @@
 import '../data/model/supply_item.dart';
-import '../data/providers/supply_item_state.dart';
+import '../data/providers/supply_item_provider.dart';
 
 class SupplyItemManager {
-  final SupplyItemState _supplyItemState;
+  final SupplyItemProvider _supplyItemState;
 
   SupplyItemManager(this._supplyItemState);
 
-  static SupplyItemManager create(SupplyItemState supplyItemState) {
+  static SupplyItemManager create(SupplyItemProvider supplyItemState) {
     return SupplyItemManager(supplyItemState);
   }
 

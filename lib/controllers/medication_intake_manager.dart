@@ -1,15 +1,15 @@
 import 'package:transdiy/controllers/supply_item_manager.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import '../data/model/medication_intake.dart';
-import '../data/providers/medication_intake_state.dart';
+import '../data/providers/medication_intake_provider.dart';
 
 class MedicationIntakeManager {
-  final MedicationIntakeState _medicationIntakeState;
+  final MedicationIntakeProvider _medicationIntakeState;
 
   MedicationIntakeManager(this._medicationIntakeState);
 
   static MedicationIntakeManager create(
-      MedicationIntakeState medicationIntakeState) {
+      MedicationIntakeProvider medicationIntakeState) {
     return MedicationIntakeManager(medicationIntakeState);
   }
 

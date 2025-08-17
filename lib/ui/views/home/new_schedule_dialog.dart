@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/providers/medication_schedule_state.dart';
+import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 
 class NewScheduleDialog extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _NewScheduleDialogState extends State<NewScheduleDialog> {
     final dose = double.parse(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
     final medicationScheduleState =
-        Provider.of<MedicationScheduleState>(context, listen: false);
+        Provider.of<MedicationScheduleProvider>(context, listen: false);
     medicationScheduleState.addSchedule(name, dose, intervalDays);
     Navigator.pop(context);
   }

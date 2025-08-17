@@ -1,6 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'ui/pages/main_page.dart';
+import 'ui/views/main_page.dart';
 
 class TransDiyApp extends StatelessWidget {
   const TransDiyApp({super.key});

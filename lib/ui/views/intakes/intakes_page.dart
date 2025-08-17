@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/data/providers/medication_intake_state.dart';
-import 'package:transdiy/ui/pages/intakes/intake_dialog.dart';
+import 'package:transdiy/data/providers/medication_intake_provider.dart';
+import 'package:transdiy/ui/views/intakes/intake_dialog.dart';
 
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationIntakeState = context.watch<MedicationIntakeState>();
+    final medicationIntakeState = context.watch<MedicationIntakeProvider>();
 
     return Column(
       children: [

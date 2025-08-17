@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../model/medication_schedule.dart';
 import '../repositories/medication_schedule_repository.dart';
 
-class MedicationScheduleState extends ChangeNotifier {
+class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> _schedules = [];
   bool _isLoading = true;
 
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
 
-  MedicationScheduleState() {
+  MedicationScheduleProvider() {
     _init();
   }
 

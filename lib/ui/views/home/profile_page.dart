@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/providers/medication_schedule_state.dart';
+import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 import 'new_schedule_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationScheduleState = context.watch<MedicationScheduleState>();
+    final medicationScheduleState = context.watch<MedicationScheduleProvider>();
 
     if (medicationScheduleState.isLoading) {
       return Scaffold(

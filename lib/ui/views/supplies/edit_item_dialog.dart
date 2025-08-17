@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/supply_item_state.dart';
+import 'package:transdiy/data/providers/supply_item_provider.dart';
 import 'package:transdiy/ui/widgets/dialogs.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
@@ -75,7 +75,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
 
     if (!_isFormValid) return;
     final supplyItemState =
-        Provider.of<SupplyItemState>(context, listen: false);
+        Provider.of<SupplyItemProvider>(context, listen: false);
     SupplyItemManager(supplyItemState).setFields(
       widget.item,
       newName: _nameController.text,
@@ -92,7 +92,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
     if (confirmed == true) {
       if (!mounted) return;
       final supplyItemState =
-          Provider.of<SupplyItemState>(context, listen: false);
+          Provider.of<SupplyItemProvider>(context, listen: false);
       supplyItemState.deleteItem(widget.item);
       Navigator.of(context).pop();
     }

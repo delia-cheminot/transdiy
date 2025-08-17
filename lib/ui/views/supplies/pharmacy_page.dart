@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/supply_item_state.dart';
-import 'package:transdiy/ui/pages/supplies/pharmacy_item.dart';
+import 'package:transdiy/data/providers/supply_item_provider.dart';
+import 'package:transdiy/ui/views/supplies/pharmacy_item.dart';
 
 class PharmacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final pharmacyState = context.watch<SupplyItemState>();
+    final pharmacyState = context.watch<SupplyItemProvider>();
 
     if (pharmacyState.isLoading) {
       return Center(child: CircularProgressIndicator());

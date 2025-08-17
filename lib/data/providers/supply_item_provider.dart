@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/repositories/supply_item_repository.dart';
 
-class SupplyItemState extends ChangeNotifier {
+class SupplyItemProvider extends ChangeNotifier {
   List<SupplyItem> _items = [];
   bool _isLoading = true;
 
   List<SupplyItem> get items => _items;
   bool get isLoading => _isLoading;
 
-  SupplyItemState() {
+  SupplyItemProvider() {
     _init();
   }
 
