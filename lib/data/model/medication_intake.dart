@@ -1,8 +1,10 @@
+import 'package:decimal/decimal.dart';
+
 class MedicationIntake {
   final int? id;
   DateTime scheduledDateTime;
   DateTime? takenDateTime;
-  double dose;
+  Decimal dose;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
@@ -17,7 +19,7 @@ class MedicationIntake {
       'id': id,
       'scheduledDateTime': scheduledDateTime.toIso8601String(),
       'takenDateTime': takenDateTime?.toIso8601String(),
-      'dose': dose,
+      'dose': dose.toString(),
     };
   }
 
@@ -28,7 +30,7 @@ class MedicationIntake {
       takenDateTime: map['takenDateTime'] == null
           ? null
           : DateTime.parse(map['takenDateTime'] as String),
-      dose: map['dose'] as double,
+      dose: Decimal.parse(map['dose'] as String),
     );
   }
 
@@ -44,10 +46,5 @@ class MedicationIntake {
   @override
   String toString() {
     return 'MedicationIntake{id: $id dateTime: $scheduledDateTime} taken: $isTaken';
-  }
-
-  static double roundDose(double dose) {
-    // Rounds the dose to the closest integer.
-    return dose.roundToDouble();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/supply_item.dart';
@@ -53,9 +54,9 @@ class _NewItemDialogState extends State<NewItemDialog> {
 
   void _addItem() async {
     final totalAmount =
-        double.parse(_totalAmountController.text.replaceAll(',', '.'));
+        Decimal.parse(_totalAmountController.text.replaceAll(',', '.'));
     final dosePerUnit =
-        double.parse(_dosePerUnitController.text.replaceAll(',', '.'));
+        Decimal.parse(_dosePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
     final supplyItemState =
         Provider.of<SupplyItemProvider>(context, listen: false);

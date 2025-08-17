@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
@@ -6,73 +7,94 @@ import 'mocks.mocks.dart';
 
 void main() {
   late SupplyItemManager manager;
-  late MockSupplyItemState mockSupplyItemState;
+  late MockSupplyItemProvider mockSupplyItemState;
 
   setUp(() {
-    mockSupplyItemState = MockSupplyItemState();
+    mockSupplyItemState = MockSupplyItemProvider();
     manager = SupplyItemManager(mockSupplyItemState);
   });
 
   group('SupplyItemManager', () {
     test('should update totalAmount correctly', () async {
-      final item = SupplyItem(name: 'h', id: 1, totalAmount: 10, usedAmount: 2, dosePerUnit: 1);
+      final item = SupplyItem(
+          name: 'h',
+          id: 1,
+          totalDose: Decimal.parse('10'),
+          usedDose: Decimal.parse('2'),
+          dosePerUnit: Decimal.parse('1'));
 
       final newItem = await manager.setFields(
         item,
-        newTotalAmount: 20,
-        newUsedAmount: 5,
+        newTotalDose: Decimal.parse('20'),
+        newUsedDose: Decimal.parse('5'),
       );
 
-      expect(newItem.totalAmount, 20);
-      expect(newItem.usedAmount, 5);
+      expect(newItem.totalDose, Decimal.parse('20'));
+      expect(newItem.usedDose, Decimal.parse('5'));
       verify(mockSupplyItemState.updateItem(newItem)).called(1);
     });
 
     test(
         'should throw ArgumentError when invalid fields and item should remain unchanged',
         () {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 2, dosePerUnit: 1);
+      final item = SupplyItem(
+          name: 'h',
+          totalDose: Decimal.parse('10'),
+          usedDose: Decimal.parse('2'),
+          dosePerUnit: Decimal.parse('1'));
 
       expect(
         () => manager.setFields(
           item,
-          newUsedAmount: 15,
+          newUsedDose: Decimal.parse('15'),
         ),
         throwsArgumentError,
       );
 
-      expect(item.usedAmount, 2);
+      expect(item.usedDose, Decimal.parse('2'));
     });
 
     test('should use amount correctly', () async {
-      final item = SupplyItem(name: 'h', totalAmount: 20, usedAmount: 5, dosePerUnit: 1);
+      final item = SupplyItem(
+          name: 'h',
+          totalDose: Decimal.parse('20'),
+          usedDose: Decimal.parse('5'),
+          dosePerUnit: Decimal.parse('1'));
 
-      await manager.useAmount(item, 5);
+      await manager.useDose(item, Decimal.parse('5'));
 
-      expect(item.usedAmount, 10);
+      expect(item.usedDose, Decimal.parse('10'));
       verify(mockSupplyItemState.updateItem(item)).called(1);
     });
 
     test('should throw ArgumentError when using more amount than available',
         () {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosePerUnit: 1);
+      final item = SupplyItem(
+          name: 'h',
+          totalDose: Decimal.parse('10'),
+          usedDose: Decimal.parse('5'),
+          dosePerUnit: Decimal.parse('1'));
 
       expect(
-        () => manager.useAmount(item, 6),
+        () => manager.useDose(item, Decimal.parse('6')),
         throwsArgumentError,
       );
 
-      expect(item.totalAmount, 10);
-      expect(item.usedAmount, 5);
+      expect(item.totalDose, Decimal.parse('10'));
+      expect(item.usedDose, Decimal.parse('5'));
       verifyNever(mockSupplyItemState.updateItem(any));
     });
 
     test('use zero amount', () async {
-      final item = SupplyItem(name: 'h', totalAmount: 10, usedAmount: 5, dosePerUnit: 1);
+      final item = SupplyItem(
+          name: 'h',
+          totalDose: Decimal.parse('10'),
+          usedDose: Decimal.parse('5'),
+          dosePerUnit: Decimal.parse('1'));
 
-      await manager.useAmount(item, 0);
+      await manager.useDose(item, Decimal.zero);
 
-      expect(item.usedAmount, 5);
+      expect(item.usedDose, Decimal.parse('5'));
       verifyNever(mockSupplyItemState.updateItem(item));
     });
   });

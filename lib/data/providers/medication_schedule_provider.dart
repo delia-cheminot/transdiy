@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import '../model/medication_schedule.dart';
 import '../repositories/medication_schedule_repository.dart';
@@ -34,7 +35,7 @@ class MedicationScheduleProvider extends ChangeNotifier {
     fetchSchedules();
   }
 
-  Future<void> addSchedule(String name, double dose, int intervalDays) async {
+  Future<void> addSchedule(String name, Decimal dose, int intervalDays) async {
     await MedicationScheduleRepository.insertSchedule(
         MedicationSchedule(name: name, dose: dose, intervalDays: intervalDays));
     // No need for id as it is auto-generated and retrieved on fetch

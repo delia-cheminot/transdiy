@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
@@ -13,7 +14,7 @@ class IntakesPage extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            medicationIntakeState.addIntake(DateTime.now(), 4);
+            medicationIntakeState.addIntake(DateTime.now(), Decimal.parse('4'));
           },
           child: Text('ajouter une prise'),
         ),

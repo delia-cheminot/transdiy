@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _NewScheduleDialogState extends State<NewScheduleDialog> {
 
   void _addSchedule() {
     final name = _nameController.text;
-    final dose = double.parse(_doseController.text);
+    final dose = Decimal.parse(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
     final medicationScheduleState =
         Provider.of<MedicationScheduleProvider>(context, listen: false);

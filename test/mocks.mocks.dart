@@ -4,15 +4,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
-import 'dart:ui' as _i5;
+import 'dart:ui' as _i6;
 
+import 'package:decimal/decimal.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:transdiy/data/model/medication_intake.dart'
-    as _i7;
-import 'package:transdiy/data/providers/medication_intake_provider.dart'
-    as _i6;
+import 'package:transdiy/controllers/supply_item_manager.dart' as _i9;
+import 'package:transdiy/data/model/medication_intake.dart' as _i8;
 import 'package:transdiy/data/model/supply_item.dart' as _i2;
-import 'package:transdiy/controllers/supply_item_manager.dart' as _i8;
+import 'package:transdiy/data/providers/medication_intake_provider.dart' as _i7;
 import 'package:transdiy/data/providers/supply_item_provider.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -38,11 +37,12 @@ class _FakeSupplyItem_0 extends _i1.SmartFake implements _i2.SupplyItem {
         );
 }
 
-/// A class which mocks [SupplyItemState].
+/// A class which mocks [SupplyItemProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
-  MockSupplyItemState() {
+class MockSupplyItemProvider extends _i1.Mock
+    implements _i3.SupplyItemProvider {
+  MockSupplyItemProvider() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -96,15 +96,15 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
 
   @override
   _i4.Future<void> addItem(
-    double? totalAmount,
+    _i5.Decimal? totalDose,
     String? name,
-    double? dosePerUnit,
+    _i5.Decimal? dosePerUnit,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addItem,
           [
-            totalAmount,
+            totalDose,
             name,
             dosePerUnit,
           ],
@@ -124,7 +124,7 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
       ) as _i4.Future<void>);
 
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -133,7 +133,7 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
       );
 
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -160,32 +160,32 @@ class MockSupplyItemState extends _i1.Mock implements _i3.SupplyItemProvider {
       );
 }
 
-/// A class which mocks [MedicationIntakeState].
+/// A class which mocks [MedicationIntakeProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMedicationIntakeState extends _i1.Mock
-    implements _i6.MedicationIntakeProvider {
-  MockMedicationIntakeState() {
+class MockMedicationIntakeProvider extends _i1.Mock
+    implements _i7.MedicationIntakeProvider {
+  MockMedicationIntakeProvider() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  List<_i7.MedicationIntake> get intakes => (super.noSuchMethod(
+  List<_i8.MedicationIntake> get intakes => (super.noSuchMethod(
         Invocation.getter(#intakes),
-        returnValue: <_i7.MedicationIntake>[],
-      ) as List<_i7.MedicationIntake>);
+        returnValue: <_i8.MedicationIntake>[],
+      ) as List<_i8.MedicationIntake>);
 
   @override
-  List<_i7.MedicationIntake> get takenIntakes => (super.noSuchMethod(
+  List<_i8.MedicationIntake> get takenIntakes => (super.noSuchMethod(
         Invocation.getter(#takenIntakes),
-        returnValue: <_i7.MedicationIntake>[],
-      ) as List<_i7.MedicationIntake>);
+        returnValue: <_i8.MedicationIntake>[],
+      ) as List<_i8.MedicationIntake>);
 
   @override
-  List<_i7.MedicationIntake> get notTakenIntakes => (super.noSuchMethod(
+  List<_i8.MedicationIntake> get notTakenIntakes => (super.noSuchMethod(
         Invocation.getter(#notTakenIntakes),
-        returnValue: <_i7.MedicationIntake>[],
-      ) as List<_i7.MedicationIntake>);
+        returnValue: <_i8.MedicationIntake>[],
+      ) as List<_i8.MedicationIntake>);
 
   @override
   bool get isLoading => (super.noSuchMethod(
@@ -220,7 +220,7 @@ class MockMedicationIntakeState extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> deleteIntake(_i7.MedicationIntake? intake) =>
+  _i4.Future<void> deleteIntake(_i8.MedicationIntake? intake) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteIntake,
@@ -233,7 +233,7 @@ class MockMedicationIntakeState extends _i1.Mock
   @override
   _i4.Future<void> addIntake(
     DateTime? scheduledDateTime,
-    double? dose,
+    _i5.Decimal? dose,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -248,7 +248,7 @@ class MockMedicationIntakeState extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> updateIntake(_i7.MedicationIntake? intake) =>
+  _i4.Future<void> updateIntake(_i8.MedicationIntake? intake) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateIntake,
@@ -259,7 +259,7 @@ class MockMedicationIntakeState extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  void addListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -268,7 +268,7 @@ class MockMedicationIntakeState extends _i1.Mock
       );
 
   @override
-  void removeListener(_i5.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -298,7 +298,7 @@ class MockMedicationIntakeState extends _i1.Mock
 /// A class which mocks [SupplyItemManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
+class MockSupplyItemManager extends _i1.Mock implements _i9.SupplyItemManager {
   MockSupplyItemManager() {
     _i1.throwOnMissingStub(this);
   }
@@ -307,9 +307,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
   _i4.Future<_i2.SupplyItem> setFields(
     _i2.SupplyItem? item, {
     String? newName,
-    double? newTotalAmount,
-    double? newUsedAmount,
-    double? newDosePerUnit,
+    _i5.Decimal? newTotalDose,
+    _i5.Decimal? newUsedDose,
+    _i5.Decimal? newDosePerUnit,
     int? newQuantity,
   }) =>
       (super.noSuchMethod(
@@ -318,8 +318,8 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
           [item],
           {
             #newName: newName,
-            #newTotalAmount: newTotalAmount,
-            #newUsedAmount: newUsedAmount,
+            #newTotalDose: newTotalDose,
+            #newUsedDose: newUsedDose,
             #newDosePerUnit: newDosePerUnit,
             #newQuantity: newQuantity,
           },
@@ -331,8 +331,8 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
             [item],
             {
               #newName: newName,
-              #newTotalAmount: newTotalAmount,
-              #newUsedAmount: newUsedAmount,
+              #newTotalDose: newTotalDose,
+              #newUsedDose: newUsedDose,
               #newDosePerUnit: newDosePerUnit,
               #newQuantity: newQuantity,
             },
@@ -341,16 +341,16 @@ class MockSupplyItemManager extends _i1.Mock implements _i8.SupplyItemManager {
       ) as _i4.Future<_i2.SupplyItem>);
 
   @override
-  _i4.Future<void> useAmount(
+  _i4.Future<void> useDose(
     _i2.SupplyItem? item,
-    double? amountToUse,
+    _i5.Decimal? doseToUse,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #useAmount,
+          #useDose,
           [
             item,
-            amountToUse,
+            doseToUse,
           ],
         ),
         returnValue: _i4.Future<void>.value(),

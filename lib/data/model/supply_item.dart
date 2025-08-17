@@ -1,31 +1,32 @@
+import 'package:decimal/decimal.dart';
 import 'package:transdiy/utils/math_helper.dart';
 
 class SupplyItem {
   final int? id;
   String name;
-  double totalAmount;
-  double usedAmount;
-  double dosePerUnit;
+  Decimal totalDose; // mg
+  Decimal usedDose; // mg
+  Decimal dosePerUnit; // mg/ml
   int quantity;
-  bool get isUsed => usedAmount > 0;
+  bool get isUsed => usedDose > Decimal.zero;
   bool get isInStock => quantity > 0;
 
   SupplyItem({
     this.id,
     required this.name,
-    required this.totalAmount,
+    required this.totalDose,
     required this.dosePerUnit,
-    this.usedAmount = 0,
+    Decimal? usedDose,
     this.quantity = 1,
-  });
+  }) : usedDose = usedDose ?? Decimal.zero;
 
   Map<String, Object?> toMap() {
     return {
       'id': id,
       'name': name,
-      'totalAmount': totalAmount,
-      'usedAmount': usedAmount,
-      'dosePerUnit': dosePerUnit,
+      'totalDose': totalDose.toString(),
+      'usedDose': usedDose.toString(),
+      'dosePerUnit': dosePerUnit.toString(),
       'quantity': quantity,
     };
   }
@@ -34,9 +35,9 @@ class SupplyItem {
     return SupplyItem(
       id: map['id'] as int?,
       name: map['name'] as String,
-      totalAmount: map['totalAmount'] as double,
-      usedAmount: map['usedAmount'] as double,
-      dosePerUnit: map['dosePerUnit'] as double,
+      totalDose: Decimal.parse(map['totalDose'] as String),
+      usedDose: Decimal.parse(map['usedDose'] as String),
+      dosePerUnit: Decimal.parse(map['dosePerUnit'] as String),
       quantity: map['quantity'] as int,
     );
   }
@@ -45,8 +46,8 @@ class SupplyItem {
     return SupplyItem(
       id: id,
       name: name,
-      totalAmount: totalAmount,
-      usedAmount: usedAmount,
+      totalDose: totalDose,
+      usedDose: usedDose,
       dosePerUnit: dosePerUnit,
       quantity: quantity,
     );
@@ -58,19 +59,19 @@ class SupplyItem {
   }
 
   bool isValid() {
-    return totalAmount > 0 &&
-        usedAmount >= 0 &&
-        usedAmount <= totalAmount &&
+    return totalDose > Decimal.zero &&
+        usedDose >= Decimal.zero &&
+        usedDose <= totalDose &&
         name != '' &&
-        dosePerUnit > 0;
+        dosePerUnit > Decimal.zero;
   }
 
   static String? validateTotalAmount(String? value) {
     if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
-    final parsedValue = MathHelper.parseDouble(value);
-    if (parsedValue == null || parsedValue <= 0) {
+    final parsedValue = Decimal.tryParse(value);
+    if (parsedValue == null || parsedValue <= Decimal.zero) {
       return 'Doit être un nombre positif';
     }
     return null;
@@ -87,14 +88,14 @@ class SupplyItem {
     if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
-    final parsedValue = MathHelper.parseDouble(value);
-    if (parsedValue == null || parsedValue < 0) {
+    final parsedValue = Decimal.tryParse(value);
+    if (parsedValue == null || parsedValue < Decimal.zero) {
       return 'Doit être un nombre positif';
     }
     if (validateTotalAmount(totalAmount) != null) {
       return 'Quantité totale invalide';
     }
-    if (parsedValue > MathHelper.parseDouble(totalAmount)!) {
+    if (parsedValue > Decimal.parse(totalAmount)) {
       return 'Ne peut pas dépasser la contenance totale';
     }
     return null;
@@ -111,16 +112,11 @@ class SupplyItem {
     return null;
   }
 
-  static double roundAmount(double amount) {
-    // Amount is rounded to two decimal places
-    return MathHelper.roundDouble(amount, 2);
+  bool canUseDose(Decimal doseToUse) {
+    return usedDose + doseToUse <= totalDose;
   }
 
-  bool canUseAmount(double amountToUse) {
-    return roundAmount(usedAmount + amountToUse) <= totalAmount;
-  }
-
-  double getRemainingAmount() {
-    return roundAmount(totalAmount - usedAmount);
+  Decimal getRemainingDose() {
+    return totalDose - usedDose;
   }
 }

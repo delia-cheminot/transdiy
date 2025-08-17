@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import '../data/model/medication_intake.dart';
@@ -20,22 +21,15 @@ class MedicationIntakeManager {
       throw ArgumentError('Medication already taken');
     }
 
-    double amountToUse = intake.dose / supplyItem.dosePerUnit;
-
-    if (!supplyItem.canUseAmount(amountToUse)) {
-      // Uses only possible amount and creates a new intake with the remaining dose
-      double remainingDose = MedicationIntake.roundDose(
-          supplyItem.getRemainingAmount() * supplyItem.dosePerUnit);
-      double doseToAdd =
-          MedicationIntake.roundDose(intake.dose - remainingDose);
-      // Rounded to avoid floating point errors
+    if (!supplyItem.canUseDose(intake.dose)) {
+      Decimal remainingDose = supplyItem.getRemainingDose();
+      Decimal doseToAdd = intake.dose - remainingDose;
       intake.dose = remainingDose;
       await _medicationIntakeState.addIntake(
           intake.scheduledDateTime, doseToAdd);
-      amountToUse = supplyItem.getRemainingAmount();
     }
 
-    supplyItemManager.useAmount(supplyItem, amountToUse);
+    supplyItemManager.useDose(supplyItem, intake.dose);
     intake.takenDateTime = takenDate ?? DateTime.now();
     await _medicationIntakeState.updateIntake(intake);
   }

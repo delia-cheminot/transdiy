@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
@@ -34,9 +35,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
   void initState() {
     super.initState();
     _totalAmountController =
-        TextEditingController(text: widget.item.totalAmount.toString());
+        TextEditingController(text: widget.item.totalDose.toString());
     _usedAmountController =
-        TextEditingController(text: widget.item.usedAmount.toString());
+        TextEditingController(text: widget.item.usedDose.toString());
     _dosePerUnitController =
         TextEditingController(text: widget.item.dosePerUnit.toString());
     _nameController = TextEditingController(text: widget.item.name);
@@ -68,9 +69,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
   }
 
   void _saveChanges() {
-    double? parseDouble(String text) {
+    Decimal? parseDecimal(String text) {
       final sanitizedText = text.replaceAll(',', '.');
-      return double.tryParse(sanitizedText);
+      return Decimal.tryParse(sanitizedText);
     }
 
     if (!_isFormValid) return;
@@ -79,9 +80,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
     SupplyItemManager(supplyItemState).setFields(
       widget.item,
       newName: _nameController.text,
-      newTotalAmount: parseDouble(_totalAmountController.text)!,
-      newUsedAmount: parseDouble(_usedAmountController.text)!,
-      newDosePerUnit: parseDouble(_dosePerUnitController.text)!,
+      newTotalDose: parseDecimal(_totalAmountController.text)!,
+      newUsedDose: parseDecimal(_usedAmountController.text)!,
+      newDosePerUnit: parseDecimal(_dosePerUnitController.text)!,
     );
     Navigator.of(context).pop();
   }

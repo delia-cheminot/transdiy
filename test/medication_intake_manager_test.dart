@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:transdiy/controllers/medication_intake_manager.dart';
@@ -7,11 +8,11 @@ import 'mocks.mocks.dart';
 
 void main() {
   late MedicationIntakeManager manager;
-  late MockMedicationIntakeState mockMedicationIntakeState;
+  late MockMedicationIntakeProvider mockMedicationIntakeState;
   late MockSupplyItemManager mockSupplyItemManager;
 
   setUp(() {
-    mockMedicationIntakeState = MockMedicationIntakeState();
+    mockMedicationIntakeState = MockMedicationIntakeProvider();
     mockSupplyItemManager = MockSupplyItemManager();
     manager = MedicationIntakeManager(mockMedicationIntakeState);
   });
@@ -21,24 +22,23 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        dose: 1.0,
+        dose: Decimal.parse('1'),
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        totalAmount: 10.0,
-        usedAmount: 2.0,
-        dosePerUnit: 5.0,
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('2'),
+        dosePerUnit: Decimal.parse('5'),
       );
 
-      final amountToUse = intake.dose / supplyItem.dosePerUnit;
 
       await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
 
       expect(intake.isTaken, true);
       verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
-      verify(mockSupplyItemManager.useAmount(supplyItem, amountToUse)).called(1);
+      verify(mockSupplyItemManager.useDose(supplyItem, intake.dose)).called(1);
     });
 
     test('should throw ArgumentError when taking medication already taken', () async {
@@ -46,15 +46,15 @@ void main() {
         id: 1,
         scheduledDateTime: DateTime.now(),
         takenDateTime: DateTime.now(),
-        dose: 1.0,
+        dose: Decimal.parse('1'),
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        totalAmount: 10.0,
-        usedAmount: 2.0,
-        dosePerUnit: 5.0,
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('2'),
+        dosePerUnit: Decimal.parse('5'),
       );
 
       expect(
@@ -67,15 +67,15 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        dose: 1.0,
+        dose: Decimal.parse('1'),
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        totalAmount: 10.0,
-        usedAmount: 2.0,
-        dosePerUnit: 5.0,
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('2'),
+        dosePerUnit: Decimal.parse('5'),
       );
 
       final customDate = DateTime.now().add(Duration(days: 1));
@@ -91,19 +91,19 @@ void main() {
       final intake = MedicationIntake(
         id: 1,
         scheduledDateTime: DateTime.now(),
-        dose: 15.0,
+        dose: Decimal.parse('15'),
       );
 
       final supplyItem = SupplyItem(
         id: 1,
         name: 'TestSupply',
-        totalAmount: 10.0,
-        usedAmount: 9.0,
-        dosePerUnit: 1.0,
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('9'),
+        dosePerUnit: Decimal.parse('1'),
       );
 
-      double remainingDose = 1.0; // 1mg remaining in the supply
-      double doseToAdd = 14.0; // 14mg to be added in a new intake
+      Decimal remainingDose = Decimal.parse('1'); // 1mg remaining in the supply
+      Decimal doseToAdd = Decimal.parse('14'); // 14mg to be added in a new intake
 
       when(mockMedicationIntakeState.addIntake(intake.scheduledDateTime, any))
           .thenAnswer((_) async {});
@@ -117,7 +117,7 @@ void main() {
         doseToAdd,
       )).called(1);
 
-      verify(mockSupplyItemManager.useAmount(supplyItem, supplyItem.totalAmount - supplyItem.usedAmount)).called(1);
+      verify(mockSupplyItemManager.useDose(supplyItem, supplyItem.totalDose - supplyItem.usedDose)).called(1);
       expect(intake.isTaken, true);
     });
   });

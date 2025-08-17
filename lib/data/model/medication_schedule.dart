@@ -1,9 +1,9 @@
-import 'package:transdiy/utils/math_helper.dart';
+import 'package:decimal/decimal.dart';
 
 class MedicationSchedule {
   final int? id;
   String name;
-  double dose;
+  Decimal dose;
   int intervalDays;
 
   MedicationSchedule({
@@ -26,7 +26,7 @@ class MedicationSchedule {
     return MedicationSchedule(
       id: map['id'] as int?,
       name: map['name'] as String,
-      dose: map['dose'] as double,
+      dose: Decimal.parse(map['dose'] as String),
       intervalDays: map['intervalDays'] as int,
     );
   }
@@ -46,7 +46,7 @@ class MedicationSchedule {
   }
 
   bool isValid() {
-    return dose > 0 && intervalDays > 0 && name.isNotEmpty;
+    return dose > Decimal.zero && intervalDays > 0 && name.isNotEmpty;
   }
 
   static String? validateName(String? name) {
@@ -59,8 +59,8 @@ class MedicationSchedule {
     if (dose == null || dose.isEmpty) {
       return 'Champ obligatoire';
     }
-    final parsedDose = MathHelper.parseDouble(dose);
-    return parsedDose == null || parsedDose <= 0
+    final parsedDose = Decimal.tryParse(dose);
+    return parsedDose == null || parsedDose <= Decimal.zero
         ? 'Doit être un nombre positif'
         : null;
   }

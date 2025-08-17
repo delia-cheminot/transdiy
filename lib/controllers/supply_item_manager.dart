@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import '../data/model/supply_item.dart';
 import '../data/providers/supply_item_provider.dart';
 
@@ -13,22 +14,15 @@ class SupplyItemManager {
   Future<SupplyItem> setFields(
     SupplyItem item, {
     String? newName,
-    double? newTotalAmount,
-    double? newUsedAmount,
-    double? newDosePerUnit,
+    Decimal? newTotalDose,
+    Decimal? newUsedDose,
+    Decimal? newDosePerUnit,
     int? newQuantity,
   }) async {
     SupplyItem newItem = item.copy();
 
-    if (newTotalAmount != null) {
-      newTotalAmount = SupplyItem.roundAmount(newTotalAmount);
-    }
-    if (newUsedAmount != null) {
-      newUsedAmount = SupplyItem.roundAmount(newUsedAmount);
-    }
-
-    newItem.totalAmount = newTotalAmount ?? item.totalAmount;
-    newItem.usedAmount = newUsedAmount ?? item.usedAmount;
+    newItem.totalDose = newTotalDose ?? item.totalDose;
+    newItem.usedDose = newUsedDose ?? item.usedDose;
     newItem.dosePerUnit = newDosePerUnit ?? item.dosePerUnit;
     newItem.quantity = newQuantity ?? item.quantity;
     newItem.name = newName ?? item.name;
@@ -42,15 +36,14 @@ class SupplyItemManager {
   }
 
   /// Uses a portion of the amount of the [SupplyItem] and updates the database.
-  Future<void> useAmount(SupplyItem item, double amountToUse) async {
-    if (amountToUse == 0) {
+  Future<void> useDose(SupplyItem item, Decimal doseToUse) async {
+    if (doseToUse == Decimal.zero) {
       return;
     }
-    if (!item.canUseAmount(amountToUse)) {
+    if (!item.canUseDose(doseToUse)) {
       throw ArgumentError('Item capacity exceeded');
     }
-    item.usedAmount = SupplyItem.roundAmount(item.usedAmount + amountToUse);
-    // Rounded to avoid floating point errors
+    item.usedDose = item.usedDose + doseToUse;
     await _supplyItemState.updateItem(item);
   }
 }

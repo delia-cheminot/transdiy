@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/repositories/supply_item_repository.dart';
@@ -34,9 +35,9 @@ class SupplyItemProvider extends ChangeNotifier {
     fetchItems();
   }
 
-  Future<void> addItem(double totalAmount, String name, double dosePerUnit) async {
+  Future<void> addItem(Decimal totalDose, String name, Decimal dosePerUnit) async {
     await SupplyItemRepository.insertItem(
-        SupplyItem(totalAmount: totalAmount, dosePerUnit: dosePerUnit, name: name));
+        SupplyItem(totalDose: totalDose, dosePerUnit: dosePerUnit, name: name));
     fetchItems();
   }
 
