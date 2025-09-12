@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:transdiy/controllers/medication_intake_manager.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'mocks.mocks.dart';
+import '../mocks/mocks.mocks.dart';
 
 void main() {
   late MedicationIntakeManager manager;

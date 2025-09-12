@@ -10,20 +10,18 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
-    // Initialize sqflite_common_ffi
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   });
+
+  tearDownAll(() async {
+      await AppDatabase.instance.close();
+    });
 
   group('Database tests', () {
     setUp(() async {
       final db = await AppDatabase.instance.database;
       await db.delete('supply_items');
-    });
-
-    tearDownAll(() async {
-      // Close the database after all tests
-      await AppDatabase.instance.close();
     });
 
     test('Database is created', () async {
@@ -51,11 +49,6 @@ void main() {
     setUp(() async {
       final db = await AppDatabase.instance.database;
       await db.delete('supply_items');
-    });
-
-    tearDownAll(() async {
-      // Close the database after all tests
-      await AppDatabase.instance.close();
     });
 
     test('Insert and retrieve a SupplyItem', () async {
