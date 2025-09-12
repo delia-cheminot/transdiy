@@ -14,7 +14,10 @@ class HomePage extends StatelessWidget {
         children: [
           Image.asset(
             'assets/homepage/logo.png',
-          )
+          ),
+          Image.asset(
+            'assets/homepage/donutstyle.gif',
+          ),
         ],
       ),
     );
