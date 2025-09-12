@@ -17,7 +17,15 @@ class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
 
-  MedicationScheduleProvider() {
+  MedicationScheduleProvider(
+      {GenericRepository<MedicationSchedule>? repository})
+      : repository = repository ??
+            GenericRepository<MedicationSchedule>(
+              tableName: 'medication_schedules',
+              toMap: (MedicationSchedule schedule) => schedule.toMap(),
+              fromMap: (Map<String, Object?> map) =>
+                  MedicationSchedule.fromMap(map),
+            ) {
     _init();
   }
 
@@ -34,24 +42,24 @@ class MedicationScheduleProvider extends ChangeNotifier {
 
   Future<void> deleteScheduleFromId(int id) async {
     await repository.delete(id);
-    fetchSchedules();
+    await fetchSchedules();
   }
 
   Future<void> deleteSchedule(MedicationSchedule schedule) async {
     assert(schedule.id != null);
     await repository.delete(schedule.id!);
-    fetchSchedules();
+    await fetchSchedules();
   }
 
   Future<void> addSchedule(String name, Decimal dose, int intervalDays) async {
     await repository.insert(
         MedicationSchedule(name: name, dose: dose, intervalDays: intervalDays));
-    fetchSchedules();
+    await fetchSchedules();
   }
 
   Future<void> updateSchedule(MedicationSchedule schedule) async {
     assert(schedule.id != null);
     await repository.update(schedule, schedule.id!);
-    fetchSchedules();
+    await fetchSchedules();
   }
 }
