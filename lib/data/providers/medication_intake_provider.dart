@@ -1,11 +1,12 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import '../model/medication_intake.dart';
-import '../repositories/medication_intake_repository.dart';
+import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:transdiy/services/generic_repository.dart';
 
 class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
   bool _isLoading = true;
+  final GenericRepository<MedicationIntake> repository;
 
   List<MedicationIntake> get intakes => _intakes;
   List<MedicationIntake> get takenIntakes =>
@@ -14,39 +15,47 @@ class MedicationIntakeProvider extends ChangeNotifier {
       _intakes.where((intake) => !intake.isTaken).toList();
   bool get isLoading => _isLoading;
 
-  MedicationIntakeProvider() {
+  MedicationIntakeProvider({GenericRepository<MedicationIntake>? repository})
+      : repository = repository ??
+            GenericRepository<MedicationIntake>(
+              tableName: 'medication_intakes',
+              toMap: (intake) => intake.toMap(),
+              fromMap: (map) => MedicationIntake.fromMap(map),
+            ) {
     _init();
   }
 
   Future<void> _init() async {
-    _intakes = await MedicationIntakeRepository.getIntakes();
+    _intakes = await repository.getAll();
     _isLoading = false;
     notifyListeners();
   }
 
   Future<void> fetchIntakes() async {
-    _intakes = await MedicationIntakeRepository.getIntakes();
+    _intakes = await repository.getAll();
     notifyListeners();
   }
 
   Future<void> deleteIntakeFromId(int id) async {
-    await MedicationIntakeRepository.deleteIntakeFromId(id);
-    fetchIntakes();
+    await repository.delete(id);
+    await fetchIntakes();
   }
 
   Future<void> deleteIntake(MedicationIntake intake) async {
-    await MedicationIntakeRepository.deleteIntake(intake);
-    fetchIntakes();
+    assert(intake.id != null);
+    await repository.delete(intake.id!);
+    await fetchIntakes();
   }
 
   Future<void> addIntake(DateTime scheduledDateTime, Decimal dose) async {
-    await MedicationIntakeRepository.insertIntake(MedicationIntake(
-        scheduledDateTime: scheduledDateTime, dose: dose));
-    fetchIntakes();
+    await repository.insert(
+        MedicationIntake(scheduledDateTime: scheduledDateTime, dose: dose));
+    await fetchIntakes();
   }
 
   Future<void> updateIntake(MedicationIntake intake) async {
-    await MedicationIntakeRepository.updateIntake(intake);
-    fetchIntakes();
+    assert(intake.id != null);
+    await repository.update(intake, intake.id!);
+    await fetchIntakes();
   }
 }
