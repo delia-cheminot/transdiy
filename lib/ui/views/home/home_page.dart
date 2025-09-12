@@ -12,16 +12,9 @@ class HomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Card(
-            color: theme.colorScheme.primary,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                'h', // the letter h
-                style: style,
-              ),
-            ),
-          ),
+          Image.asset(
+            'assets/homepage/logo.png',
+          )
         ],
       ),
     );
