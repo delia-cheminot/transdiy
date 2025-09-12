@@ -11,7 +11,17 @@ class ProfilePage extends StatelessWidget {
     if (medicationScheduleState.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Profil'),
+          title: Row(
+            children: [
+              Text('Profil'),
+              Image.asset(
+                'assets/global/logo.png',
+                width: 100,
+                height: 100,
+              ),
+            ],
+          ) 
+          
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -21,7 +31,17 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profil'),
+        title: Row(
+            children: [
+              Text('Profil'),
+              Image.asset(
+                'assets/global/logo.png',
+                width: 100,
+                height: 100,
+              ),
+            ],
+          ),
+        
       ),
       body: medicationScheduleState.schedules.isEmpty
           ? Center(

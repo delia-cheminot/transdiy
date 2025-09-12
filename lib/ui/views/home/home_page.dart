@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/homepage/logo.png',
+            'assets/global/logo.png',
           ),
           Image.asset(
             'assets/homepage/donutstyle.gif',
