@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._init();
@@ -11,9 +12,13 @@ class AppDatabase {
 
   Future<Database> get database async {
     WidgetsFlutterBinding.ensureInitialized();
-    if (_database != null) return _database!;
 
+    if (_database != null) return _database!;
+    // fix pour linux/windows
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
     _database = await _initDB('app_database.db');
+
     return _database!;
   }
 
