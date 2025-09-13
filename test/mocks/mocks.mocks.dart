@@ -68,16 +68,6 @@ class MockSupplyItemProvider extends _i1.Mock
       ) as _i2.GenericRepository<_i3.SupplyItem>);
 
   @override
-  set repository(_i2.GenericRepository<_i3.SupplyItem>? _repository) =>
-      super.noSuchMethod(
-        Invocation.setter(
-          #repository,
-          _repository,
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
   List<_i3.SupplyItem> get items => (super.noSuchMethod(
         Invocation.getter(#items),
         returnValue: <_i3.SupplyItem>[],
