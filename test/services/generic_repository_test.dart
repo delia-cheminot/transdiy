@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/services/app_database.dart';
-import 'package:transdiy/services/generic_repository.dart';
+import 'package:transdiy/services/repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -39,8 +39,8 @@ void main() {
   });
 
   group('SupplyItemRepository tests', () {
-    late GenericRepository<SupplyItem> repository =
-        GenericRepository<SupplyItem>(
+    late Repository<SupplyItem> repository =
+        Repository<SupplyItem>(
       tableName: 'supply_items',
       toMap: (SupplyItem item) => item.toMap(),
       fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),
@@ -139,7 +139,7 @@ void main() {
 
   group('Invalid column name test', () {
     test('Throws exception for invalid column name', () async {
-      GenericRepository<SupplyItem> repository = GenericRepository<SupplyItem>(
+      Repository<SupplyItem> repository = Repository<SupplyItem>(
         tableName: 'bad_table',
         toMap: (SupplyItem item) => item.toMap(),
         fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),

@@ -1,19 +1,19 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/services/generic_repository.dart';
+import 'package:transdiy/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
   List<SupplyItem> _items = [];
   bool _isLoading = true;
-  final GenericRepository<SupplyItem> repository;
+  final Repository<SupplyItem> repository;
 
   List<SupplyItem> get items => _items;
   bool get isLoading => _isLoading;
 
-  SupplyItemProvider({GenericRepository<SupplyItem>? repository})
+  SupplyItemProvider({Repository<SupplyItem>? repository})
       : repository = repository ??
-            GenericRepository<SupplyItem>(
+            Repository<SupplyItem>(
               tableName: 'supply_items',
               toMap: (item) => item.toMap(),
               fromMap: (map) => SupplyItem.fromMap(map),

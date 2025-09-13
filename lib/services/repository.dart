@@ -1,12 +1,12 @@
 import 'package:sqflite/sqflite.dart';
 import 'app_database.dart';
 
-class GenericRepository<T> {
+class Repository<T> {
   final String tableName;
   final Map<String, Object?> Function(T) toMap;
   final T Function(Map<String, Object?>) fromMap;
 
-  GenericRepository({
+  Repository({
     required this.tableName,
     required this.toMap,
     required this.fromMap,

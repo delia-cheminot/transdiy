@@ -1,12 +1,12 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/services/generic_repository.dart';
+import 'package:transdiy/services/repository.dart';
 
 class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
   bool _isLoading = true;
-  final GenericRepository<MedicationIntake> repository;
+  final Repository<MedicationIntake> repository;
 
   List<MedicationIntake> get intakes => _intakes;
   List<MedicationIntake> get takenIntakes =>
@@ -15,9 +15,9 @@ class MedicationIntakeProvider extends ChangeNotifier {
       _intakes.where((intake) => !intake.isTaken).toList();
   bool get isLoading => _isLoading;
 
-  MedicationIntakeProvider({GenericRepository<MedicationIntake>? repository})
+  MedicationIntakeProvider({Repository<MedicationIntake>? repository})
       : repository = repository ??
-            GenericRepository<MedicationIntake>(
+            Repository<MedicationIntake>(
               tableName: 'medication_intakes',
               toMap: (intake) => intake.toMap(),
               fromMap: (map) => MedicationIntake.fromMap(map),

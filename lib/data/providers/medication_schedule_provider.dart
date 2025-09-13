@@ -1,14 +1,14 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/services/generic_repository.dart';
+import 'package:transdiy/services/repository.dart';
 
 class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> _schedules = [];
   bool _isLoading = true;
 
-  GenericRepository<MedicationSchedule> repository =
-      GenericRepository<MedicationSchedule>(
+  Repository<MedicationSchedule> repository =
+      Repository<MedicationSchedule>(
     tableName: 'medication_schedules',
     toMap: (MedicationSchedule schedule) => schedule.toMap(),
     fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
@@ -18,9 +18,9 @@ class MedicationScheduleProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   MedicationScheduleProvider(
-      {GenericRepository<MedicationSchedule>? repository})
+      {Repository<MedicationSchedule>? repository})
       : repository = repository ??
-            GenericRepository<MedicationSchedule>(
+            Repository<MedicationSchedule>(
               tableName: 'medication_schedules',
               toMap: (MedicationSchedule schedule) => schedule.toMap(),
               fromMap: (Map<String, Object?> map) =>

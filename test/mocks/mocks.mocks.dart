@@ -13,7 +13,7 @@ import 'package:transdiy/data/model/medication_intake.dart' as _i9;
 import 'package:transdiy/data/model/supply_item.dart' as _i3;
 import 'package:transdiy/data/providers/medication_intake_provider.dart' as _i8;
 import 'package:transdiy/data/providers/supply_item_provider.dart' as _i4;
-import 'package:transdiy/services/generic_repository.dart' as _i2;
+import 'package:transdiy/services/repository.dart' as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -29,7 +29,7 @@ import 'package:transdiy/services/generic_repository.dart' as _i2;
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeGenericRepository_0<T> extends _i1.SmartFake
-    implements _i2.GenericRepository<T> {
+    implements _i2.Repository<T> {
   _FakeGenericRepository_0(
     Object parent,
     Invocation parentInvocation,
@@ -59,13 +59,13 @@ class MockSupplyItemProvider extends _i1.Mock
   }
 
   @override
-  _i2.GenericRepository<_i3.SupplyItem> get repository => (super.noSuchMethod(
+  _i2.Repository<_i3.SupplyItem> get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeGenericRepository_0<_i3.SupplyItem>(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.GenericRepository<_i3.SupplyItem>);
+      ) as _i2.Repository<_i3.SupplyItem>);
 
   @override
   List<_i3.SupplyItem> get items => (super.noSuchMethod(
@@ -191,14 +191,14 @@ class MockMedicationIntakeProvider extends _i1.Mock
   }
 
   @override
-  _i2.GenericRepository<_i9.MedicationIntake> get repository =>
+  _i2.Repository<_i9.MedicationIntake> get repository =>
       (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeGenericRepository_0<_i9.MedicationIntake>(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.GenericRepository<_i9.MedicationIntake>);
+      ) as _i2.Repository<_i9.MedicationIntake>);
 
   @override
   List<_i9.MedicationIntake> get intakes => (super.noSuchMethod(
