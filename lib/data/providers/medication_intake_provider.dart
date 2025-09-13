@@ -8,6 +8,12 @@ class MedicationIntakeProvider extends ChangeNotifier {
   bool _isLoading = true;
   final Repository<MedicationIntake> repository;
 
+  static final defaultRepository = Repository<MedicationIntake>(
+    tableName: 'medication_intakes',
+    toMap: (MedicationIntake intake) => intake.toMap(),
+    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
+  );
+
   List<MedicationIntake> get intakes => _intakes;
   List<MedicationIntake> get takenIntakes =>
       _intakes.where((intake) => intake.isTaken).toList();
@@ -16,12 +22,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   MedicationIntakeProvider({Repository<MedicationIntake>? repository})
-      : repository = repository ??
-            Repository<MedicationIntake>(
-              tableName: 'medication_intakes',
-              toMap: (intake) => intake.toMap(),
-              fromMap: (map) => MedicationIntake.fromMap(map),
-            ) {
+      : repository = repository ?? defaultRepository {
     _init();
   }
 

@@ -8,16 +8,17 @@ class SupplyItemProvider extends ChangeNotifier {
   bool _isLoading = true;
   final Repository<SupplyItem> repository;
 
+  static final defaultRepository = Repository<SupplyItem>(
+    tableName: 'supply_items',
+    toMap: (item) => item.toMap(),
+    fromMap: (map) => SupplyItem.fromMap(map),
+  );
+
   List<SupplyItem> get items => _items;
   bool get isLoading => _isLoading;
 
   SupplyItemProvider({Repository<SupplyItem>? repository})
-      : repository = repository ??
-            Repository<SupplyItem>(
-              tableName: 'supply_items',
-              toMap: (item) => item.toMap(),
-              fromMap: (map) => SupplyItem.fromMap(map),
-            ) {
+      : repository = repository ?? defaultRepository {
     _init();
   }
 

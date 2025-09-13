@@ -6,9 +6,9 @@ import 'package:transdiy/services/repository.dart';
 class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> _schedules = [];
   bool _isLoading = true;
+  final Repository<MedicationSchedule> repository;
 
-  Repository<MedicationSchedule> repository =
-      Repository<MedicationSchedule>(
+  static final defaultRepository = Repository<MedicationSchedule>(
     tableName: 'medication_schedules',
     toMap: (MedicationSchedule schedule) => schedule.toMap(),
     fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
@@ -17,15 +17,8 @@ class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
 
-  MedicationScheduleProvider(
-      {Repository<MedicationSchedule>? repository})
-      : repository = repository ??
-            Repository<MedicationSchedule>(
-              tableName: 'medication_schedules',
-              toMap: (MedicationSchedule schedule) => schedule.toMap(),
-              fromMap: (Map<String, Object?> map) =>
-                  MedicationSchedule.fromMap(map),
-            ) {
+  MedicationScheduleProvider({Repository<MedicationSchedule>? repository})
+      : repository = repository ?? defaultRepository {
     _init();
   }
 
