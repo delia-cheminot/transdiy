@@ -28,9 +28,8 @@ import 'package:transdiy/services/repository.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeGenericRepository_0<T> extends _i1.SmartFake
-    implements _i2.Repository<T> {
-  _FakeGenericRepository_0(
+class _FakeRepository_0<T> extends _i1.SmartFake implements _i2.Repository<T> {
+  _FakeRepository_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -61,7 +60,7 @@ class MockSupplyItemProvider extends _i1.Mock
   @override
   _i2.Repository<_i3.SupplyItem> get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeGenericRepository_0<_i3.SupplyItem>(
+        returnValue: _FakeRepository_0<_i3.SupplyItem>(
           this,
           Invocation.getter(#repository),
         ),
@@ -191,10 +190,9 @@ class MockMedicationIntakeProvider extends _i1.Mock
   }
 
   @override
-  _i2.Repository<_i9.MedicationIntake> get repository =>
-      (super.noSuchMethod(
+  _i2.Repository<_i9.MedicationIntake> get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeGenericRepository_0<_i9.MedicationIntake>(
+        returnValue: _FakeRepository_0<_i9.MedicationIntake>(
           this,
           Invocation.getter(#repository),
         ),

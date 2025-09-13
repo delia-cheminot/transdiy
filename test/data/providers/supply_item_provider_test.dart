@@ -2,14 +2,14 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
-import 'mock_generic_repository.dart';
+import 'generic_repository_mock.dart';
 
 void main() {
   late SupplyItemProvider provider;
-  late MockGenericRepository<SupplyItem> repo;
+  late GenericRepositoryMock<SupplyItem> repo;
 
   setUp(() async {
-    repo = MockGenericRepository<SupplyItem>(
+    repo = GenericRepositoryMock<SupplyItem>(
       withId: (i, id) => SupplyItem(
         id: id,
         name: i.name,

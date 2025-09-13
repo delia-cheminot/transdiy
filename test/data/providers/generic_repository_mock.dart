@@ -1,13 +1,13 @@
 import 'package:mockito/mockito.dart';
 import 'package:transdiy/services/repository.dart';
 
-class MockGenericRepository<T extends dynamic> extends Mock
+class GenericRepositoryMock<T extends dynamic> extends Mock
     implements Repository<T> {
   final List<T> _items = [];
   int _nextId = 1;
   final T Function(T, int) withId;
 
-  MockGenericRepository({required this.withId});
+  GenericRepositoryMock({required this.withId});
 
   List<T> get items => _items;
 

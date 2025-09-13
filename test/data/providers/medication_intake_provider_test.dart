@@ -2,14 +2,14 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
 import 'package:transdiy/data/providers/medication_intake_provider.dart';
-import 'mock_generic_repository.dart';
+import 'generic_repository_mock.dart';
 
 void main() {
   late MedicationIntakeProvider provider;
-  late MockGenericRepository<MedicationIntake> repo;
+  late GenericRepositoryMock<MedicationIntake> repo;
 
   setUp(() {
-    repo = MockGenericRepository<MedicationIntake>(
+    repo = GenericRepositoryMock<MedicationIntake>(
       withId: (i, id) => MedicationIntake(
         id: id,
         scheduledDateTime: i.scheduledDateTime,
