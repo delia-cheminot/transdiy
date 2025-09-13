@@ -20,7 +20,6 @@ void main() {
     );
     provider = SupplyItemProvider(repository: repo);
 
-    // Pré-remplir le repo avec quelques items
     await repo.insert(SupplyItem(
         id: 1, name: 'Test Item 1', totalDose: Decimal.parse('50'), dosePerUnit: Decimal.parse('5')));
 

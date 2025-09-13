@@ -90,5 +90,16 @@ void main() {
       // Assert
       expect({provider.intakes.length, provider.intakes.first.id}, {1, 2});
     });
+
+    test('takenIntakes and notTakenIntakes return correct subsets', () async {
+      await provider.fetchIntakes();
+      expect({
+        provider.takenIntakes,
+        provider.notTakenIntakes
+      }, {
+        repo.items.where((i) => i.isTaken).toList(),
+        repo.items.where((i) => !i.isTaken).toList()
+      });
+    });
   });
 }
