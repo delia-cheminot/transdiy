@@ -14,11 +14,6 @@ class ProfilePage extends StatelessWidget {
           title: Row(
             children: [
               Text('Profil'),
-              Image.asset(
-                'assets/global/logo.png',
-                width: 100,
-                height: 100,
-              ),
             ],
           ) 
           
@@ -34,11 +29,6 @@ class ProfilePage extends StatelessWidget {
         title: Row(
             children: [
               Text('Profil'),
-              Image.asset(
-                'assets/global/logo.png',
-                width: 100,
-                height: 100,
-              ),
             ],
           ),
         

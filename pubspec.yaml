@@ -38,6 +38,7 @@ dependencies:
   sqflite_common_ffi: ^2.0.0+2
   path: ^1.9.0
   decimal: ^3.2.4
+  flutter_svg: ^2.2.1
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,7 @@ flutter:
     - assets/
     - assets/homepage/
     - assets/global/
+    - assets/pharmacie/fioles/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
