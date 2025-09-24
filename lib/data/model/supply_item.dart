@@ -1,5 +1,4 @@
 import 'package:decimal/decimal.dart';
-import 'package:transdiy/utils/math_helper.dart';
 
 class SupplyItem {
   final int? id;
@@ -105,8 +104,8 @@ class SupplyItem {
     if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
-    final parsedValue = MathHelper.parseDouble(value);
-    if (parsedValue == null || parsedValue <= 0) {
+    final parsedValue = Decimal.tryParse(value);
+    if (parsedValue == null || parsedValue <= Decimal.zero) {
       return 'Doit être supérieur à 0';
     }
     return null;
