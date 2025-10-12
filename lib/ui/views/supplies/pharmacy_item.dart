@@ -1,71 +1,51 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/ui/views/supplies/edit_item_dialog.dart';
 
-
 class PharmacyItem extends StatelessWidget {
   final SupplyItem item;
   PharmacyItem({required this.item});
-  
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-        children : [ 
-          ListTile(
-            trailing: switch (item.getRatio()) {
-              0.0 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_vide.svg'
-              ),
-              var r when r > 0.0 && r < 0.25 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_02.svg'
-              ),
-              var r when r >= 0.25 && r < 0.3 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_025.svg'
-              ),
-              var r when r >= 0.3 && r < 0.4 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_03.svg'
-              ),
-              var r when r >= 0.4 && r < 0.5 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_04.svg'
-              ),
-              var r when r >= 0.5 && r < 0.6 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_05.svg'
-              ),
-              var r when r >= 0.6 && r < 0.75 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_06.svg'
-              ),
-              var r when r >= 0.75 && r < 0.8 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_075.svg'
-              ),
-              var r when r >= 0.8 && r < 0.9 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_08.svg'
-              ),
-              var r when r >= 0.9 && r < 1.0 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_09.svg', width: 120, height: 120,
-              ),
-              1.0 => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_1.svg'
-              ),
-              _ => SvgPicture.asset(
-              'assets/pharmacie/fioles/fiole_vide.svg'
-              ), 
-            }
-            ,
-            title: Text(item.name),
-            subtitle: Text(
-              'Contenance: ${item.totalDose.toString()} (${(item.getRemainingDose()).toString()} restant)'),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute<void>(
-                fullscreenDialog: true,
-                builder: (context) => EditItemDialog(item: item),
-                )
-              );
-            },
-          ),
-        ] 
-    );
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      ListTile(
+        trailing: SvgPicture.asset(_getVialAsset(item.getRatio())),
+        title: Text(item.name),
+        subtitle: Text(
+            'Contenance: ${item.totalDose.toString()} (${(item.getRemainingDose()).toString()} restant)'),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute<void>(
+            fullscreenDialog: true,
+            builder: (context) => EditItemDialog(item: item),
+          ));
+        },
+      ),
+    ]);
+  }
+
+  String _getVialAsset(double ratio) {
+    if (ratio == 0.0) return 'assets/pharmacie/fioles/fiole_vide.svg';
+    if (ratio == 1.0) return 'assets/pharmacie/fioles/fiole_1.svg';
+
+    final thresholds = <double, String>{
+      0.25: '025',
+      0.30: '03',
+      0.40: '04',
+      0.50: '05',
+      0.60: '06',
+      0.75: '075',
+      0.80: '08',
+      0.90: '09', // TODO: width: 120, height: 120 was added in the code, check if needed ?
+    };
+
+    for (final entry in thresholds.entries) {
+      if (ratio < entry.key) {
+        return 'assets/pharmacie/fioles/fiole_${entry.value}.svg';
+      }
+    }
+
+    return 'assets/pharmacie/fioles/fiole_vide.svg';
   }
 }
