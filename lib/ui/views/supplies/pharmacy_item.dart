@@ -11,12 +11,11 @@ class PharmacyItem extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final Decimal ratio = item.getRemainingDose() * item.totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10)  ;
     return Column(
       mainAxisSize: MainAxisSize.min,
         children : [ 
           ListTile(
-            trailing: switch (ratio.toDouble()) {
+            trailing: switch (item.getRatio()) {
               0.0 => SvgPicture.asset(
               'assets/pharmacie/fioles/fiole_vide.svg'
               ),
