@@ -17,7 +17,7 @@ class MedicationSchedule {
     return {
       'id': id,
       'name': name,
-      'dose': dose,
+      'dose': dose.toString(),
       'intervalDays': intervalDays,
     };
   }
