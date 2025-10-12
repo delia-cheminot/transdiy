@@ -11,13 +11,16 @@ class ProfilePage extends StatelessWidget {
     if (medicationScheduleState.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Row(
-            children: [
-              Text('Profil'),
-            ],
-          ) 
-          
-        ),
+            title: Row(
+          children: [
+            Text('Profil'),
+            Image.asset(
+              'assets/global/logo.png',
+              width: 100,
+              height: 100,
+            ),
+          ],
+        )),
         body: Center(
           child: CircularProgressIndicator(),
         ),
@@ -27,11 +30,15 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-            children: [
-              Text('Profil'),
-            ],
-          ),
-        
+          children: [
+            Text('Profil'),
+            Image.asset(
+              'assets/global/logo.png',
+              width: 100,
+              height: 100,
+            ),
+          ],
+        ),
       ),
       body: medicationScheduleState.schedules.isEmpty
           ? Center(
@@ -41,10 +48,10 @@ class ProfilePage extends StatelessWidget {
               itemCount: medicationScheduleState.schedules.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(medicationScheduleState.schedules[index].name),
-                  subtitle: Text(
-                      medicationScheduleState.schedules[index].dose.toString()),
-                );
+                    title: Text(medicationScheduleState.schedules[index].name),
+                    subtitle: Text(
+                        "${medicationScheduleState.schedules[index].dose.toString()} mg "
+                        "tous les ${medicationScheduleState.schedules[index].intervalDays.toString()} jours"));
               },
             ),
       floatingActionButton: FloatingActionButton(
