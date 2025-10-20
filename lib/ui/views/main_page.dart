@@ -9,14 +9,14 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
+  get currentTab => mainTabs[_selectedIndex];
+
   void _selectIndex(int index) {
     setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentTab = mainTabs[_selectedIndex];
-
     return Scaffold(
       appBar: AppBar(
         title: Text(currentTab.title),
