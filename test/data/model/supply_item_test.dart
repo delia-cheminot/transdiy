@@ -56,7 +56,6 @@ void main() {
         copy.usedDose,
         copy.dosePerUnit,
         copy.quantity,
-        copy == item
       ],
       [
         item.id,
@@ -65,7 +64,6 @@ void main() {
         item.usedDose,
         item.dosePerUnit,
         item.quantity,
-        false
       ],
       );
     });

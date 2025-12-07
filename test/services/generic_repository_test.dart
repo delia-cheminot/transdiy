@@ -115,10 +115,12 @@ void main() {
     test('Only delete the specified SupplyItem', () async {
       // Create and insert two SupplyItems
       final item1 = SupplyItem(
+          id: 1,
           name: 'g',
           totalDose: Decimal.parse('1'),
           dosePerUnit: Decimal.parse('1'));
       final item2 = SupplyItem(
+          id: 2,
           name: 'h',
           totalDose: Decimal.parse('2'),
           dosePerUnit: Decimal.parse('1'));

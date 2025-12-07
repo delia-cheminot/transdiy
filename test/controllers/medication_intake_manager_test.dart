@@ -151,15 +151,20 @@ void main() {
         intervalDays: 7,
       );
 
+      final takenDateTime = DateTime.now();
+
       when(mockMedicationScheduleProvider.getScheduleById(42))
           .thenReturn(schedule);
       when(mockMedicationScheduleProvider.updateSchedule(any))
           .thenAnswer((_) async {});
 
-      await manager.takeMedication(intake, supplyItem);
+      await manager.takeMedication(intake, supplyItem,
+          takenDate: takenDateTime);
 
       expect(schedule.lastTaken.day, DateTime.now().day);
-      verify(mockMedicationScheduleProvider.updateSchedule(schedule)).called(1);
+      verify(mockMedicationScheduleProvider
+              .updateSchedule(schedule.copyWith(lastTaken: takenDateTime)))
+          .called(1);
     });
   });
 }

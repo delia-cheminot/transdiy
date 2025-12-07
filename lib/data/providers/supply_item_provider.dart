@@ -39,8 +39,7 @@ class SupplyItemProvider extends ChangeNotifier {
   }
 
   Future<void> deleteItem(SupplyItem item) async {
-    assert(item.id != null);
-    await repository.delete(item.id!);
+    await repository.delete(item.id);
     await fetchItems();
   }
 
@@ -52,8 +51,7 @@ class SupplyItemProvider extends ChangeNotifier {
   }
 
   Future<void> updateItem(SupplyItem item) async {
-    assert(item.id != null);
-    await repository.update(item, item.id!);
+    await repository.update(item, item.id);
     await fetchItems();
   }
 }

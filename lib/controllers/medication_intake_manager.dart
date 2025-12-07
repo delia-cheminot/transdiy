@@ -45,8 +45,8 @@ class MedicationIntakeManager {
         ? _medicationScheduleProvider.getScheduleById(intake.scheduleId!)
         : null;
     if (schedule != null) {
-      schedule.lastTaken = intake.takenDateTime!;
-      await _medicationScheduleProvider.updateSchedule(schedule);
+      await _medicationScheduleProvider
+          .updateSchedule(schedule.copyWith(lastTaken: intake.takenDateTime!));
     }
   }
 }

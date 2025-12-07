@@ -2,10 +2,10 @@ import 'package:decimal/decimal.dart';
 
 class MedicationSchedule {
   final int id;
-  String name;
-  Decimal dose;
-  int intervalDays;
-  DateTime lastTaken;
+  final String name;
+  final Decimal dose;
+  final int intervalDays;
+  final DateTime lastTaken;
 
   MedicationSchedule({
     int? id,
@@ -45,6 +45,43 @@ class MedicationSchedule {
       lastTaken: lastTaken,
     );
   }
+
+  MedicationSchedule copyWith({
+    int? id,
+    String? name,
+    Decimal? dose,
+    int? intervalDays,
+    DateTime? lastTaken,
+  }) {
+    return MedicationSchedule(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      dose: dose ?? this.dose,
+      intervalDays: intervalDays ?? this.intervalDays,
+      lastTaken: lastTaken ?? this.lastTaken,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MedicationSchedule &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          dose == other.dose &&
+          intervalDays == other.intervalDays &&
+          lastTaken == other.lastTaken;
+
+  @override
+  int get hashCode =>
+      Object.hash(
+        id,
+        name,
+        dose,
+        intervalDays,
+        lastTaken,
+      );
 
   @override
   String toString() {

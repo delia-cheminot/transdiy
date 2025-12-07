@@ -57,7 +57,6 @@ void main() {
           copy.dose,
           copy.intervalDays,
           copy.lastTaken,
-          copy == schedule,
         ],
         [
           schedule.id,
@@ -65,7 +64,6 @@ void main() {
           schedule.dose,
           schedule.intervalDays,
           schedule.lastTaken,
-          false,
         ],
       );
     });
