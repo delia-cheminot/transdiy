@@ -1,20 +1,20 @@
 import 'package:decimal/decimal.dart';
 
 class MedicationIntake {
-  final int? id;
-  DateTime scheduledDateTime;
-  DateTime? takenDateTime;
-  Decimal dose;
+  final int id;
+  final DateTime scheduledDateTime;
+  final DateTime? takenDateTime;
+  final Decimal dose;
   final int? scheduleId;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
-    this.id,
+    int? id,
     required this.scheduledDateTime,
     required this.dose,
     this.takenDateTime,
     this.scheduleId,
-  });
+  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   Map<String, Object?> toMap() {
     return {
@@ -47,6 +47,36 @@ class MedicationIntake {
       scheduleId: scheduleId,
     );
   }
+
+  MedicationIntake copyWith({
+    int? id,
+    DateTime? scheduledDateTime,
+    DateTime? takenDateTime,
+    Decimal? dose,
+    int? scheduleId,
+  }) {
+    return MedicationIntake(
+      id: id ?? this.id,
+      scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,
+      takenDateTime: takenDateTime ?? this.takenDateTime,
+      dose: dose ?? this.dose,
+      scheduleId: scheduleId ?? this.scheduleId,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MedicationIntake &&
+          id == other.id &&
+          scheduledDateTime == other.scheduledDateTime &&
+          takenDateTime == other.takenDateTime &&
+          dose == other.dose &&
+          scheduleId == other.scheduleId;
+
+  @override
+  int get hashCode =>
+      Object.hash(dose, id, scheduleId, scheduledDateTime, takenDateTime);
 
   @override
   String toString() {

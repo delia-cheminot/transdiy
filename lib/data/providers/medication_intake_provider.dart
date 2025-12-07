@@ -43,8 +43,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
   }
 
   Future<void> deleteIntake(MedicationIntake intake) async {
-    assert(intake.id != null);
-    await repository.delete(intake.id!);
+    await repository.delete(intake.id);
     await fetchIntakes();
   }
 
@@ -55,8 +54,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
   }
 
   Future<void> updateIntake(MedicationIntake intake) async {
-    assert(intake.id != null);
-    await repository.update(intake, intake.id!);
+    await repository.update(intake, intake.id);
     await fetchIntakes();
   }
 }

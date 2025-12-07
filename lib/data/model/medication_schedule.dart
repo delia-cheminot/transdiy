@@ -13,8 +13,8 @@ class MedicationSchedule {
     required this.dose,
     required this.intervalDays,
     DateTime? lastTaken,
-  }) : id = id ?? DateTime.now().millisecondsSinceEpoch,
-       lastTaken = lastTaken ?? DateTime.now();
+  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
+        lastTaken = lastTaken ?? DateTime.now();
 
   Map<String, Object?> toMap() {
     return {
@@ -66,7 +66,6 @@ class MedicationSchedule {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MedicationSchedule &&
-          runtimeType == other.runtimeType &&
           id == other.id &&
           name == other.name &&
           dose == other.dose &&
@@ -74,14 +73,7 @@ class MedicationSchedule {
           lastTaken == other.lastTaken;
 
   @override
-  int get hashCode =>
-      Object.hash(
-        id,
-        name,
-        dose,
-        intervalDays,
-        lastTaken,
-      );
+  int get hashCode => Object.hash(id, name, dose, intervalDays, lastTaken);
 
   @override
   String toString() {

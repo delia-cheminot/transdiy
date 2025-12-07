@@ -1,6 +1,5 @@
 import 'package:decimal/decimal.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
@@ -29,24 +28,29 @@ class MedicationIntakeManager {
       throw ArgumentError('Medication already taken');
     }
 
-    if (!supplyItem.canUseDose(intake.dose)) {
+    MedicationIntake updatedIntake = intake;
+
+    if (!supplyItem.canUseDose(updatedIntake.dose)) {
       Decimal remainingDose = supplyItem.getRemainingDose();
-      Decimal doseToAdd = intake.dose - remainingDose;
-      intake.dose = remainingDose;
+      Decimal doseToAdd = updatedIntake.dose - remainingDose;
+      updatedIntake = updatedIntake.copyWith(dose: remainingDose);
       await _medicationIntakeState.addIntake(
-          intake.scheduledDateTime, doseToAdd);
+          updatedIntake.scheduledDateTime, doseToAdd);
     }
 
-    SupplyItemManager(_supplyItemProvider).useDose(supplyItem, intake.dose);
-    intake.takenDateTime = takenDate ?? DateTime.now();
-    await _medicationIntakeState.updateIntake(intake);
+    SupplyItemManager(_supplyItemProvider)
+        .useDose(supplyItem, updatedIntake.dose);
+    updatedIntake = updatedIntake.copyWith(
+      takenDateTime: takenDate ?? DateTime.now(),
+    );
+    await _medicationIntakeState.updateIntake(updatedIntake);
 
-    MedicationSchedule? schedule = intake.scheduleId != null
-        ? _medicationScheduleProvider.getScheduleById(intake.scheduleId!)
+    final schedule = updatedIntake.scheduleId != null
+        ? _medicationScheduleProvider.getScheduleById(updatedIntake.scheduleId!)
         : null;
     if (schedule != null) {
-      await _medicationScheduleProvider
-          .updateSchedule(schedule.copyWith(lastTaken: intake.takenDateTime!));
+      await _medicationScheduleProvider.updateSchedule(
+          schedule.copyWith(lastTaken: updatedIntake.takenDateTime!));
     }
   }
 }

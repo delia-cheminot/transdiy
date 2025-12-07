@@ -61,7 +61,6 @@ void main() {
           copy.dose,
           copy.isTaken,
           copy.scheduleId,
-          copy == intake,
         ],
         [
           intake.id,
@@ -70,7 +69,6 @@ void main() {
           intake.dose,
           intake.isTaken,
           intake.scheduleId,
-          false,
         ],
       );
     });

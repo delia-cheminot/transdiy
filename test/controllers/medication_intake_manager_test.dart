@@ -37,10 +37,16 @@ void main() {
         dosePerUnit: Decimal.parse('5'),
       );
 
+      late MedicationIntake updatedIntake;
+      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+        updatedIntake = inv.positionalArguments.first as MedicationIntake;
+        return Future.value();
+      });
+
       await manager.takeMedication(intake, supplyItem);
 
-      expect(intake.isTaken, true);
-      verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
+      expect(updatedIntake.isTaken, true);
+      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
       verify(mockSupplyItemProvider.updateItem(
               supplyItem.copyWith(usedDose: supplyItem.usedDose + intake.dose)))
           .called(1);
@@ -82,13 +88,19 @@ void main() {
         dosePerUnit: Decimal.parse('5'),
       );
 
+      late MedicationIntake updatedIntake;
+      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+        updatedIntake = inv.positionalArguments.first as MedicationIntake;
+        return Future.value();
+      });
+
       final customDate = DateTime.now().add(Duration(days: 1));
 
       await manager.takeMedication(intake, supplyItem, takenDate: customDate);
 
-      expect(intake.isTaken, true);
-      expect(intake.takenDateTime, customDate);
-      verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
+      expect(updatedIntake.isTaken, true);
+      expect(updatedIntake.takenDateTime, customDate);
+      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
     });
 
     test('should handle case when not enough medication is remaining',
@@ -107,6 +119,12 @@ void main() {
         dosePerUnit: Decimal.parse('1'),
       );
 
+      late MedicationIntake updatedIntake;
+      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+        updatedIntake = inv.positionalArguments.first as MedicationIntake;
+        return Future.value();
+      });
+
       Decimal remainingDose = Decimal.parse('1'); // 1mg remaining in the supply
       Decimal doseToAdd =
           Decimal.parse('14'); // 14mg to be added in a new intake
@@ -116,15 +134,15 @@ void main() {
 
       await manager.takeMedication(intake, supplyItem);
 
-      expect(intake.dose, remainingDose);
+      expect(updatedIntake.dose, remainingDose);
 
       verify(mockMedicationIntakeState.addIntake(
         intake.scheduledDateTime,
         doseToAdd,
       )).called(1);
 
-      verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
-      expect(intake.isTaken, true);
+      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
+      expect(updatedIntake.isTaken, true);
     });
 
     test('should update schedule last taken date if scheduleId is present',
