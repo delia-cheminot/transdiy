@@ -52,7 +52,8 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
-      dose TEXT NOT NULL
+      dose TEXT NOT NULL,
+      scheduleId INTEGER
     )
     ''');
 
@@ -61,7 +62,8 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       dose TEXT NOT NULL,
-      intervalDays INTEGER NOT NULL
+      intervalDays INTEGER NOT NULL,
+      lastTaken TEXT NOT NULL
     )
     ''');
   }

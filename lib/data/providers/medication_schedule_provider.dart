@@ -17,6 +17,14 @@ class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
 
+  MedicationSchedule? getScheduleById(int id) {
+    try {
+      return _schedules.firstWhere((schedule) => schedule.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
   MedicationScheduleProvider({Repository<MedicationSchedule>? repository})
       : repository = repository ?? defaultRepository {
     _init();
@@ -39,20 +47,23 @@ class MedicationScheduleProvider extends ChangeNotifier {
   }
 
   Future<void> deleteSchedule(MedicationSchedule schedule) async {
-    assert(schedule.id != null);
-    await repository.delete(schedule.id!);
+    await repository.delete(schedule.id);
     await fetchSchedules();
   }
 
-  Future<void> addSchedule(String name, Decimal dose, int intervalDays) async {
-    await repository.insert(
-        MedicationSchedule(name: name, dose: dose, intervalDays: intervalDays));
+  Future<void> addSchedule(String name, Decimal dose, int intervalDays,
+      {DateTime? lastTaken}) async {
+    await repository.insert(MedicationSchedule(
+      name: name,
+      dose: dose,
+      intervalDays: intervalDays,
+      lastTaken: lastTaken ?? DateTime.now(),
+    ));
     await fetchSchedules();
   }
 
   Future<void> updateSchedule(MedicationSchedule schedule) async {
-    assert(schedule.id != null);
-    await repository.update(schedule, schedule.id!);
+    await repository.update(schedule, schedule.id);
     await fetchSchedules();
   }
 }

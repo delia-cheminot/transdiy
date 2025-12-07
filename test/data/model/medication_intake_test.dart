@@ -13,6 +13,7 @@ void main() {
         scheduledDateTime: scheduled,
         dose: Decimal.parse('2.5'),
         takenDateTime: taken,
+        scheduleId: 42,
       );
 
       final map = intake.toMap();
@@ -25,13 +26,15 @@ void main() {
           fromMap.takenDateTime,
           fromMap.dose,
           fromMap.isTaken,
+          fromMap.scheduleId,
         ],
         [
           intake.id,
           intake.scheduledDateTime,
           intake.takenDateTime,
           intake.dose,
-          true,
+          intake.isTaken,
+          intake.scheduleId,
         ],
       );
     });
@@ -45,6 +48,7 @@ void main() {
         scheduledDateTime: scheduled,
         dose: Decimal.fromInt(5),
         takenDateTime: taken,
+        scheduleId: 7,
       );
 
       final copy = intake.copy();
@@ -56,6 +60,7 @@ void main() {
           copy.takenDateTime,
           copy.dose,
           copy.isTaken,
+          copy.scheduleId,
           copy == intake,
         ],
         [
@@ -63,7 +68,8 @@ void main() {
           intake.scheduledDateTime,
           intake.takenDateTime,
           intake.dose,
-          true,
+          intake.isTaken,
+          intake.scheduleId,
           false,
         ],
       );

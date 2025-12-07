@@ -5,6 +5,7 @@ class MedicationIntake {
   DateTime scheduledDateTime;
   DateTime? takenDateTime;
   Decimal dose;
+  final int? scheduleId;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
@@ -12,6 +13,7 @@ class MedicationIntake {
     required this.scheduledDateTime,
     required this.dose,
     this.takenDateTime,
+    this.scheduleId,
   });
 
   Map<String, Object?> toMap() {
@@ -20,6 +22,7 @@ class MedicationIntake {
       'scheduledDateTime': scheduledDateTime.toIso8601String(),
       'takenDateTime': takenDateTime?.toIso8601String(),
       'dose': dose.toString(),
+      'scheduleId': scheduleId,
     };
   }
 
@@ -31,6 +34,7 @@ class MedicationIntake {
           ? null
           : DateTime.parse(map['takenDateTime'] as String),
       dose: Decimal.parse(map['dose'] as String),
+      scheduleId: map['scheduleId'] as int?,
     );
   }
 
@@ -40,6 +44,7 @@ class MedicationIntake {
       scheduledDateTime: scheduledDateTime,
       takenDateTime: takenDateTime,
       dose: dose,
+      scheduleId: scheduleId,
     );
   }
 

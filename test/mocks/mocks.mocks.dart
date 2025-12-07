@@ -8,10 +8,13 @@ import 'dart:ui' as _i7;
 
 import 'package:decimal/decimal.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:transdiy/controllers/supply_item_manager.dart' as _i10;
+import 'package:transdiy/controllers/supply_item_manager.dart' as _i12;
 import 'package:transdiy/data/model/medication_intake.dart' as _i9;
+import 'package:transdiy/data/model/medication_schedule.dart' as _i11;
 import 'package:transdiy/data/model/supply_item.dart' as _i3;
 import 'package:transdiy/data/providers/medication_intake_provider.dart' as _i8;
+import 'package:transdiy/data/providers/medication_schedule_provider.dart'
+    as _i10;
 import 'package:transdiy/data/providers/supply_item_provider.dart' as _i4;
 import 'package:transdiy/services/repository.dart' as _i2;
 
@@ -324,10 +327,153 @@ class MockMedicationIntakeProvider extends _i1.Mock
       );
 }
 
+/// A class which mocks [MedicationScheduleProvider].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMedicationScheduleProvider extends _i1.Mock
+    implements _i10.MedicationScheduleProvider {
+  MockMedicationScheduleProvider() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Repository<_i11.MedicationSchedule> get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeRepository_0<_i11.MedicationSchedule>(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i2.Repository<_i11.MedicationSchedule>);
+
+  @override
+  List<_i11.MedicationSchedule> get schedules => (super.noSuchMethod(
+        Invocation.getter(#schedules),
+        returnValue: <_i11.MedicationSchedule>[],
+      ) as List<_i11.MedicationSchedule>);
+
+  @override
+  bool get isLoading => (super.noSuchMethod(
+        Invocation.getter(#isLoading),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+
+  @override
+  _i11.MedicationSchedule? getScheduleById(int? id) =>
+      (super.noSuchMethod(Invocation.method(
+        #getScheduleById,
+        [id],
+      )) as _i11.MedicationSchedule?);
+
+  @override
+  _i5.Future<void> fetchSchedules() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchSchedules,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> deleteScheduleFromId(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteScheduleFromId,
+          [id],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> deleteSchedule(_i11.MedicationSchedule? schedule) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteSchedule,
+          [schedule],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> addSchedule(
+    String? name,
+    _i6.Decimal? dose,
+    int? intervalDays, {
+    DateTime? lastTaken,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addSchedule,
+          [
+            name,
+            dose,
+            intervalDays,
+          ],
+          {#lastTaken: lastTaken},
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> updateSchedule(_i11.MedicationSchedule? schedule) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateSchedule,
+          [schedule],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
 /// A class which mocks [SupplyItemManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupplyItemManager extends _i1.Mock implements _i10.SupplyItemManager {
+class MockSupplyItemManager extends _i1.Mock implements _i12.SupplyItemManager {
   MockSupplyItemManager() {
     _i1.throwOnMissingStub(this);
   }

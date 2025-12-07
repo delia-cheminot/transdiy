@@ -17,6 +17,7 @@ void main() {
         'name': schedule.name,
         'dose': schedule.dose.toString(),
         'intervalDays': schedule.intervalDays,
+        'lastTaken': schedule.lastTaken.toIso8601String(),
       };
 
       final fromMap = MedicationSchedule.fromMap(map);
@@ -27,12 +28,14 @@ void main() {
           fromMap.name,
           fromMap.dose,
           fromMap.intervalDays,
+          fromMap.lastTaken
         ],
         [
           schedule.id,
           schedule.name,
           schedule.dose,
           schedule.intervalDays,
+          schedule.lastTaken
         ],
       );
     });
@@ -53,6 +56,7 @@ void main() {
           copy.name,
           copy.dose,
           copy.intervalDays,
+          copy.lastTaken,
           copy == schedule,
         ],
         [
@@ -60,6 +64,7 @@ void main() {
           schedule.name,
           schedule.dose,
           schedule.intervalDays,
+          schedule.lastTaken,
           false,
         ],
       );
