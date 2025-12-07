@@ -37,7 +37,7 @@ class PharmacyItem extends StatelessWidget {
       0.60: '06',
       0.75: '075',
       0.80: '08',
-      0.90: '09', // TODO: width: 120, height: 120 was added in the code, check if needed ?
+      0.90: '09', 
     };
 
     for (final entry in thresholds.entries) {
