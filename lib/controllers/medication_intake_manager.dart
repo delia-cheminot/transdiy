@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
@@ -14,14 +13,6 @@ class MedicationIntakeManager {
   MedicationIntakeManager(this._medicationIntakeState,
       this._medicationScheduleProvider, this._supplyItemProvider);
 
-  static MedicationIntakeManager create(
-      MedicationIntakeProvider medicationIntakeState,
-      MedicationScheduleProvider medicationScheduleProvider,
-      SupplyItemProvider supplyItemProvider) {
-    return MedicationIntakeManager(
-        medicationIntakeState, medicationScheduleProvider, supplyItemProvider);
-  }
-
   Future<void> takeMedication(MedicationIntake intake, SupplyItem supplyItem,
       {DateTime? takenDate}) async {
     if (intake.isTaken) {
@@ -30,27 +21,49 @@ class MedicationIntakeManager {
 
     MedicationIntake updatedIntake = intake;
 
-    if (!supplyItem.canUseDose(updatedIntake.dose)) {
-      Decimal remainingDose = supplyItem.getRemainingDose();
-      Decimal doseToAdd = updatedIntake.dose - remainingDose;
-      updatedIntake = updatedIntake.copyWith(dose: remainingDose);
-      await _medicationIntakeState.addIntake(
-          updatedIntake.scheduledDateTime, doseToAdd);
+    updatedIntake = await _checkDoseAndSplitIfNeeded(updatedIntake, supplyItem);
+
+    updatedIntake =
+        await _markIntakeTaken(updatedIntake, supplyItem, takenDate);
+
+    await _updateScheduleLastTaken(updatedIntake);
+  }
+
+  Future<MedicationIntake> _checkDoseAndSplitIfNeeded(
+      MedicationIntake intake, SupplyItem supplyItem) async {
+    if (supplyItem.canUseDose(intake.dose)) {
+      return intake;
     }
 
-    SupplyItemManager(_supplyItemProvider)
-        .useDose(supplyItem, updatedIntake.dose);
-    updatedIntake = updatedIntake.copyWith(
+    final remainingDose = supplyItem.getRemainingDose();
+    final doseToAdd = intake.dose - remainingDose;
+    final updatedIntake = intake.copyWith(dose: remainingDose);
+    await _medicationIntakeState.addIntake(
+        updatedIntake.scheduledDateTime, doseToAdd);
+
+    return updatedIntake;
+  }
+
+  Future<MedicationIntake> _markIntakeTaken(MedicationIntake intake,
+      SupplyItem supplyItem, DateTime? takenDate) async {
+    SupplyItemManager(_supplyItemProvider).useDose(supplyItem, intake.dose);
+    final updatedIntake = intake.copyWith(
       takenDateTime: takenDate ?? DateTime.now(),
     );
+
     await _medicationIntakeState.updateIntake(updatedIntake);
 
-    final schedule = updatedIntake.scheduleId != null
-        ? _medicationScheduleProvider.getScheduleById(updatedIntake.scheduleId!)
-        : null;
+    return updatedIntake;
+  }
+
+  Future<void> _updateScheduleLastTaken(MedicationIntake intake) async {
+    if (intake.scheduleId == null) return;
+    final schedule =
+        _medicationScheduleProvider.getScheduleById(intake.scheduleId!);
+
     if (schedule != null) {
-      await _medicationScheduleProvider.updateSchedule(
-          schedule.copyWith(lastTaken: updatedIntake.takenDateTime!));
+      await _medicationScheduleProvider
+          .updateSchedule(schedule.copyWith(lastTaken: intake.takenDateTime!));
     }
   }
 }
