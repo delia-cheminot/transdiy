@@ -96,6 +96,7 @@ void main() {
         'name': 'Morning Med',
         'dose': '5',
         'intervalDays': 1,
+        'lastTaken': DateTime(2025, 9, 13).toIso8601String(),
       });
 
       final schedule = await db.query(
