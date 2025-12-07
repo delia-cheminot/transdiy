@@ -10,15 +10,15 @@ import '../mocks/mocks.mocks.dart';
 void main() {
   late MedicationIntakeManager manager;
   late MockMedicationIntakeProvider mockMedicationIntakeState;
-  late MockSupplyItemManager mockSupplyItemManager;
   late MockMedicationScheduleProvider mockMedicationScheduleProvider;
+  late MockSupplyItemProvider mockSupplyItemProvider;
 
   setUp(() {
     mockMedicationIntakeState = MockMedicationIntakeProvider();
     mockMedicationScheduleProvider = MockMedicationScheduleProvider();
-    mockSupplyItemManager = MockSupplyItemManager();
-    manager = MedicationIntakeManager(
-        mockMedicationIntakeState, mockMedicationScheduleProvider);
+    mockSupplyItemProvider = MockSupplyItemProvider();
+    manager = MedicationIntakeManager(mockMedicationIntakeState,
+        mockMedicationScheduleProvider, mockSupplyItemProvider);
   });
 
   group('MedicationIntakeManager', () {
@@ -37,11 +37,11 @@ void main() {
         dosePerUnit: Decimal.parse('5'),
       );
 
-      await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
+      await manager.takeMedication(intake, supplyItem);
 
       expect(intake.isTaken, true);
       verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
-      verify(mockSupplyItemManager.useDose(supplyItem, intake.dose)).called(1);
+      verify(mockSupplyItemProvider.updateItem(supplyItem)).called(1);
     });
 
     test('should throw ArgumentError when taking medication already taken',
@@ -63,7 +63,7 @@ void main() {
 
       expect(
           () async => await manager.takeMedication(
-              intake, supplyItem, mockSupplyItemManager),
+              intake, supplyItem),
           throwsArgumentError);
     });
 
@@ -84,7 +84,7 @@ void main() {
 
       final customDate = DateTime.now().add(Duration(days: 1));
 
-      await manager.takeMedication(intake, supplyItem, mockSupplyItemManager,
+      await manager.takeMedication(intake, supplyItem,
           takenDate: customDate);
 
       expect(intake.isTaken, true);
@@ -115,7 +115,7 @@ void main() {
       when(mockMedicationIntakeState.addIntake(intake.scheduledDateTime, any))
           .thenAnswer((_) async {});
 
-      await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
+      await manager.takeMedication(intake, supplyItem);
 
       expect(intake.dose, remainingDose);
 
@@ -124,8 +124,7 @@ void main() {
         doseToAdd,
       )).called(1);
 
-      verify(mockSupplyItemManager.useDose(
-              supplyItem, supplyItem.totalDose - supplyItem.usedDose))
+      verify(mockMedicationIntakeState.updateIntake(intake))
           .called(1);
       expect(intake.isTaken, true);
     });
@@ -159,7 +158,7 @@ void main() {
       when(mockMedicationScheduleProvider.updateSchedule(any))
           .thenAnswer((_) async {});
 
-      await manager.takeMedication(intake, supplyItem, mockSupplyItemManager);
+      await manager.takeMedication(intake, supplyItem);
 
       expect(schedule.lastTaken.day, DateTime.now().day);
       verify(mockMedicationScheduleProvider.updateSchedule(schedule)).called(1);
