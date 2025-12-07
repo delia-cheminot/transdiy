@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 
 class SupplyItem {
-  final int? id;
+  final int id;
   final String name;
   final Decimal totalDose; // mg
   final Decimal usedDose; // mg
@@ -11,13 +11,14 @@ class SupplyItem {
   bool get isInStock => quantity > 0;
 
   SupplyItem({
-    this.id,
+    int? id,
     required this.name,
     required this.totalDose,
     required this.dosePerUnit,
     Decimal? usedDose,
     this.quantity = 1,
-  }) : usedDose = usedDose ?? Decimal.zero;
+  }) : usedDose = usedDose ?? Decimal.zero,
+       id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   Map<String, Object?> toMap() {
     return {
