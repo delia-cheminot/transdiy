@@ -41,7 +41,9 @@ void main() {
 
       expect(intake.isTaken, true);
       verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
-      verify(mockSupplyItemProvider.updateItem(supplyItem)).called(1);
+      verify(mockSupplyItemProvider.updateItem(
+              supplyItem.copyWith(usedDose: supplyItem.usedDose + intake.dose)))
+          .called(1);
     });
 
     test('should throw ArgumentError when taking medication already taken',
@@ -61,9 +63,7 @@ void main() {
         dosePerUnit: Decimal.parse('5'),
       );
 
-      expect(
-          () async => await manager.takeMedication(
-              intake, supplyItem),
+      expect(() async => await manager.takeMedication(intake, supplyItem),
           throwsArgumentError);
     });
 
@@ -84,8 +84,7 @@ void main() {
 
       final customDate = DateTime.now().add(Duration(days: 1));
 
-      await manager.takeMedication(intake, supplyItem,
-          takenDate: customDate);
+      await manager.takeMedication(intake, supplyItem, takenDate: customDate);
 
       expect(intake.isTaken, true);
       expect(intake.takenDateTime, customDate);
@@ -124,8 +123,7 @@ void main() {
         doseToAdd,
       )).called(1);
 
-      verify(mockMedicationIntakeState.updateIntake(intake))
-          .called(1);
+      verify(mockMedicationIntakeState.updateIntake(intake)).called(1);
       expect(intake.isTaken, true);
     });
 

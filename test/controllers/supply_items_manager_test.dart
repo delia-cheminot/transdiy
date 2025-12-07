@@ -60,11 +60,17 @@ void main() {
           totalDose: Decimal.parse('20'),
           usedDose: Decimal.parse('5'),
           dosePerUnit: Decimal.parse('1'));
+      
+      late SupplyItem updatedItem;
+      when(mockSupplyItemState.updateItem(any)).thenAnswer((invocation) async {
+        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
 
       await manager.useDose(item, Decimal.parse('5'));
 
-      expect(item.usedDose, Decimal.parse('10'));
-      verify(mockSupplyItemState.updateItem(item)).called(1);
+      expect(updatedItem.usedDose, Decimal.parse('10'));
+      verify(mockSupplyItemState.updateItem(updatedItem)).called(1);
     });
 
     test('should throw ArgumentError when using more amount than available',

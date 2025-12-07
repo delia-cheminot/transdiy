@@ -2,11 +2,11 @@ import 'package:decimal/decimal.dart';
 
 class SupplyItem {
   final int? id;
-  String name;
-  Decimal totalDose; // mg
-  Decimal usedDose; // mg
-  Decimal dosePerUnit; // mg/ml
-  int quantity;
+  final String name;
+  final Decimal totalDose; // mg
+  final Decimal usedDose; // mg
+  final Decimal dosePerUnit; // mg/ml
+  final int quantity;
   bool get isUsed => usedDose > Decimal.zero;
   bool get isInStock => quantity > 0;
 
@@ -51,6 +51,39 @@ class SupplyItem {
       quantity: quantity,
     );
   }
+
+  SupplyItem copyWith({
+    int? id,
+    String? name,
+    Decimal? totalDose,
+    Decimal? usedDose,
+    Decimal? dosePerUnit,
+    int? quantity,
+  }) {
+    return SupplyItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      totalDose: totalDose ?? this.totalDose,
+      usedDose: usedDose ?? this.usedDose,
+      dosePerUnit: dosePerUnit ?? this.dosePerUnit,
+      quantity: quantity ?? this.quantity,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SupplyItem &&
+          other.id == id &&
+          other.name == name &&
+          other.totalDose == totalDose &&
+          other.usedDose == usedDose &&
+          other.dosePerUnit == dosePerUnit &&
+          other.quantity == quantity;
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, totalDose, usedDose, dosePerUnit, quantity);
 
   @override
   String toString() {

@@ -19,13 +19,13 @@ class SupplyItemManager {
     Decimal? newDosePerUnit,
     int? newQuantity,
   }) async {
-    SupplyItem newItem = item.copy();
-
-    newItem.totalDose = newTotalDose ?? item.totalDose;
-    newItem.usedDose = newUsedDose ?? item.usedDose;
-    newItem.dosePerUnit = newDosePerUnit ?? item.dosePerUnit;
-    newItem.quantity = newQuantity ?? item.quantity;
-    newItem.name = newName ?? item.name;
+    final newItem = item.copyWith(
+      name: newName,
+      totalDose: newTotalDose,
+      usedDose: newUsedDose,
+      dosePerUnit: newDosePerUnit,
+      quantity: newQuantity,
+    );
 
     if (!newItem.isValid()) {
       throw ArgumentError('Invalid item');
@@ -43,7 +43,8 @@ class SupplyItemManager {
     if (!item.canUseDose(doseToUse)) {
       throw ArgumentError('Item capacity exceeded');
     }
-    item.usedDose = item.usedDose + doseToUse;
-    await _supplyItemState.updateItem(item);
+    await _supplyItemState.updateItem(item.copyWith(
+      usedDose: item.usedDose + doseToUse,
+    ));
   }
 }
