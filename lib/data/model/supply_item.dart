@@ -118,4 +118,10 @@ class SupplyItem {
   Decimal getRemainingDose() {
     return totalDose - usedDose;
   }
+
+  double getRatio() {
+    return (getRemainingDose() *
+            totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10))
+        .toDouble();
+  }
 }
