@@ -3,22 +3,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:transdiy/controllers/medication_intake_manager.dart';
 import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import '../mocks/mocks.mocks.dart';
 
 void main() {
   late MedicationIntakeManager manager;
   late MockMedicationIntakeProvider mockMedicationIntakeProvider;
-  late MockMedicationScheduleProvider mockMedicationScheduleProvider;
   late MockSupplyItemProvider mockSupplyItemProvider;
 
   setUp(() {
     mockMedicationIntakeProvider = MockMedicationIntakeProvider();
-    mockMedicationScheduleProvider = MockMedicationScheduleProvider();
     mockSupplyItemProvider = MockSupplyItemProvider();
-    manager = MedicationIntakeManager(mockMedicationIntakeProvider,
-        mockMedicationScheduleProvider, mockSupplyItemProvider);
+    manager = MedicationIntakeManager(
+        mockMedicationIntakeProvider, mockSupplyItemProvider);
   });
 
   group('MedicationIntakeManager', () {
@@ -46,7 +43,8 @@ void main() {
       await manager.takeMedication(intake, supplyItem);
 
       expect(updatedIntake.isTaken, true);
-      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake))
+          .called(1);
       verify(mockSupplyItemProvider.updateItem(
               supplyItem.copyWith(usedDose: supplyItem.usedDose + intake.dose)))
           .called(1);
@@ -100,7 +98,8 @@ void main() {
 
       expect(updatedIntake.isTaken, true);
       expect(updatedIntake.takenDateTime, customDate);
-      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake))
+          .called(1);
     });
 
     test('should handle case when not enough medication is remaining',
@@ -129,7 +128,8 @@ void main() {
       Decimal doseToAdd =
           Decimal.parse('14'); // 14mg to be added in a new intake
 
-      when(mockMedicationIntakeProvider.addIntake(intake.scheduledDateTime, any))
+      when(mockMedicationIntakeProvider.addIntake(
+              intake.scheduledDateTime, any))
           .thenAnswer((_) async {});
 
       await manager.takeMedication(intake, supplyItem);
@@ -141,48 +141,9 @@ void main() {
         doseToAdd,
       )).called(1);
 
-      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
-      expect(updatedIntake.isTaken, true);
-    });
-
-    test('should update schedule last taken date if scheduleId is present',
-        () async {
-      final intake = MedicationIntake(
-        id: 1,
-        scheduledDateTime: DateTime.now(),
-        dose: Decimal.parse('1'),
-        scheduleId: 42,
-      );
-
-      final supplyItem = SupplyItem(
-        id: 1,
-        name: 'TestSupply',
-        totalDose: Decimal.parse('10'),
-        usedDose: Decimal.parse('2'),
-        dosePerUnit: Decimal.parse('5'),
-      );
-
-      final schedule = MedicationSchedule(
-        id: 42,
-        name: 'Test Med',
-        dose: Decimal.parse('1'),
-        intervalDays: 7,
-      );
-
-      final takenDateTime = DateTime.now();
-
-      when(mockMedicationScheduleProvider.getScheduleById(42))
-          .thenReturn(schedule);
-      when(mockMedicationScheduleProvider.updateSchedule(any))
-          .thenAnswer((_) async {});
-
-      await manager.takeMedication(intake, supplyItem,
-          takenDate: takenDateTime);
-
-      expect(schedule.lastTaken.day, DateTime.now().day);
-      verify(mockMedicationScheduleProvider
-              .updateSchedule(schedule.copyWith(lastTaken: takenDateTime)))
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake))
           .called(1);
+      expect(updatedIntake.isTaken, true);
     });
   });
 }

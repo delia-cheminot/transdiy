@@ -1,17 +1,15 @@
 import 'package:transdiy/controllers/supply_item_manager.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
 import '../data/model/medication_intake.dart';
 import '../data/providers/medication_intake_provider.dart';
 
 class MedicationIntakeManager {
   final MedicationIntakeProvider _medicationIntakeProvider;
-  final MedicationScheduleProvider _medicationScheduleProvider;
   final SupplyItemProvider _supplyItemProvider;
 
-  MedicationIntakeManager(this._medicationIntakeProvider,
-      this._medicationScheduleProvider, this._supplyItemProvider);
+  MedicationIntakeManager(
+      this._medicationIntakeProvider, this._supplyItemProvider);
 
   Future<void> takeMedication(MedicationIntake intake, SupplyItem supplyItem,
       {DateTime? takenDate}) async {
@@ -25,8 +23,6 @@ class MedicationIntakeManager {
 
     updatedIntake =
         await _markIntakeTaken(updatedIntake, supplyItem, takenDate);
-
-    await _updateScheduleLastTaken(updatedIntake);
   }
 
   Future<MedicationIntake> _checkDoseAndSplitIfNeeded(
@@ -54,16 +50,5 @@ class MedicationIntakeManager {
     await _medicationIntakeProvider.updateIntake(updatedIntake);
 
     return updatedIntake;
-  }
-
-  Future<void> _updateScheduleLastTaken(MedicationIntake intake) async {
-    if (intake.scheduleId == null) return;
-    final schedule =
-        _medicationScheduleProvider.getScheduleById(intake.scheduleId!);
-
-    if (schedule != null) {
-      await _medicationScheduleProvider
-          .updateSchedule(schedule.copyWith(lastTaken: intake.takenDateTime!));
-    }
   }
 }

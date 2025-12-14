@@ -52,12 +52,12 @@ class MedicationScheduleProvider extends ChangeNotifier {
   }
 
   Future<void> addSchedule(String name, Decimal dose, int intervalDays,
-      {DateTime? lastTaken}) async {
+      {DateTime? lastGenerated}) async {
     await repository.insert(MedicationSchedule(
       name: name,
       dose: dose,
       intervalDays: intervalDays,
-      lastTaken: lastTaken ?? DateTime.now(),
+      lastGenerated: lastGenerated ?? DateTime.now(),
     ));
     await fetchSchedules();
   }

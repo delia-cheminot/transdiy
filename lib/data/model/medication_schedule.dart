@@ -5,16 +5,16 @@ class MedicationSchedule {
   final String name;
   final Decimal dose;
   final int intervalDays;
-  final DateTime lastTaken;
+  final DateTime lastGenerated;
 
   MedicationSchedule({
     int? id,
     required this.name,
     required this.dose,
     required this.intervalDays,
-    DateTime? lastTaken,
+    DateTime? lastGenerated,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        lastTaken = lastTaken ?? DateTime.now();
+        lastGenerated = lastGenerated ?? DateTime.now();
 
   Map<String, Object?> toMap() {
     return {
@@ -22,7 +22,7 @@ class MedicationSchedule {
       'name': name,
       'dose': dose.toString(),
       'intervalDays': intervalDays,
-      'lastTaken': lastTaken.toIso8601String(),
+      'lastGenerated': lastGenerated.toIso8601String(),
     };
   }
 
@@ -32,7 +32,7 @@ class MedicationSchedule {
       name: map['name'] as String,
       dose: Decimal.parse(map['dose'] as String),
       intervalDays: map['intervalDays'] as int,
-      lastTaken: DateTime.parse(map['lastTaken'] as String),
+      lastGenerated: DateTime.parse(map['lastGenerated'] as String),
     );
   }
 
@@ -42,7 +42,7 @@ class MedicationSchedule {
       name: name,
       dose: dose,
       intervalDays: intervalDays,
-      lastTaken: lastTaken,
+      lastGenerated: lastGenerated,
     );
   }
 
@@ -51,14 +51,14 @@ class MedicationSchedule {
     String? name,
     Decimal? dose,
     int? intervalDays,
-    DateTime? lastTaken,
+    DateTime? lastGenerated,
   }) {
     return MedicationSchedule(
       id: id ?? this.id,
       name: name ?? this.name,
       dose: dose ?? this.dose,
       intervalDays: intervalDays ?? this.intervalDays,
-      lastTaken: lastTaken ?? this.lastTaken,
+      lastGenerated: lastGenerated ?? this.lastGenerated,
     );
   }
 
@@ -70,10 +70,10 @@ class MedicationSchedule {
           name == other.name &&
           dose == other.dose &&
           intervalDays == other.intervalDays &&
-          lastTaken == other.lastTaken;
+          lastGenerated == other.lastGenerated;
 
   @override
-  int get hashCode => Object.hash(id, name, dose, intervalDays, lastTaken);
+  int get hashCode => Object.hash(id, name, dose, intervalDays, lastGenerated);
 
   @override
   String toString() {
