@@ -50,13 +50,16 @@ void main() {
         whereArgs: [id],
       );
 
-      expect({
-        item.first['name'],
-        item.first['totalDose'],
-      }, {
-        'Test Item',
-        '100',
-      });
+      expect(
+        [
+          item.first['name'],
+          item.first['totalDose'],
+        ],
+        [
+          'Test Item',
+          '100',
+        ],
+      );
     });
 
     test('can insert and query medication_intakes', () async {
@@ -72,13 +75,16 @@ void main() {
         whereArgs: [id],
       );
 
-      expect({
-        intake.first['dose'],
-        intake.first['takenDateTime'],
-      }, {
-        '2.5',
-        null,
-      });
+      expect(
+        [
+          intake.first['dose'],
+          intake.first['takenDateTime'],
+        ],
+        [
+          '2.5',
+          null,
+        ],
+      );
     });
 
     test('can insert and query medication_schedules', () async {
@@ -95,13 +101,16 @@ void main() {
         whereArgs: [id],
       );
 
-      expect({
-        schedule.first['name'],
-        schedule.first['intervalDays'],
-      }, {
-        'Morning Med',
-        1,
-      });
+      expect(
+        [
+          schedule.first['name'],
+          schedule.first['intervalDays'],
+        ],
+        [
+          'Morning Med',
+          1,
+        ],
+      );
     });
   });
 }

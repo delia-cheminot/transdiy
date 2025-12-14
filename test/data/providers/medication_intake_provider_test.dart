@@ -45,15 +45,14 @@ void main() {
 
       // Assert
 
-      expect({
-        provider.intakes.length,
-        provider.intakes.last.scheduledDateTime,
-        provider.intakes.last.dose
-      }, {
-        3,
-        newDate,
-        newDose
-      });
+      expect(
+        [
+          provider.intakes.length,
+          provider.intakes.last.scheduledDateTime,
+          provider.intakes.last.dose
+        ],
+        [3, newDate, newDose],
+      );
     });
 
     test('updateIntake updates an existing item', () async {
@@ -77,7 +76,10 @@ void main() {
       await provider.deleteIntakeFromId(1);
 
       // Assert
-      expect({provider.intakes.length, provider.intakes.first.id}, {1, 2});
+      expect(
+        [provider.intakes.length, provider.intakes.first.id],
+        [1, 2],
+      );
     });
 
     test('deleteIntake removes the item by object', () async {
@@ -88,18 +90,21 @@ void main() {
       await provider.deleteIntake(intakeToDelete);
 
       // Assert
-      expect({provider.intakes.length, provider.intakes.first.id}, {1, 2});
+      expect(
+        [provider.intakes.length, provider.intakes.first.id],
+        [1, 2],
+      );
     });
 
     test('takenIntakes and notTakenIntakes return correct subsets', () async {
       await provider.fetchIntakes();
-      expect({
-        provider.takenIntakes,
-        provider.notTakenIntakes
-      }, {
-        repo.items.where((i) => i.isTaken).toList(),
-        repo.items.where((i) => !i.isTaken).toList()
-      });
+      expect(
+        [provider.takenIntakes, provider.notTakenIntakes],
+        [
+          repo.items.where((i) => i.isTaken).toList(),
+          repo.items.where((i) => !i.isTaken).toList()
+        ],
+      );
     });
   });
 }

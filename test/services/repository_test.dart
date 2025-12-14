@@ -35,11 +35,12 @@ void main() {
           dosePerUnit: Decimal.parse('1'));
 
       int insertedId = await repository.insert(item);
-
       final items = await repository.getAll();
 
-      expect(items.length, 1);
-      expect(items[0].id, insertedId);
+      expect(
+        [items.length, items[0].id],
+        [1, insertedId],
+      );
     });
 
     test('Update a SupplyItem', () async {
@@ -48,19 +49,19 @@ void main() {
           totalDose: Decimal.parse('1'),
           dosePerUnit: Decimal.parse('1'));
       int id = await repository.insert(item);
-
       final updatedItem = SupplyItem(
           name: 'h',
           id: id,
           totalDose: Decimal.parse('2'),
           dosePerUnit: Decimal.parse('1'));
+
       await repository.update(updatedItem, id);
 
       final updatedItems = await repository.getAll();
-
-      expect(updatedItems.length, 1);
-      expect(updatedItems[0].id, id);
-      expect(updatedItems[0].totalDose, Decimal.parse('2'));
+      expect(
+        [updatedItems.length, updatedItems[0].id, updatedItems[0].totalDose],
+        [1, id, Decimal.parse('2')],
+      );
     });
 
     test('Delete a SupplyItem', () async {
@@ -73,7 +74,6 @@ void main() {
       await repository.delete(id);
 
       final remainingItems = await repository.getAll();
-
       expect(remainingItems.length, 0);
     });
 
@@ -94,9 +94,10 @@ void main() {
       await repository.delete(id1);
 
       final remainingItems = await repository.getAll();
-
-      expect(remainingItems.length, 1);
-      expect(remainingItems[0].id, id2);
+      expect(
+        [remainingItems.length, remainingItems[0].id],
+        [1, id2],
+      );
     });
   });
 

@@ -49,17 +49,20 @@ void main() {
       await provider.addSchedule(newName, newDose, intervalDays);
 
       // Assert
-      expect({
-        provider.schedules.length,
-        provider.schedules.last.name,
-        provider.schedules.last.dose,
-        provider.schedules.last.intervalDays,
-      }, {
-        3,
-        newName,
-        newDose,
-        intervalDays,
-      });
+      expect(
+        [
+          provider.schedules.length,
+          provider.schedules.last.name,
+          provider.schedules.last.dose,
+          provider.schedules.last.intervalDays,
+        ],
+        [
+          3,
+          newName,
+          newDose,
+          intervalDays,
+        ],
+      );
     });
 
     test('updateSchedule updates an existing item', () async {
@@ -84,7 +87,10 @@ void main() {
       await provider.deleteScheduleFromId(1);
 
       // Assert
-      expect({provider.schedules.length, provider.schedules.first.id}, {1, 2});
+      expect(
+        [provider.schedules.length, provider.schedules.first.id],
+        [1, 2],
+      );
     });
 
     test('deleteSchedule removes the item by object', () async {
@@ -95,7 +101,10 @@ void main() {
       await provider.deleteSchedule(scheduleToDelete);
 
       // Assert
-      expect({provider.schedules.length, provider.schedules.first.id}, {1, 2});
+      expect(
+        [provider.schedules.length, provider.schedules.first.id],
+        [1, 2],
+      );
     });
   });
 }

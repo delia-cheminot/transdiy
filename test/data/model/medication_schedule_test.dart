@@ -70,12 +70,19 @@ void main() {
 
     test('isValid returns correct values', () {
       final schedules = [
-        MedicationSchedule(name: 'Valid', dose: Decimal.fromInt(5), intervalDays: 3),
+        MedicationSchedule(
+            name: 'Valid', dose: Decimal.fromInt(5), intervalDays: 3),
         MedicationSchedule(name: '', dose: Decimal.fromInt(5), intervalDays: 3),
-        MedicationSchedule(name: 'Zero dose', dose: Decimal.zero, intervalDays: 3),
-        MedicationSchedule(name: 'Negative dose', dose: Decimal.fromInt(-1), intervalDays: 3),
-        MedicationSchedule(name: 'Zero interval', dose: Decimal.fromInt(5), intervalDays: 0),
-        MedicationSchedule(name: 'Negative interval', dose: Decimal.fromInt(5), intervalDays: -2),
+        MedicationSchedule(
+            name: 'Zero dose', dose: Decimal.zero, intervalDays: 3),
+        MedicationSchedule(
+            name: 'Negative dose', dose: Decimal.fromInt(-1), intervalDays: 3),
+        MedicationSchedule(
+            name: 'Zero interval', dose: Decimal.fromInt(5), intervalDays: 0),
+        MedicationSchedule(
+            name: 'Negative interval',
+            dose: Decimal.fromInt(5),
+            intervalDays: -2),
       ];
 
       expect(

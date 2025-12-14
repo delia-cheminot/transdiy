@@ -21,15 +21,22 @@ void main() {
     provider = SupplyItemProvider(repository: repo);
 
     await repo.insert(SupplyItem(
-        id: 1, name: 'Test Item 1', totalDose: Decimal.parse('50'), dosePerUnit: Decimal.parse('5')));
+        id: 1,
+        name: 'Test Item 1',
+        totalDose: Decimal.parse('50'),
+        dosePerUnit: Decimal.parse('5')));
 
     await repo.insert(SupplyItem(
-        id: 2, name: 'Test Item 2', totalDose: Decimal.parse('30'), dosePerUnit: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        dosePerUnit: Decimal.parse('3')));
   });
 
   group('SupplyItemProvider Tests', () {
     test('initialization loads items', () async {
       await provider.fetchItems();
+
       expect(provider.items.length, repo.items.length);
     });
 
@@ -41,18 +48,20 @@ void main() {
       await provider.addItem(totalDose, name, dosePerUnit);
 
       final lastItem = provider.items.last;
-
-      expect({
-        provider.items.length,
-        lastItem.name,
-        lastItem.totalDose,
-        lastItem.dosePerUnit,
-      }, {
-        3,
-        name,
-        totalDose,
-        dosePerUnit,
-      });
+      expect(
+        [
+          provider.items.length,
+          lastItem.name,
+          lastItem.totalDose,
+          lastItem.dosePerUnit,
+        ],
+        [
+          3,
+          name,
+          totalDose,
+          dosePerUnit,
+        ],
+      );
     });
 
     test('updateItem updates an existing item', () async {
@@ -66,24 +75,30 @@ void main() {
       await provider.updateItem(updatedItem);
 
       final firstItem = provider.items.first;
-      expect(firstItem.name, 'Updated Name');
-      expect(firstItem.totalDose, Decimal.parse('99'));
-      expect(firstItem.dosePerUnit, Decimal.parse('9'));
+      expect(
+        [firstItem.name, firstItem.totalDose, firstItem.dosePerUnit],
+        ['Updated Name', Decimal.parse('99'), Decimal.parse('9')],
+      );
     });
 
     test('deleteItemFromId removes the item', () async {
       await provider.deleteItemFromId(1);
 
-      expect(provider.items.length, 1);
-      expect(provider.items.first.id, 2);
+      expect(
+        [provider.items.length, provider.items.first.id],
+        [1, 2],
+      );
     });
 
     test('deleteItem removes the item by object', () async {
       final itemToDelete = repo.items.first;
+
       await provider.deleteItem(itemToDelete);
 
-      expect(provider.items.length, 1);
-      expect(provider.items.first.id, 2);
+      expect(
+        [provider.items.length, provider.items.first.id],
+        [1, 2],
+      );
     });
   });
 }
