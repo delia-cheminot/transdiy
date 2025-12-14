@@ -1,6 +1,5 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/services/app_database.dart';
@@ -15,27 +14,7 @@ void main() {
   });
 
   tearDownAll(() async {
-      await AppDatabase.instance.close();
-    });
-
-  group('Database tests', () {
-    setUp(() async {
-      final db = await AppDatabase.instance.database;
-      await db.delete('supply_items');
-    });
-
-    test('Database is created', () async {
-      // Initialize the database
-      final db = await AppDatabase.instance.database;
-
-      // Check that the database path is correct
-      final dbPath = await getDatabasesPath();
-      final expectedPath = join(dbPath, 'app_database.db');
-      expect(db.path, expectedPath);
-
-      // Check that the database is open
-      expect(db.isOpen, true);
-    });
+    await AppDatabase.instance.close();
   });
 
   group('SupplyItemRepository tests', () {

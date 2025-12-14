@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:transdiy/services/app_database.dart';
 
@@ -29,6 +30,16 @@ void main() {
             {'supply_items', 'medication_intakes', 'medication_schedules'}),
         true,
       );
+    });
+
+    test('Database is created', () async {
+      final db = await dbInstance.database;
+
+      final dbPath = await getDatabasesPath();
+      final expectedPath = join(dbPath, 'app_database.db');
+      expect(db.path, expectedPath);
+
+      expect(db.isOpen, true);
     });
 
     test('can insert and query supply_items', () async {
