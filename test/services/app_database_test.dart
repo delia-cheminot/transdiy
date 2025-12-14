@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:transdiy/services/app_database.dart';
 
@@ -9,14 +8,19 @@ void main() {
 
   group('AppDatabase', () {
     late AppDatabase dbInstance;
+    late Database db;
 
-    setUp(() {
-      dbInstance = AppDatabase.instance;
+    setUp(() async {
+      AppDatabase.reset();
+      dbInstance = AppDatabase.getInstance(inMemory: true);
+      db = await dbInstance.database;
+    });
+
+    test('Database is created', () async {
+      expect(db.isOpen, true);
     });
 
     test('database initializes and tables exist', () async {
-      final db = await dbInstance.database;
-
       final tables = await db
           .rawQuery("SELECT name FROM sqlite_master WHERE type='table'");
 
@@ -32,19 +36,7 @@ void main() {
       );
     });
 
-    test('Database is created', () async {
-      final db = await dbInstance.database;
-
-      final dbPath = await getDatabasesPath();
-      final expectedPath = join(dbPath, 'app_database.db');
-      expect(db.path, expectedPath);
-
-      expect(db.isOpen, true);
-    });
-
     test('can insert and query supply_items', () async {
-      final db = await dbInstance.database;
-
       final id = await db.insert('supply_items', {
         'name': 'Test Item',
         'totalDose': '100',
@@ -73,8 +65,6 @@ void main() {
     });
 
     test('can insert and query medication_intakes', () async {
-      final db = await dbInstance.database;
-
       final id = await db.insert('medication_intakes', {
         'scheduledDateTime': DateTime(2025, 9, 14, 10, 30).toIso8601String(),
         'takenDateTime': null,
@@ -101,8 +91,6 @@ void main() {
     });
 
     test('can insert and query medication_schedules', () async {
-      final db = await dbInstance.database;
-
       final id = await db.insert('medication_schedules', {
         'name': 'Morning Med',
         'dose': '5',

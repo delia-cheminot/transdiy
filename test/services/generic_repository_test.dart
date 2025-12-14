@@ -7,56 +7,48 @@ import 'package:transdiy/services/repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
-  setUpAll(() {
-    sqfliteFfiInit();
-    databaseFactory = databaseFactoryFfi;
-  });
-
-  tearDownAll(() async {
-    await AppDatabase.instance.close();
-  });
+  sqfliteFfiInit();
+  databaseFactory = databaseFactoryFfi;
 
   group('SupplyItemRepository tests', () {
-    late Repository<SupplyItem> repository =
-        Repository<SupplyItem>(
-      tableName: 'supply_items',
-      toMap: (SupplyItem item) => item.toMap(),
-      fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),
-    );
+    late AppDatabase dbInstance;
+    late Database db;
+    late Repository<SupplyItem> repository;
 
     setUp(() async {
-      final db = await AppDatabase.instance.database;
+      AppDatabase.reset();
+      dbInstance = AppDatabase.getInstance(inMemory: true);
+      db = await dbInstance.database;
       await db.delete('supply_items');
+      repository = Repository<SupplyItem>(
+        db: db,
+        tableName: 'supply_items',
+        toMap: (SupplyItem item) => item.toMap(),
+        fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),
+      );
     });
 
     test('Insert and retrieve a SupplyItem', () async {
-      // Create a SupplyItem instance
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
           dosePerUnit: Decimal.parse('1'));
 
-      // Insert the item
       int insertedId = await repository.insert(item);
 
-      // Retrieve the items
       final items = await repository.getAll();
 
-      // Check that the inserted item is in the database
       expect(items.length, 1);
       expect(items[0].id, insertedId);
     });
 
     test('Update a SupplyItem', () async {
-      // Create and insert a SupplyItem
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
           dosePerUnit: Decimal.parse('1'));
       int id = await repository.insert(item);
 
-      // Update the item
       final updatedItem = SupplyItem(
           name: 'h',
           id: id,
@@ -64,35 +56,28 @@ void main() {
           dosePerUnit: Decimal.parse('1'));
       await repository.update(updatedItem, id);
 
-      // Retrieve the updated items
       final updatedItems = await repository.getAll();
 
-      // Check that the updated item is in the database
       expect(updatedItems.length, 1);
       expect(updatedItems[0].id, id);
       expect(updatedItems[0].totalDose, Decimal.parse('2'));
     });
 
     test('Delete a SupplyItem', () async {
-      // Create and insert a SupplyItem
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
           dosePerUnit: Decimal.parse('1'));
       int id = await repository.insert(item);
 
-      // Delete the item
       await repository.delete(id);
 
-      // Retrieve the items
       final remainingItems = await repository.getAll();
 
-      // Check that the item is deleted
       expect(remainingItems.length, 0);
     });
 
     test('Only delete the specified SupplyItem', () async {
-      // Create and insert two SupplyItems
       final item1 = SupplyItem(
           id: 1,
           name: 'g',
@@ -106,13 +91,10 @@ void main() {
       int id1 = await repository.insert(item1);
       int id2 = await repository.insert(item2);
 
-      // Delete the first item
       await repository.delete(id1);
 
-      // Retrieve the items
       final remainingItems = await repository.getAll();
 
-      // Check that only the first item is deleted
       expect(remainingItems.length, 1);
       expect(remainingItems[0].id, id2);
     });
@@ -120,7 +102,11 @@ void main() {
 
   group('Invalid column name test', () {
     test('Throws exception for invalid column name', () async {
+      AppDatabase.reset();
+      AppDatabase dbInstance = AppDatabase.getInstance(inMemory: true);
+      Database db = await dbInstance.database;
       Repository<SupplyItem> repository = Repository<SupplyItem>(
+        db: db,
         tableName: 'bad_table',
         toMap: (SupplyItem item) => item.toMap(),
         fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),

@@ -4,10 +4,16 @@ import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class AppDatabase {
-  static final AppDatabase instance = AppDatabase._init();
+  static AppDatabase? _instance;
   static Database? _database;
+  final bool inMemory;
 
-  AppDatabase._init();
+  AppDatabase._init({required this.inMemory});
+
+  static AppDatabase getInstance({bool inMemory = false}) {
+    _instance ??= AppDatabase._init(inMemory: inMemory);
+    return _instance!;
+  }
 
   Future<Database> get database async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -19,12 +25,22 @@ class AppDatabase {
       databaseFactory = databaseFactoryFfi;
     }
 
-    _database = await _initDB('app_database.db');
+    _database = inMemory
+        ? await _initInMemoryDB()
+        : await _initFileDB('app_database.db');
 
     return _database!;
   }
 
-  Future<Database> _initDB(String filePath) async {
+  Future<Database> _initInMemoryDB() async {
+    return openDatabase(
+      inMemoryDatabasePath,
+      version: 1,
+      onCreate: _createDB,
+    );
+  }
+
+  Future<Database> _initFileDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
@@ -69,7 +85,14 @@ class AppDatabase {
   }
 
   Future<void> close() async {
-    final db = await instance.database;
-    db.close();
+    if (_database != null) {
+      await _database!.close();
+      _database = null;
+    }
+  }
+
+  static void reset() {
+    _database = null;
+    _instance = null;
   }
 }
