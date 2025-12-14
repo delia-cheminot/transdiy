@@ -6,9 +6,9 @@ import 'new_schedule_dialog.dart';
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationScheduleState = context.watch<MedicationScheduleProvider>();
+    final medicationScheduleProvider = context.watch<MedicationScheduleProvider>();
 
-    if (medicationScheduleState.isLoading) {
+    if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(
             title: Row(
@@ -40,18 +40,18 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-      body: medicationScheduleState.schedules.isEmpty
+      body: medicationScheduleProvider.schedules.isEmpty
           ? Center(
               child: Text('Ajoutez un traitement pour commencer'),
             )
           : ListView.builder(
-              itemCount: medicationScheduleState.schedules.length,
+              itemCount: medicationScheduleProvider.schedules.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                    title: Text(medicationScheduleState.schedules[index].name),
+                    title: Text(medicationScheduleProvider.schedules[index].name),
                     subtitle: Text(
-                        "${medicationScheduleState.schedules[index].dose.toString()} mg "
-                        "tous les ${medicationScheduleState.schedules[index].intervalDays.toString()} jours"));
+                        "${medicationScheduleProvider.schedules[index].dose.toString()} mg "
+                        "tous les ${medicationScheduleProvider.schedules[index].intervalDays.toString()} jours"));
               },
             ),
       floatingActionButton: FloatingActionButton(

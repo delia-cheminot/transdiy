@@ -6,11 +6,11 @@ import '../data/model/medication_intake.dart';
 import '../data/providers/medication_intake_provider.dart';
 
 class MedicationIntakeManager {
-  final MedicationIntakeProvider _medicationIntakeState;
+  final MedicationIntakeProvider _medicationIntakeProvider;
   final MedicationScheduleProvider _medicationScheduleProvider;
   final SupplyItemProvider _supplyItemProvider;
 
-  MedicationIntakeManager(this._medicationIntakeState,
+  MedicationIntakeManager(this._medicationIntakeProvider,
       this._medicationScheduleProvider, this._supplyItemProvider);
 
   Future<void> takeMedication(MedicationIntake intake, SupplyItem supplyItem,
@@ -38,7 +38,7 @@ class MedicationIntakeManager {
     final remainingDose = supplyItem.getRemainingDose();
     final doseToAdd = intake.dose - remainingDose;
     final updatedIntake = intake.copyWith(dose: remainingDose);
-    await _medicationIntakeState.addIntake(
+    await _medicationIntakeProvider.addIntake(
         updatedIntake.scheduledDateTime, doseToAdd);
 
     return updatedIntake;
@@ -51,7 +51,7 @@ class MedicationIntakeManager {
       takenDateTime: takenDate ?? DateTime.now(),
     );
 
-    await _medicationIntakeState.updateIntake(updatedIntake);
+    await _medicationIntakeProvider.updateIntake(updatedIntake);
 
     return updatedIntake;
   }

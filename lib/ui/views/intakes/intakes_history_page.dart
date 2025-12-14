@@ -6,7 +6,7 @@ import 'package:transdiy/data/providers/medication_intake_provider.dart';
 class IntakesHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationIntakeState = context.watch<MedicationIntakeProvider>();
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
 
     return Scaffold(
       appBar: AppBar(
@@ -15,22 +15,22 @@ class IntakesHistoryPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: medicationIntakeState.isLoading
+            child: medicationIntakeProvider.isLoading
                 ? Center(child: CircularProgressIndicator())
-                : medicationIntakeState.takenIntakes.isEmpty
+                : medicationIntakeProvider.takenIntakes.isEmpty
                     ? Center(
                         child: Text('Les prises effectuées apparaîtront ici'),
                       )
                     : ListView.builder(
-                        itemCount: medicationIntakeState.takenIntakes.length,
+                        itemCount: medicationIntakeProvider.takenIntakes.length,
                         itemBuilder: (context, index) {
                           MedicationIntake intake =
-                              medicationIntakeState.takenIntakes[index];
+                              medicationIntakeProvider.takenIntakes[index];
                           return ListTile(
                             title: Text(intake.scheduledDateTime.toString()),
                             subtitle: Text(intake.takenDateTime.toString()),
                             onTap: () {
-                              medicationIntakeState.deleteIntake(intake);
+                              medicationIntakeProvider.deleteIntake(intake);
                             },
                           );
                         },

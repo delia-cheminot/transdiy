@@ -7,11 +7,11 @@ import '../mocks/mocks.mocks.dart';
 
 void main() {
   late SupplyItemManager manager;
-  late MockSupplyItemProvider mockSupplyItemState;
+  late MockSupplyItemProvider mockSupplyItemProvider;
 
   setUp(() {
-    mockSupplyItemState = MockSupplyItemProvider();
-    manager = SupplyItemManager(mockSupplyItemState);
+    mockSupplyItemProvider = MockSupplyItemProvider();
+    manager = SupplyItemManager(mockSupplyItemProvider);
   });
 
   group('SupplyItemManager', () {
@@ -31,7 +31,7 @@ void main() {
 
       expect(newItem.totalDose, Decimal.parse('20'));
       expect(newItem.usedDose, Decimal.parse('5'));
-      verify(mockSupplyItemState.updateItem(newItem)).called(1);
+      verify(mockSupplyItemProvider.updateItem(newItem)).called(1);
     });
 
     test(
@@ -62,7 +62,7 @@ void main() {
           dosePerUnit: Decimal.parse('1'));
       
       late SupplyItem updatedItem;
-      when(mockSupplyItemState.updateItem(any)).thenAnswer((invocation) async {
+      when(mockSupplyItemProvider.updateItem(any)).thenAnswer((invocation) async {
         updatedItem = invocation.positionalArguments.first as SupplyItem;
         return Future.value();
       });
@@ -70,7 +70,7 @@ void main() {
       await manager.useDose(item, Decimal.parse('5'));
 
       expect(updatedItem.usedDose, Decimal.parse('10'));
-      verify(mockSupplyItemState.updateItem(updatedItem)).called(1);
+      verify(mockSupplyItemProvider.updateItem(updatedItem)).called(1);
     });
 
     test('should throw ArgumentError when using more amount than available',
@@ -88,7 +88,7 @@ void main() {
 
       expect(item.totalDose, Decimal.parse('10'));
       expect(item.usedDose, Decimal.parse('5'));
-      verifyNever(mockSupplyItemState.updateItem(any));
+      verifyNever(mockSupplyItemProvider.updateItem(any));
     });
 
     test('use zero amount', () async {
@@ -101,7 +101,7 @@ void main() {
       await manager.useDose(item, Decimal.zero);
 
       expect(item.usedDose, Decimal.parse('5'));
-      verifyNever(mockSupplyItemState.updateItem(item));
+      verifyNever(mockSupplyItemProvider.updateItem(item));
     });
   });
 }

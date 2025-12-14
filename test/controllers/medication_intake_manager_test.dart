@@ -9,15 +9,15 @@ import '../mocks/mocks.mocks.dart';
 
 void main() {
   late MedicationIntakeManager manager;
-  late MockMedicationIntakeProvider mockMedicationIntakeState;
+  late MockMedicationIntakeProvider mockMedicationIntakeProvider;
   late MockMedicationScheduleProvider mockMedicationScheduleProvider;
   late MockSupplyItemProvider mockSupplyItemProvider;
 
   setUp(() {
-    mockMedicationIntakeState = MockMedicationIntakeProvider();
+    mockMedicationIntakeProvider = MockMedicationIntakeProvider();
     mockMedicationScheduleProvider = MockMedicationScheduleProvider();
     mockSupplyItemProvider = MockSupplyItemProvider();
-    manager = MedicationIntakeManager(mockMedicationIntakeState,
+    manager = MedicationIntakeManager(mockMedicationIntakeProvider,
         mockMedicationScheduleProvider, mockSupplyItemProvider);
   });
 
@@ -38,7 +38,7 @@ void main() {
       );
 
       late MedicationIntake updatedIntake;
-      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+      when(mockMedicationIntakeProvider.updateIntake(any)).thenAnswer((inv) {
         updatedIntake = inv.positionalArguments.first as MedicationIntake;
         return Future.value();
       });
@@ -46,7 +46,7 @@ void main() {
       await manager.takeMedication(intake, supplyItem);
 
       expect(updatedIntake.isTaken, true);
-      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
       verify(mockSupplyItemProvider.updateItem(
               supplyItem.copyWith(usedDose: supplyItem.usedDose + intake.dose)))
           .called(1);
@@ -89,7 +89,7 @@ void main() {
       );
 
       late MedicationIntake updatedIntake;
-      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+      when(mockMedicationIntakeProvider.updateIntake(any)).thenAnswer((inv) {
         updatedIntake = inv.positionalArguments.first as MedicationIntake;
         return Future.value();
       });
@@ -100,7 +100,7 @@ void main() {
 
       expect(updatedIntake.isTaken, true);
       expect(updatedIntake.takenDateTime, customDate);
-      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
     });
 
     test('should handle case when not enough medication is remaining',
@@ -120,7 +120,7 @@ void main() {
       );
 
       late MedicationIntake updatedIntake;
-      when(mockMedicationIntakeState.updateIntake(any)).thenAnswer((inv) {
+      when(mockMedicationIntakeProvider.updateIntake(any)).thenAnswer((inv) {
         updatedIntake = inv.positionalArguments.first as MedicationIntake;
         return Future.value();
       });
@@ -129,19 +129,19 @@ void main() {
       Decimal doseToAdd =
           Decimal.parse('14'); // 14mg to be added in a new intake
 
-      when(mockMedicationIntakeState.addIntake(intake.scheduledDateTime, any))
+      when(mockMedicationIntakeProvider.addIntake(intake.scheduledDateTime, any))
           .thenAnswer((_) async {});
 
       await manager.takeMedication(intake, supplyItem);
 
       expect(updatedIntake.dose, remainingDose);
 
-      verify(mockMedicationIntakeState.addIntake(
+      verify(mockMedicationIntakeProvider.addIntake(
         intake.scheduledDateTime,
         doseToAdd,
       )).called(1);
 
-      verify(mockMedicationIntakeState.updateIntake(updatedIntake)).called(1);
+      verify(mockMedicationIntakeProvider.updateIntake(updatedIntake)).called(1);
       expect(updatedIntake.isTaken, true);
     });
 

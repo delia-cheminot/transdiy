@@ -8,28 +8,28 @@ import 'package:transdiy/ui/views/intakes/intake_dialog.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationIntakeState = context.watch<MedicationIntakeProvider>();
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
 
     return Column(
       children: [
         ElevatedButton(
           onPressed: () {
-            medicationIntakeState.addIntake(DateTime.now(), Decimal.parse('4'));
+            medicationIntakeProvider.addIntake(DateTime.now(), Decimal.parse('4'));
           },
           child: Text('ajouter une prise'),
         ),
         Expanded(
-          child: medicationIntakeState.isLoading
+          child: medicationIntakeProvider.isLoading
               ? Center(child: CircularProgressIndicator())
-              : medicationIntakeState.notTakenIntakes.isEmpty
+              : medicationIntakeProvider.notTakenIntakes.isEmpty
                   ? Center(
                       child: Text('No intakes yet'),
                     )
                   : ListView.builder(
-                      itemCount: medicationIntakeState.notTakenIntakes.length,
+                      itemCount: medicationIntakeProvider.notTakenIntakes.length,
                       itemBuilder: (context, index) {
                         MedicationIntake intake =
-                            medicationIntakeState.notTakenIntakes[index];
+                            medicationIntakeProvider.notTakenIntakes[index];
                         return ListTile(
                           title: Text(intake.scheduledDateTime.toString()),
                           subtitle: Text('Prévue'),

@@ -3,12 +3,12 @@ import '../data/model/supply_item.dart';
 import '../data/providers/supply_item_provider.dart';
 
 class SupplyItemManager {
-  final SupplyItemProvider _supplyItemState;
+  final SupplyItemProvider _supplyItemProvider;
 
-  SupplyItemManager(this._supplyItemState);
+  SupplyItemManager(this._supplyItemProvider);
 
-  static SupplyItemManager create(SupplyItemProvider supplyItemState) {
-    return SupplyItemManager(supplyItemState);
+  static SupplyItemManager create(SupplyItemProvider supplyItemProvider) {
+    return SupplyItemManager(supplyItemProvider);
   }
 
   Future<SupplyItem> setFields(
@@ -31,7 +31,7 @@ class SupplyItemManager {
       throw ArgumentError('Invalid item');
     }
 
-    await _supplyItemState.updateItem(newItem);
+    await _supplyItemProvider.updateItem(newItem);
     return newItem;
   }
 
@@ -43,7 +43,7 @@ class SupplyItemManager {
     if (!item.canUseDose(doseToUse)) {
       throw ArgumentError('Item capacity exceeded');
     }
-    await _supplyItemState.updateItem(item.copyWith(
+    await _supplyItemProvider.updateItem(item.copyWith(
       usedDose: item.usedDose + doseToUse,
     ));
   }

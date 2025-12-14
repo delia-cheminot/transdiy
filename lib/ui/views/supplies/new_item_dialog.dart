@@ -58,9 +58,9 @@ class _NewItemDialogState extends State<NewItemDialog> {
     final dosePerUnit =
         Decimal.parse(_dosePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
-    final supplyItemState =
+    final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    supplyItemState.addItem(totalAmount, name, dosePerUnit);
+    supplyItemProvider.addItem(totalAmount, name, dosePerUnit);
     Navigator.pop(context);
   }
 

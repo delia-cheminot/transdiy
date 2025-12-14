@@ -34,9 +34,9 @@ class _NewScheduleDialogState extends State<NewScheduleDialog> {
     final name = _nameController.text;
     final dose = Decimal.parse(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
-    final medicationScheduleState =
+    final medicationScheduleProvider =
         Provider.of<MedicationScheduleProvider>(context, listen: false);
-    medicationScheduleState.addSchedule(name, dose, intervalDays);
+    medicationScheduleProvider.addSchedule(name, dose, intervalDays);
     Navigator.pop(context);
   }
 

@@ -75,9 +75,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
     }
 
     if (!_isFormValid) return;
-    final supplyItemState =
+    final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    SupplyItemManager(supplyItemState).setFields(
+    SupplyItemManager(supplyItemProvider).setFields(
       widget.item,
       newName: _nameController.text,
       newTotalDose: parseDecimal(_totalAmountController.text)!,
@@ -92,9 +92,9 @@ class _EditItemDialogState extends State<EditItemDialog> {
 
     if (confirmed == true) {
       if (!mounted) return;
-      final supplyItemState =
+      final supplyItemProvider =
           Provider.of<SupplyItemProvider>(context, listen: false);
-      supplyItemState.deleteItem(widget.item);
+      supplyItemProvider.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
   }
