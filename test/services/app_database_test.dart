@@ -15,7 +15,6 @@ void main() {
       dbInstance = AppDatabase.getInstance(inMemory: true);
       db = await dbInstance.database;
     });
-
     test('Database is created', () async {
       expect(db.isOpen, true);
     });
@@ -51,17 +50,13 @@ void main() {
         whereArgs: [id],
       );
 
-      final expected = {
-        'name': 'Test Item',
-        'totalDose': '100',
-      };
-
-      final actual = {
-        'name': item.first['name'],
-        'totalDose': item.first['totalDose'],
-      };
-
-      expect(actual, expected);
+      expect({
+        item.first['name'],
+        item.first['totalDose'],
+      }, {
+        'Test Item',
+        '100',
+      });
     });
 
     test('can insert and query medication_intakes', () async {
@@ -77,17 +72,13 @@ void main() {
         whereArgs: [id],
       );
 
-      final actual = {
-        'dose': intake.first['dose'],
-        'takenDateTime': intake.first['takenDateTime'],
-      };
-
-      final expected = {
-        'dose': '2.5',
-        'takenDateTime': null,
-      };
-
-      expect(actual, expected);
+      expect({
+        intake.first['dose'],
+        intake.first['takenDateTime'],
+      }, {
+        '2.5',
+        null,
+      });
     });
 
     test('can insert and query medication_schedules', () async {
@@ -104,17 +95,13 @@ void main() {
         whereArgs: [id],
       );
 
-      final actual = {
-        'name': schedule.first['name'],
-        'intervalDays': schedule.first['intervalDays'],
-      };
-
-      final expected = {
-        'name': 'Morning Med',
-        'intervalDays': 1,
-      };
-
-      expect(actual, expected);
+      expect({
+        schedule.first['name'],
+        schedule.first['intervalDays'],
+      }, {
+        'Morning Med',
+        1,
+      });
     });
   });
 }
