@@ -53,6 +53,11 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
+  Future<void> add(MedicationIntake intake) async {
+    await repository.insert(intake);
+    await fetchIntakes();
+  }
+
   Future<void> updateIntake(MedicationIntake intake) async {
     await repository.update(intake, intake.id);
     await fetchIntakes();
