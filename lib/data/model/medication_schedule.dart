@@ -1,20 +1,24 @@
 import 'package:decimal/decimal.dart';
 
+DateTime normalizeDate(DateTime date) {
+  return DateTime(date.year, date.month, date.day);
+}
+
 class MedicationSchedule {
   final int id;
   final String name;
   final Decimal dose;
   final int intervalDays;
-  final DateTime lastGenerated;
+  final DateTime startDate;
 
   MedicationSchedule({
     int? id,
     required this.name,
     required this.dose,
     required this.intervalDays,
-    DateTime? lastGenerated,
+    DateTime? startDate,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        lastGenerated = lastGenerated ?? DateTime.now();
+        startDate = normalizeDate(startDate ?? DateTime.now());
 
   Map<String, Object?> toMap() {
     return {
@@ -22,7 +26,7 @@ class MedicationSchedule {
       'name': name,
       'dose': dose.toString(),
       'intervalDays': intervalDays,
-      'lastGenerated': lastGenerated.toIso8601String(),
+      'startDate': startDate.toIso8601String(),
     };
   }
 
@@ -32,7 +36,7 @@ class MedicationSchedule {
       name: map['name'] as String,
       dose: Decimal.parse(map['dose'] as String),
       intervalDays: map['intervalDays'] as int,
-      lastGenerated: DateTime.parse(map['lastGenerated'] as String),
+      startDate: DateTime.parse(map['startDate'] as String),
     );
   }
 
@@ -42,7 +46,7 @@ class MedicationSchedule {
       name: name,
       dose: dose,
       intervalDays: intervalDays,
-      lastGenerated: lastGenerated,
+      startDate: startDate,
     );
   }
 
@@ -51,14 +55,14 @@ class MedicationSchedule {
     String? name,
     Decimal? dose,
     int? intervalDays,
-    DateTime? lastGenerated,
+    DateTime? startDate,
   }) {
     return MedicationSchedule(
       id: id ?? this.id,
       name: name ?? this.name,
       dose: dose ?? this.dose,
       intervalDays: intervalDays ?? this.intervalDays,
-      lastGenerated: lastGenerated ?? this.lastGenerated,
+      startDate: startDate ?? this.startDate,
     );
   }
 
@@ -70,10 +74,10 @@ class MedicationSchedule {
           name == other.name &&
           dose == other.dose &&
           intervalDays == other.intervalDays &&
-          lastGenerated == other.lastGenerated;
+          startDate == other.startDate;
 
   @override
-  int get hashCode => Object.hash(id, name, dose, intervalDays, lastGenerated);
+  int get hashCode => Object.hash(id, name, dose, intervalDays, startDate);
 
   @override
   String toString() {
@@ -112,8 +116,48 @@ class MedicationSchedule {
         : null;
   }
 
+  DateTime? getNextDate({DateTime? referenceDate}) {
+    final today = normalizeDate(referenceDate ?? DateTime.now());
+
+    if (!startDate.isBefore(today)) {
+      return startDate;
+    }
+
+    final daysSinceStart = today.difference(startDate).inDays;
+
+    if (daysSinceStart % intervalDays == 0) {
+      return today;
+    }
+
+    final intervalsPassed = (daysSinceStart / intervalDays).ceil();
+    return startDate.add(
+      Duration(days: intervalsPassed * intervalDays),
+    );
+  }
+
+  DateTime? getLastDate({DateTime? referenceDate}) {
+    final today = normalizeDate(referenceDate ?? DateTime.now());
+
+    if (!startDate.isBefore(today)) {
+      return null;
+    }
+
+    final daysSinceStart = today.difference(startDate).inDays;
+
+    if (daysSinceStart % intervalDays == 0) {
+      return startDate.add(
+        Duration(days: (daysSinceStart - intervalDays)),
+      );
+    }
+
+    final intervalsPassed = (daysSinceStart / intervalDays).floor();
+    return startDate.add(
+      Duration(days: intervalsPassed * intervalDays),
+    );
+  }
+
   //     |------------------------|
-  //     |  TODO refactor parsers |
+  //     |  TODO refactor getters |
   //     |------------------------|
   //        ||
   // (\__/) ||

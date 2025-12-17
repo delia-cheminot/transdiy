@@ -16,13 +16,13 @@ class MedicationIntakeGenerator {
         DateTime.now().subtract(Duration(days: schedule.intervalDays));
     DateTime endOfWindow = startOfWindow
         .add(Duration(days: numberOfIntakes * schedule.intervalDays));
-    DateTime cursor = schedule.lastGenerated; // only increases
+    DateTime cursor = schedule.startDate; // only increases
 
     while (cursor.isBefore(startOfWindow)) {
       cursor = cursor.add(Duration(days: schedule.intervalDays));
     }
 
-    // cursor >= max(startOfWindow, schedule.lastGenerated)
+    // cursor >= max(startOfWindow, schedule.startDate)
 
     while (cursor.isBefore(endOfWindow)) {
       newIntakeDates.add(cursor);
@@ -37,3 +37,11 @@ class MedicationIntakeGenerator {
     }
   }
 }
+
+    //     |----------|
+  //     |  TODO test |
+  //     |------------|
+  //        ||
+  // (\__/) ||
+  // (•ㅅ•) ||
+  // / 　 づ

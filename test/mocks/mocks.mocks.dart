@@ -408,7 +408,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
     String? name,
     _i6.Decimal? dose,
     int? intervalDays, {
-    DateTime? lastGenerated,
+    DateTime? startDate,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -418,7 +418,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
             dose,
             intervalDays,
           ],
-          {#lastGenerated: lastGenerated},
+          {#startDate: startDate},
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),

@@ -79,7 +79,7 @@ class AppDatabase {
       name TEXT NOT NULL,
       dose TEXT NOT NULL,
       intervalDays INTEGER NOT NULL,
-      lastGenerated TEXT NOT NULL
+      startDate TEXT NOT NULL
     )
     ''');
   }
