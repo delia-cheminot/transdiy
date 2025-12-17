@@ -155,22 +155,27 @@ void main() {
     test('startDate > today -> returns startDate', () {
       final today = d(2025, 1, 10);
       final start = d(2025, 1, 15);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       expect(s.getNextDate(referenceDate: today), start);
     });
 
     test('startDate == today -> returns startDate', () {
       final today = d(2025, 1, 10);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: today);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: today);
 
       expect(s.getNextDate(referenceDate: today), today);
     });
 
-    test('today falls outside a scheduled date -> returns the next scheduled date', () {
+    test(
+        'today falls outside a scheduled date -> returns the next scheduled date',
+        () {
       final today = d(2025, 1, 5);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       final expectedNext = d(2025, 1, 8);
       expect(s.getNextDate(referenceDate: today), expectedNext);
@@ -179,7 +184,8 @@ void main() {
     test('today falls exactly on a scheduled date -> returns today', () {
       final today = d(2025, 1, 8);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       final expectedNext = d(2025, 1, 8);
       expect(s.getNextDate(referenceDate: today), expectedNext);
@@ -188,7 +194,8 @@ void main() {
     test('intervalDays = 1 and startDate < today -> returns today', () {
       final today = d(2025, 1, 10);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 1, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 1, startDate: start);
 
       final expectedNext = d(2025, 1, 10);
       expect(s.getNextDate(referenceDate: today), expectedNext);
@@ -199,49 +206,63 @@ void main() {
     test('startDate > today -> returns null', () {
       final today = d(2025, 1, 10);
       final start = d(2025, 1, 15);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       expect(s.getLastDate(referenceDate: today), isNull);
     });
 
     test('startDate == today -> returns null', () {
       final today = d(2025, 1, 10);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: today);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: today);
 
       expect(s.getLastDate(referenceDate: today), isNull);
     });
 
-    test('today falls outside a scheduled date -> returns the most recent past scheduled date', () {
+    test(
+        'today falls outside a scheduled date -> returns the most recent past scheduled date',
+        () {
       final today = d(2025, 1, 5);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       final expectedLast = d(2025, 1, 1);
       expect(s.getLastDate(referenceDate: today), expectedLast);
     });
 
-    test('today falls exactly on a scheduled date -> returns scheduled date before today', () {
+    test(
+        'today falls exactly on a scheduled date -> returns scheduled date before today',
+        () {
       final today = d(2025, 1, 8);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       expect(s.getLastDate(referenceDate: today), d(2025, 1, 1));
     });
 
-    test('intervalDays = 1 and startDate < today -> returns scheduled date before today', () {
+    test(
+        'intervalDays = 1 and startDate < today -> returns scheduled date before today',
+        () {
       final today = d(2025, 1, 10);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 1, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 1, startDate: start);
 
       expect(s.getLastDate(referenceDate: today), d(2025, 1, 9));
     });
   });
 
   group('Consistency checks between last and next date', () {
-    test('when startDate < today -> lastDate < nextDate and difference == intervalDays', () {
+    test(
+        'when startDate < today -> lastDate < nextDate and difference == intervalDays',
+        () {
       final today = d(2025, 1, 5);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       final last = s.getLastDate(referenceDate: today);
       final next = s.getNextDate(referenceDate: today);
@@ -249,15 +270,16 @@ void main() {
       expect(next!.difference(last!).inDays, s.intervalDays);
     });
 
-    test('difference == intervalDays when today is exactly on a scheduled date', () {
+    test('difference == intervalDays when today is exactly on a scheduled date',
+        () {
       final today = d(2025, 1, 8);
       final start = d(2025, 1, 1);
-      final s = MedicationSchedule(name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
+      final s = MedicationSchedule(
+          name: 'A', dose: Decimal.one, intervalDays: 7, startDate: start);
 
       final last = s.getLastDate(referenceDate: today);
       final next = s.getNextDate(referenceDate: today);
 
-      // expect(last!.isBefore(next!), isTrue);
       expect(next!.difference(last!).inDays, s.intervalDays);
     });
   });

@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
 
-DateTime normalizeDate(DateTime date) {
+DateTime _normalizeDate(DateTime date) {
   return DateTime(date.year, date.month, date.day);
 }
 
@@ -18,17 +18,7 @@ class MedicationSchedule {
     required this.intervalDays,
     DateTime? startDate,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        startDate = normalizeDate(startDate ?? DateTime.now());
-
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'dose': dose.toString(),
-      'intervalDays': intervalDays,
-      'startDate': startDate.toIso8601String(),
-    };
-  }
+        startDate = _normalizeDate(startDate ?? DateTime.now());
 
   factory MedicationSchedule.fromMap(Map<String, Object?> map) {
     return MedicationSchedule(
@@ -38,6 +28,16 @@ class MedicationSchedule {
       intervalDays: map['intervalDays'] as int,
       startDate: DateTime.parse(map['startDate'] as String),
     );
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'dose': dose.toString(),
+      'intervalDays': intervalDays,
+      'startDate': startDate.toIso8601String(),
+    };
   }
 
   MedicationSchedule copy() {
@@ -64,28 +64,6 @@ class MedicationSchedule {
       intervalDays: intervalDays ?? this.intervalDays,
       startDate: startDate ?? this.startDate,
     );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MedicationSchedule &&
-          id == other.id &&
-          name == other.name &&
-          dose == other.dose &&
-          intervalDays == other.intervalDays &&
-          startDate == other.startDate;
-
-  @override
-  int get hashCode => Object.hash(id, name, dose, intervalDays, startDate);
-
-  @override
-  String toString() {
-    return 'MedicationSchedule{id: $id name: $name}';
-  }
-
-  String generateUid() {
-    return '$name-$dose-$intervalDays-$DateTime.now()';
   }
 
   bool isValid() {
@@ -122,7 +100,7 @@ class MedicationSchedule {
   /// - If today falls exactly on a scheduled injection date, returns today.
   /// - Otherwise, returns the next scheduled date after today.
   DateTime? getNextDate({DateTime? referenceDate}) {
-    final today = normalizeDate(referenceDate ?? DateTime.now());
+    final today = _normalizeDate(referenceDate ?? DateTime.now());
 
     if (!startDate.isBefore(today)) {
       return startDate;
@@ -141,12 +119,12 @@ class MedicationSchedule {
   }
 
   /// Returns the last scheduled injection date relative to [referenceDate] (or today if null).
-  ///
+  /// 
   /// - If the [startDate] is in the future or today, returns null.
   /// - If today falls exactly on a scheduled injection date, returns the scheduled date before today.
   /// - Otherwise, returns the last scheduled date before today.
   DateTime? getLastDate({DateTime? referenceDate}) {
-    final today = normalizeDate(referenceDate ?? DateTime.now());
+    final today = _normalizeDate(referenceDate ?? DateTime.now());
 
     if (!startDate.isBefore(today)) {
       return null;
@@ -164,6 +142,28 @@ class MedicationSchedule {
     return startDate.add(
       Duration(days: intervalsPassed * intervalDays),
     );
+  }
+
+  String generateUid() {
+    return '$name-$dose-$intervalDays-${DateTime.now().toIso8601String()}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MedicationSchedule &&
+          id == other.id &&
+          name == other.name &&
+          dose == other.dose &&
+          intervalDays == other.intervalDays &&
+          startDate == other.startDate;
+
+  @override
+  int get hashCode => Object.hash(id, name, dose, intervalDays, startDate);
+
+  @override
+  String toString() {
+    return 'MedicationSchedule{id: $id name: $name}';
   }
 
   //     |------------------------|
