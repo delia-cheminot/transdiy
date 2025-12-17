@@ -116,6 +116,11 @@ class MedicationSchedule {
         : null;
   }
 
+  /// Returns the next scheduled injection date relative to [referenceDate] (or today if null).
+  ///
+  /// - If the [startDate] is in the future or today, returns [startDate].
+  /// - If today falls exactly on a scheduled injection date, returns today.
+  /// - Otherwise, returns the next scheduled date after today.
   DateTime? getNextDate({DateTime? referenceDate}) {
     final today = normalizeDate(referenceDate ?? DateTime.now());
 
@@ -135,6 +140,11 @@ class MedicationSchedule {
     );
   }
 
+  /// Returns the last scheduled injection date relative to [referenceDate] (or today if null).
+  ///
+  /// - If the [startDate] is in the future or today, returns null.
+  /// - If today falls exactly on a scheduled injection date, returns the scheduled date before today.
+  /// - Otherwise, returns the last scheduled date before today.
   DateTime? getLastDate({DateTime? referenceDate}) {
     final today = normalizeDate(referenceDate ?? DateTime.now());
 
