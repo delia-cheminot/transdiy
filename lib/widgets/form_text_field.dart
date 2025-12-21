@@ -7,14 +7,14 @@ class FormTextField extends StatelessWidget {
   final String? suffixText;
   final String? errorText;
   final TextInputType inputType;
-  final VoidCallback validator;
+  final VoidCallback onChanged;
   final bool isFirst;
   final String? regexFormatter;
 
   FormTextField({
     required this.controller,
     required this.label,
-    required this.validator,
+    required this.onChanged,
     this.suffixText,
     this.errorText,
     required this.inputType,
@@ -42,7 +42,7 @@ class FormTextField extends StatelessWidget {
           errorText: errorText,
           suffixIcon: errorText != null ? Icon(Icons.error) : null,
         ),
-        onChanged: (value) => validator(),
+        onChanged: (value) => onChanged(),
       ),
     );
   }

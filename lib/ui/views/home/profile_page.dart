@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
-import 'new_schedule_dialog.dart';
+import 'new_schedule_page.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -58,7 +58,7 @@ class ProfilePage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute<void>(
             fullscreenDialog: true,
-            builder: (context) => NewScheduleDialog(),
+            builder: (context) => NewSchedulePage(),
           ));
         },
         tooltip: 'Ajouter un traitement',

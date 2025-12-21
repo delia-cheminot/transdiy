@@ -5,23 +5,26 @@ import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
-class NewItemDialog extends StatefulWidget {
+class NewItemPage extends StatefulWidget {
   @override
-  State<NewItemDialog> createState() => _NewItemDialogState();
+  State<NewItemPage> createState() => _NewItemPageState();
 }
 
-class _NewItemDialogState extends State<NewItemDialog> {
+class _NewItemPageState extends State<NewItemPage> {
   late TextEditingController _totalAmountController;
   late TextEditingController _nameController;
   late TextEditingController _dosePerUnitController;
 
-  bool _isFormValid = false;
+  String? get _nameError => SupplyItem.validateName(_nameController.text);
+  String? get _totalAmountError =>
+      SupplyItem.validateTotalAmount(_totalAmountController.text);
+  String? get _dosePerUnitError =>
+      SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
 
-  Map<String, String?> _fieldErrors = {
-    'name': null,
-    'totalAmount': null,
-    'dosePerUnit': null,
-  };
+  bool get _isFormValid =>
+      _nameError == null &&
+      _totalAmountError == null &&
+      _dosePerUnitError == null;
 
   @override
   void initState() {
@@ -39,17 +42,8 @@ class _NewItemDialogState extends State<NewItemDialog> {
     super.dispose();
   }
 
-  /// Updates the error messages for each field and the form validity.
-  void _validateInputs() {
-    setState(() {
-      _fieldErrors['name'] = SupplyItem.validateName(_nameController.text);
-      _fieldErrors['totalAmount'] =
-          SupplyItem.validateTotalAmount(_totalAmountController.text);
-      _fieldErrors['dosePerUnit'] =
-          SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
-
-      _isFormValid = _fieldErrors.values.every((error) => error == null);
-    });
+  void _refresh() {
+    setState(() {});
   }
 
   void _addItem() async {
@@ -96,14 +90,14 @@ class _NewItemDialogState extends State<NewItemDialog> {
             FormTextField(
               controller: _nameController,
               label: 'Nom',
-              validator: _validateInputs,
+              onChanged: _refresh,
               inputType: TextInputType.text,
               isFirst: true,
             ),
             FormTextField(
               controller: _totalAmountController,
               label: 'Contenance',
-              validator: _validateInputs,
+              onChanged: _refresh,
               inputType: TextInputType.number,
               suffixText: 'ml',
               regexFormatter: r'[0-9.,]',
@@ -111,7 +105,7 @@ class _NewItemDialogState extends State<NewItemDialog> {
             FormTextField(
               controller: _dosePerUnitController,
               label: 'Concentration',
-              validator: _validateInputs,
+              onChanged: _refresh,
               inputType: TextInputType.number,
               suffixText: 'mg/ml',
               regexFormatter: r'[0-9]',

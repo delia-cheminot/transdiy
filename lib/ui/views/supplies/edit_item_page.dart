@@ -7,29 +7,36 @@ import 'package:transdiy/data/providers/supply_item_provider.dart';
 import 'package:transdiy/ui/widgets/dialogs.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
-class EditItemDialog extends StatefulWidget {
+class EditItemPage extends StatefulWidget {
   final SupplyItem item;
 
-  EditItemDialog({required this.item});
+  EditItemPage({required this.item});
 
   @override
-  State<EditItemDialog> createState() => _EditItemDialogState();
+  State<EditItemPage> createState() => _EditItemPageState();
 }
 
-class _EditItemDialogState extends State<EditItemDialog> {
+class _EditItemPageState extends State<EditItemPage> {
   late TextEditingController _totalAmountController;
   late TextEditingController _usedAmountController;
   late TextEditingController _dosePerUnitController;
   late TextEditingController _nameController;
 
-  bool _isFormValid = false;
+  String? get _nameError => SupplyItem.validateName(_nameController.text);
+  String? get _totalAmountError =>
+      SupplyItem.validateTotalAmount(_totalAmountController.text);
+  String? get _usedAmountError => SupplyItem.validateUsedAmount(
+        _usedAmountController.text,
+        _totalAmountController.text,
+      );
+  String? get _dosePerUnitError =>
+      SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
 
-  Map<String, String?> _fieldErrors = {
-    'name': null,
-    'totalAmount': null,
-    'usedAmount': null,
-    'dosePerUnit': null,
-  };
+  bool get _isFormValid =>
+      _nameError == null &&
+      _totalAmountError == null &&
+      _usedAmountError == null &&
+      _dosePerUnitError == null;
 
   @override
   void initState() {
@@ -52,20 +59,8 @@ class _EditItemDialogState extends State<EditItemDialog> {
     super.dispose();
   }
 
-  void _validateInputs() {
-    setState(() {
-      _fieldErrors['name'] = SupplyItem.validateName(_nameController.text);
-      _fieldErrors['totalAmount'] =
-          SupplyItem.validateTotalAmount(_totalAmountController.text);
-      _fieldErrors['usedAmount'] = SupplyItem.validateUsedAmount(
-        _usedAmountController.text,
-        _totalAmountController.text,
-      );
-      _fieldErrors['dosePerUnit'] =
-          SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
-
-      _isFormValid = _fieldErrors.values.every((error) => error == null);
-    });
+  void _refresh() {
+    setState(() {});
   }
 
   void _saveChanges() {
@@ -75,6 +70,7 @@ class _EditItemDialogState extends State<EditItemDialog> {
     }
 
     if (!_isFormValid) return;
+    if (!mounted) return;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
     SupplyItemManager(supplyItemProvider).setFields(
@@ -130,36 +126,36 @@ class _EditItemDialogState extends State<EditItemDialog> {
               FormTextField(
                 controller: _nameController,
                 label: 'Nom',
-                validator: _validateInputs,
+                onChanged: _refresh,
                 inputType: TextInputType.text,
                 isFirst: true,
-                errorText: _fieldErrors['name'],
+                errorText: _nameError,
               ),
               FormTextField(
                 controller: _totalAmountController,
                 label: 'Quantité totale',
-                validator: _validateInputs,
+                onChanged: _refresh,
                 inputType: TextInputType.number,
                 suffixText: 'ml',
-                errorText: _fieldErrors['totalAmount'],
+                errorText: _totalAmountError,
                 regexFormatter: r'[0-9.,]',
               ),
               FormTextField(
                 controller: _usedAmountController,
                 label: 'Quantité utilisée',
-                validator: _validateInputs,
+                onChanged: _refresh,
                 inputType: TextInputType.number,
                 suffixText: 'ml',
-                errorText: _fieldErrors['usedAmount'],
+                errorText: _usedAmountError,
                 regexFormatter: r'[0-9.,]',
               ),
               FormTextField(
                 controller: _dosePerUnitController,
                 label: 'Dosage par unité',
-                validator: _validateInputs,
+                onChanged: _refresh,
                 inputType: TextInputType.number,
                 suffixText: 'mg/ml',
-                errorText: _fieldErrors['dosePerUnit'],
+                errorText: _dosePerUnitError,
                 regexFormatter: r'[0-9]',
               ),
               Padding(

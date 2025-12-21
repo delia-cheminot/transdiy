@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/ui/views/supplies/edit_item_dialog.dart';
+import 'package:transdiy/ui/views/supplies/edit_item_page.dart';
 
 class PharmacyItem extends StatelessWidget {
   final SupplyItem item;
@@ -18,7 +18,7 @@ class PharmacyItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute<void>(
             fullscreenDialog: true,
-            builder: (context) => EditItemDialog(item: item),
+            builder: (context) => EditItemPage(item: item),
           ));
         },
       ),

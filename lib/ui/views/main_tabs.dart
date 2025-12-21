@@ -5,7 +5,7 @@ import 'home/profile_page.dart';
 import 'intakes/intakes_history_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
-import 'supplies/new_item_dialog.dart';
+import 'supplies/new_item_page.dart';
 import 'supplies/pharmacy_page.dart';
 
 final List<MainTabConfig> mainTabs = [
@@ -52,7 +52,7 @@ final List<MainTabConfig> mainTabs = [
         Navigator.of(context).push(
           MaterialPageRoute<void>(
             fullscreenDialog: true,
-            builder: (context) => NewItemDialog(),
+            builder: (context) => NewItemPage(),
           ),
         );
       },
