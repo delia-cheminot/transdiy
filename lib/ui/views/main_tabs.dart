@@ -10,7 +10,7 @@ import 'supplies/pharmacy_page.dart';
 
 final List<MainTabConfig> mainTabs = [
   MainTabConfig(
-    title: 'Accueil',
+    title: 'TransDIY',
     page: HomePage(),
     icon: Icons.home_outlined,
     selectedIcon: Icons.home,
