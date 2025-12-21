@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'app_database.dart';
 
 class Repository<T> {
-  final Database db;
+  final Future<Database> _dbFuture;
   final String tableName;
   final Map<String, Object?> Function(T) toMap;
   final T Function(Map<String, Object?>) fromMap;
@@ -12,9 +12,10 @@ class Repository<T> {
     required this.tableName,
     required this.toMap,
     required this.fromMap,
-  }) : db = db ?? AppDatabase.getInstance().database as Database;
+  }) : _dbFuture = db != null ? Future.value(db) : AppDatabase.getInstance().database; 
 
   Future<int> insert(T element) async {
+    final db = await _dbFuture;
     return await db.insert(
       tableName,
       toMap(element),
@@ -23,11 +24,13 @@ class Repository<T> {
   }
 
   Future<List<T>> getAll() async {
+    final db = await _dbFuture;
     final result = await db.query(tableName);
     return result.map(fromMap).toList();
   }
 
   Future<void> update(T element, int id) async {
+    final db = await _dbFuture;
     await db.update(
       tableName,
       toMap(element),
@@ -37,6 +40,7 @@ class Repository<T> {
   }
 
   Future<void> delete(int id) async {
+    final db = await _dbFuture;
     await db.delete(
       tableName,
       where: 'id = ?',
