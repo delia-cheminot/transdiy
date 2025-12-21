@@ -7,22 +7,22 @@ import 'package:transdiy/ui/views/supplies/pharmacy_item.dart';
 class PharmacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final pharmacyState = context.watch<SupplyItemProvider>();
+    final supplyItemProvider = context.watch<SupplyItemProvider>();
 
-    if (pharmacyState.isLoading) {
+    if (supplyItemProvider.isLoading) {
       return Center(child: CircularProgressIndicator());
     }
 
-    if (pharmacyState.items.isEmpty) {
+    if (supplyItemProvider.items.isEmpty) {
       return Center(
         child: Text('Ajoutez un élément pour commencer'),
       );
     }
 
     return ListView.builder(
-      itemCount: pharmacyState.items.length,
+      itemCount: supplyItemProvider.items.length,
       itemBuilder: (context, index) {
-        SupplyItem item = pharmacyState.items[index];
+        SupplyItem item = supplyItemProvider.items[index];
         return PharmacyItem(
           item: item,
         );
