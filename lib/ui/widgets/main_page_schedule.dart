@@ -15,6 +15,7 @@ class BrickTile extends StatelessWidget {
       appBar: AppBar(title: const Text('à venir')),
       body: ListView(
         children: <Widget>[
+         
           for (final schedule in medicationScheduleProvider.schedules)
             _buildTile(schedule),
           Divider(height: 0),
@@ -24,15 +25,18 @@ class BrickTile extends StatelessWidget {
   }
 
   String _getPharmacyAsset(MedicationSchedule schedule) {
+    // for now uniquely estradiol enenthate, add more treatments later and do a switch 
+    // on the treatment to get the correct asset 
     return "assets/pharmacie/tablets/full_tablet.svg";
   }
 
   String _getTreatmentName(MedicationSchedule schedule) {
-    return "Oestradiol Enanthate";
+    return schedule.name;
   }
 
   String _getTreatmentDate(MedicationSchedule schedule) {
-    return "fuck that shit bro";
+    final date = schedule.getNextDate()!;
+    return "${date.day} ${date.month} ${date.year}";
   }
 
   ListTile _buildTile(MedicationSchedule schedule) {
