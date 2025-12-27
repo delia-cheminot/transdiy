@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
-import 'package:transdiy/ui/views/supplies/pharmacy_item.dart';
+import 'package:transdiy/ui/views/supplies/supply_item_card.dart';
 
 class PharmacyPage extends StatelessWidget {
   @override
@@ -19,14 +20,16 @@ class PharmacyPage extends StatelessWidget {
       );
     }
 
-    return ListView.builder(
+    return MasonryGridView.builder(
+      gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 300),
       itemCount: supplyItemProvider.items.length,
       itemBuilder: (context, index) {
         SupplyItem item = supplyItemProvider.items[index];
-        return PharmacyItem(
-          item: item,
-        );
+        return SupplyItemCard(item: item);
       },
     );
   }
+
+
 }
