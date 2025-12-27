@@ -28,8 +28,6 @@ class AppDatabase {
     _database = inMemory
         ? await _initInMemoryDB()
         : await _initFileDB('app_database.db');
-    final db = await getDatabasesPath();
-    print(db);
     return _database!;
   }
 
