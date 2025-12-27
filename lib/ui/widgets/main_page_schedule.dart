@@ -11,17 +11,14 @@ class BrickTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('à venir')),
-      body: ListView(
+    return ListView(
         children: <Widget>[
          
           for (final schedule in medicationScheduleProvider.schedules)
             _buildTile(schedule),
           Divider(height: 0),
         ],
-      ),
-    );
+      );
   }
 
   String _getPharmacyAsset(MedicationSchedule schedule) {
