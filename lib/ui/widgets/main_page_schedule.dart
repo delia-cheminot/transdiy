@@ -4,26 +4,23 @@ import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 
-class BrickTile extends StatelessWidget {
-  const BrickTile({super.key});
-
+class MainPageSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+
     return ListView(
-        children: <Widget>[
-         
-          for (final schedule in medicationScheduleProvider.schedules)
-            _buildTile(schedule),
-          Divider(height: 0),
-        ],
-      );
+      children: <Widget>[
+        for (final schedule in medicationScheduleProvider.schedules)
+          _buildTile(schedule),
+      ],
+    );
   }
 
   String _getPharmacyAsset(MedicationSchedule schedule) {
-    // for now uniquely estradiol enenthate, add more treatments later and do a switch 
-    // on the treatment to get the correct asset 
+    // for now uniquely estradiol enenthate, add more treatments later and do a switch
+    // on the treatment to get the correct asset
     return "assets/pharmacie/tablets/full_tablet.svg";
   }
 
