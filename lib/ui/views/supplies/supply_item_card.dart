@@ -51,11 +51,11 @@ class SupplyItemCard extends StatelessWidget {
                   ),
                   // text with description
                   Text(
-                    'Contenance: ${item.totalDose.toString()}',
+                    'Contenance: ${item.totalDose}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    '(${(item.getRemainingDose()).toString()} restants)',
+                    '(${(item.getRemainingDose())} restants)',
                     style: Theme.of(context).textTheme.bodyMedium,
                   )
                 ],
@@ -68,25 +68,29 @@ class SupplyItemCard extends StatelessWidget {
   }
 
   String _getVialAsset(double ratio) {
-    final thresholds = <double, String>{
-      0.10: '00',
-      0.20: '02',
-      0.25: '025',
-      0.30: '03',
-      0.40: '04',
-      0.50: '05',
-      0.60: '06',
-      0.75: '075',
-      0.80: '08',
-      0.90: '09',
-    };
-
-    for (final entry in thresholds.entries) {
-      if (ratio < entry.key) {
-        return 'assets/pharmacie/fioles/fiole_${entry.value}.svg';
-      }
+    switch (ratio) {
+      case < 0.10:
+        return 'assets/pharmacie/fioles/fiole_00.svg';
+      case < 0.20:
+        return 'assets/pharmacie/fioles/fiole_02.svg';
+      case < 0.25:
+        return 'assets/pharmacie/fioles/fiole_025.svg';
+      case < 0.30:
+        return 'assets/pharmacie/fioles/fiole_03.svg';
+      case < 0.40:
+        return 'assets/pharmacie/fioles/fiole_04.svg';
+      case < 0.50:
+        return 'assets/pharmacie/fioles/fiole_05.svg';
+      case < 0.60:
+        return 'assets/pharmacie/fioles/fiole_06.svg';
+      case < 0.75:
+        return 'assets/pharmacie/fioles/fiole_075.svg';
+      case < 0.80:
+        return 'assets/pharmacie/fioles/fiole_08.svg';
+      case < 0.90:
+        return 'assets/pharmacie/fioles/fiole_09.svg';
+      default:
+        return 'assets/pharmacie/fioles/fiole_1.svg';
     }
-
-    return 'assets/pharmacie/fioles/fiole_1.svg';
   }
 }
