@@ -1,5 +1,6 @@
 // main_tabs.dart
 import 'package:flutter/material.dart';
+import 'chart/chart_page.dart';
 import 'home/home_page.dart';
 import 'home/profile/profile_page.dart';
 import 'intakes/intakes_history_page.dart';
@@ -7,6 +8,7 @@ import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
 import 'supplies/new_item_page.dart';
 import 'supplies/pharmacy_page.dart';
+
 
 final List<MainTabConfig> mainTabs = [
   MainTabConfig(
@@ -40,6 +42,12 @@ final List<MainTabConfig> mainTabs = [
         },
       ),
     ],
+  ),
+  MainTabConfig(
+    title: 'Courbe',
+    page: ChartPage(),
+    icon: Icons.trending_up_outlined,
+    selectedIcon: Icons.trending_up_rounded,
   ),
   MainTabConfig(
     title: 'Pharmacie',
