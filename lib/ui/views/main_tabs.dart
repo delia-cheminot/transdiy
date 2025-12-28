@@ -1,7 +1,7 @@
 // main_tabs.dart
 import 'package:flutter/material.dart';
 import 'home/home_page.dart';
-import 'home/profile_page.dart';
+import 'home/profile/profile_page.dart';
 import 'intakes/intakes_history_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
