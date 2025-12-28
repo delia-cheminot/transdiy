@@ -23,11 +23,8 @@ class _MainPageState extends State<MainPage> {
         centerTitle: true,
         actions: currentTab.buildActions?.call(context),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SafeArea(
-          child: currentTab.page,
-        ),
+      body: SafeArea(
+        child: currentTab.page,
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,

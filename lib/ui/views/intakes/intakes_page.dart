@@ -14,7 +14,8 @@ class IntakesPage extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            medicationIntakeProvider.addIntake(DateTime.now(), Decimal.parse('4'));
+            medicationIntakeProvider.addIntake(
+                DateTime.now(), Decimal.parse('4'));
           },
           child: Text('ajouter une prise'),
         ),
@@ -26,7 +27,9 @@ class IntakesPage extends StatelessWidget {
                       child: Text('No intakes yet'),
                     )
                   : ListView.builder(
-                      itemCount: medicationIntakeProvider.notTakenIntakes.length,
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount:
+                          medicationIntakeProvider.notTakenIntakes.length,
                       itemBuilder: (context, index) {
                         MedicationIntake intake =
                             medicationIntakeProvider.notTakenIntakes[index];
