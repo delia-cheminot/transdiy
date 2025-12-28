@@ -81,36 +81,39 @@ class _NewItemPageState extends State<NewItemPage> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FormTextField(
-              controller: _nameController,
-              label: 'Nom',
-              onChanged: _refresh,
-              inputType: TextInputType.text,
-              isFirst: true,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FormTextField(
+                  controller: _nameController,
+                  label: 'Nom',
+                  onChanged: _refresh,
+                  inputType: TextInputType.text,
+                ),
+                FormTextField(
+                  controller: _totalAmountController,
+                  label: 'Contenance',
+                  onChanged: _refresh,
+                  inputType: TextInputType.number,
+                  suffixText: 'ml',
+                  regexFormatter: r'[0-9.,]',
+                ),
+                FormTextField(
+                  controller: _dosePerUnitController,
+                  label: 'Concentration',
+                  onChanged: _refresh,
+                  inputType: TextInputType.number,
+                  suffixText: 'mg/ml',
+                  regexFormatter: r'[0-9]',
+                ),
+              ],
             ),
-            FormTextField(
-              controller: _totalAmountController,
-              label: 'Contenance',
-              onChanged: _refresh,
-              inputType: TextInputType.number,
-              suffixText: 'ml',
-              regexFormatter: r'[0-9.,]',
-            ),
-            FormTextField(
-              controller: _dosePerUnitController,
-              label: 'Concentration',
-              onChanged: _refresh,
-              inputType: TextInputType.number,
-              suffixText: 'mg/ml',
-              regexFormatter: r'[0-9]',
-            ),
-          ],
+          ),
         ),
       ),
     );

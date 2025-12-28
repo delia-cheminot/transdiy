@@ -11,7 +11,6 @@ class MainPageSchedule extends StatelessWidget {
         context.watch<MedicationScheduleProvider>();
 
     return ListView(
-      padding: const EdgeInsets.all(16.0),
       children: <Widget>[
         for (final schedule in medicationScheduleProvider.schedules)
           _buildTile(schedule),

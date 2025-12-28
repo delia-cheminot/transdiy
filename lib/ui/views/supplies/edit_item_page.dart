@@ -116,61 +116,62 @@ class _EditItemPageState extends State<EditItemPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FormTextField(
-                controller: _nameController,
-                label: 'Nom',
-                onChanged: _refresh,
-                inputType: TextInputType.text,
-                isFirst: true,
-                errorText: _nameError,
-              ),
-              FormTextField(
-                controller: _totalAmountController,
-                label: 'Quantité totale',
-                onChanged: _refresh,
-                inputType: TextInputType.number,
-                suffixText: 'ml',
-                errorText: _totalAmountError,
-                regexFormatter: r'[0-9.,]',
-              ),
-              FormTextField(
-                controller: _usedAmountController,
-                label: 'Quantité utilisée',
-                onChanged: _refresh,
-                inputType: TextInputType.number,
-                suffixText: 'ml',
-                errorText: _usedAmountError,
-                regexFormatter: r'[0-9.,]',
-              ),
-              FormTextField(
-                controller: _dosePerUnitController,
-                label: 'Dosage par unité',
-                onChanged: _refresh,
-                inputType: TextInputType.number,
-                suffixText: 'mg/ml',
-                errorText: _dosePerUnitError,
-                regexFormatter: r'[0-9]',
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Divider(),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: _confirmDelete,
-                  child: Text('Supprimer'),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FormTextField(
+                  controller: _nameController,
+                  label: 'Nom',
+                  onChanged: _refresh,
+                  inputType: TextInputType.text,
+                  errorText: _nameError,
                 ),
-              ),
-            ],
+                FormTextField(
+                  controller: _totalAmountController,
+                  label: 'Quantité totale',
+                  onChanged: _refresh,
+                  inputType: TextInputType.number,
+                  suffixText: 'ml',
+                  errorText: _totalAmountError,
+                  regexFormatter: r'[0-9.,]',
+                ),
+                FormTextField(
+                  controller: _usedAmountController,
+                  label: 'Quantité utilisée',
+                  onChanged: _refresh,
+                  inputType: TextInputType.number,
+                  suffixText: 'ml',
+                  errorText: _usedAmountError,
+                  regexFormatter: r'[0-9.,]',
+                ),
+                FormTextField(
+                  controller: _dosePerUnitController,
+                  label: 'Dosage par unité',
+                  onChanged: _refresh,
+                  inputType: TextInputType.number,
+                  suffixText: 'mg/ml',
+                  errorText: _dosePerUnitError,
+                  regexFormatter: r'[0-9]',
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Divider(),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: _confirmDelete,
+                    child: Text('Supprimer'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

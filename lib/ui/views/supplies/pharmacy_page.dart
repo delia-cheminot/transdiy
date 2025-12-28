@@ -21,7 +21,7 @@ class PharmacyPage extends StatelessWidget {
     }
 
     return MasonryGridView.builder(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 300),
       itemCount: supplyItemProvider.items.length,

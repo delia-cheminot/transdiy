@@ -27,7 +27,6 @@ class IntakesPage extends StatelessWidget {
                       child: Text('No intakes yet'),
                     )
                   : ListView.builder(
-                      padding: const EdgeInsets.all(16.0),
                       itemCount:
                           medicationIntakeProvider.notTakenIntakes.length,
                       itemBuilder: (context, index) {

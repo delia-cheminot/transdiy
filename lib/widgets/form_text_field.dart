@@ -8,8 +8,8 @@ class FormTextField extends StatelessWidget {
   final String? errorText;
   final TextInputType inputType;
   final VoidCallback onChanged;
-  final bool isFirst;
   final String? regexFormatter;
+  final bool readonly;
 
   FormTextField({
     required this.controller,
@@ -18,14 +18,14 @@ class FormTextField extends StatelessWidget {
     this.suffixText,
     this.errorText,
     required this.inputType,
-    this.isFirst = false,
     this.regexFormatter,
+    this.readonly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: isFirst ? 0 : 8.0, bottom: 8.0),
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: TextField(
         controller: controller,
         keyboardType: inputType,
@@ -43,6 +43,7 @@ class FormTextField extends StatelessWidget {
           suffixIcon: errorText != null ? Icon(Icons.error) : null,
         ),
         onChanged: (value) => onChanged(),
+        readOnly: readonly,
       ),
     );
   }

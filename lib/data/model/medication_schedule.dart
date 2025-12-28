@@ -94,6 +94,9 @@ class MedicationSchedule {
         : null;
   }
 
+  static String? validateStartDate(DateTime? startDate) =>
+      startDate == null ? 'Champ obligatoire' : null;
+
   /// Returns the next scheduled injection date relative to [referenceDate] (or today if null).
   ///
   /// - If the [startDate] is in the future or today, returns [startDate].
@@ -119,7 +122,7 @@ class MedicationSchedule {
   }
 
   /// Returns the last scheduled injection date relative to [referenceDate] (or today if null).
-  /// 
+  ///
   /// - If the [startDate] is in the future or today, returns null.
   /// - If today falls exactly on a scheduled injection date, returns the scheduled date before today.
   /// - Otherwise, returns the last scheduled date before today.

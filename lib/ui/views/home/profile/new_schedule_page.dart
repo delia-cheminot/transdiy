@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
+import 'package:transdiy/widgets/form_date_field.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -14,6 +15,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
+  late DateTime _startDate;
 
   @override
   void initState() {
@@ -21,6 +23,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     _nameController = TextEditingController();
     _doseController = TextEditingController();
     _intervalDaysController = TextEditingController();
+    _startDate = DateTime.now();
   }
 
   @override
@@ -37,7 +40,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final intervalDays = int.parse(_intervalDaysController.text);
     final medicationScheduleProvider =
         Provider.of<MedicationScheduleProvider>(context, listen: false);
-    medicationScheduleProvider.addSchedule(name, dose, intervalDays);
+    medicationScheduleProvider.addSchedule(name, dose, intervalDays,
+        startDate: _startDate);
     Navigator.pop(context);
   }
 
@@ -47,9 +51,14 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       MedicationSchedule.validateDose(_doseController.text);
   String? get _intervalDaysError =>
       MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
+  String? get _startDateError =>
+      MedicationSchedule.validateStartDate(_startDate);
 
   bool get _isFormValid =>
-      _nameError == null && _doseError == null && _intervalDaysError == null;
+      _nameError == null &&
+      _doseError == null &&
+      _intervalDaysError == null &&
+      _startDateError == null;
 
   void _refresh() {
     setState(() {});
@@ -70,37 +79,46 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FormTextField(
-                  controller: _nameController,
-                  label: 'Nom',
-                  onChanged: _refresh,
-                  inputType: TextInputType.text,
-                  isFirst: true,
-                ),
-                FormTextField(
-                  controller: _doseController,
-                  label: 'Dose',
-                  suffixText: 'mg',
-                  onChanged: _refresh,
-                  inputType: TextInputType.numberWithOptions(decimal: false),
-                  regexFormatter: '[0-9]',
-                ),
-                FormTextField(
-                  controller: _intervalDaysController,
-                  label: 'Tous les',
-                  suffixText: 'jours',
-                  onChanged: _refresh,
-                  inputType: TextInputType.numberWithOptions(decimal: false),
-                  regexFormatter: '[0-9]',
-                ),
-              ],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FormTextField(
+                    controller: _nameController,
+                    label: 'Nom',
+                    onChanged: _refresh,
+                    inputType: TextInputType.text,
+                  ),
+                  FormTextField(
+                    controller: _doseController,
+                    label: 'Dose',
+                    suffixText: 'mg',
+                    onChanged: _refresh,
+                    inputType: TextInputType.numberWithOptions(decimal: false),
+                    regexFormatter: '[0-9]',
+                  ),
+                  FormTextField(
+                    controller: _intervalDaysController,
+                    label: 'Tous les',
+                    suffixText: 'jours',
+                    onChanged: _refresh,
+                    inputType: TextInputType.numberWithOptions(decimal: false),
+                    regexFormatter: '[0-9]',
+                  ),
+                  FormDateField(
+                    date: _startDate,
+                    label: 'Date de début',
+                    errorText: _startDateError,
+                    onChanged: (date) => setState(() {
+                      _startDate = date;
+                    }),
+                  )
+                ],
+              ),
             ),
           ),
         ));

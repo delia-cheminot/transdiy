@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
 import 'package:transdiy/ui/widgets/dialogs.dart';
+import 'package:transdiy/widgets/form_date_field.dart';
 import 'package:transdiy/widgets/form_text_field.dart';
 
 class EditSchedulePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
+  late DateTime _startDate;
 
   String? get _nameError =>
       MedicationSchedule.validateName(_nameController.text);
@@ -26,9 +28,14 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       MedicationSchedule.validateDose(_doseController.text);
   String? get _intervalDaysError =>
       MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
+  String? get _startDateError =>
+      MedicationSchedule.validateStartDate(_startDate);
 
   bool get _isFormValid =>
-      _nameError == null && _doseError == null && _intervalDaysError == null;
+      _nameError == null &&
+      _doseError == null &&
+      _intervalDaysError == null &&
+      _startDateError == null;
 
   @override
   void initState() {
@@ -38,6 +45,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         TextEditingController(text: widget.schedule.dose.toString());
     _intervalDaysController =
         TextEditingController(text: widget.schedule.intervalDays.toString());
+    _startDate = widget.schedule.startDate;
   }
 
   @override
@@ -65,6 +73,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       name: _nameController.text,
       dose: parseDecimal(_doseController.text)!,
       intervalDays: int.parse(_intervalDaysController.text),
+      startDate: _startDate,
     );
     medicationScheduleProvider.updateSchedule(updatedSchedule);
     Navigator.pop(context, updatedSchedule);
@@ -100,51 +109,60 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FormTextField(
-              controller: _nameController,
-              label: 'Nom',
-              onChanged: _refresh,
-              inputType: TextInputType.text,
-              isFirst: true,
-              errorText: _nameError,
-            ),
-            FormTextField(
-              controller: _doseController,
-              label: 'Dose',
-              onChanged: _refresh,
-              inputType: TextInputType.number,
-              suffixText: 'mg',
-              errorText: _doseError,
-              regexFormatter: r'[0-9.,]',
-            ),
-            FormTextField(
-              controller: _intervalDaysController,
-              label: 'Intervalle',
-              suffixText: 'jours',
-              onChanged: _refresh,
-              inputType: TextInputType.number,
-              errorText: _intervalDaysError,
-              regexFormatter: r'[0-9]',
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8, bottom: 8),
-              child: Divider(),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 8, bottom: 8),
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: _confirmDelete,
-                child: Text('Supprimer'),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FormTextField(
+                controller: _nameController,
+                label: 'Nom',
+                onChanged: _refresh,
+                inputType: TextInputType.text,
+                errorText: _nameError,
               ),
-            )
-          ],
+              FormTextField(
+                controller: _doseController,
+                label: 'Dose',
+                onChanged: _refresh,
+                inputType: TextInputType.number,
+                suffixText: 'mg',
+                errorText: _doseError,
+                regexFormatter: r'[0-9.,]',
+              ),
+              FormTextField(
+                controller: _intervalDaysController,
+                label: 'Intervalle',
+                suffixText: 'jours',
+                onChanged: _refresh,
+                inputType: TextInputType.number,
+                errorText: _intervalDaysError,
+                regexFormatter: r'[0-9]',
+              ),
+              FormDateField(
+                date: _startDate,
+                label: 'Date de début',
+                errorText: _startDateError,
+                onChanged: (date) => setState(() {
+                  _startDate = date;
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 8, bottom: 8),
+                child: Divider(),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 8, bottom: 8),
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: _confirmDelete,
+                  child: Text('Supprimer'),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

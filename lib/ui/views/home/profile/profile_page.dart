@@ -33,31 +33,32 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-      body: medicationScheduleProvider.schedules.isEmpty
-          ? Center(
-              child: Text('Ajoutez un traitement pour commencer'),
-            )
-          : ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: medicationScheduleProvider.schedules.length,
-              itemBuilder: (context, index) {
-                final schedule = medicationScheduleProvider.schedules[index];
-                return ListTile(
-                  title: Text(schedule.name),
-                  subtitle: Text("${schedule.dose.toString()} mg "
-                      "tous les ${schedule.intervalDays.toString()} jours"),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        fullscreenDialog: true,
-                        builder: (context) =>
-                            EditSchedulePage(schedule: schedule),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
+      body: SafeArea(
+        child: medicationScheduleProvider.schedules.isEmpty
+            ? Center(
+                child: Text('Ajoutez un traitement pour commencer'),
+              )
+            : ListView.builder(
+                itemCount: medicationScheduleProvider.schedules.length,
+                itemBuilder: (context, index) {
+                  final schedule = medicationScheduleProvider.schedules[index];
+                  return ListTile(
+                    title: Text(schedule.name),
+                    subtitle: Text("${schedule.dose.toString()} mg "
+                        "tous les ${schedule.intervalDays.toString()} jours"),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          fullscreenDialog: true,
+                          builder: (context) =>
+                              EditSchedulePage(schedule: schedule),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute<void>(
