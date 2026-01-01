@@ -22,7 +22,9 @@ class _ChartSliderState extends State<ChartSlider> {
   Widget build(BuildContext context) {
     return Slider(
       value: _currentSliderValue,
-      max: 120,
+      max: 100,
+      min: 0,
+      divisions: 20,
       onChanged: (double value) {
         setState(() =>  _currentSliderValue = value);
         widget.onChanged(value);

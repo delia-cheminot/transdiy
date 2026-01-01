@@ -9,7 +9,7 @@ class ChartPage extends StatefulWidget {
 }
 
 class _ChartPageState extends State<ChartPage> {
-  double sliderValue = 40;
+  double sliderValue = 0;
 
   @override
   Widget build(BuildContext context) {

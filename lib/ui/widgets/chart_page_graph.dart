@@ -1,53 +1,130 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:transdiy/data/providers/medication_intake_provider.dart';
 
 class MainGraph extends StatelessWidget {
   //take the real doses for creation of enanthate graph
 
-  static List<int> _getDays() => [0, 8, 18, 27, 36, 47, 57, 68, 77, 83, 90];
-  static List<double> _getDosesMg() => [6, 4, 4, 5.5, 6, 6, 8, 8, 6.4, 4, 6];
-  final List<int> days = _getDays();
-  final List<double> dosesMg = _getDosesMg();
   final double window;
-  final int windowCenter = (_getDays().length / 2).toInt();
   MainGraph({required this.window});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: SizedBox(
-        width: _getDays().last * 35 + window * 20,
-        height: MediaQuery.of(context).size.height - 200,
-        child: LineChart(
-          LineChartData(
-            minX: days[windowCenter].toDouble() - window,
-            maxX: days[windowCenter].toDouble() + window,
-            minY: 0,
-            gridData: FlGridData(show: true),
-            titlesData: FlTitlesData(show: true),
-            borderData: FlBorderData(show: true),
-            lineBarsData: [
-              LineChartBarData(
-                spots: GraphCalculator().generateSpots(dosesMg, days),
-                isCurved: true,
-                color: Theme.of(context).colorScheme.primary,
-                barWidth: 3,
-                dotData: FlDotData(show: false),
-                belowBarData: BarAreaData(
-                  show: true,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .primary
-                      .withValues(alpha: 0.3),
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    Map<int, double> daysAndDoses = medicationIntakeProvider
+        .getDaysAndDoses(medicationIntakeProvider.intakes);
+    List<int> getDays() => daysAndDoses.keys.toList();
+    List<double> getDosesMg() => daysAndDoses.values.toList();
+    final List<int> days = getDays();
+    final List<double> dosesMg = getDosesMg();
+    if (days.isEmpty) {
+      return Center(
+        child: Text(
+            'take your pills alice'),
+      );
+    } else {
+      //padding on the top for accessibility
+      List<FlSpot> spots = GraphCalculator().generateSpots(dosesMg, days);
+      double maxConcentration = spots.isEmpty
+          ? 0
+          : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+      double maxYWithPadding = maxConcentration * 1.15;
+
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SizedBox(
+          width: 4 * MediaQuery.of(context).size.width -
+              2 * MediaQuery.of(context).size.width * 0.01 * (100 - window),
+          height: 3 * MediaQuery.of(context).size.height / 4,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: RotatedBox(
+                        quarterTurns: -1,
+                        child: Text('Concentration (pg/ml)',
+                            style: const TextStyle(fontSize: 14)),
+                      ),
+                    ),
+                    Expanded(
+                      child: LineChart(
+                        LineChartData(
+                          minX: 0,
+                          maxX: (days.last.toDouble() + 40),
+                          minY: 0,
+                          maxY: maxYWithPadding,
+                          gridData: FlGridData(show: true),
+                          titlesData: FlTitlesData(
+                            show: true,
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 32,
+                                getTitlesWidget: (value, meta) {
+                                  final txt = value.toInt().toString();
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(txt,
+                                        style: const TextStyle(fontSize: 12)),
+                                  );
+                                },
+                              ),
+                            ),
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 40,
+                                getTitlesWidget: (value, meta) {
+                                  return Text(value.toStringAsFixed(1),
+                                      style: const TextStyle(fontSize: 12));
+                                },
+                              ),
+                            ),
+                            topTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                            rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                          ),
+                          borderData: FlBorderData(show: true),
+                          lineBarsData: [
+                            LineChartBarData(
+                              spots: GraphCalculator()
+                                  .generateSpots(dosesMg, days),
+                              isCurved: true,
+                              color: Theme.of(context).colorScheme.primary,
+                              barWidth: 3,
+                              dotData: FlDotData(show: false),
+                              belowBarData: BarAreaData(
+                                show: true,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withValues(alpha: 0.3),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+              SizedBox(
+                height: 24,
+                child: Center(
+                    child: Text('Days', style: const TextStyle(fontSize: 14))),
               ),
             ],
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 
@@ -84,8 +161,9 @@ class GraphCalculator {
   }
 
   List<FlSpot> generateSpots(List<double> doses, List<int> days,
-      {double tMin = -10, double tMax = 120, int numPoints = 1000}) {
+      {double tMin = 0, double tMax = 120, int numPoints = 1000}) {
     List<FlSpot> spots = [];
+    tMax = days.last.toDouble() + 40;
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
