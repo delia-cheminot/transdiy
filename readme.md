@@ -1,16 +1,39 @@
-# transdiy
+# Mona
 
-A new Flutter project.
+Mona is a mobile app for transfeminine healthcare. The app is currently under developpement at the Alpha stage. The code is very clean and any contribution is welcomed. 
+This project is developped in flutter, granting android and IOS releases.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Oestradiol Enanthate intake schedule
+- Chart of oestraiol concentration
+- Vials for Oestradiol Enanthate
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## Installation for Android
+
+https://github.com/delia-cheminot/transdiy/releases/tag/alpha
+    
+## Discord
+
+### Join Mona's official discord server
+[![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/WWgtw5HWGB)
+
+
+### Support us
+ ![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)
+## Authors
+
+- [@delia](https://github.com/delia-cheminot)
+- [@june](https://github.com/yakissa)
+
+
+
+
+
+![Flutter Badge](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff&style=for-the-badge)
+![Inkscape Badge](https://img.shields.io/badge/Inkscape-000?logo=inkscape&logoColor=fff&style=for-the-badge)
+
