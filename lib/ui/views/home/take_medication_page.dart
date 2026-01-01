@@ -33,7 +33,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     MedicationIntakeManager(
       context.read<MedicationIntakeProvider>(),
       supplyItemProvider,
-    ).takeMedicationSimple(
+    ).takeMedication(
         widget.intake, supplyItemProvider.orderedByRemainingDose.first,
         takenDate: _takenDate);
     Navigator.of(context).pop();

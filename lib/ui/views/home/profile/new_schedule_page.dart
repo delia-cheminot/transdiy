@@ -98,8 +98,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                     label: 'Dose',
                     suffixText: 'mg',
                     onChanged: _refresh,
-                    inputType: TextInputType.numberWithOptions(decimal: false),
-                    regexFormatter: '[0-9]',
+                    inputType: TextInputType.number,
+                    regexFormatter: '[0-9.,]',
                   ),
                   FormTextField(
                     controller: _intervalDaysController,
