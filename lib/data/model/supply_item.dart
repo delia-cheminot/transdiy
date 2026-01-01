@@ -9,6 +9,7 @@ class SupplyItem {
   final int quantity;
   bool get isUsed => usedDose > Decimal.zero;
   bool get isInStock => quantity > 0;
+  Decimal get remainingDose => totalDose - usedDose;
 
   SupplyItem({
     int? id,
@@ -17,8 +18,8 @@ class SupplyItem {
     required this.dosePerUnit,
     Decimal? usedDose,
     this.quantity = 1,
-  }) : usedDose = usedDose ?? Decimal.zero,
-       id = id ?? DateTime.now().millisecondsSinceEpoch;
+  })  : usedDose = usedDose ?? Decimal.zero,
+        id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   Map<String, Object?> toMap() {
     return {
@@ -149,12 +150,8 @@ class SupplyItem {
     return usedDose + doseToUse <= totalDose;
   }
 
-  Decimal getRemainingDose() {
-    return totalDose - usedDose;
-  }
-
   double getRatio() {
-    return (getRemainingDose() *
+    return (remainingDose *
             totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10))
         .toDouble();
   }

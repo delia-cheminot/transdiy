@@ -229,14 +229,14 @@ void main() {
         );
       });
 
-      test('getRemainingDose returns correct value', () {
+      test('remainingDose returns correct value', () {
         final item = SupplyItem(
           name: 'Remaining',
           totalDose: Decimal.fromInt(100),
           usedDose: Decimal.fromInt(30),
           dosePerUnit: Decimal.one,
         );
-        expect(item.getRemainingDose(), Decimal.fromInt(70));
+        expect(item.remainingDose, Decimal.fromInt(70));
       });
     });
   });

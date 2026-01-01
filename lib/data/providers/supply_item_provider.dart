@@ -16,6 +16,9 @@ class SupplyItemProvider extends ChangeNotifier {
 
   List<SupplyItem> get items => _items;
   bool get isLoading => _isLoading;
+  List<SupplyItem> get orderedByRemainingDose => [..._items]..sort(
+      (a, b) => a.getRatio().compareTo(b.getRatio()),
+    );
 
   SupplyItemProvider({Repository<SupplyItem>? repository})
       : repository = repository ?? defaultRepository {

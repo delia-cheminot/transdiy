@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:transdiy/data/model/medication_intake.dart';
 
 DateTime _normalizeDate(DateTime date) {
   return DateTime(date.year, date.month, date.day);
@@ -102,7 +103,7 @@ class MedicationSchedule {
   /// - If the [startDate] is in the future or today, returns [startDate].
   /// - If today falls exactly on a scheduled injection date, returns today.
   /// - Otherwise, returns the next scheduled date after today.
-  DateTime? getNextDate({DateTime? referenceDate}) {
+  DateTime getNextDate({DateTime? referenceDate}) {
     final today = _normalizeDate(referenceDate ?? DateTime.now());
 
     if (!startDate.isBefore(today)) {
@@ -144,6 +145,14 @@ class MedicationSchedule {
     final intervalsPassed = (daysSinceStart / intervalDays).floor();
     return startDate.add(
       Duration(days: intervalsPassed * intervalDays),
+    );
+  }
+
+  MedicationIntake getIntakeForDate(DateTime date) {
+    return MedicationIntake(
+      scheduledDateTime: date,
+      dose: dose,
+      scheduleId: id,
     );
   }
 

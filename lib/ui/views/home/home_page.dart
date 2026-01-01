@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/providers/medication_schedule_provider.dart';
+import 'package:transdiy/ui/views/home/take_medication_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -13,29 +14,34 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         for (final schedule in medicationScheduleProvider.schedules)
-          _buildTile(schedule),
+          _buildTile(schedule, context),
       ],
     );
   }
 
-  String _getPharmacyAsset(MedicationSchedule schedule) =>
-      "assets/pharmacie/tablets/full_tablet.svg";
+  ListTile _buildTile(MedicationSchedule schedule, BuildContext context) {
+    final nextDate = schedule.getNextDate();
 
-  String _getTreatmentName(MedicationSchedule schedule) => schedule.name;
-
-  String _getTreatmentDate(MedicationSchedule schedule) {
-    final date = schedule.getNextDate()!;
-    return "${date.day} ${date.month} ${date.year}";
-  }
-
-  ListTile _buildTile(MedicationSchedule schedule) {
     return ListTile(
       leading: CircleAvatar(
           backgroundColor: Colors.transparent,
-          child: SvgPicture.asset(_getPharmacyAsset(schedule))),
-      title: Text(_getTreatmentName(schedule)),
-      subtitle: Text(_getTreatmentDate(schedule)),
-      trailing: Icon(Icons.favorite_rounded),
+          child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg")),
+      title: Text(schedule.name),
+      subtitle: Text(
+          "prochaine prise le ${nextDate.day} ${nextDate.month} ${nextDate.year}"),
+      trailing: IconButton(
+        icon: const Icon(Icons.play_circle),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              // fullscreenDialog: true,
+              builder: (context) => TakeMedicationPage(
+                intake: schedule.getIntakeForDate(nextDate),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

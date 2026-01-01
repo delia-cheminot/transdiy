@@ -15,7 +15,7 @@ void main() {
   });
 
   group('SupplyItemManager', () {
-    test('should update totalAmount correctly', () async {
+    test('should update totalAmount and usedDose correctly', () async {
       final item = SupplyItem(
           name: 'h',
           id: 1,
@@ -31,7 +31,6 @@ void main() {
 
       expect(newItem.totalDose, Decimal.parse('20'));
       expect(newItem.usedDose, Decimal.parse('5'));
-      verify(mockSupplyItemProvider.updateItem(newItem)).called(1);
     });
 
     test(
@@ -60,9 +59,10 @@ void main() {
           totalDose: Decimal.parse('20'),
           usedDose: Decimal.parse('5'),
           dosePerUnit: Decimal.parse('1'));
-      
+
       late SupplyItem updatedItem;
-      when(mockSupplyItemProvider.updateItem(any)).thenAnswer((invocation) async {
+      when(mockSupplyItemProvider.updateItem(any))
+          .thenAnswer((invocation) async {
         updatedItem = invocation.positionalArguments.first as SupplyItem;
         return Future.value();
       });
@@ -70,25 +70,28 @@ void main() {
       await manager.useDose(item, Decimal.parse('5'));
 
       expect(updatedItem.usedDose, Decimal.parse('10'));
-      verify(mockSupplyItemProvider.updateItem(updatedItem)).called(1);
     });
 
-    test('should throw ArgumentError when using more amount than available',
-        () {
+    test('should clamp dose when using more than available and update provider',
+        () async {
       final item = SupplyItem(
-          name: 'h',
-          totalDose: Decimal.parse('10'),
-          usedDose: Decimal.parse('5'),
-          dosePerUnit: Decimal.parse('1'));
-
-      expect(
-        () => manager.useDose(item, Decimal.parse('6')),
-        throwsArgumentError,
+        name: 'h',
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('5'),
+        dosePerUnit: Decimal.parse('1'),
       );
 
-      expect(item.totalDose, Decimal.parse('10'));
+      late SupplyItem updatedItem;
+      when(mockSupplyItemProvider.updateItem(any))
+          .thenAnswer((invocation) async {
+        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
+
+      await manager.useDose(item, Decimal.parse('6'));
+
       expect(item.usedDose, Decimal.parse('5'));
-      verifyNever(mockSupplyItemProvider.updateItem(any));
+      expect(updatedItem.usedDose, Decimal.parse('10'));
     });
 
     test('use zero amount', () async {

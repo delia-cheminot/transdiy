@@ -55,7 +55,7 @@ class SupplyItemCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    '(${(item.getRemainingDose())} restants)',
+                    '(${(item.remainingDose)} restants)',
                     style: Theme.of(context).textTheme.bodyMedium,
                   )
                 ],

@@ -267,7 +267,7 @@ void main() {
       final last = s.getLastDate(referenceDate: today);
       final next = s.getNextDate(referenceDate: today);
 
-      expect(next!.difference(last!).inDays, s.intervalDays);
+      expect(next.difference(last!).inDays, s.intervalDays);
     });
 
     test('difference == intervalDays when today is exactly on a scheduled date',
@@ -280,7 +280,7 @@ void main() {
       final last = s.getLastDate(referenceDate: today);
       final next = s.getNextDate(referenceDate: today);
 
-      expect(next!.difference(last!).inDays, s.intervalDays);
+      expect(next.difference(last!).inDays, s.intervalDays);
     });
   });
 }

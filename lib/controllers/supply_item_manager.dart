@@ -37,12 +37,15 @@ class SupplyItemManager {
 
   /// Uses a portion of the amount of the [SupplyItem] and updates the database.
   Future<void> useDose(SupplyItem item, Decimal doseToUse) async {
+    print('Using dose: $doseToUse from item: ${item.name}');
     if (doseToUse == Decimal.zero) {
       return;
     }
-    if (!item.canUseDose(doseToUse)) {
-      throw ArgumentError('Item capacity exceeded');
+
+    if (item.usedDose + doseToUse > item.totalDose) {
+      doseToUse = item.totalDose - item.usedDose;
     }
+
     await _supplyItemProvider.updateItem(item.copyWith(
       usedDose: item.usedDose + doseToUse,
     ));

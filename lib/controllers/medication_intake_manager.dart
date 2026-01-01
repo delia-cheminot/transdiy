@@ -11,6 +11,18 @@ class MedicationIntakeManager {
   MedicationIntakeManager(
       this._medicationIntakeProvider, this._supplyItemProvider);
 
+  Future<void> takeMedicationSimple(
+      MedicationIntake intake, SupplyItem supplyItem,
+      {DateTime? takenDate}) async {
+    final updatedIntake = intake.copyWith(
+      takenDateTime: takenDate ?? DateTime.now(),
+    );
+
+    await _medicationIntakeProvider.add(updatedIntake);
+    await SupplyItemManager(_supplyItemProvider)
+        .useDose(supplyItem, updatedIntake.dose);
+  }
+
   Future<void> takeMedication(MedicationIntake intake, SupplyItem supplyItem,
       {DateTime? takenDate}) async {
     if (intake.isTaken) {
@@ -31,7 +43,7 @@ class MedicationIntakeManager {
       return intake;
     }
 
-    final remainingDose = supplyItem.getRemainingDose();
+    final remainingDose = supplyItem.remainingDose;
     final doseToAdd = intake.dose - remainingDose;
     final updatedIntake = intake.copyWith(dose: remainingDose);
     await _medicationIntakeProvider.addIntake(

@@ -19,28 +19,40 @@ void main() {
       ),
     );
     provider = SupplyItemProvider(repository: repo);
-
-    await repo.insert(SupplyItem(
-        id: 1,
-        name: 'Test Item 1',
-        totalDose: Decimal.parse('50'),
-        dosePerUnit: Decimal.parse('5')));
-
-    await repo.insert(SupplyItem(
-        id: 2,
-        name: 'Test Item 2',
-        totalDose: Decimal.parse('30'),
-        dosePerUnit: Decimal.parse('3')));
   });
 
   group('SupplyItemProvider Tests', () {
     test('initialization loads items', () async {
+      await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Test Item 1',
+          totalDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('5')));
+
+      await repo.insert(SupplyItem(
+          id: 2,
+          name: 'Test Item 2',
+          totalDose: Decimal.parse('30'),
+          dosePerUnit: Decimal.parse('3')));
+
       await provider.fetchItems();
 
       expect(provider.items.length, repo.items.length);
     });
 
     test('addItem inserts a new item', () async {
+      await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Test Item 1',
+          totalDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('5')));
+
+      await repo.insert(SupplyItem(
+          id: 2,
+          name: 'Test Item 2',
+          totalDose: Decimal.parse('30'),
+          dosePerUnit: Decimal.parse('3')));
+
       const name = 'New Item';
       final totalDose = Decimal.parse('20');
       final dosePerUnit = Decimal.parse('2');
@@ -65,6 +77,18 @@ void main() {
     });
 
     test('updateItem updates an existing item', () async {
+      await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Test Item 1',
+          totalDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('5')));
+
+      await repo.insert(SupplyItem(
+          id: 2,
+          name: 'Test Item 2',
+          totalDose: Decimal.parse('30'),
+          dosePerUnit: Decimal.parse('3')));
+
       final itemToUpdate = repo.items.first;
       final updatedItem = SupplyItem(
           id: itemToUpdate.id,
@@ -82,6 +106,18 @@ void main() {
     });
 
     test('deleteItemFromId removes the item', () async {
+      await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Test Item 1',
+          totalDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('5')));
+
+      await repo.insert(SupplyItem(
+          id: 2,
+          name: 'Test Item 2',
+          totalDose: Decimal.parse('30'),
+          dosePerUnit: Decimal.parse('3')));
+
       await provider.deleteItemFromId(1);
 
       expect(
@@ -91,6 +127,18 @@ void main() {
     });
 
     test('deleteItem removes the item by object', () async {
+      await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Test Item 1',
+          totalDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('5')));
+
+      await repo.insert(SupplyItem(
+          id: 2,
+          name: 'Test Item 2',
+          totalDose: Decimal.parse('30'),
+          dosePerUnit: Decimal.parse('3')));
+
       final itemToDelete = repo.items.first;
 
       await provider.deleteItem(itemToDelete);
@@ -99,6 +147,36 @@ void main() {
         [provider.items.length, provider.items.first.id],
         [1, 2],
       );
+    });
+
+    test('orderedByRemainingDose orders items with most used/total first',
+        () async {
+      await repo.insert(SupplyItem(
+          id: 3,
+          name: 'A',
+          totalDose: Decimal.parse('100'),
+          usedDose: Decimal.parse('90'),
+          dosePerUnit: Decimal.parse('1')));
+
+      await repo.insert(SupplyItem(
+          id: 4,
+          name: 'B',
+          totalDose: Decimal.parse('100'),
+          usedDose: Decimal.parse('10'),
+          dosePerUnit: Decimal.parse('1')));
+
+      await repo.insert(SupplyItem(
+          id: 5,
+          name: 'C',
+          totalDose: Decimal.parse('100'),
+          usedDose: Decimal.parse('50'),
+          dosePerUnit: Decimal.parse('1')));
+
+      await provider.fetchItems();
+
+      final ordered = provider.orderedByRemainingDose;
+
+      expect(ordered.map((e) => e.name).toList(), ['A', 'C', 'B']);
     });
   });
 }

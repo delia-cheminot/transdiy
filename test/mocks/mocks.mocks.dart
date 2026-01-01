@@ -84,6 +84,12 @@ class MockSupplyItemProvider extends _i1.Mock
       ) as bool);
 
   @override
+  List<_i3.SupplyItem> get orderedByRemainingDose => (super.noSuchMethod(
+        Invocation.getter(#orderedByRemainingDose),
+        returnValue: <_i3.SupplyItem>[],
+      ) as List<_i3.SupplyItem>);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
@@ -276,6 +282,16 @@ class MockMedicationIntakeProvider extends _i1.Mock
             scheduledDateTime,
             dose,
           ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> add(_i9.MedicationIntake? intake) => (super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [intake],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),

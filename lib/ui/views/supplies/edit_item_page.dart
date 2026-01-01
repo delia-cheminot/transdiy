@@ -17,17 +17,17 @@ class EditItemPage extends StatefulWidget {
 }
 
 class _EditItemPageState extends State<EditItemPage> {
-  late TextEditingController _totalAmountController;
-  late TextEditingController _usedAmountController;
+  late TextEditingController _totalDosesController;
+  late TextEditingController _usedDoseController;
   late TextEditingController _dosePerUnitController;
   late TextEditingController _nameController;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
   String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalAmountController.text);
+      SupplyItem.validateTotalAmount(_totalDosesController.text);
   String? get _usedAmountError => SupplyItem.validateUsedAmount(
-        _usedAmountController.text,
-        _totalAmountController.text,
+        _usedDoseController.text,
+        _totalDosesController.text,
       );
   String? get _dosePerUnitError =>
       SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
@@ -41,9 +41,9 @@ class _EditItemPageState extends State<EditItemPage> {
   @override
   void initState() {
     super.initState();
-    _totalAmountController =
+    _totalDosesController =
         TextEditingController(text: widget.item.totalDose.toString());
-    _usedAmountController =
+    _usedDoseController =
         TextEditingController(text: widget.item.usedDose.toString());
     _dosePerUnitController =
         TextEditingController(text: widget.item.dosePerUnit.toString());
@@ -52,8 +52,8 @@ class _EditItemPageState extends State<EditItemPage> {
 
   @override
   void dispose() {
-    _totalAmountController.dispose();
-    _usedAmountController.dispose();
+    _totalDosesController.dispose();
+    _usedDoseController.dispose();
     _dosePerUnitController.dispose();
     _nameController.dispose();
     super.dispose();
@@ -76,8 +76,8 @@ class _EditItemPageState extends State<EditItemPage> {
     SupplyItemManager(supplyItemProvider).setFields(
       widget.item,
       newName: _nameController.text,
-      newTotalDose: parseDecimal(_totalAmountController.text)!,
-      newUsedDose: parseDecimal(_usedAmountController.text)!,
+      newTotalDose: parseDecimal(_totalDosesController.text)!,
+      newUsedDose: parseDecimal(_usedDoseController.text)!,
       newDosePerUnit: parseDecimal(_dosePerUnitController.text)!,
     );
     Navigator.of(context).pop();
@@ -132,20 +132,20 @@ class _EditItemPageState extends State<EditItemPage> {
                   errorText: _nameError,
                 ),
                 FormTextField(
-                  controller: _totalAmountController,
-                  label: 'Quantité totale',
+                  controller: _totalDosesController,
+                  label: 'Dose totale',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
-                  suffixText: 'ml',
+                  suffixText: 'mg',
                   errorText: _totalAmountError,
                   regexFormatter: r'[0-9.,]',
                 ),
                 FormTextField(
-                  controller: _usedAmountController,
-                  label: 'Quantité utilisée',
+                  controller: _usedDoseController,
+                  label: 'Dose utilisée',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
-                  suffixText: 'ml',
+                  suffixText: 'mg',
                   errorText: _usedAmountError,
                   regexFormatter: r'[0-9.,]',
                 ),

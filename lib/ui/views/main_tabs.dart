@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
 import 'home/profile/profile_page.dart';
-import 'intakes/intakes_history_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
 import 'supplies/new_item_page.dart';
@@ -34,12 +33,8 @@ final List<MainTabConfig> mainTabs = [
     selectedIcon: Icons.event_rounded,
     buildActions: (context) => [
       IconButton(
-        icon: const Icon(Icons.history),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => IntakesHistoryPage()),
-          );
-        },
+        icon: const Icon(Icons.calendar_month),
+        onPressed: () {},
       ),
     ],
   ),
