@@ -8,8 +8,6 @@ class IntakesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
 
-    print(medicationIntakeProvider.intakes);
-
     return Column(
       children: [
         Expanded(

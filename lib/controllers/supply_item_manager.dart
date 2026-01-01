@@ -37,7 +37,6 @@ class SupplyItemManager {
 
   /// Uses a portion of the amount of the [SupplyItem] and updates the database.
   Future<void> useDose(SupplyItem item, Decimal doseToUse) async {
-    print('Using dose: $doseToUse from item: ${item.name}');
     if (doseToUse == Decimal.zero) {
       return;
     }
