@@ -1,4 +1,6 @@
+import 'package:decimal/decimal.dart';
 import 'package:transdiy/controllers/supply_item_manager.dart';
+import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/model/supply_item.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
 import '../data/model/medication_intake.dart';
@@ -12,14 +14,18 @@ class MedicationIntakeManager {
       this._medicationIntakeProvider, this._supplyItemProvider);
 
   Future<void> takeMedication(
-      MedicationIntake intake, SupplyItem supplyItem,
-      {DateTime? takenDate}) async {
-    final updatedIntake = intake.copyWith(
-      takenDateTime: takenDate ?? DateTime.now(),
-    );
-
-    await _medicationIntakeProvider.add(updatedIntake);
-    await SupplyItemManager(_supplyItemProvider)
-        .useDose(supplyItem, updatedIntake.dose);
+    Decimal dose,
+    DateTime scheduledDate,
+    DateTime takenDate,
+    SupplyItem supplyItem,
+    MedicationSchedule schedule,
+  ) async {
+    await _medicationIntakeProvider.add(MedicationIntake(
+      dose: dose,
+      scheduledDateTime: scheduledDate,
+      takenDateTime: takenDate,
+      scheduleId: schedule.id,
+    ));
+    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
   }
 }

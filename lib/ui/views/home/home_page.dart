@@ -34,10 +34,8 @@ class HomePage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              // fullscreenDialog: true,
-              builder: (context) => TakeMedicationPage(
-                intake: schedule.getIntakeForDate(nextDate),
-              ),
+              fullscreenDialog: true,
+              builder: (context) => TakeMedicationPage(schedule, nextDate),
             ),
           );
         },

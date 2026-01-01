@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:transdiy/controllers/medication_intake_manager.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:transdiy/data/model/medication_schedule.dart';
 import 'package:transdiy/data/providers/medication_intake_provider.dart';
 import 'package:transdiy/data/providers/supply_item_provider.dart';
 import 'package:transdiy/widgets/form_date_field.dart';
 
 class TakeMedicationPage extends StatefulWidget {
-  final MedicationIntake intake;
+  final MedicationSchedule schedule;
+  final DateTime scheduledDate;
 
-  TakeMedicationPage({required this.intake});
+  TakeMedicationPage(this.schedule, this.scheduledDate);
 
   @override
   State<TakeMedicationPage> createState() => _TakeMedicationPageState();
@@ -21,7 +22,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   @override
   void initState() {
     super.initState();
-    _takenDate = widget.intake.scheduledDateTime;
+    _takenDate = widget.scheduledDate;
   }
 
   @override
@@ -31,11 +32,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   void _takeIntake(SupplyItemProvider supplyItemProvider) {
     MedicationIntakeManager(
-      context.read<MedicationIntakeProvider>(),
-      supplyItemProvider,
-    ).takeMedication(
-        widget.intake, supplyItemProvider.orderedByRemainingDose.first,
-        takenDate: _takenDate);
+            context.read<MedicationIntakeProvider>(), supplyItemProvider)
+        .takeMedication(widget.schedule.dose, widget.scheduledDate, _takenDate,
+            supplyItemProvider.orderedByRemainingDose.first, widget.schedule);
     Navigator.of(context).pop();
   }
 
