@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/ui/views/home/profile/edit_schedule_page.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/providers/medication_schedule_provider.dart';
-import 'package:transdiy/ui/views/home/profile/edit_schedule_page.dart';
 import 'new_schedule_page.dart';
 
 class ProfilePage extends StatelessWidget {

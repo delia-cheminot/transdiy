@@ -1,9 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/services/app_database.dart';
+import 'package:mona/services/repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/services/app_database.dart';
-import 'package:transdiy/services/repository.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

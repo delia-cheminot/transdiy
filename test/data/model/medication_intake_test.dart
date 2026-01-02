@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:mona/data/model/medication_intake.dart';
 
 void main() {
   group('MedicationIntake model', () {

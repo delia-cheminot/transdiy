@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/widgets/form_date_field.dart';
+import 'package:mona/widgets/form_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/data/providers/medication_schedule_provider.dart';
-import 'package:transdiy/widgets/form_date_field.dart';
-import 'package:transdiy/widgets/form_text_field.dart';
 
 class NewSchedulePage extends StatefulWidget {
   @override

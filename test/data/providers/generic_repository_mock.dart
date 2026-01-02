@@ -1,5 +1,5 @@
 import 'package:mockito/mockito.dart';
-import 'package:transdiy/services/repository.dart';
+import 'package:mona/services/repository.dart';
 
 class GenericRepositoryMock<T extends dynamic> extends Mock
     implements Repository<T> {

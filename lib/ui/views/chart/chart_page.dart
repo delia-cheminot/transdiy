@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:transdiy/ui/widgets/chart_page_graph.dart';
-import 'package:transdiy/ui/widgets/chart_page_slider.dart';
+import 'package:mona/ui/widgets/chart_page_graph.dart';
+import 'package:mona/ui/widgets/chart_page_slider.dart';
 
 
 class ChartPage extends StatefulWidget {

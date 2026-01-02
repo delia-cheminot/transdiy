@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/supply_item_provider.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
 import 'generic_repository_mock.dart';
 
 void main() {

@@ -2,12 +2,12 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:transdiy/controllers/medication_intake_manager.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/medication_intake_provider.dart';
-import 'package:transdiy/data/providers/supply_item_provider.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
 
 @GenerateNiceMocks([
   MockSpec<MedicationIntakeProvider>(),

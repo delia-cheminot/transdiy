@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/ui/views/supplies/supply_item_card.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/supply_item_provider.dart';
-import 'package:transdiy/ui/views/supplies/supply_item_card.dart';
 
 class PharmacyPage extends StatelessWidget {
   @override

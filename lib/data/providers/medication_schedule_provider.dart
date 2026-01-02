@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/services/repository.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/services/repository.dart';
 
 class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> _schedules = [];

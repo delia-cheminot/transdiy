@@ -1,9 +1,9 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/widgets/form_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/data/providers/supply_item_provider.dart';
-import 'package:transdiy/widgets/form_text_field.dart';
 
 class NewItemPage extends StatefulWidget {
   @override

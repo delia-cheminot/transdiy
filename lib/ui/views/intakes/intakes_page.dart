@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/data/providers/medication_intake_provider.dart';
 
 class IntakesPage extends StatelessWidget {
   @override

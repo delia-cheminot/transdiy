@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/services/repository.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
   List<SupplyItem> _items = [];

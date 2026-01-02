@@ -1,5 +1,5 @@
 import 'package:decimal/decimal.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
+import 'package:mona/data/model/medication_intake.dart';
 
 DateTime _normalizeDate(DateTime date) {
   return DateTime(date.year, date.month, date.day);

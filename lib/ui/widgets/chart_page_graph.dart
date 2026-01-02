@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/providers/medication_intake_provider.dart';
 
 class MainGraph extends StatelessWidget {
   //take the real doses for creation of enanthate graph

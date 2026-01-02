@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
-import 'package:transdiy/data/model/medication_intake.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
+import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/medication_schedule.dart';
 
 import '../data/providers/medication_intake_provider.dart';
 

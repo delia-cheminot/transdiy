@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:transdiy/data/model/supply_item.dart';
-import 'package:transdiy/ui/views/supplies/edit_item_page.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/ui/views/supplies/edit_item_page.dart';
 
 class SupplyItemCard extends StatelessWidget {
   final SupplyItem item;

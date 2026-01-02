@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/data/providers/medication_schedule_provider.dart';
-import 'package:transdiy/ui/views/home/take_medication_page.dart';
 
 class HomePage extends StatelessWidget {
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/widgets/form_date_field.dart';
 import 'package:provider/provider.dart';
-import 'package:transdiy/controllers/medication_intake_manager.dart';
-import 'package:transdiy/data/model/medication_schedule.dart';
-import 'package:transdiy/data/providers/medication_intake_provider.dart';
-import 'package:transdiy/data/providers/supply_item_provider.dart';
-import 'package:transdiy/widgets/form_date_field.dart';
 
 class TakeMedicationPage extends StatefulWidget {
   final MedicationSchedule schedule;

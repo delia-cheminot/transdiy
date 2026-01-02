@@ -2,8 +2,8 @@ import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
 import 'ui/views/main_page.dart';
 
-class TransDiyApp extends StatelessWidget {
-  const TransDiyApp({super.key});
+class MonaApp extends StatelessWidget {
+  const MonaApp({super.key});
 
   ColorScheme _getLightColorScheme(ColorScheme? lightDynamic) {
     return lightDynamic ?? ColorScheme.fromSeed(seedColor: Colors.deepPurple);
@@ -25,7 +25,7 @@ class TransDiyApp extends StatelessWidget {
         final darkColorScheme = _getDarkColorScheme(darkDynamic);
 
         return MaterialApp(
-          title: 'TransDIY',
+          title: 'Mona',
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,
