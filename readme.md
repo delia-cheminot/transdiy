@@ -7,9 +7,9 @@ This project is developped in flutter, granting android and IOS releases.
 
 ## Features
 
-- Oestradiol Enanthate intake schedule
-- Chart of oestraiol concentration
-- Vials for Oestradiol Enanthate
+- Estradiol enanthate intake schedule
+- Chart of estradiol concentration
+- Vials for estradiol enanthate
 
 
 
@@ -27,7 +27,7 @@ https://github.com/delia-cheminot/transdiy/releases/tag/alpha
  ![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)
 ## Authors
 
-- [@delia](https://github.com/delia-cheminot)
+- [@délia](https://github.com/delia-cheminot)
 - [@june](https://github.com/yakissa)
 
 
