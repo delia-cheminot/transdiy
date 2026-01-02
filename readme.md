@@ -24,7 +24,7 @@ https://github.com/delia-cheminot/transdiy/releases/tag/alpha
 
 
 ### Support us
- [![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](ko-fi.com/deliacheminot)
+ [![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](https://ko-fi.com/deliacheminot)
 ## Authors
 
 - [@délia](https://github.com/delia-cheminot)
