@@ -96,6 +96,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Mona - HRT journal"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
