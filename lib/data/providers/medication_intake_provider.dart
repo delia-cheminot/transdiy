@@ -63,12 +63,17 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
-   Map<int, double> getDaysAndDoses(List<MedicationIntake> intakes){
-    List<int> days = takenIntakes.map((intake) => intake.takenDateTime!.difference(intakes.first.scheduledDateTime).inDays).toList();
-    List<double> doses = takenIntakes.map((intake) => intake.dose.toDouble()).toList();
-    return Map.fromIterables(days, doses);
+  Map<int, double> getDaysAndDoses() {
+    return Map.fromEntries(
+      takenIntakes.map(
+        (intake) {
+          final day = intake.takenDateTime!
+              .difference(intakes.first.scheduledDateTime)
+              .inDays;
+          final dose = intake.dose.toDouble();
+          return MapEntry(day, dose);
+        },
+      ),
+    );
   }
-
 }
-
-

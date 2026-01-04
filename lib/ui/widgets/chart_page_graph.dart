@@ -12,21 +12,18 @@ class MainGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-    Map<int, double> daysAndDoses = medicationIntakeProvider
-        .getDaysAndDoses(medicationIntakeProvider.intakes);
-    List<int> getDays() => daysAndDoses.keys.toList();
-    List<double> getDosesMg() => daysAndDoses.values.toList();
-    final List<int> days = getDays();
-    final List<double> dosesMg = getDosesMg();
+    Map<int, double> daysAndDoses =
+        context.watch<MedicationIntakeProvider>().getDaysAndDoses();
+    final List<int> days = daysAndDoses.keys.toList();
+    final List<double> doses = daysAndDoses.values.toList();
+
     if (days.isEmpty) {
       return Center(
-        child: Text(
-            'take your pills alice'),
+        child: Text('take your pills alice'),
       );
     } else {
       //padding on the top for accessibility
-      List<FlSpot> spots = GraphCalculator().generateSpots(dosesMg, days);
+      List<FlSpot> spots = GraphCalculator().generateSpots(doses, days);
       double maxConcentration = spots.isEmpty
           ? 0
           : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
@@ -94,8 +91,8 @@ class MainGraph extends StatelessWidget {
                           borderData: FlBorderData(show: true),
                           lineBarsData: [
                             LineChartBarData(
-                              spots: GraphCalculator()
-                                  .generateSpots(dosesMg, days),
+                              spots:
+                                  GraphCalculator().generateSpots(doses, days),
                               isCurved: true,
                               color: Theme.of(context).colorScheme.primary,
                               barWidth: 3,
