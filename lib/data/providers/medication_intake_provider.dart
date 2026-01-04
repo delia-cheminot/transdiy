@@ -64,15 +64,13 @@ class MedicationIntakeProvider extends ChangeNotifier {
   }
 
   Map<int, double> getDaysAndDoses() {
+    final startDate = takenIntakes.first.takenDateTime!;
     return Map.fromEntries(
       takenIntakes.map(
-        (intake) {
-          final day = intake.takenDateTime!
-              .difference(intakes.first.scheduledDateTime)
-              .inDays;
-          final dose = intake.dose.toDouble();
-          return MapEntry(day, dose);
-        },
+        (intake) => MapEntry(
+          intake.takenDateTime!.difference(startDate).inDays,
+          intake.dose.toDouble(),
+        ),
       ),
     );
   }
