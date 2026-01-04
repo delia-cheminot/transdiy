@@ -1,0 +1,29 @@
+PODS:
+  - dynamic_system_colors (0.0.2):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
+  - sqflite_darwin (0.0.4):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - dynamic_system_colors (from `Flutter/ephemeral/.symlinks/plugins/dynamic_system_colors/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - sqflite_darwin (from `Flutter/ephemeral/.symlinks/plugins/sqflite_darwin/darwin`)
+
+EXTERNAL SOURCES:
+  dynamic_system_colors:
+    :path: Flutter/ephemeral/.symlinks/plugins/dynamic_system_colors/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  sqflite_darwin:
+    :path: Flutter/ephemeral/.symlinks/plugins/sqflite_darwin/darwin
+
+SPEC CHECKSUMS:
+  dynamic_system_colors: 9481d54d1e04fb1917c1b0c40c74cc92351960ce
+  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
+
+PODFILE CHECKSUM: 9ebaf0ce3d369aaa26a9ea0e159195ed94724cf3
+
+COCOAPODS: 1.16.2
