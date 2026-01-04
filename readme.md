@@ -15,7 +15,7 @@ This project is developped in flutter, granting android and IOS releases.
 
 ## Installation for Android
 
-https://github.com/delia-cheminot/transdiy/releases/tag/alpha
+https://github.com/delia-cheminot/transdiy/releases/tag/v0.1.0
     
 ## Discord
 
