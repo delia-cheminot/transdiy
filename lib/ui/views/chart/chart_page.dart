@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/ui/widgets/chart_page_graph.dart';
 import 'package:mona/ui/widgets/chart_page_slider.dart';
+import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class ChartPage extends StatefulWidget {
@@ -15,22 +16,19 @@ class _ChartPageState extends State<ChartPage> {
   @override
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-    final int intakeCount = medicationIntakeProvider.intakes.length;
-
-    if (intakeCount == 0) {
-      return Center(
-        child: Text('take your pills alice'),
-      );
-    }
-
-    return Column(children: [
-      ChartSlider(
-        value: sliderValue,
-        onChanged: (newValue) {
-          setState(() => sliderValue = newValue);
-        },
+    return MainPageWrapper(
+      isLoading: medicationIntakeProvider.isLoading,
+      isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
+      emptyMessage: 'take your pills alice',
+      child: Column(
+        children: [
+          ChartSlider(
+            value: sliderValue,
+            onChanged: (v) => setState(() => sliderValue = v),
+          ),
+          MainGraph(window: sliderValue),
+        ],
       ),
-      MainGraph(window: sliderValue),
-    ]);
+    );
   }
 }
