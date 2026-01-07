@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/widgets/form_text_field.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +120,7 @@ class _EditItemPageState extends State<EditItemPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: pagePadding,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

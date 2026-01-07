@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/widgets/form_date_field.dart';
 import 'package:mona/widgets/form_text_field.dart';
@@ -111,7 +112,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: pagePadding,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
