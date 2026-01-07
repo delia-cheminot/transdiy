@@ -2,8 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
+import 'package:mona/ui/widgets/edit_form_page.dart';
 import 'package:mona/widgets/form_date_field.dart';
 import 'package:mona/widgets/form_text_field.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +22,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
   late DateTime _startDate;
+  late MedicationScheduleProvider _medicationScheduleProvider;
 
   String? get _nameError =>
       MedicationSchedule.validateName(_nameController.text);
@@ -41,6 +42,8 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   @override
   void initState() {
     super.initState();
+    _medicationScheduleProvider =
+        Provider.of<MedicationScheduleProvider>(context, listen: false);
     _nameController = TextEditingController(text: widget.schedule.name);
     _doseController =
         TextEditingController(text: widget.schedule.dose.toString());
@@ -68,15 +71,13 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    final medicationScheduleProvider =
-        Provider.of<MedicationScheduleProvider>(context, listen: false);
     final updatedSchedule = widget.schedule.copyWith(
       name: _nameController.text,
       dose: parseDecimal(_doseController.text)!,
       intervalDays: int.parse(_intervalDaysController.text),
       startDate: _startDate,
     );
-    medicationScheduleProvider.updateSchedule(updatedSchedule);
+    _medicationScheduleProvider.updateSchedule(updatedSchedule);
     Navigator.pop(context, updatedSchedule);
   }
 
@@ -84,87 +85,56 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
     final confirmed = await Dialogs.confirmDelete(context);
 
     if (confirmed == true && mounted) {
-      final medicationScheduleProvider =
-          Provider.of<MedicationScheduleProvider>(context, listen: false);
-      medicationScheduleProvider.deleteSchedule(widget.schedule);
+      _medicationScheduleProvider.deleteSchedule(widget.schedule);
       Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Modifier le traitement'),
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: _isFormValid ? _saveSchedule : null,
-              child: Text('Sauvegarder'),
-            ),
+    return EditFormPage(
+      title: 'Modifier le traitement',
+      isFormValid: _isFormValid,
+      saveChanges: _saveSchedule,
+      onDelete: _confirmDelete,
+      child: Column( // TODO have this as a list of fields
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FormTextField(
+            controller: _nameController,
+            label: 'Nom',
+            onChanged: _refresh,
+            inputType: TextInputType.text,
+            errorText: _nameError,
+          ),
+          FormTextField(
+            controller: _doseController,
+            label: 'Dose',
+            onChanged: _refresh,
+            inputType: TextInputType.number,
+            suffixText: 'mg',
+            errorText: _doseError,
+            regexFormatter: r'[0-9.,]',
+          ),
+          FormTextField(
+            controller: _intervalDaysController,
+            label: 'Intervalle',
+            suffixText: 'jours',
+            onChanged: _refresh,
+            inputType: TextInputType.number,
+            errorText: _intervalDaysError,
+            regexFormatter: r'[0-9]',
+          ),
+          FormDateField(
+            date: _startDate,
+            label: 'Date de début',
+            errorText: _startDateError,
+            onChanged: (date) => setState(() {
+              _startDate = date;
+            }),
           ),
         ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: pagePadding,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FormTextField(
-                controller: _nameController,
-                label: 'Nom',
-                onChanged: _refresh,
-                inputType: TextInputType.text,
-                errorText: _nameError,
-              ),
-              FormTextField(
-                controller: _doseController,
-                label: 'Dose',
-                onChanged: _refresh,
-                inputType: TextInputType.number,
-                suffixText: 'mg',
-                errorText: _doseError,
-                regexFormatter: r'[0-9.,]',
-              ),
-              FormTextField(
-                controller: _intervalDaysController,
-                label: 'Intervalle',
-                suffixText: 'jours',
-                onChanged: _refresh,
-                inputType: TextInputType.number,
-                errorText: _intervalDaysError,
-                regexFormatter: r'[0-9]',
-              ),
-              FormDateField(
-                date: _startDate,
-                label: 'Date de début',
-                errorText: _startDateError,
-                onChanged: (date) => setState(() {
-                  _startDate = date;
-                }),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                child: Divider(),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: _confirmDelete,
-                  child: Text('Supprimer'),
-                ),
-              )
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -25,10 +25,9 @@ class FormDateField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: TextField(
-        controller: TextEditingController(
-                  text: date.toString().split(' ').first),
+        controller:
+            TextEditingController(text: date.toString().split(' ').first),
         keyboardType: TextInputType.datetime,
-        // formatter only if regex is not null
         inputFormatters: regexFormatter != null
             ? <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
@@ -44,7 +43,7 @@ class FormDateField extends StatelessWidget {
               : Icon(Icons.calendar_today),
         ),
         readOnly: true,
-        onTap: () => _selectDate(context)
+        onTap: () => _selectDate(context),
       ),
     );
   }

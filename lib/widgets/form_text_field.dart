@@ -29,10 +29,11 @@ class FormTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: inputType,
-        // formatter only if regex is not null
         inputFormatters: regexFormatter != null
             ? <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
+                FilteringTextInputFormatter.allow(
+                  RegExp(regexFormatter!),
+                )
               ]
             : null,
         decoration: InputDecoration(
