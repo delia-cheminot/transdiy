@@ -9,22 +9,24 @@ import 'package:provider/provider.dart';
 class PharmacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final supplyItemProvider = context.watch<SupplyItemProvider>();
-
-    return MainPageWrapper(
-      isLoading: supplyItemProvider.isLoading,
-      isEmpty: supplyItemProvider.items.isEmpty,
-      emptyMessage: 'Ajoutez un élément pour commencer',
-      child: MasonryGridView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 300),
-        itemCount: supplyItemProvider.items.length,
-        itemBuilder: (context, index) {
-          SupplyItem item = supplyItemProvider.items[index];
-          return SupplyItemCard(item: item);
-        },
-      ),
+    return Consumer<SupplyItemProvider>(
+      builder: (context, supplyItemProvider, child) {
+        return MainPageWrapper(
+          isLoading: supplyItemProvider.isLoading,
+          isEmpty: supplyItemProvider.items.isEmpty,
+          emptyMessage: 'Ajoutez un élément pour commencer',
+          child: MasonryGridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300),
+            itemCount: supplyItemProvider.items.length,
+            itemBuilder: (context, index) {
+              SupplyItem item = supplyItemProvider.items[index];
+              return SupplyItemCard(item: item);
+            },
+          ),
+        );
+      },
     );
   }
 }

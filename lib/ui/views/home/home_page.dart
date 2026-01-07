@@ -9,19 +9,20 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationScheduleProvider =
-        context.watch<MedicationScheduleProvider>();
-
-    return MainPageWrapper(
-      isLoading: medicationScheduleProvider.isLoading,
-      isEmpty: medicationScheduleProvider.schedules.isEmpty,
-      emptyMessage: 'Aucun médicament à prendre',
-      child: ListView(
-        children: <Widget>[
-          for (final schedule in medicationScheduleProvider.schedules)
-            _buildTile(schedule, context),
-        ],
-      ),
+    return Consumer<MedicationScheduleProvider>(
+      builder: (context, medicationScheduleProvider, child) {
+        return MainPageWrapper(
+          isLoading: medicationScheduleProvider.isLoading,
+          isEmpty: medicationScheduleProvider.schedules.isEmpty,
+          emptyMessage: 'Aucun médicament à prendre',
+          child: ListView(
+            children: <Widget>[
+              for (final schedule in medicationScheduleProvider.schedules)
+                _buildTile(schedule, context),
+            ],
+          ),
+        );
+      },
     );
   }
 

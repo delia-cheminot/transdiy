@@ -7,26 +7,28 @@ import 'package:provider/provider.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-
-    return MainPageWrapper(
-      isLoading: medicationIntakeProvider.isLoading,
-      isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
-      emptyMessage: 'Les prises effectuées apparaîtront ici',
-      child: ListView.builder(
-        itemCount: medicationIntakeProvider.takenIntakes.length,
-        itemBuilder: (context, index) {
-          MedicationIntake intake =
-              medicationIntakeProvider.takenIntakes[index];
-          return ListTile(
-            title: Text(intake.scheduledDateTime.toString()),
-            subtitle: Text(intake.takenDateTime.toString()),
-            onTap: () {
-              medicationIntakeProvider.deleteIntake(intake);
+    return Consumer<MedicationIntakeProvider>(
+      builder: (context, medicationIntakeProvider, child) {
+        return MainPageWrapper(
+          isLoading: medicationIntakeProvider.isLoading,
+          isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
+          emptyMessage: 'Les prises effectuées apparaîtront ici',
+          child: ListView.builder(
+            itemCount: medicationIntakeProvider.takenIntakes.length,
+            itemBuilder: (context, index) {
+              MedicationIntake intake =
+                  medicationIntakeProvider.takenIntakes[index];
+              return ListTile(
+                title: Text(intake.scheduledDateTime.toString()),
+                subtitle: Text(intake.takenDateTime.toString()),
+                onTap: () {
+                  medicationIntakeProvider.deleteIntake(intake);
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
