@@ -4,8 +4,8 @@ import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
-import 'package:mona/ui/widgets/edit_form_page.dart';
-import 'package:mona/widgets/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:provider/provider.dart';
 
 class EditItemPage extends StatefulWidget {
@@ -97,51 +97,48 @@ class _EditItemPageState extends State<EditItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return EditFormPage(
+    return ModelForm(
       title: 'Modifier',
+      submitButtonLabel: 'Enregistrer',
       isFormValid: _isFormValid,
       saveChanges: _saveChanges,
       onDelete: _confirmDelete,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FormTextField(
-            controller: _nameController,
-            label: 'Nom',
-            onChanged: _refresh,
-            inputType: TextInputType.text,
-            errorText: _nameError,
-          ),
-          FormTextField(
-            controller: _totalDosesController,
-            label: 'Dose totale',
-            onChanged: _refresh,
-            inputType: TextInputType.number,
-            suffixText: 'mg',
-            errorText: _totalAmountError,
-            regexFormatter: r'[0-9.,]',
-          ),
-          FormTextField(
-            controller: _usedDoseController,
-            label: 'Dose utilisée',
-            onChanged: _refresh,
-            inputType: TextInputType.number,
-            suffixText: 'mg',
-            errorText: _usedAmountError,
-            regexFormatter: r'[0-9.,]',
-          ),
-          FormTextField(
-            controller: _dosePerUnitController,
-            label: 'Dosage par unité',
-            onChanged: _refresh,
-            inputType: TextInputType.number,
-            suffixText: 'mg/ml',
-            errorText: _dosePerUnitError,
-            regexFormatter: r'[0-9]',
-          ),
-        ],
-      ),
+      fields: [
+        FormTextField(
+          controller: _nameController,
+          label: 'Nom',
+          onChanged: _refresh,
+          inputType: TextInputType.text,
+          errorText: _nameError,
+        ),
+        FormTextField(
+          controller: _totalDosesController,
+          label: 'Dose totale',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg',
+          errorText: _totalAmountError,
+          regexFormatter: r'[0-9.,]',
+        ),
+        FormTextField(
+          controller: _usedDoseController,
+          label: 'Dose utilisée',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg',
+          errorText: _usedAmountError,
+          regexFormatter: r'[0-9.,]',
+        ),
+        FormTextField(
+          controller: _dosePerUnitController,
+          label: 'Dosage par unité',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg/ml',
+          errorText: _dosePerUnitError,
+          regexFormatter: r'[0-9]',
+        ),
+      ],
     );
   }
 }

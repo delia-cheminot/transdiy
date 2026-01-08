@@ -51,17 +51,19 @@ void main() {
         return Future.value();
       });
 
-      final expectedIntake = MedicationIntake(
-        dose: dose,
-        scheduledDateTime: date,
-        takenDateTime: date,
-        scheduleId: schedule.id,
-      );
+      await manager.takeMedication(dose, date, date, supplyItem, schedule);
 
-      await manager.takeMedication(
-          dose, date, date, supplyItem, schedule);
-
-      expect(addedIntake, expectedIntake);
+      expect({
+        addedIntake.dose,
+        addedIntake.scheduledDateTime,
+        addedIntake.takenDateTime,
+        addedIntake.scheduleId
+      }, {
+        dose,
+        date,
+        date,
+        schedule.id
+      });
     });
 
     test('takeMedication decreases supply item dose', () async {

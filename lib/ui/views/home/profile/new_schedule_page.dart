@@ -2,9 +2,9 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/ui/constants/dimensions.dart';
-import 'package:mona/widgets/form_date_field.dart';
-import 'package:mona/widgets/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:provider/provider.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -67,61 +67,43 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Nouveau traitement'),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 1.0),
-              child: TextButton(
-                onPressed: _isFormValid ? _addSchedule : null,
-                child: Text('Ajouter'),
-              ),
-            ),
-          ],
+    return ModelForm(
+      title: 'Nouveau traitement',
+      submitButtonLabel: 'Ajouter',
+      isFormValid: _isFormValid,
+      saveChanges: _addSchedule,
+      fields: <Widget>[
+        FormTextField(
+          controller: _nameController,
+          label: 'Nom',
+          onChanged: _refresh,
+          inputType: TextInputType.text,
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: pagePadding,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  FormTextField(
-                    controller: _nameController,
-                    label: 'Nom',
-                    onChanged: _refresh,
-                    inputType: TextInputType.text,
-                  ),
-                  FormTextField(
-                    controller: _doseController,
-                    label: 'Dose',
-                    suffixText: 'mg',
-                    onChanged: _refresh,
-                    inputType: TextInputType.number,
-                    regexFormatter: '[0-9.,]',
-                  ),
-                  FormTextField(
-                    controller: _intervalDaysController,
-                    label: 'Tous les',
-                    suffixText: 'jours',
-                    onChanged: _refresh,
-                    inputType: TextInputType.numberWithOptions(decimal: false),
-                    regexFormatter: '[0-9]',
-                  ),
-                  FormDateField(
-                    date: _startDate,
-                    label: 'Date de début',
-                    errorText: _startDateError,
-                    onChanged: (date) => setState(() {
-                      _startDate = date;
-                    }),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ));
+        FormTextField(
+          controller: _doseController,
+          label: 'Dose',
+          suffixText: 'mg',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          regexFormatter: '[0-9.,]',
+        ),
+        FormTextField(
+          controller: _intervalDaysController,
+          label: 'Tous les',
+          suffixText: 'jours',
+          onChanged: _refresh,
+          inputType: TextInputType.numberWithOptions(decimal: false),
+          regexFormatter: '[0-9]',
+        ),
+        FormDateField(
+          date: _startDate,
+          label: 'Date de début',
+          errorText: _startDateError,
+          onChanged: (date) => setState(() {
+            _startDate = date;
+          }),
+        ),
+      ],
+    );
   }
 }

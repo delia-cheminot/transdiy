@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 
-class EditFormPage extends StatelessWidget {
+class ModelForm extends StatelessWidget {
   final String title;
-  final Widget child;
-  final VoidCallback onDelete;
+  final List<Widget> fields;
+  final VoidCallback? onDelete;
   final bool isFormValid;
   final VoidCallback saveChanges;
+  final String submitButtonLabel;
 
-  const EditFormPage({
+  const ModelForm({
     required this.title,
-    required this.child,
-    required this.onDelete,
+    required this.fields,
+    this.onDelete,
     required this.isFormValid,
     required this.saveChanges,
+    required this.submitButtonLabel,
   });
 
   @override
@@ -30,7 +32,7 @@ class EditFormPage extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
               onPressed: isFormValid ? saveChanges : null,
-              child: Text('Sauvegarder'),
+              child: Text(submitButtonLabel),
             ),
           ),
         ],
@@ -41,24 +43,26 @@ class EditFormPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              child,
+              ...fields,
               const SizedBox(height: 8),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Divider(),
-                  ),
-                  Container(
-                    padding: pagePadding,
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: onDelete,
-                      child: Text('Supprimer'),
+              if (onDelete != null) ...[
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 8),
+                      child: Divider(),
                     ),
-                  ),
-                ],
-              ),
+                    Container(
+                      padding: pagePadding,
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: onDelete,
+                        child: Text('Supprimer'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),

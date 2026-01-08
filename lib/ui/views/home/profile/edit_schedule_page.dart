@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
-import 'package:mona/ui/widgets/edit_form_page.dart';
-import 'package:mona/widgets/form_date_field.dart';
-import 'package:mona/widgets/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:provider/provider.dart';
 
 class EditSchedulePage extends StatefulWidget {
@@ -92,50 +92,47 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return EditFormPage(
+    return ModelForm(
       title: 'Modifier le traitement',
+      submitButtonLabel: 'Enregistrer',
       isFormValid: _isFormValid,
       saveChanges: _saveSchedule,
       onDelete: _confirmDelete,
-      child: Column( // TODO have this as a list of fields
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FormTextField(
-            controller: _nameController,
-            label: 'Nom',
-            onChanged: _refresh,
-            inputType: TextInputType.text,
-            errorText: _nameError,
-          ),
-          FormTextField(
-            controller: _doseController,
-            label: 'Dose',
-            onChanged: _refresh,
-            inputType: TextInputType.number,
-            suffixText: 'mg',
-            errorText: _doseError,
-            regexFormatter: r'[0-9.,]',
-          ),
-          FormTextField(
-            controller: _intervalDaysController,
-            label: 'Intervalle',
-            suffixText: 'jours',
-            onChanged: _refresh,
-            inputType: TextInputType.number,
-            errorText: _intervalDaysError,
-            regexFormatter: r'[0-9]',
-          ),
-          FormDateField(
-            date: _startDate,
-            label: 'Date de début',
-            errorText: _startDateError,
-            onChanged: (date) => setState(() {
-              _startDate = date;
-            }),
-          ),
-        ],
-      ),
+      fields: [
+        FormTextField(
+          controller: _nameController,
+          label: 'Nom',
+          onChanged: _refresh,
+          inputType: TextInputType.text,
+          errorText: _nameError,
+        ),
+        FormTextField(
+          controller: _doseController,
+          label: 'Dose',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg',
+          errorText: _doseError,
+          regexFormatter: r'[0-9.,]',
+        ),
+        FormTextField(
+          controller: _intervalDaysController,
+          label: 'Intervalle',
+          suffixText: 'jours',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          errorText: _intervalDaysError,
+          regexFormatter: r'[0-9]',
+        ),
+        FormDateField(
+          date: _startDate,
+          label: 'Date de début',
+          errorText: _startDateError,
+          onChanged: (date) => setState(() {
+            _startDate = date;
+          }),
+        ),
+      ],
     );
   }
 }
