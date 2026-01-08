@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/graph_calculator.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
-import 'package:mona/ui/widgets/chart/graph_calculator.dart';
 import 'package:provider/provider.dart';
 
 class MainGraph extends StatelessWidget {
@@ -18,8 +18,10 @@ class MainGraph extends StatelessWidget {
     final List<double> doses = daysAndDoses.values.toList();
 
     // padding on the top for accessibility
-    final calc = GraphCalculator();
-    final List<FlSpot> spots = calc.generateSpots(doses, days);
+    final List<FlSpot> spots = GraphCalculator()
+        .generatePoints(doses, days)
+        .map((p) => FlSpot(p.x.toDouble(), p.y.toDouble()))
+        .toList();
     final double maxConcentration = spots.isEmpty
         ? 0
         : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
