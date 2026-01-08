@@ -18,6 +18,21 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   late TextEditingController _intervalDaysController;
   late DateTime _startDate;
 
+  String? get _nameError =>
+      MedicationSchedule.validateName(_nameController.text);
+  String? get _doseError =>
+      MedicationSchedule.validateDose(_doseController.text);
+  String? get _intervalDaysError =>
+      MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
+  String? get _startDateError =>
+      MedicationSchedule.validateStartDate(_startDate);
+
+  bool get _isFormValid =>
+      _nameError == null &&
+      _doseError == null &&
+      _intervalDaysError == null &&
+      _startDateError == null;
+
   @override
   void initState() {
     super.initState();
@@ -45,21 +60,6 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         startDate: _startDate);
     Navigator.pop(context);
   }
-
-  String? get _nameError =>
-      MedicationSchedule.validateName(_nameController.text);
-  String? get _doseError =>
-      MedicationSchedule.validateDose(_doseController.text);
-  String? get _intervalDaysError =>
-      MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
-  String? get _startDateError =>
-      MedicationSchedule.validateStartDate(_startDate);
-
-  bool get _isFormValid =>
-      _nameError == null &&
-      _doseError == null &&
-      _intervalDaysError == null &&
-      _startDateError == null;
 
   void _refresh() {
     setState(() {});
