@@ -63,10 +63,9 @@ class MainGraph extends StatelessWidget {
                               showTitles: true,
                               reservedSize: 32,
                               getTitlesWidget: (value, meta) {
-                                final txt = value.toInt().toString();
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(txt,
+                                  child: Text(value.toInt().toString(),
                                       style: const TextStyle(fontSize: 12)),
                                 );
                               },
