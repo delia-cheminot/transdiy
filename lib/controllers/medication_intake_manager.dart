@@ -19,11 +19,13 @@ class MedicationIntakeManager {
     DateTime takenDate,
     SupplyItem? supplyItem,
     MedicationSchedule schedule,
+    InjectionSide? side,
   ) async {
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
       scheduledDateTime: scheduledDate,
       takenDateTime: takenDate,
+      side: side,
       scheduleId: schedule.id,
     ));
 

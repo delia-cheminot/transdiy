@@ -5,6 +5,17 @@ enum InjectionSide {
   right,
 }
 
+extension InjectionSideX on InjectionSide {
+  String get label {
+    switch (this) {
+      case InjectionSide.left:
+        return 'gauche';
+      case InjectionSide.right:
+        return 'droite';
+    }
+  }
+}
+
 class MedicationIntake {
   final int id;
   final DateTime scheduledDateTime;

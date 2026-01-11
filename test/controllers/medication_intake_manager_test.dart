@@ -30,6 +30,7 @@ void main() {
           mockMedicationIntakeProvider, mockSupplyItemProvider);
       final dose = Decimal.parse('2');
       final date = DateTime.now();
+      const side = InjectionSide.left;
 
       final supplyItem = SupplyItem(
         id: 10,
@@ -56,10 +57,11 @@ void main() {
         scheduledDateTime: date,
         takenDateTime: date,
         scheduleId: schedule.id,
+        side: side,
       );
 
       await manager.takeMedication(
-          dose, date, date, supplyItem, schedule);
+          dose, date, date, supplyItem, schedule, side);
 
       expect(addedIntake, expectedIntake);
     });
@@ -92,7 +94,7 @@ void main() {
       });
 
       await manager.takeMedication(
-          dose, scheduledDate, takenDate, supplyItem, schedule);
+          dose, scheduledDate, takenDate, supplyItem, schedule, null);
 
       expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
     });
