@@ -1,11 +1,17 @@
 import 'package:decimal/decimal.dart';
 
+enum InjectionSide {
+  left,
+  right,
+}
+
 class MedicationIntake {
   final int id;
   final DateTime scheduledDateTime;
   final DateTime? takenDateTime;
   final Decimal dose;
   final int? scheduleId;
+  final InjectionSide? side;
   bool get isTaken => takenDateTime != null;
 
   MedicationIntake({
@@ -14,6 +20,7 @@ class MedicationIntake {
     required this.dose,
     this.takenDateTime,
     this.scheduleId,
+    this.side,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   Map<String, Object?> toMap() {
@@ -23,6 +30,7 @@ class MedicationIntake {
       'takenDateTime': takenDateTime?.toIso8601String(),
       'dose': dose.toString(),
       'scheduleId': scheduleId,
+      'side': side?.name,
     };
   }
 
@@ -35,6 +43,9 @@ class MedicationIntake {
           : DateTime.parse(map['takenDateTime'] as String),
       dose: Decimal.parse(map['dose'] as String),
       scheduleId: map['scheduleId'] as int?,
+      side: map['side'] == null
+          ? null
+          : InjectionSide.values.byName(map['side'] as String),
     );
   }
 
@@ -45,6 +56,7 @@ class MedicationIntake {
       takenDateTime: takenDateTime,
       dose: dose,
       scheduleId: scheduleId,
+      side: side,
     );
   }
 
@@ -54,6 +66,7 @@ class MedicationIntake {
     DateTime? takenDateTime,
     Decimal? dose,
     int? scheduleId,
+    InjectionSide? side,
   }) {
     return MedicationIntake(
       id: id ?? this.id,
@@ -61,6 +74,7 @@ class MedicationIntake {
       takenDateTime: takenDateTime ?? this.takenDateTime,
       dose: dose ?? this.dose,
       scheduleId: scheduleId ?? this.scheduleId,
+      side: side ?? this.side,
     );
   }
 
@@ -72,11 +86,12 @@ class MedicationIntake {
           scheduledDateTime == other.scheduledDateTime &&
           takenDateTime == other.takenDateTime &&
           dose == other.dose &&
-          scheduleId == other.scheduleId;
+          scheduleId == other.scheduleId &&
+          side == other.side;
 
   @override
   int get hashCode =>
-      Object.hash(dose, id, scheduleId, scheduledDateTime, takenDateTime);
+      Object.hash(dose, id, scheduleId, scheduledDateTime, takenDateTime, side);
 
   @override
   String toString() {

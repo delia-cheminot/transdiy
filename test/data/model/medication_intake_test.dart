@@ -14,29 +14,13 @@ void main() {
         dose: Decimal.parse('2.5'),
         takenDateTime: taken,
         scheduleId: 42,
+        side: InjectionSide.left,
       );
 
       final map = intake.toMap();
       final fromMap = MedicationIntake.fromMap(map);
 
-      expect(
-        [
-          fromMap.id,
-          fromMap.scheduledDateTime,
-          fromMap.takenDateTime,
-          fromMap.dose,
-          fromMap.isTaken,
-          fromMap.scheduleId,
-        ],
-        [
-          intake.id,
-          intake.scheduledDateTime,
-          intake.takenDateTime,
-          intake.dose,
-          intake.isTaken,
-          intake.scheduleId,
-        ],
-      );
+      expect(fromMap, intake);
     });
 
     test('copy creates identical object but different instance', () {
@@ -49,28 +33,12 @@ void main() {
         dose: Decimal.fromInt(5),
         takenDateTime: taken,
         scheduleId: 7,
+        side: InjectionSide.left,
       );
 
       final copy = intake.copy();
 
-      expect(
-        [
-          copy.id,
-          copy.scheduledDateTime,
-          copy.takenDateTime,
-          copy.dose,
-          copy.isTaken,
-          copy.scheduleId,
-        ],
-        [
-          intake.id,
-          intake.scheduledDateTime,
-          intake.takenDateTime,
-          intake.dose,
-          intake.isTaken,
-          intake.scheduleId,
-        ],
-      );
+      expect(copy, intake);
     });
 
     test('isTaken returns correct value', () {

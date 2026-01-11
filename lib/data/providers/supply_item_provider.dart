@@ -36,6 +36,11 @@ class SupplyItemProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  SupplyItem? getMostUsedItem() {
+    if (_items.isEmpty) return null;
+    return orderedByRemainingDose.first;
+  }
+
   Future<void> deleteItemFromId(int id) async {
     await repository.delete(id);
     await fetchItems();

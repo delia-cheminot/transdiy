@@ -68,7 +68,8 @@ class AppDatabase {
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
       dose TEXT NOT NULL,
-      scheduleId INTEGER
+      scheduleId INTEGER,
+      side TEXT
     )
     ''');
 
