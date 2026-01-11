@@ -47,6 +47,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
+  @Deprecated('use add through manager instead')
   Future<void> addIntake(DateTime scheduledDateTime, Decimal dose) async {
     await repository.insert(
         MedicationIntake(scheduledDateTime: scheduledDateTime, dose: dose));

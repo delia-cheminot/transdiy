@@ -34,7 +34,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     MedicationIntakeManager(
             context.read<MedicationIntakeProvider>(), supplyItemProvider)
         .takeMedication(widget.schedule.dose, widget.scheduledDate, _takenDate,
-            supplyItemProvider.orderedByRemainingDose.first, widget.schedule);
+            supplyItemProvider.getMostUsedItem(), widget.schedule);
     Navigator.of(context).pop();
   }
 

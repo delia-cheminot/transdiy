@@ -17,7 +17,7 @@ class MedicationIntakeManager {
     Decimal dose,
     DateTime scheduledDate,
     DateTime takenDate,
-    SupplyItem supplyItem,
+    SupplyItem? supplyItem,
     MedicationSchedule schedule,
   ) async {
     await _medicationIntakeProvider.add(MedicationIntake(
@@ -26,6 +26,9 @@ class MedicationIntakeManager {
       takenDateTime: takenDate,
       scheduleId: schedule.id,
     ));
-    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+    
+    if (supplyItem != null) {
+      await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+    }
   }
 }
