@@ -70,6 +70,11 @@ class MedicationIntakeProvider extends ChangeNotifier {
     return Map.fromIterables(days, doses);
   }
 
+  MedicationIntake? getLastTakenIntake() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes.reduce((a, b) =>
+        a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b);
+  }
 }
 
 

@@ -96,5 +96,26 @@ void main() {
 
       expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
     });
+
+    test('getNextSide returns correct side', () {
+      final firstIntake = MedicationIntake(
+        id: 1,
+        scheduledDateTime: DateTime(2025, 9, 14, 10, 30),
+        dose: Decimal.parse('2.5'),
+        takenDateTime: DateTime(2025, 9, 14, 12, 0),
+        scheduleId: 42,
+        side: InjectionSide.left,
+      );
+
+      when (mockMedicationIntakeProvider.getLastTakenIntake())
+          .thenReturn(firstIntake);
+
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
+
+      final InjectionSide nextSide = manager.getNextSide();
+
+      expect(nextSide, InjectionSide.right);
+    });
   });
 }

@@ -26,9 +26,19 @@ class MedicationIntakeManager {
       takenDateTime: takenDate,
       scheduleId: schedule.id,
     ));
-    
+
     if (supplyItem != null) {
       await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
     }
+  }
+
+  InjectionSide getNextSide() {
+    final lastIntake = _medicationIntakeProvider.getLastTakenIntake();
+    if (lastIntake == null || lastIntake.side == null) {
+      return InjectionSide.left;
+    }
+    return lastIntake.side == InjectionSide.left
+        ? InjectionSide.right
+        : InjectionSide.left;
   }
 }
