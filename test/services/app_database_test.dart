@@ -81,7 +81,7 @@ void main() {
       expect(
         intake,
         allOf(
-          containsPair('id, ', id),
+          containsPair('id', id),
           containsPair('dose', '2.5'),
           containsPair('takenDateTime', null),
           containsPair('side', null),
