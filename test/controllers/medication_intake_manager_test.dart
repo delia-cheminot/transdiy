@@ -53,137 +53,122 @@ void main() {
           return Future.value();
         });
 
-        await manager.takeMedication(dose, date, date, supplyItem, schedule, side);
-
-        expect({
-          addedIntake.dose,
-          addedIntake.scheduledDateTime,
-          addedIntake.takenDateTime,
-          addedIntake.scheduleId,
-          addedIntake.side,
-        }, {
-          dose,
-          date,
-          date,
-          schedule.id,
-          side,
-        });
-      });
-      final expectedIntake = MedicationIntake(
-        dose: dose,
-        scheduledDateTime: date,
-        takenDateTime: date,
-        scheduleId: schedule.id,
-        side: side,
-      );
-
-      await manager.takeMedication(
-          dose, date, date, supplyItem, schedule, side);
-
-      expect(addedIntake, expectedIntake);
-    });
-
-      test('decreases supply item dose', () async {
-        final manager = MedicationIntakeManager(
-            mockMedicationIntakeProvider, mockSupplyItemProvider);
-        final dose = Decimal.parse('2');
-        final scheduledDate = DateTime.now();
-        final takenDate = DateTime.now();
-
-        final supplyItem = SupplyItem(
-          id: 10,
-          name: 'SupplySingle',
-          totalDose: Decimal.parse('10'),
-          usedDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'),
-        );
-
-        final schedule = MedicationSchedule(
-          name: 'ScheduleSingle',
+        final expectedIntake = MedicationIntake(
           dose: dose,
-          intervalDays: 1,
+          scheduledDateTime: date,
+          takenDateTime: date,
+          side: side,
+          scheduleId: schedule.id,
         );
-
-        late SupplyItem updatedSupplyItem;
-        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem = inv.positionalArguments.first as SupplyItem;
-          return Future.value();
-        });
 
         await manager.takeMedication(
-            dose, scheduledDate, takenDate, supplyItem, schedule, null);
+            dose, date, date, supplyItem, schedule, side);
 
-        expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
+        expect(addedIntake, expectedIntake);
       });
     });
 
-    group('getNextSide', () {
-      test('returns right when last side is left', () {
-        final firstIntake = MedicationIntake(
-          id: 1,
-          scheduledDateTime: DateTime(2025, 9, 14, 10, 30),
-          dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 14, 12, 0),
-          scheduleId: 42,
-          side: InjectionSide.left,
-        );
+    test('decreases supply item dose', () async {
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
+      final dose = Decimal.parse('2');
+      final scheduledDate = DateTime.now();
+      final takenDate = DateTime.now();
 
-        when (mockMedicationIntakeProvider.getLastTakenIntake())
-            .thenReturn(firstIntake);
+      final supplyItem = SupplyItem(
+        id: 10,
+        name: 'SupplySingle',
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('1'),
+        dosePerUnit: Decimal.parse('1'),
+      );
 
-        final manager = MedicationIntakeManager(
-            mockMedicationIntakeProvider, mockSupplyItemProvider);
+      final schedule = MedicationSchedule(
+        name: 'ScheduleSingle',
+        dose: dose,
+        intervalDays: 1,
+      );
 
-        final InjectionSide nextSide = manager.getNextSide();
-
-        expect(nextSide, InjectionSide.right);
+      late SupplyItem updatedSupplyItem;
+      when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+        updatedSupplyItem = inv.positionalArguments.first as SupplyItem;
+        return Future.value();
       });
 
-      test('returns left when last side is right', () {
-        final lastIntake = MedicationIntake(
-          id: 2,
-          scheduledDateTime: DateTime(2025, 9, 15, 10, 30),
-          dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 15, 12, 0),
-          scheduleId: 42,
-          side: InjectionSide.right,
-        );
+      await manager.takeMedication(
+          dose, scheduledDate, takenDate, supplyItem, schedule, null);
 
-        when (mockMedicationIntakeProvider.getLastTakenIntake())
-            .thenReturn(lastIntake);
+      expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
+    });
+  });
 
-        final manager = MedicationIntakeManager(
-            mockMedicationIntakeProvider, mockSupplyItemProvider);
+  group('getNextSide', () {
+    test('returns right when last side is left', () {
+      final firstIntake = MedicationIntake(
+        id: 1,
+        scheduledDateTime: DateTime(2025, 9, 14, 10, 30),
+        dose: Decimal.parse('2.5'),
+        takenDateTime: DateTime(2025, 9, 14, 12, 0),
+        scheduleId: 42,
+        side: InjectionSide.left,
+      );
 
-        expect(manager.getNextSide(), InjectionSide.left);
-      });
+      when(mockMedicationIntakeProvider.getLastTakenIntake())
+          .thenReturn(firstIntake);
 
-      test('returns left when there is no last intake', () {
-        when(mockMedicationIntakeProvider.getLastTakenIntake()).thenReturn(null);
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
 
-        final manager = MedicationIntakeManager(
-            mockMedicationIntakeProvider, mockSupplyItemProvider);
+      final InjectionSide nextSide = manager.getNextSide();
 
-        expect(manager.getNextSide(), InjectionSide.left);
-      });
+      expect(nextSide, InjectionSide.right);
+    });
 
-      test('returns left when last intake side is null', () {
-        final intake = MedicationIntake(
-          id: 3,
-          scheduledDateTime: DateTime(2025, 9, 16, 10, 30),
-          dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 16, 12, 0),
-          scheduleId: 42,
-          side: null,
-        );
+    test('returns left when last side is right', () {
+      final lastIntake = MedicationIntake(
+        id: 2,
+        scheduledDateTime: DateTime(2025, 9, 15, 10, 30),
+        dose: Decimal.parse('2.5'),
+        takenDateTime: DateTime(2025, 9, 15, 12, 0),
+        scheduleId: 42,
+        side: InjectionSide.right,
+      );
 
-        when(mockMedicationIntakeProvider.getLastTakenIntake()).thenReturn(intake);
+      when(mockMedicationIntakeProvider.getLastTakenIntake())
+          .thenReturn(lastIntake);
 
-        final manager = MedicationIntakeManager(
-            mockMedicationIntakeProvider, mockSupplyItemProvider);
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
 
-        expect(manager.getNextSide(), InjectionSide.left);
-      });
+      expect(manager.getNextSide(), InjectionSide.left);
+    });
+
+    test('returns left when there is no last intake', () {
+      when(mockMedicationIntakeProvider.getLastTakenIntake()).thenReturn(null);
+
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
+
+      expect(manager.getNextSide(), InjectionSide.left);
+    });
+
+    test('returns left when last intake side is null', () {
+      final intake = MedicationIntake(
+        id: 3,
+        scheduledDateTime: DateTime(2025, 9, 16, 10, 30),
+        dose: Decimal.parse('2.5'),
+        takenDateTime: DateTime(2025, 9, 16, 12, 0),
+        scheduleId: 42,
+        side: null,
+      );
+
+      when(mockMedicationIntakeProvider.getLastTakenIntake())
+          .thenReturn(intake);
+
+      final manager = MedicationIntakeManager(
+          mockMedicationIntakeProvider, mockSupplyItemProvider);
+
+      expect(manager.getNextSide(), InjectionSide.left);
     });
   });
 }
