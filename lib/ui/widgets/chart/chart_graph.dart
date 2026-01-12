@@ -32,7 +32,6 @@ class MainGraph extends StatelessWidget {
       child: SizedBox(
         width: 4 * MediaQuery.of(context).size.width -
             2 * MediaQuery.of(context).size.width * 0.01 * (100 - window),
-        height: 3 * MediaQuery.of(context).size.height / 4,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

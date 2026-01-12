@@ -27,7 +27,7 @@ class _ChartPageState extends State<ChartPage> {
                 value: sliderValue,
                 onChanged: (v) => setState(() => sliderValue = v),
               ),
-              MainGraph(window: sliderValue),
+              Expanded( child : MainGraph(window: sliderValue)),
             ],
           ),
         );
