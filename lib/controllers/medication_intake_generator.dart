@@ -4,6 +4,7 @@ import 'package:mona/data/model/medication_schedule.dart';
 
 import '../data/providers/medication_intake_provider.dart';
 
+@Deprecated('not in use anymore')
 class MedicationIntakeGenerator {
   final MedicationIntakeProvider _medicationIntakeProvider;
 

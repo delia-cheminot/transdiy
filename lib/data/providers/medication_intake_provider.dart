@@ -47,6 +47,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
+  @Deprecated('use add through manager instead')
   Future<void> addIntake(DateTime scheduledDateTime, Decimal dose) async {
     await repository.insert(
         MedicationIntake(scheduledDateTime: scheduledDateTime, dose: dose));
@@ -69,6 +70,11 @@ class MedicationIntakeProvider extends ChangeNotifier {
     return Map.fromIterables(days, doses);
   }
 
+  MedicationIntake? getLastTakenIntake() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes.reduce((a, b) =>
+        a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b);
+  }
 }
 
 

@@ -67,23 +67,25 @@ void main() {
         'scheduledDateTime': DateTime(2025, 9, 14, 10, 30).toIso8601String(),
         'takenDateTime': null,
         'dose': '2.5',
+        'side': null,
       });
 
-      final intake = await db.query(
+      final allIntakes = await db.query(
         'medication_intakes',
         where: 'id = ?',
         whereArgs: [id],
       );
 
+      final intake = allIntakes.first;
+
       expect(
-        [
-          intake.first['dose'],
-          intake.first['takenDateTime'],
-        ],
-        [
-          '2.5',
-          null,
-        ],
+        intake,
+        allOf(
+          containsPair('id', id),
+          containsPair('dose', '2.5'),
+          containsPair('takenDateTime', null),
+          containsPair('side', null),
+        ),
       );
     });
 

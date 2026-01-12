@@ -17,15 +17,30 @@ class MedicationIntakeManager {
     Decimal dose,
     DateTime scheduledDate,
     DateTime takenDate,
-    SupplyItem supplyItem,
+    SupplyItem? supplyItem,
     MedicationSchedule schedule,
+    InjectionSide? side,
   ) async {
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
       scheduledDateTime: scheduledDate,
       takenDateTime: takenDate,
+      side: side,
       scheduleId: schedule.id,
     ));
-    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+
+    if (supplyItem != null) {
+      await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+    }
+  }
+
+  InjectionSide getNextSide() {
+    final lastIntake = _medicationIntakeProvider.getLastTakenIntake();
+    if (lastIntake == null || lastIntake.side == null) {
+      return InjectionSide.left;
+    }
+    return lastIntake.side == InjectionSide.left
+        ? InjectionSide.right
+        : InjectionSide.left;
   }
 }
