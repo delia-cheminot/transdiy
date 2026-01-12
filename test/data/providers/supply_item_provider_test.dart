@@ -179,33 +179,32 @@ void main() {
       expect(ordered.map((e) => e.name).toList(), ['A', 'C', 'B']);
     });
 
-    test('getMostUsedItem returns the item with highest used/total dose', () async {
-      await repo.insert(SupplyItem(
+    test('getMostUsedItem returns the item with highest used/total dose',
+        () async {
+      final supplyItem = SupplyItem(
           id: 6,
           name: 'X',
           totalDose: Decimal.parse('200'),
           usedDose: Decimal.parse('150'),
-          dosePerUnit: Decimal.parse('2')));
+          dosePerUnit: Decimal.parse('2'));
 
-      await repo.insert(SupplyItem(
-          id: 7,
-          name: 'Y',
-          totalDose: Decimal.parse('200'),
-          usedDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('2')));
+      await repo.insert(supplyItem);
 
-      await repo.insert(SupplyItem(
-          id: 8,
-          name: 'Z',
-          totalDose: Decimal.parse('200'),
-          usedDose: Decimal.parse('100'),
-          dosePerUnit: Decimal.parse('2')));
+      await repo.insert(supplyItem.copyWith(
+        id: 7,
+        usedDose: Decimal.parse('50'),
+      ));
+
+      await repo.insert(supplyItem.copyWith(
+        id: 8,
+        usedDose: Decimal.parse('100'),
+      ));
 
       await provider.fetchItems();
 
       final mostUsed = provider.getMostUsedItem();
 
-      expect(mostUsed?.name, 'X');
+      expect(mostUsed?.id, 6);
     });
   });
 }
