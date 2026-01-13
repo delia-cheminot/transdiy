@@ -34,6 +34,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Future<void> fetchIntakes() async {
     _intakes = await repository.getAll();
+    _intakes.sort((a, b) => b.scheduledDateTime.compareTo(a.scheduledDateTime));
     notifyListeners();
   }
 
@@ -64,7 +65,8 @@ class MedicationIntakeProvider extends ChangeNotifier {
   }
 
   Map<int, double> getDaysAndDoses() {
-    final startDate = takenIntakes.first.takenDateTime!;
+    if (takenIntakes.isEmpty) return {};
+    final startDate = takenIntakes.last.takenDateTime!;
     return Map.fromEntries(
       takenIntakes.map(
         (intake) => MapEntry(
