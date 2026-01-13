@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:fl_chart/fl_chart.dart';
+
 class GraphCalculator {
   static const double tMaxOffset = 40.0;
   static const double _inactiveWindow = 100.0;
@@ -38,7 +40,7 @@ class GraphCalculator {
     return total;
   }
 
-  List<math.Point> generatePoints(List<double> doses, List<int> days,
+  List<FlSpot> generateFlSpots(List<double> doses, List<int> days,
       {double tMin = 0, double tMax = 120, int numPoints = 1000}) {
     final List<math.Point> points = [];
     tMax = days.last.toDouble() + tMaxOffset;
@@ -48,6 +50,6 @@ class GraphCalculator {
       double concentration = oestradiolEnanthateTotal(t, days, doses);
       points.add(math.Point(t, concentration));
     }
-    return points;
+    return points.map((p) => FlSpot(p.x.toDouble(), p.y.toDouble())).toList();
   }
 }

@@ -5,8 +5,6 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
 
 class MainGraph extends StatelessWidget {
-  // take the real doses for creation of enanthate graph
-
   final double window;
   MainGraph({required this.window});
 
@@ -16,15 +14,11 @@ class MainGraph extends StatelessWidget {
         context.watch<MedicationIntakeProvider>().getDaysAndDoses();
     final List<int> days = daysAndDoses.keys.toList();
     final List<double> doses = daysAndDoses.values.toList();
-
-    // padding on the top for accessibility
-    final List<FlSpot> spots = GraphCalculator()
-        .generatePoints(doses, days)
-        .map((p) => FlSpot(p.x.toDouble(), p.y.toDouble()))
-        .toList();
+    final List<FlSpot> spots = GraphCalculator().generateFlSpots(doses, days);
     final double maxConcentration = spots.isEmpty
         ? 0
         : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+    // padding on the top for accessibility
     final double maxYWithPadding = maxConcentration * 1.15;
 
     return SingleChildScrollView(
