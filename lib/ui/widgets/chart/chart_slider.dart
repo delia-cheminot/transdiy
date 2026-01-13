@@ -29,6 +29,7 @@ class _ChartSliderState extends State<ChartSlider> {
         setState(() =>  _currentSliderValue = value);
         widget.onChanged(value);
       },
+      activeColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

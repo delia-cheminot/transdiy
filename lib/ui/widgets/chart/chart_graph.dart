@@ -102,6 +102,28 @@ class MainGraph extends StatelessWidget {
                             ),
                           ),
                         ],
+                        lineTouchData: LineTouchData(
+                          touchTooltipData: LineTouchTooltipData(
+                            getTooltipColor: (touchedSpots) =>
+                                Theme.of(context).colorScheme.tertiaryContainer,
+                            tooltipRoundedRadius: 8,
+                            tooltipPadding: const EdgeInsets.all(6),
+                            getTooltipItems: (touchedSpots) {
+                              return touchedSpots
+                                  .map((t) => LineTooltipItem(
+                                      t.y.toStringAsFixed(1),
+                                      Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onTertiaryContainer) ??
+                                          const TextStyle()))
+                                  .toList();
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
