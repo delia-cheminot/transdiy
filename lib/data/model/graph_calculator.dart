@@ -13,7 +13,8 @@ class GraphCalculator {
     "k3": 0.15291485
   };
 
-  double oestradiolEnanthateSingleInjection(double t, int day, double doseMg) {
+  // een for now
+  double singleInjectionConcentration(double t, int day, double doseMg) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
 
     final k1 = _coef["k1"]!;
@@ -27,27 +28,28 @@ class GraphCalculator {
         (k3 - k1) /
         ((k1 - k2) * (k1 - k3) * (k2 - k3));
 
-    double point = doseMg * d * _dFactor * k1 * k2 * (part1 + part2 + part3);
-    return point;
+    double concentration =
+        doseMg * d * _dFactor * k1 * k2 * (part1 + part2 + part3);
+    return concentration;
   }
 
-  double oestradiolEnanthateTotal(
-      double t, List<int> days, List<double> dosesMg) {
-    double total = 0;
-    for (int i = 0; days.length > i; i++) {
-      total += oestradiolEnanthateSingleInjection(t, days[i], dosesMg[i]);
-    }
-    return total;
+  double totalConcentrationAtTime(double t, Map<int, double> daysAndDoses) {
+    if (daysAndDoses.isEmpty) return 0.0;
+    return daysAndDoses.entries
+        .map((e) => singleInjectionConcentration(t, e.key, e.value))
+        .fold(0.0, (sum, val) => sum + val);
   }
 
-  List<FlSpot> generateFlSpots(List<double> doses, List<int> days,
+  List<FlSpot> generateFlSpots(Map<int, double> daysAndDoses,
       {double tMin = 0, double tMax = 120, int numPoints = 1000}) {
     final List<math.Point> points = [];
-    tMax = days.last.toDouble() + tMaxOffset;
+    if (daysAndDoses.isEmpty) return <FlSpot>[];
+    final int maxDay = daysAndDoses.keys.reduce((a, b) => a > b ? a : b);
+    tMax = maxDay.toDouble() + tMaxOffset;
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
-      double concentration = oestradiolEnanthateTotal(t, days, doses);
+      double concentration = totalConcentrationAtTime(t, daysAndDoses);
       points.add(math.Point(t, concentration));
     }
     return points.map((p) => FlSpot(p.x.toDouble(), p.y.toDouble())).toList();

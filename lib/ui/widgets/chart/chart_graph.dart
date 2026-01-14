@@ -13,8 +13,7 @@ class MainGraph extends StatelessWidget {
     Map<int, double> daysAndDoses =
         context.watch<MedicationIntakeProvider>().getDaysAndDoses();
     final List<int> days = daysAndDoses.keys.toList();
-    final List<double> doses = daysAndDoses.values.toList();
-    final List<FlSpot> spots = GraphCalculator().generateFlSpots(doses, days);
+    final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
     final double maxConcentration = spots.isEmpty
         ? 0
         : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
