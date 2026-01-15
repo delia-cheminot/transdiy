@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
         )),
         body: Center(
           child:
-              CircularProgressIndicator(), // TODO use material 3 progress indicator
+              CircularProgressIndicator(),
         ),
       );
     }
