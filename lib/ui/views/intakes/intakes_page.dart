@@ -15,7 +15,7 @@ class IntakesPage extends StatelessWidget {
               ? Center(child: CircularProgressIndicator())
               : medicationIntakeProvider.takenIntakes.isEmpty
                   ? Center(
-                      child: Text('Les prises effectuées apparaîtront ici'),
+                      child: Text('Taken intakes will appear here.'),
                     )
                   : ListView.builder(
                       itemCount: medicationIntakeProvider.takenIntakes.length,

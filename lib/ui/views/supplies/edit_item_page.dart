@@ -17,31 +17,31 @@ class EditItemPage extends StatefulWidget {
 }
 
 class _EditItemPageState extends State<EditItemPage> {
-  late TextEditingController _totalDosesController;
+  late TextEditingController _totalDoseController;
   late TextEditingController _usedDoseController;
   late TextEditingController _dosePerUnitController;
   late TextEditingController _nameController;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
-  String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalDosesController.text);
-  String? get _usedAmountError => SupplyItem.validateUsedAmount(
+  String? get _totalDoseError =>
+      SupplyItem.validateTotalAmount(_totalDoseController.text);
+  String? get _usedDoseError => SupplyItem.validateUsedAmount(
         _usedDoseController.text,
-        _totalDosesController.text,
+        _totalDoseController.text,
       );
   String? get _dosePerUnitError =>
       SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
 
   bool get _isFormValid =>
       _nameError == null &&
-      _totalAmountError == null &&
-      _usedAmountError == null &&
+      _totalDoseError == null &&
+      _usedDoseError == null &&
       _dosePerUnitError == null;
 
   @override
   void initState() {
     super.initState();
-    _totalDosesController =
+    _totalDoseController =
         TextEditingController(text: widget.item.totalDose.toString());
     _usedDoseController =
         TextEditingController(text: widget.item.usedDose.toString());
@@ -52,7 +52,7 @@ class _EditItemPageState extends State<EditItemPage> {
 
   @override
   void dispose() {
-    _totalDosesController.dispose();
+    _totalDoseController.dispose();
     _usedDoseController.dispose();
     _dosePerUnitController.dispose();
     _nameController.dispose();
@@ -76,7 +76,7 @@ class _EditItemPageState extends State<EditItemPage> {
     SupplyItemManager(supplyItemProvider).setFields(
       widget.item,
       newName: _nameController.text,
-      newTotalDose: parseDecimal(_totalDosesController.text)!,
+      newTotalDose: parseDecimal(_totalDoseController.text)!,
       newUsedDose: parseDecimal(_usedDoseController.text)!,
       newDosePerUnit: parseDecimal(_dosePerUnitController.text)!,
     );
@@ -99,7 +99,7 @@ class _EditItemPageState extends State<EditItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Modifier'),
+        title: Text('Edit item'),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {
@@ -111,7 +111,7 @@ class _EditItemPageState extends State<EditItemPage> {
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
               onPressed: _isFormValid ? _saveChanges : null,
-              child: Text('Sauvegarder'),
+              child: Text('Save'),
             ),
           ),
         ],
@@ -126,32 +126,32 @@ class _EditItemPageState extends State<EditItemPage> {
               children: [
                 FormTextField(
                   controller: _nameController,
-                  label: 'Nom',
+                  label: 'Name',
                   onChanged: _refresh,
                   inputType: TextInputType.text,
                   errorText: _nameError,
                 ),
                 FormTextField(
-                  controller: _totalDosesController,
-                  label: 'Dose totale',
+                  controller: _totalDoseController,
+                  label: 'Total amount',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
                   suffixText: 'mg',
-                  errorText: _totalAmountError,
+                  errorText: _totalDoseError,
                   regexFormatter: r'[0-9.,]',
                 ),
                 FormTextField(
                   controller: _usedDoseController,
-                  label: 'Dose utilisée',
+                  label: 'Used amount',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
                   suffixText: 'mg',
-                  errorText: _usedAmountError,
+                  errorText: _usedDoseError,
                   regexFormatter: r'[0-9.,]',
                 ),
                 FormTextField(
                   controller: _dosePerUnitController,
-                  label: 'Dosage par unité',
+                  label: 'Concentration',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
                   suffixText: 'mg/ml',
@@ -167,7 +167,7 @@ class _EditItemPageState extends State<EditItemPage> {
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: _confirmDelete,
-                    child: Text('Supprimer'),
+                    child: Text('Delete'),
                   ),
                 ),
               ],

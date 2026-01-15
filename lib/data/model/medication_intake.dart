@@ -9,9 +9,9 @@ extension InjectionSideX on InjectionSide {
   String get label {
     switch (this) {
       case InjectionSide.left:
-        return 'gauche';
+        return 'left';
       case InjectionSide.right:
-        return 'droite';
+        return 'right';
     }
   }
 }

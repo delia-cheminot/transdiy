@@ -16,7 +16,7 @@ class PharmacyPage extends StatelessWidget {
 
     if (supplyItemProvider.items.isEmpty) {
       return Center(
-        child: Text('Ajoutez un élément pour commencer'),
+        child: Text('No supplies. Add an item to get started!'),
       );
     }
 

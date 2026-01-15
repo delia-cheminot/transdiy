@@ -68,13 +68,13 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Nouveau traitement'),
+          title: Text('New schhedule'),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 1.0),
               child: TextButton(
                 onPressed: _isFormValid ? _addSchedule : null,
-                child: Text('Ajouter'),
+                child: Text('Add'),
               ),
             ),
           ],
@@ -89,13 +89,13 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                 children: <Widget>[
                   FormTextField(
                     controller: _nameController,
-                    label: 'Nom',
+                    label: 'Name',
                     onChanged: _refresh,
                     inputType: TextInputType.text,
                   ),
                   FormTextField(
                     controller: _doseController,
-                    label: 'Dose',
+                    label: 'Amount',
                     suffixText: 'mg',
                     onChanged: _refresh,
                     inputType: TextInputType.number,
@@ -103,15 +103,15 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
                   ),
                   FormTextField(
                     controller: _intervalDaysController,
-                    label: 'Tous les',
-                    suffixText: 'jours',
+                    label: 'Time interval',
+                    suffixText: 'days',
                     onChanged: _refresh,
                     inputType: TextInputType.numberWithOptions(decimal: false),
                     regexFormatter: '[0-9]',
                   ),
                   FormDateField(
                     date: _startDate,
-                    label: 'Date de début',
+                    label: 'Start date',
                     errorText: _startDateError,
                     onChanged: (date) => setState(() {
                       _startDate = date;
