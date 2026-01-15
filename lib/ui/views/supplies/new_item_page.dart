@@ -11,32 +11,32 @@ class NewItemPage extends StatefulWidget {
 }
 
 class _NewItemPageState extends State<NewItemPage> {
-  late TextEditingController _totalAmountController;
+  late TextEditingController _totalDoseController;
   late TextEditingController _nameController;
   late TextEditingController _dosePerUnitController;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
-  String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalAmountController.text);
+  String? get _totalDoseError =>
+      SupplyItem.validateTotalAmount(_totalDoseController.text);
   String? get _dosePerUnitError =>
       SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
 
   bool get _isFormValid =>
       _nameError == null &&
-      _totalAmountError == null &&
+      _totalDoseError == null &&
       _dosePerUnitError == null;
 
   @override
   void initState() {
     super.initState();
-    _totalAmountController = TextEditingController();
+    _totalDoseController = TextEditingController();
     _nameController = TextEditingController();
     _dosePerUnitController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _totalAmountController.dispose();
+    _totalDoseController.dispose();
     _nameController.dispose();
     _dosePerUnitController.dispose();
     super.dispose();
@@ -47,14 +47,14 @@ class _NewItemPageState extends State<NewItemPage> {
   }
 
   void _addItem() async {
-    final totalAmount =
-        Decimal.parse(_totalAmountController.text.replaceAll(',', '.'));
+    final totalDose =
+        Decimal.parse(_totalDoseController.text.replaceAll(',', '.'));
     final dosePerUnit =
         Decimal.parse(_dosePerUnitController.text.replaceAll(',', '.'));
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    supplyItemProvider.addItem(totalAmount, name, dosePerUnit);
+    supplyItemProvider.addItem(totalDose, name, dosePerUnit);
     Navigator.pop(context);
   }
 
@@ -62,7 +62,7 @@ class _NewItemPageState extends State<NewItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nouvel élément'),
+        title: Text('New item'),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {
@@ -75,7 +75,7 @@ class _NewItemPageState extends State<NewItemPage> {
             child: TextButton(
               onPressed: _isFormValid ? _addItem : null,
               child: Text(
-                'Ajouter',
+                'Add',
               ),
             ),
           ),
@@ -91,16 +91,16 @@ class _NewItemPageState extends State<NewItemPage> {
               children: [
                 FormTextField(
                   controller: _nameController,
-                  label: 'Nom',
+                  label: 'Name',
                   onChanged: _refresh,
                   inputType: TextInputType.text,
                 ),
                 FormTextField(
-                  controller: _totalAmountController,
-                  label: 'Contenance',
+                  controller: _totalDoseController,
+                  label: 'Total amount',
                   onChanged: _refresh,
                   inputType: TextInputType.number,
-                  suffixText: 'ml',
+                  suffixText: 'mg',
                   regexFormatter: r'[0-9.,]',
                 ),
                 FormTextField(
@@ -109,7 +109,7 @@ class _NewItemPageState extends State<NewItemPage> {
                   onChanged: _refresh,
                   inputType: TextInputType.number,
                   suffixText: 'mg/ml',
-                  regexFormatter: r'[0-9]',
+                  regexFormatter: r'[0-9.,]',
                 ),
               ],
             ),

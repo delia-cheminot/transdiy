@@ -53,7 +53,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            Text('Prendre le traitement'),
+            Text('Take intake'),
           ],
         ),
       ),
@@ -66,12 +66,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Faire la prise à ${side.label}',
+                  'Take intake on ${side.label} side',
                 ),
                 SizedBox(height: 8),
                 FormDateField(
                   date: _takenDate,
-                  label: 'Date de prise',
+                  label: 'Date taken',
                   onChanged: (date) => setState(() {
                     _takenDate = date;
                   }),
@@ -84,7 +84,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       : FilledButton(
                           onPressed: () => _takeIntake(supplyItemProvider,
                               medicationIntakeProvider, side),
-                          child: Text('Prendre'),
+                          child: Text('Take intake'),
                         ),
                 ),
               ],

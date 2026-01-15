@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
         appBar: AppBar(
             title: Row(
           children: [
-            Text('Profil'),
+            Text('Profile'),
           ],
         )),
         body: Center(
@@ -29,14 +29,14 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            Text('Profil'),
+            Text('Profile'),
           ],
         ),
       ),
       body: SafeArea(
         child: medicationScheduleProvider.schedules.isEmpty
             ? Center(
-                child: Text('Ajoutez un traitement pour commencer'),
+                child: Text('Add a schedule to get started.'),
               )
             : ListView.builder(
                 itemCount: medicationScheduleProvider.schedules.length,
@@ -45,7 +45,7 @@ class ProfilePage extends StatelessWidget {
                   return ListTile(
                     title: Text(schedule.name),
                     subtitle: Text("${schedule.dose.toString()} mg "
-                        "tous les ${schedule.intervalDays.toString()} jours"),
+                        "every ${schedule.intervalDays.toString()} days"),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(

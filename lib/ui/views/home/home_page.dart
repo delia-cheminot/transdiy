@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
@@ -21,6 +22,7 @@ class HomePage extends StatelessWidget {
 
   ListTile _buildTile(MedicationSchedule schedule, BuildContext context) {
     final nextDate = schedule.getNextDate();
+    final readableNextDate = DateFormat.MMMMd().format(nextDate);
 
     return ListTile(
       leading: CircleAvatar(
@@ -28,7 +30,7 @@ class HomePage extends StatelessWidget {
           child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg")),
       title: Text(schedule.name),
       subtitle: Text(
-          "prochaine prise le ${nextDate.day} ${nextDate.month} ${nextDate.year}"),
+          "Next intake $readableNextDate"),
       trailing: IconButton(
         icon: const Icon(Icons.play_circle),
         onPressed: () {

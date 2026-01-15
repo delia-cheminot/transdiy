@@ -56,7 +56,7 @@ class ModelForm extends StatelessWidget {
                       width: double.infinity,
                       child: OutlinedButton(
                         onPressed: onDelete,
-                        child: Text('Supprimer'),
+                        child: Text('Delete'),
                       ),
                     ),
                   ],

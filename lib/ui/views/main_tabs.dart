@@ -27,7 +27,7 @@ final List<MainTabConfig> mainTabs = [
     ],
   ),
   MainTabConfig(
-    title: 'Prises',
+    title: 'Intakes',
     page: IntakesPage(),
     icon: Icons.event_outlined,
     selectedIcon: Icons.event_rounded,
@@ -39,18 +39,18 @@ final List<MainTabConfig> mainTabs = [
     ],
   ),
   MainTabConfig(
-    title: 'Courbe',
+    title: 'Levels',
     page: ChartPage(),
     icon: Icons.trending_up_outlined,
     selectedIcon: Icons.trending_up_rounded,
   ),
   MainTabConfig(
-    title: 'Pharmacie',
+    title: 'Supplies',
     page: PharmacyPage(),
     icon: Icons.medication_outlined,
     selectedIcon: Icons.medication,
     buildFab: (context) => FloatingActionButton(
-      tooltip: 'Add Item',
+      tooltip: 'Add an item',
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(

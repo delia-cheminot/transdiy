@@ -94,7 +94,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Modifier le traitement'),
+        title: Text('Edit schedule'),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -104,7 +104,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
               onPressed: _isFormValid ? _saveSchedule : null,
-              child: Text('Sauvegarder'),
+              child: Text('Save'),
             ),
           ),
         ],
@@ -118,14 +118,14 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
             children: [
               FormTextField(
                 controller: _nameController,
-                label: 'Nom',
+                label: 'Name',
                 onChanged: _refresh,
                 inputType: TextInputType.text,
                 errorText: _nameError,
               ),
               FormTextField(
                 controller: _doseController,
-                label: 'Dose',
+                label: 'Amount',
                 onChanged: _refresh,
                 inputType: TextInputType.number,
                 suffixText: 'mg',
@@ -134,8 +134,8 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
               ),
               FormTextField(
                 controller: _intervalDaysController,
-                label: 'Intervalle',
-                suffixText: 'jours',
+                label: 'Time interval',
+                suffixText: 'days',
                 onChanged: _refresh,
                 inputType: TextInputType.number,
                 errorText: _intervalDaysError,
@@ -143,7 +143,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
               ),
               FormDateField(
                 date: _startDate,
-                label: 'Date de début',
+                label: 'Start date',
                 errorText: _startDateError,
                 onChanged: (date) => setState(() {
                   _startDate = date;
@@ -158,7 +158,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: _confirmDelete,
-                  child: Text('Supprimer'),
+                  child: Text('Delete'),
                 ),
               )
             ],
