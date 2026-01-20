@@ -35,13 +35,17 @@ void main() {
       expect(provider.intakes.length, repo.items.length);
     });
 
-    test('addIntake inserts a new item', () async {
+    test('add inserts a new item', () async {
       // Arrange
       final newDate = DateTime(2025, 9, 13, 8, 0);
       final newDose = Decimal.parse('2.5');
 
       // Act
-      await provider.addIntake(newDate, newDose);
+      await provider.add(MedicationIntake(
+        scheduledDateTime: newDate,
+        dose: newDose,
+        takenDateTime: DateTime(2025, 9, 13, 8, 10),
+      ));
 
       // Assert
       expect(

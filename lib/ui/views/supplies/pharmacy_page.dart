@@ -15,7 +15,7 @@ class PharmacyPage extends StatelessWidget {
         return MainPageWrapper(
           isLoading: supplyItemProvider.isLoading,
           isEmpty: supplyItemProvider.items.isEmpty,
-          emptyMessage: 'Ajoutez un élément pour commencer',
+          emptyMessage: 'No supplies. Add an item to get started!',
           child: MasonryGridView.builder(
             padding: pagePadding,
             gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(

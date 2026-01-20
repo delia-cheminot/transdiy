@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -31,23 +32,29 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     super.dispose();
   }
 
-  void _takeIntake(SupplyItemProvider supplyItemProvider) {
-    MedicationIntakeManager(
-            context.read<MedicationIntakeProvider>(), supplyItemProvider)
+  void _takeIntake(SupplyItemProvider supplyItemProvider,
+      MedicationIntakeProvider medicationIntakeProvider, InjectionSide side) {
+    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(widget.schedule.dose, widget.scheduledDate, _takenDate,
-            supplyItemProvider.orderedByRemainingDose.first, widget.schedule);
+            supplyItemProvider.getMostUsedItem(), widget.schedule, side);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     final supplyItemProvider = Provider.of<SupplyItemProvider>(context);
+    final medicationIntakeProvider =
+        Provider.of<MedicationIntakeProvider>(context);
+
+    final side =
+        MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+            .getNextSide();
 
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            Text('Prendre le traitement'),
+            Text('Take intake'),
           ],
         ),
       ),
@@ -59,9 +66,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Take intake on ${side.label} side',
+                ),
+                SizedBox(height: 8),
                 FormDateField(
                   date: _takenDate,
-                  label: 'Date de prise',
+                  label: 'Date taken',
                   onChanged: (date) => setState(() {
                     _takenDate = date;
                   }),
@@ -72,8 +83,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                   child: supplyItemProvider.isLoading
                       ? CircularProgressIndicator()
                       : FilledButton(
-                          onPressed: () => _takeIntake(supplyItemProvider),
-                          child: Text('Prendre'),
+                          onPressed: () => _takeIntake(supplyItemProvider,
+                              medicationIntakeProvider, side),
+                          child: Text('Take intake'),
                         ),
                 ),
               ],

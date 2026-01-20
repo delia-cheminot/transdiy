@@ -1,34 +1,43 @@
 # Mona
+Your hormonal memo
 
-Mona is a mobile app for transfeminine healthcare. The app is currently under developpement at the Alpha stage. The code is very clean and any contribution is welcomed. 
-This project is developped in flutter, granting android and IOS releases.
+Mona is a mobile transfeminine healthcare journal. Know when to take hour HRT, track your medication supplies and preview your hormone levels.
 
+The app is currently under developpement at the Alpha stage. Any contribution is welcome!
 
+This project is developped in Flutter, granting Android and iOS releases.
+
+![Homepage](/assets/readme/homepage.png)
+![Homepage](/assets/readme/supplies_page.png)
 
 ## Features
 
-- Estradiol enanthate intake schedule
-- Chart of estradiol concentration
-- Vials for estradiol enanthate
+- Know when to take HRT
+- Manage HRT schedules
+- Preview estimated hormone levels
 
 
 
-## Installation for Android
+## Download for Android
 
 https://github.com/delia-cheminot/transdiy/releases/tag/v0.1.0
+
+## Download for iOS
+
+https://testflight.apple.com/join/ersXvycy
     
 ## Discord
 
-### Join Mona's official discord server
+### Join Mona's Discord server
 [![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/WWgtw5HWGB)
-
 
 ### Support us
  [![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](https://ko-fi.com/deliacheminot)
-## Authors
 
-- [@délia](https://github.com/delia-cheminot)
-- [@june](https://github.com/yakissa)
+## Maintainers
+[@délia](https://github.com/delia-cheminot)
+
+[@june](https://github.com/yakissa)
 
 
 

@@ -7,17 +7,17 @@ class Dialogs {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Supprimer ?'),
+          title: Text('Delete this element?'),
           content: Text(
-              'Voulez-vous vraiment supprimer cet élément ? Cette action est irréversible.'),
+              'This action cannot be undone.'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Annuler'),
+              child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text('Supprimer'),
+              child: Text('Delete'),
             ),
           ],
         );

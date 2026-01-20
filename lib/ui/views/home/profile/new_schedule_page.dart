@@ -68,20 +68,20 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   @override
   Widget build(BuildContext context) {
     return ModelForm(
-      title: 'Nouveau traitement',
-      submitButtonLabel: 'Ajouter',
+      title: 'New schedule',
+      submitButtonLabel: 'Add',
       isFormValid: _isFormValid,
       saveChanges: _addSchedule,
       fields: <Widget>[
         FormTextField(
           controller: _nameController,
-          label: 'Nom',
+          label: 'Name',
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
         FormTextField(
           controller: _doseController,
-          label: 'Dose',
+          label: 'Amount',
           suffixText: 'mg',
           onChanged: _refresh,
           inputType: TextInputType.number,
@@ -89,15 +89,15 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         ),
         FormTextField(
           controller: _intervalDaysController,
-          label: 'Tous les',
-          suffixText: 'jours',
+          label: 'Time interval',
+          suffixText: 'days',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: false),
           regexFormatter: '[0-9]',
         ),
         FormDateField(
           date: _startDate,
-          label: 'Date de début',
+          label: 'Start date',
           errorText: _startDateError,
           onChanged: (date) => setState(() {
             _startDate = date;
