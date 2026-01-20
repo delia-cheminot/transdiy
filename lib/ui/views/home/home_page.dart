@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/services/notifications/notification_service.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +17,24 @@ class HomePage extends StatelessWidget {
           isLoading: medicationScheduleProvider.isLoading,
           isEmpty: medicationScheduleProvider.schedules.isEmpty,
           emptyMessage: 'Add a schedule in your profile to get started!',
-          child: ListView(
-            children: <Widget>[
-              for (final schedule in medicationScheduleProvider.schedules)
-                _buildTile(schedule, context),
-            ],
-          ),
+          child: Column(children: [
+            ElevatedButton(
+              onPressed: () => NotificationService().showNotification(
+                id: 0,
+                title: 'Test Notification',
+                body: 'This is a test notification body.',
+              ),
+              child: Text('test notification'),
+            ),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  for (final schedule in medicationScheduleProvider.schedules)
+                    _buildTile(schedule, context),
+                ],
+              ),
+            ),
+          ]),
         );
       },
     );
@@ -36,8 +49,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg")),
       title: Text(schedule.name),
-      subtitle: Text(
-          "Next intake $readableNextDate"),
+      subtitle: Text("Next intake $readableNextDate"),
       trailing: IconButton(
         icon: const Icon(Icons.play_circle),
         onPressed: () {
