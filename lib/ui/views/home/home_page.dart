@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         return MainPageWrapper(
           isLoading: medicationScheduleProvider.isLoading,
           isEmpty: medicationScheduleProvider.schedules.isEmpty,
-          emptyMessage: 'Aucun médicament à prendre',
+          emptyMessage: 'Add a schedule in your profile to get started!',
           child: ListView(
             children: <Widget>[
               for (final schedule in medicationScheduleProvider.schedules)
