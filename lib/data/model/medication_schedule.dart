@@ -156,6 +156,24 @@ class MedicationSchedule {
     );
   }
 
+  List<DateTime> getNextDates({int count = 1, DateTime? referenceDate}) {
+    if (count < 0) {
+      throw ArgumentError('Count must be a positive integer');
+    }
+
+    if (count == 0) {
+      return [];
+    }
+
+    final dates = <DateTime>[];
+    DateTime nextDate = getNextDate(referenceDate: referenceDate);
+    for (int i = 0; i < count; i++) {
+      dates.add(nextDate);
+      nextDate = nextDate.add(Duration(days: intervalDays));
+    }
+    return dates;
+  }
+
   String generateUid() {
     return '$name-$dose-$intervalDays-${DateTime.now().toIso8601String()}';
   }
