@@ -66,7 +66,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Map<int, double> getDaysAndDoses() {
     if (takenIntakes.isEmpty) return {};
-    final startDate = takenIntakes.last.takenDateTime!;
+    final startDate = getFirstIntakeDate()!;
     return Map.fromEntries(
       takenIntakes.map(
         (intake) => MapEntry(
@@ -77,19 +77,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
     );
   }
 
-  List<String> getDates() {
-    if (takenIntakes.isEmpty) return [];
-    final startDate = takenIntakes.first.takenDateTime!;
-    final endDate = takenIntakes.last.takenDateTime!;
-    final days = endDate.difference(startDate).inDays;
-    
-    return List.generate(
-      days + 1 + 60, //for padding purposes
-      (index) {
-        final date = startDate.add(Duration(days: index));
-        return "${date.day}/${date.month}";
-      },
-    );
-  } 
-
+  DateTime? getFirstIntakeDate() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes
+        .reduce((a, b) => a.takenDateTime!.isBefore(b.takenDateTime!) ? a : b)
+        .takenDateTime;
+  }
 }

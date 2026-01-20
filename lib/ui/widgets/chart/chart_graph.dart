@@ -10,14 +10,10 @@ class MainGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<int, double> daysAndDoses =
-        context.watch<MedicationIntakeProvider>().getDaysAndDoses();
-    final List<int> days = daysAndDoses.keys.toList();
-    final List<double> doses = daysAndDoses.values.toList();
-    final List<String> dates = 
-    context.watch<MedicationIntakeProvider>().getDates();
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
+    final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
 
-    // padding on the top for accessibility
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
 
     final double maxConcentration = spots.isEmpty
@@ -49,8 +45,8 @@ class MainGraph extends StatelessWidget {
                     child: LineChart(
                       LineChartData(
                         minX: 0,
-                        maxX:
-                            (days.last.toDouble() + GraphCalculator.tMaxOffset),
+                        maxX: (daysAndDoses.keys.last +
+                            GraphCalculator.tMaxOffset),
                         minY: 0,
                         maxY: maxYWithPadding,
                         gridData: FlGridData(show: true),
@@ -61,10 +57,9 @@ class MainGraph extends StatelessWidget {
                               showTitles: true,
                               reservedSize: 32,
                               getTitlesWidget: (value, meta) {
-                                final index = value.toInt();
-                                final dateText = index >= 0 && index < dates.length
-                                    ? dates[index]
-                                    : '';//to fill date holes on the x axis
+                                final date =
+                                    firstDay.add(Duration(days: value.toInt()));
+                                final dateText = "${date.day}/${date.month}";
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(dateText,
