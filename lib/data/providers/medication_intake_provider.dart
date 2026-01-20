@@ -76,4 +76,20 @@ class MedicationIntakeProvider extends ChangeNotifier {
       ),
     );
   }
+
+  List<String> getDates() {
+    if (takenIntakes.isEmpty) return [];
+    final startDate = takenIntakes.first.takenDateTime!;
+    final endDate = takenIntakes.last.takenDateTime!;
+    final days = endDate.difference(startDate).inDays;
+    
+    return List.generate(
+      days + 1 + 60, //for padding purposes
+      (index) {
+        final date = startDate.add(Duration(days: index));
+        return "${date.day}/${date.month}";
+      },
+    );
+  } 
+
 }

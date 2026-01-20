@@ -13,7 +13,13 @@ class MainGraph extends StatelessWidget {
     Map<int, double> daysAndDoses =
         context.watch<MedicationIntakeProvider>().getDaysAndDoses();
     final List<int> days = daysAndDoses.keys.toList();
+    final List<double> doses = daysAndDoses.values.toList();
+    final List<String> dates = 
+    context.watch<MedicationIntakeProvider>().getDates();
+
+    // padding on the top for accessibility
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
+
     final double maxConcentration = spots.isEmpty
         ? 0
         : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
@@ -55,9 +61,13 @@ class MainGraph extends StatelessWidget {
                               showTitles: true,
                               reservedSize: 32,
                               getTitlesWidget: (value, meta) {
+                                final index = value.toInt();
+                                final dateText = index >= 0 && index < dates.length
+                                    ? dates[index]
+                                    : '';//to fill date holes on the x axis
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(value.toInt().toString(),
+                                  child: Text(dateText,
                                       style: const TextStyle(fontSize: 12)),
                                 );
                               },
