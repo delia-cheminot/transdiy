@@ -25,113 +25,98 @@ class MainGraph extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        width: 4 * MediaQuery.of(context).size.width -
-            2 * MediaQuery.of(context).size.width * 0.01 * (100 - window),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        // width: 500 + window,
+        width:
+            MediaQuery.of(context).size.width * (1 + 0.02 * window),
+        child: Row(
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: RotatedBox(
-                      quarterTurns: -1,
-                      child: Text('Concentration (pg/ml)',
-                          style: const TextStyle(fontSize: 14)),
-                    ),
-                  ),
-                  Expanded(
-                    child: LineChart(
-                      LineChartData(
-                        minX: 0,
-                        maxX: (daysAndDoses.keys.last +
-                            GraphCalculator.tMaxOffset),
-                        minY: 0,
-                        maxY: maxYWithPadding,
-                        gridData: FlGridData(show: true),
-                        titlesData: FlTitlesData(
-                          show: true,
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 32,
-                              getTitlesWidget: (value, meta) {
-                                final date =
-                                    firstDay.add(Duration(days: value.toInt()));
-                                final dateText = "${date.day}/${date.month}";
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(dateText,
-                                      style: const TextStyle(fontSize: 12)),
-                                );
-                              },
-                            ),
-                          ),
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              reservedSize: 40,
-                              getTitlesWidget: (value, meta) {
-                                return Text(value.toStringAsFixed(1),
-                                    style: const TextStyle(fontSize: 12));
-                              },
-                            ),
-                          ),
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                        ),
-                        borderData: FlBorderData(show: true),
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: spots,
-                            isCurved: true,
-                            color: Theme.of(context).colorScheme.primary,
-                            barWidth: 3,
-                            dotData: FlDotData(show: false),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: 0.3),
-                            ),
-                          ),
-                        ],
-                        lineTouchData: LineTouchData(
-                          touchTooltipData: LineTouchTooltipData(
-                            getTooltipColor: (touchedSpots) =>
-                                Theme.of(context).colorScheme.tertiaryContainer,
-                            tooltipRoundedRadius: 8,
-                            tooltipPadding: const EdgeInsets.all(6),
-                            getTooltipItems: (touchedSpots) {
-                              return touchedSpots
-                                  .map((t) => LineTooltipItem(
-                                      t.y.toStringAsFixed(1),
-                                      Theme.of(context)
-                                              .textTheme
-                                              .bodySmall
-                                              ?.copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .onTertiaryContainer) ??
-                                          const TextStyle()))
-                                  .toList();
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: Text('Concentration (pg/ml)',
+                    style: const TextStyle(fontSize: 14)),
               ),
             ),
-            SizedBox(
-              height: 24,
-              child: Center(
-                  child: Text('Days', style: const TextStyle(fontSize: 14))),
+            Expanded(
+              child: LineChart(
+                LineChartData(
+                  minX: 0,
+                  maxX: (daysAndDoses.keys.last + GraphCalculator.tMaxOffset),
+                  minY: 0,
+                  maxY: maxYWithPadding,
+                  gridData: FlGridData(show: true),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 32,
+                        getTitlesWidget: (value, meta) {
+                          final date =
+                              firstDay.add(Duration(days: value.toInt()));
+                          final dateText = "${date.day}/${date.month}";
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(dateText,
+                                style: const TextStyle(fontSize: 12)),
+                          );
+                        },
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                        getTitlesWidget: (value, meta) {
+                          return Text(value.toStringAsFixed(1),
+                              style: const TextStyle(fontSize: 12));
+                        },
+                      ),
+                    ),
+                    topTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  ),
+                  borderData: FlBorderData(show: true),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: spots,
+                      isCurved: true,
+                      color: Theme.of(context).colorScheme.primary,
+                      barWidth: 3,
+                      dotData: FlDotData(show: false),
+                      belowBarData: BarAreaData(
+                        show: true,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.3),
+                      ),
+                    ),
+                  ],
+                  lineTouchData: LineTouchData(
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipColor: (touchedSpots) =>
+                          Theme.of(context).colorScheme.tertiaryContainer,
+                      tooltipRoundedRadius: 8,
+                      tooltipPadding: const EdgeInsets.all(6),
+                      getTooltipItems: (touchedSpots) {
+                        return touchedSpots
+                            .map((t) => LineTooltipItem(
+                                t.y.toStringAsFixed(1),
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onTertiaryContainer) ??
+                                    const TextStyle()))
+                            .toList();
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
