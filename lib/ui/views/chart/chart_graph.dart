@@ -33,11 +33,6 @@ class MainGraph extends StatelessWidget {
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
 
-    String dateLabel(value) {
-      final date = firstDay.add(Duration(days: value.toInt()));
-      return "${date.day}/${date.month}";
-    }
-
     if (daysAndDoses.isEmpty) return SizedBox.shrink();
 
     return SingleChildScrollView(
@@ -65,72 +60,12 @@ class MainGraph extends StatelessWidget {
                   minY: 0,
                   maxY: maxYWithPadding,
                   gridData: FlGridData(show: true),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: _ChartConstants.bottomReservedSize,
-                        getTitlesWidget: (value, meta) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                top: _ChartConstants.axesPadding),
-                            child: Text(dateLabel(value),
-                                style: const TextStyle(
-                                    fontSize: _ChartConstants.labelFontSize)),
-                          );
-                        },
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: _ChartConstants.leftReservedSize,
-                        getTitlesWidget: (value, meta) {
-                          return Text(value.toStringAsFixed(1),
-                              style: const TextStyle(
-                                  fontSize: _ChartConstants.labelFontSize));
-                        },
-                      ),
-                    ),
-                    topTitles:
-                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    rightTitles:
-                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  ),
+                  titlesData: _buildTitlesData(firstDay),
                   borderData: FlBorderData(show: true),
                   lineBarsData: [
-                    LineChartBarData(
-                      spots: spots,
-                      isCurved: true,
-                      color: theme.colorScheme.primary,
-                      barWidth: _ChartConstants.lineBarWidth,
-                      dotData: FlDotData(show: false),
-                      belowBarData: BarAreaData(
-                        show: true,
-                        color: theme.colorScheme.primary.withValues(alpha: 0.3),
-                      ),
-                    ),
+                    _buildLineBarData(spots, theme),
                   ],
-                  lineTouchData: LineTouchData(
-                    touchTooltipData: LineTouchTooltipData(
-                      getTooltipColor: (touchedSpots) =>
-                          theme.colorScheme.tertiaryContainer,
-                      tooltipRoundedRadius: _ChartConstants.tooltipRadius,
-                      tooltipPadding:
-                          const EdgeInsets.all(_ChartConstants.tooltipPadding),
-                      getTooltipItems: (touchedSpots) {
-                        return touchedSpots
-                            .map((t) => LineTooltipItem(
-                                t.y.toStringAsFixed(1),
-                                theme.textTheme.bodySmall?.copyWith(
-                                        color: theme
-                                            .colorScheme.onTertiaryContainer) ??
-                                    const TextStyle()))
-                            .toList();
-                      },
-                    ),
-                  ),
+                  lineTouchData: _buildLineTouchData(theme),
                 ),
               ),
             ),
@@ -138,5 +73,76 @@ class MainGraph extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  LineChartBarData _buildLineBarData(List<FlSpot> spots, ThemeData theme) {
+    return LineChartBarData(
+      spots: spots,
+      isCurved: true,
+      color: theme.colorScheme.primary,
+      barWidth: _ChartConstants.lineBarWidth,
+      dotData: FlDotData(show: false),
+      belowBarData: BarAreaData(
+        show: true,
+        color: theme.colorScheme.primary.withValues(alpha: 0.3),
+      ),
+    );
+  }
+
+  LineTouchData _buildLineTouchData(ThemeData theme) {
+    return LineTouchData(
+      touchTooltipData: LineTouchTooltipData(
+        getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
+        tooltipRoundedRadius: _ChartConstants.tooltipRadius,
+        tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
+        getTooltipItems: (touchedSpots) {
+          return touchedSpots
+              .map((t) => LineTooltipItem(
+                  t.y.toStringAsFixed(1),
+                  theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onTertiaryContainer) ??
+                      const TextStyle()))
+              .toList();
+        },
+      ),
+    );
+  }
+
+  FlTitlesData _buildTitlesData(DateTime firstDay) {
+    return FlTitlesData(
+      show: true,
+      bottomTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: _ChartConstants.bottomReservedSize,
+          getTitlesWidget: (value, meta) {
+            return Padding(
+              padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
+              child: Text(_getDateLabel(value, firstDay),
+                  style:
+                      const TextStyle(fontSize: _ChartConstants.labelFontSize)),
+            );
+          },
+        ),
+      ),
+      leftTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: _ChartConstants.leftReservedSize,
+          getTitlesWidget: (value, meta) {
+            return Text(value.toStringAsFixed(1),
+                style:
+                    const TextStyle(fontSize: _ChartConstants.labelFontSize));
+          },
+        ),
+      ),
+      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+    );
+  }
+
+  String _getDateLabel(double value, DateTime firstDay) {
+    final date = firstDay.add(Duration(days: value.toInt()));
+    return "${date.day}/${date.month}";
   }
 }
