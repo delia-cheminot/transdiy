@@ -4,6 +4,19 @@ import 'package:mona/data/model/graph_calculator.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
 
+class _ChartConstants {
+  static const double maxYPadding = 1.15;
+  static const double windowWidthFactor = 0.02;
+  static const double labelFontSize = 12;
+  static const double titleFontSize = 14;
+  static const double axesPadding = 8.0;
+  static const double bottomReservedSize = 32;
+  static const double leftReservedSize = 40;
+  static const double lineBarWidth = 3;
+  static const double tooltipPadding = 6;
+  static const double tooltipRadius = 8;
+}
+
 class MainGraph extends StatelessWidget {
   final double window;
   MainGraph({required this.window});
@@ -15,27 +28,35 @@ class MainGraph extends StatelessWidget {
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
 
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
-
     final double maxConcentration = spots.isEmpty
         ? 0
         : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
-    // padding on the top for accessibility
-    final double maxYWithPadding = maxConcentration * 1.15;
+    final double maxYWithPadding =
+        maxConcentration * _ChartConstants.maxYPadding;
+
+    final theme = Theme.of(context);
+
+    String dateLabel(value) {
+      final date = firstDay.add(Duration(days: value.toInt()));
+      return "${date.day}/${date.month}";
+    }
+
+    if (daysAndDoses.isEmpty) return SizedBox.shrink();
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        // width: 500 + window,
-        width:
-            MediaQuery.of(context).size.width * (1 + 0.02 * window),
+        width: MediaQuery.of(context).size.width *
+            (1 + _ChartConstants.windowWidthFactor * window),
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(right: _ChartConstants.axesPadding),
               child: RotatedBox(
                 quarterTurns: -1,
                 child: Text('Concentration (pg/ml)',
-                    style: const TextStyle(fontSize: 14)),
+                    style: const TextStyle(
+                        fontSize: _ChartConstants.titleFontSize)),
               ),
             ),
             Expanded(
@@ -51,15 +72,13 @@ class MainGraph extends StatelessWidget {
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 32,
+                        reservedSize: _ChartConstants.bottomReservedSize,
                         getTitlesWidget: (value, meta) {
-                          final date =
-                              firstDay.add(Duration(days: value.toInt()));
-                          final dateText = "${date.day}/${date.month}";
                           return Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(dateText,
-                                style: const TextStyle(fontSize: 12)),
+                            padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
+                            child: Text(dateLabel(value),
+                                style: const TextStyle(
+                                    fontSize: _ChartConstants.labelFontSize)),
                           );
                         },
                       ),
@@ -67,10 +86,11 @@ class MainGraph extends StatelessWidget {
                     leftTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
-                        reservedSize: 40,
+                        reservedSize: _ChartConstants.leftReservedSize,
                         getTitlesWidget: (value, meta) {
                           return Text(value.toStringAsFixed(1),
-                              style: const TextStyle(fontSize: 12));
+                              style: const TextStyle(
+                                  fontSize: _ChartConstants.labelFontSize));
                         },
                       ),
                     ),
@@ -84,32 +104,29 @@ class MainGraph extends StatelessWidget {
                     LineChartBarData(
                       spots: spots,
                       isCurved: true,
-                      color: Theme.of(context).colorScheme.primary,
-                      barWidth: 3,
+                      color: theme.colorScheme.primary,
+                      barWidth: _ChartConstants.lineBarWidth,
                       dotData: FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withValues(alpha: 0.3),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.3),
                       ),
                     ),
                   ],
                   lineTouchData: LineTouchData(
                     touchTooltipData: LineTouchTooltipData(
                       getTooltipColor: (touchedSpots) =>
-                          Theme.of(context).colorScheme.tertiaryContainer,
-                      tooltipRoundedRadius: 8,
-                      tooltipPadding: const EdgeInsets.all(6),
+                          theme.colorScheme.tertiaryContainer,
+                      tooltipRoundedRadius: _ChartConstants.tooltipRadius,
+                      tooltipPadding:
+                          const EdgeInsets.all(_ChartConstants.tooltipPadding),
                       getTooltipItems: (touchedSpots) {
                         return touchedSpots
                             .map((t) => LineTooltipItem(
                                 t.y.toStringAsFixed(1),
-                                Theme.of(context).textTheme.bodySmall?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onTertiaryContainer) ??
+                                theme.textTheme.bodySmall?.copyWith(
+                                        color: theme
+                                            .colorScheme.onTertiaryContainer) ??
                                     const TextStyle()))
                             .toList();
                       },
