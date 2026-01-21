@@ -72,31 +72,31 @@ class MedicationSchedule {
   }
 
   static String? validateName(String? name) {
-    return name == null || name.isEmpty ? 'Champ obligatoire' : null;
+    return name == null || name.isEmpty ? 'Required field' : null;
   }
 
   static String? validateDose(String? dose) {
     if (dose == null || dose.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     final parsedDose = Decimal.tryParse(dose);
     return parsedDose == null || parsedDose <= Decimal.zero
-        ? 'Doit être un nombre positif'
+        ? 'Must be a positive number'
         : null;
   }
 
   static String? validateIntervalDays(String? intervalDays) {
     if (intervalDays == null || intervalDays.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     final parsedIntervalDays = int.tryParse(intervalDays);
     return (parsedIntervalDays == null || parsedIntervalDays <= 0)
-        ? 'Doit être un nombre positif'
+        ? 'Must be a positive number'
         : null;
   }
 
   static String? validateStartDate(DateTime? startDate) =>
-      startDate == null ? 'Champ obligatoire' : null;
+      startDate == null ? 'Required field' : null;
 
   /// Returns the next scheduled injection date relative to [referenceDate] (or today if null).
   ///

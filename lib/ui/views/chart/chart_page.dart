@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mona/ui/widgets/chart_page_graph.dart';
-import 'package:mona/ui/widgets/chart_page_slider.dart';
-
+import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/ui/views/chart/chart_graph.dart';
+import 'package:mona/ui/views/chart/chart_slider.dart';
+import 'package:mona/ui/widgets/main_page_wrapper.dart';
+import 'package:provider/provider.dart';
 
 class ChartPage extends StatefulWidget {
-  @override 
+  @override
   State<ChartPage> createState() => _ChartPageState();
 }
 
@@ -13,17 +15,23 @@ class _ChartPageState extends State<ChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ChartSlider(
-          value: sliderValue,
-          onChanged: (newValue) {
-            setState(() => sliderValue = newValue);
-            
-          },
-        ),
-        MainGraph(window: sliderValue),
-      ]
+    return Consumer<MedicationIntakeProvider>(
+      builder: (context, medicationIntakeProvider, child) {
+        return MainPageWrapper(
+          isLoading: medicationIntakeProvider.isLoading,
+          isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
+          emptyMessage: 'take your pills alice',
+          child: Column(
+            children: [
+              ChartSlider(
+                value: sliderValue,
+                onChanged: (v) => setState(() => sliderValue = v),
+              ),
+              Expanded( child : MainGraph(window: sliderValue)),
+            ],
+          ),
+        );
+      }
     );
   }
 }

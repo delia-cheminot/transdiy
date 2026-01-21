@@ -102,46 +102,46 @@ class SupplyItem {
 
   static String? validateTotalAmount(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     final parsedValue = Decimal.tryParse(value);
     if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Doit être un nombre positif';
+      return 'Must be a positive number';
     }
     return null;
   }
 
   static String? validateName(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     return null;
   }
 
   static String? validateUsedAmount(String? value, String totalAmount) {
     if (value == null || value.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     final parsedValue = Decimal.tryParse(value);
     if (parsedValue == null || parsedValue < Decimal.zero) {
-      return 'Doit être un nombre positif';
+      return 'Must be a positive number';
     }
     if (validateTotalAmount(totalAmount) != null) {
-      return 'Quantité totale invalide';
+      return 'Invalid total amount';
     }
     if (parsedValue > Decimal.parse(totalAmount)) {
-      return 'Ne peut pas dépasser la contenance totale';
+      return 'Cannot exceed total capacity';
     }
     return null;
   }
 
   static String? validateDosePerUnit(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Champ obligatoire';
+      return 'Required field';
     }
     final parsedValue = Decimal.tryParse(value);
     if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Doit être supérieur à 0';
+      return 'Must be a positive number';
     }
     return null;
   }

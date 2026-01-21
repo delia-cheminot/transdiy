@@ -34,6 +34,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Future<void> fetchIntakes() async {
     _intakes = await repository.getAll();
+    _intakes.sort((a, b) => b.scheduledDateTime.compareTo(a.scheduledDateTime));
     notifyListeners();
   }
 
@@ -47,6 +48,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
+  @Deprecated('use add through manager instead')
   Future<void> addIntake(DateTime scheduledDateTime, Decimal dose) async {
     await repository.insert(
         MedicationIntake(scheduledDateTime: scheduledDateTime, dose: dose));
@@ -63,12 +65,29 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
-   Map<int, double> getDaysAndDoses(List<MedicationIntake> intakes){
-    List<int> days = takenIntakes.map((intake) => intake.takenDateTime!.difference(intakes.first.scheduledDateTime).inDays).toList();
-    List<double> doses = takenIntakes.map((intake) => intake.dose.toDouble()).toList();
-    return Map.fromIterables(days, doses);
+  Map<int, double> getDaysAndDoses() {
+    if (takenIntakes.isEmpty) return {};
+    final startDate = getFirstIntakeDate()!;
+    return Map.fromEntries(
+      takenIntakes.map(
+        (intake) => MapEntry(
+          intake.takenDateTime!.difference(startDate).inDays,
+          intake.dose.toDouble(),
+        ),
+      ),
+    );
   }
 
+  DateTime? getFirstIntakeDate() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes
+        .reduce((a, b) => a.takenDateTime!.isBefore(b.takenDateTime!) ? a : b)
+        .takenDateTime;
+  }
+
+  MedicationIntake? getLastTakenIntake() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes
+        .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b);
+  }
 }
-
-
