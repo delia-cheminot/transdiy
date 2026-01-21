@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
-import 'package:mona/ui/widgets/chart/chart_graph.dart';
-import 'package:mona/ui/widgets/chart/chart_slider.dart';
+import 'package:mona/ui/views/chart/chart_graph.dart';
+import 'package:mona/ui/views/chart/chart_slider.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
 
