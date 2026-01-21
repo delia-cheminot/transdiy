@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/graph_calculator.dart';
@@ -24,17 +25,13 @@ class MainGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final theme = Theme.of(context);
+
     Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
-
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
-    final double maxConcentration = spots.isEmpty
-        ? 0
-        : spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
     final double maxYWithPadding =
-        maxConcentration * _ChartConstants.maxYPadding;
-
-    final theme = Theme.of(context);
+        spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
 
     String dateLabel(value) {
       final date = firstDay.add(Duration(days: value.toInt()));
@@ -51,7 +48,8 @@ class MainGraph extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: _ChartConstants.axesPadding),
+              padding:
+                  const EdgeInsets.only(right: _ChartConstants.axesPadding),
               child: RotatedBox(
                 quarterTurns: -1,
                 child: Text('Concentration (pg/ml)',
@@ -75,7 +73,8 @@ class MainGraph extends StatelessWidget {
                         reservedSize: _ChartConstants.bottomReservedSize,
                         getTitlesWidget: (value, meta) {
                           return Padding(
-                            padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
+                            padding: const EdgeInsets.only(
+                                top: _ChartConstants.axesPadding),
                             child: Text(dateLabel(value),
                                 style: const TextStyle(
                                     fontSize: _ChartConstants.labelFontSize)),

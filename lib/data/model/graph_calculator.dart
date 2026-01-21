@@ -44,7 +44,7 @@ class GraphCalculator {
       {double tMin = 0, double tMax = 120, int numPoints = 1000}) {
     final List<math.Point> points = [];
     if (daysAndDoses.isEmpty) return <FlSpot>[];
-    final int maxDay = daysAndDoses.keys.reduce((a, b) => a > b ? a : b);
+    final int maxDay = daysAndDoses.keys.reduce(math.max);
     tMax = maxDay.toDouble() + tMaxOffset;
 
     for (int i = 0; i <= numPoints; i++) {
