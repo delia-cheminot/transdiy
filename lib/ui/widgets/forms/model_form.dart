@@ -48,7 +48,7 @@ class ModelForm extends StatelessWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsetsGeometry.only(top: 6, bottom: 8),
+                      padding: const EdgeInsets.only(top: 8, bottom: 8),
                       child: Divider(),
                     ),
                     Container(

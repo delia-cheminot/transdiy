@@ -53,18 +53,18 @@ void main() {
           return Future.value();
         });
 
-        final expectedIntake = MedicationIntake(
-          dose: dose,
-          scheduledDateTime: date,
-          takenDateTime: date,
-          side: side,
-          scheduleId: schedule.id,
-        );
-
         await manager.takeMedication(
             dose, date, date, supplyItem, schedule, side);
 
-        expect(addedIntake, expectedIntake);
+        expect(
+          addedIntake,
+          predicate((MedicationIntake i) =>
+              i.dose == dose &&
+              i.scheduledDateTime == date &&
+              i.takenDateTime == date &&
+              i.side == side &&
+              i.scheduleId == schedule.id),
+        );
       });
     });
 

@@ -4,19 +4,26 @@ import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
+import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final medicationScheduleProvider =
-        context.watch<MedicationScheduleProvider>();
-
-    return ListView(
-      children: <Widget>[
-        for (final schedule in medicationScheduleProvider.schedules)
-          _buildTile(schedule, context),
-      ],
+    return Consumer<MedicationScheduleProvider>(
+      builder: (context, medicationScheduleProvider, child) {
+        return MainPageWrapper(
+          isLoading: medicationScheduleProvider.isLoading,
+          isEmpty: medicationScheduleProvider.schedules.isEmpty,
+          emptyMessage: 'Add a schedule in your profile to get started!',
+          child: ListView(
+            children: <Widget>[
+              for (final schedule in medicationScheduleProvider.schedules)
+                _buildTile(schedule, context),
+            ],
+          ),
+        );
+      },
     );
   }
 

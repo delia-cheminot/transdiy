@@ -2,7 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
-import 'package:mona/widgets/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:provider/provider.dart';
 
 class NewItemPage extends StatefulWidget {
@@ -60,62 +61,35 @@ class _NewItemPageState extends State<NewItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('New item'),
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+    return ModelForm(
+      title: 'New item',
+      submitButtonLabel: 'Add',
+      isFormValid: _isFormValid,
+      saveChanges: _addItem,
+      fields: [
+        FormTextField(
+          controller: _nameController,
+          label: 'Name',
+          onChanged: _refresh,
+          inputType: TextInputType.text,
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: _isFormValid ? _addItem : null,
-              child: Text(
-                'Add',
-              ),
-            ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FormTextField(
-                  controller: _nameController,
-                  label: 'Name',
-                  onChanged: _refresh,
-                  inputType: TextInputType.text,
-                ),
-                FormTextField(
-                  controller: _totalDoseController,
-                  label: 'Total amount',
-                  onChanged: _refresh,
-                  inputType: TextInputType.number,
-                  suffixText: 'mg',
-                  regexFormatter: r'[0-9.,]',
-                ),
-                FormTextField(
-                  controller: _dosePerUnitController,
-                  label: 'Concentration',
-                  onChanged: _refresh,
-                  inputType: TextInputType.number,
-                  suffixText: 'mg/ml',
-                  regexFormatter: r'[0-9.,]',
-                ),
-              ],
-            ),
-          ),
+        FormTextField(
+          controller: _totalDoseController,
+          label: 'Total amount',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg',
+          regexFormatter: r'[0-9.,]',
         ),
-      ),
+        FormTextField(
+          controller: _dosePerUnitController,
+          label: 'Concentration',
+          onChanged: _refresh,
+          inputType: TextInputType.number,
+          suffixText: 'mg/ml',
+          regexFormatter: r'[0-9]',
+        ),
+      ],
     );
   }
 }

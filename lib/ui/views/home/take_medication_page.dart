@@ -4,7 +4,8 @@ import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
-import 'package:mona/widgets/form_date_field.dart';
+import 'package:mona/ui/constants/dimensions.dart';
+import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: pagePadding,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
