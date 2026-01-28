@@ -17,24 +17,22 @@ class HomePage extends StatelessWidget {
           isLoading: medicationScheduleProvider.isLoading,
           isEmpty: medicationScheduleProvider.schedules.isEmpty,
           emptyMessage: 'Add a schedule in your profile to get started!',
-          child: Column(children: [
-            ElevatedButton(
-              onPressed: () => NotificationService().showNotification(
-                id: 0,
-                title: 'Test Notification',
-                body: 'This is a test notification body.',
+          child: SingleChildScrollView(
+            child: Column(children: [
+              ElevatedButton(
+                onPressed: () => NotificationService().scheduleNotification(
+                  id: 0,
+                  title: 'Test Notification',
+                  body: 'This is a test notification body.',
+                  hour: 19,
+                  minute: 30,
+                ),
+                child: Text('schedule notification'),
               ),
-              child: Text('test notification'),
-            ),
-            Expanded(
-              child: ListView(
-                children: <Widget>[
-                  for (final schedule in medicationScheduleProvider.schedules)
-                    _buildTile(schedule, context),
-                ],
-              ),
-            ),
-          ]),
+              for (final schedule in medicationScheduleProvider.schedules)
+                _buildTile(schedule, context),
+            ]),
+          ),
         );
       },
     );

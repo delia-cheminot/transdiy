@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
-  final notificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
   bool _initialized = false;
 
@@ -11,6 +14,11 @@ class NotificationService {
 
   Future<void> initialize() async {
     if (_initialized) return;
+
+    tz.initializeTimeZones();
+    final TimezoneInfo currentTimeZone =
+        await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
 
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -21,7 +29,7 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
-    await notificationsPlugin.initialize(InitializationSettings(
+    await _notificationsPlugin.initialize(InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     ));
@@ -34,7 +42,11 @@ class NotificationService {
           channelDescription: 'Notifications for medication intakes',
           importance: Importance.max,
           priority: Priority.max),
-      iOS: DarwinNotificationDetails(),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
     );
   }
 
@@ -48,11 +60,31 @@ class NotificationService {
       return;
     }
 
-    return notificationsPlugin.show(
+    return _notificationsPlugin.show(
       id,
       title,
       body,
       notificationDetails(),
     );
+  }
+
+  Future<void> scheduleNotification({
+    int id = 1,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+  }) async {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+
+    await _notificationsPlugin.zonedSchedule(
+        id, title, body, scheduledDate, notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+  }
+
+  Future<void> cancelAllNotifications() async {
+    await _notificationsPlugin.cancelAll();
   }
 }

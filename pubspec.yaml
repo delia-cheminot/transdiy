@@ -44,6 +44,8 @@ dependencies:
   dynamic_system_colors: ^1.8.0
   intl: ^0.20.2
   flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
+  flutter_timezone: ^5.0.1
 
 dev_dependencies:
   flutter_test:

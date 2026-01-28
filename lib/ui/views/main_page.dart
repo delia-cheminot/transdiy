@@ -26,6 +26,7 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: currentTab.page,
       ),
+      // TODO implement indexed stack + correct scroll bug
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: _selectIndex,
