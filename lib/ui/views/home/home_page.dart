@@ -27,6 +27,8 @@ class HomePage extends StatelessWidget {
                   year: DateTime.now().year,
                   month: DateTime.now().month,
                   day: DateTime.now().day,
+                  hour: DateTime.now().hour,
+                  minute: DateTime.now().minute + 1,
                 ),
                 child: Text('schedule notification'),
               ),

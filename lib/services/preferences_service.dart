@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PreferencesService {
+class PreferencesService extends ChangeNotifier {
   static const _notificationHourKey = 'notification_hour';
   static const _notificationMinuteKey = 'notification_minute';
+  static const _notificationsEnabledKey = 'notifications_enabled';
 
   static const int defaultHour = 18;
   static const int defaultMinute = 0;
+  static const bool defaultNotificationsEnabled = true;
 
   late SharedPreferences _prefs;
 
@@ -16,14 +19,30 @@ class PreferencesService {
     return PreferencesService._(prefs);
   }
 
-  int get notificationHour =>
-      _prefs.getInt(_notificationHourKey) ?? defaultHour;
-  int get notificationMinute =>
-      _prefs.getInt(_notificationMinuteKey) ?? defaultMinute;
+  TimeOfDay get notificationTime => TimeOfDay(
+        hour: _prefs.getInt(_notificationHourKey) ?? defaultHour,
+        minute: _prefs.getInt(_notificationMinuteKey) ?? defaultMinute,
+      );
+  bool get notificationsEnabled =>
+      _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
-  Future<void> setNotificationHour(int hour) async =>
-      await _prefs.setInt(_notificationHourKey, hour);
+  Future<void> setNotificationHour(int hour) async {
+    await _prefs.setInt(_notificationHourKey, hour);
+    notifyListeners();
+  }
 
-  Future<void> setNotificationMinute(int minute) async =>
-      await _prefs.setInt(_notificationMinuteKey, minute);
+  Future<void> setNotificationMinute(int minute) async {
+    await _prefs.setInt(_notificationMinuteKey, minute);
+    notifyListeners();
+  }
+
+  Future<void> setNotificationTime(TimeOfDay time) async {
+    await setNotificationHour(time.hour);
+    await setNotificationMinute(time.minute);
+  }
+
+  Future<void> setNotificationsEnabled(bool isEnabled) async {
+    await _prefs.setBool(_notificationsEnabledKey, isEnabled);
+    notifyListeners();
+  }
 }

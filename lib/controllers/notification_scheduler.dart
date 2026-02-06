@@ -1,12 +1,14 @@
 import 'package:intl/intl.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notifications/notification_service.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:mona/util/date_helpers.dart';
 
 class NotificationScheduler {
   final MedicationScheduleProvider medicationScheduleProvider;
+  final PreferencesService preferencesService;
 
-  NotificationScheduler(this.medicationScheduleProvider);
+  NotificationScheduler(this.medicationScheduleProvider, this.preferencesService);
 
   bool shouldSkipNotificationForToday(DateTime date) {
     if (!date.isAtSameMomentAs(normalizedToday())) {
@@ -18,8 +20,8 @@ class NotificationScheduler {
       date.year,
       date.month,
       date.day,
-      defaultNotificationHour,
-      defaultNotificationMinute,
+      preferencesService.notificationTime.hour,
+      preferencesService.notificationTime.minute,
     );
 
     return now.isAfter(scheduledNotificationTime);
@@ -41,6 +43,8 @@ class NotificationScheduler {
           year: date.year,
           month: date.month,
           day: date.day,
+          hour: preferencesService.notificationTime.hour,
+          minute: preferencesService.notificationTime.minute,
         );
       }
     }
