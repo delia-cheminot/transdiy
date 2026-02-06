@@ -5,6 +5,9 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+const int defaultNotificationHour = 18;
+const int defaultNotificationMinute = 0;
+
 class NotificationService {
   final _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -72,12 +75,12 @@ class NotificationService {
     int id = 1,
     required String title,
     required String body,
-    required int hour,
-    required int minute,
+    required int year,
+    required int month,
+    required int day,
   }) async {
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+    var scheduledDate = tz.TZDateTime(tz.local, year, month, day,
+        defaultNotificationHour, defaultNotificationMinute);
 
     await _notificationsPlugin.zonedSchedule(
         id, title, body, scheduledDate, notificationDetails(),
@@ -86,5 +89,14 @@ class NotificationService {
 
   Future<void> cancelAllNotifications() async {
     await _notificationsPlugin.cancelAll();
+  }
+
+  Future<void> cancelPendingNotifications() async {
+    final pendingNotifications =
+        await _notificationsPlugin.pendingNotificationRequests();
+
+    for (final notification in pendingNotifications) {
+      await _notificationsPlugin.cancel(notification.id);
+    }
   }
 }
