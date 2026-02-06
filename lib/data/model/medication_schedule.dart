@@ -1,9 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/medication_intake.dart';
-
-DateTime _normalizeDate(DateTime date) {
-  return DateTime(date.year, date.month, date.day);
-}
+import 'package:mona/util/date_helpers.dart';
 
 class MedicationSchedule {
   final int id;
@@ -19,7 +16,7 @@ class MedicationSchedule {
     required this.intervalDays,
     DateTime? startDate,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        startDate = _normalizeDate(startDate ?? DateTime.now());
+        startDate = normalizeDate(startDate ?? DateTime.now());
 
   factory MedicationSchedule.fromMap(Map<String, Object?> map) {
     return MedicationSchedule(
@@ -104,7 +101,7 @@ class MedicationSchedule {
   /// - If today falls exactly on a scheduled injection date, returns today.
   /// - Otherwise, returns the next scheduled date after today.
   DateTime getNextDate({DateTime? referenceDate}) {
-    final today = _normalizeDate(referenceDate ?? DateTime.now());
+    final today = normalizeDate(referenceDate ?? DateTime.now());
 
     if (!startDate.isBefore(today)) {
       return startDate;
@@ -128,7 +125,7 @@ class MedicationSchedule {
   /// - If today falls exactly on a scheduled injection date, returns the scheduled date before today.
   /// - Otherwise, returns the last scheduled date before today.
   DateTime? getLastDate({DateTime? referenceDate}) {
-    final today = _normalizeDate(referenceDate ?? DateTime.now());
+    final today = normalizeDate(referenceDate ?? DateTime.now());
 
     if (!startDate.isBefore(today)) {
       return null;
