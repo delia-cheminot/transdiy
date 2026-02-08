@@ -283,4 +283,138 @@ void main() {
       expect(next.difference(last!).inDays, s.intervalDays);
     });
   });
+
+  group('getNextDates', () {
+    DateTime d(int y, int m, int day) => DateTime(y, m, day);
+
+    test('today is an intake date -> first returned date is today', () {
+      final today = d(2025, 1, 8);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 3, referenceDate: today);
+
+      expect(dates.first, today);
+    });
+
+    test(
+        'today is not an intake date -> first returned date is next scheduled date',
+        () {
+      final today = d(2025, 1, 5);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 2, referenceDate: today);
+
+      expect(dates.first, d(2025, 1, 8));
+    });
+
+    test('startDate is today -> first returned date is today', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: today,
+      );
+
+      final dates = s.getNextDates(count: 2, referenceDate: today);
+
+      expect(dates.first, today);
+    });
+
+    test('startDate is in the future -> first returned date is startDate', () {
+      final today = d(2025, 1, 10);
+      final start = d(2025, 1, 15);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: start,
+      );
+
+      final dates = s.getNextDates(count: 2, referenceDate: today);
+
+      expect(dates.first, start);
+    });
+
+    test('count = 1 -> returns exactly one date', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 1, referenceDate: today);
+
+      expect(dates.length, 1);
+    });
+
+    test('count > 1 -> returns exactly count dates', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 4, referenceDate: today);
+
+      expect(dates.length, 4);
+    });
+
+    test('returned dates are spaced by intervalDays', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 3, referenceDate: today);
+
+      expect(dates[2].difference(dates[1]).inDays, 7);
+    });
+
+    test('count = 0 -> returns empty list', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      final dates = s.getNextDates(count: 0, referenceDate: today);
+
+      expect(dates, isEmpty);
+    });
+
+    test('count < 0 -> throws ArgumentError', () {
+      final today = d(2025, 1, 10);
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: d(2025, 1, 1),
+      );
+
+      expect(
+        () => s.getNextDates(count: -1, referenceDate: today),
+        throwsArgumentError,
+      );
+    });
+  });
 }

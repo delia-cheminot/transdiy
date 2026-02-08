@@ -13,8 +13,7 @@ import 'package:mona/data/model/medication_intake.dart' as _i9;
 import 'package:mona/data/model/medication_schedule.dart' as _i11;
 import 'package:mona/data/model/supply_item.dart' as _i3;
 import 'package:mona/data/providers/medication_intake_provider.dart' as _i8;
-import 'package:mona/data/providers/medication_schedule_provider.dart'
-    as _i10;
+import 'package:mona/data/providers/medication_schedule_provider.dart' as _i10;
 import 'package:mona/data/providers/supply_item_provider.dart' as _i4;
 import 'package:mona/services/repository.dart' as _i2;
 
@@ -307,6 +306,15 @@ class MockMedicationIntakeProvider extends _i1.Mock
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
+  @override
+  Map<int, double> getDaysAndDoses() => (super.noSuchMethod(
+        Invocation.method(
+          #getDaysAndDoses,
+          [],
+        ),
+        returnValue: <int, double>{},
+      ) as Map<int, double>);
 
   @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
