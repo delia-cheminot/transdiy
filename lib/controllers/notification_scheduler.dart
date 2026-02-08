@@ -33,19 +33,19 @@ class NotificationScheduler {
     NotificationService().cancelPendingNotifications();
 
     for (final schedule in medicationScheduleProvider.schedules) {
-      for (final date in schedule.getNextDates(count: 5)) {
-        if (shouldSkipNotificationForToday(date)) continue;
-
-        await NotificationService().scheduleNotification(
-          title: 'Time to take ${schedule.name}',
-          body: 'Next intake scheduled for ${DateFormat.MMMMd().format(date)}',
-          year: date.year,
-          month: date.month,
-          day: date.day,
-          hour: preferencesService.notificationTime.hour,
-          minute: preferencesService.notificationTime.minute,
-        );
-      }
+      await Future.wait(schedule
+          .getNextDates(count: 5)
+          .where((date) => !shouldSkipNotificationForToday(date))
+          .map((date) => NotificationService().scheduleNotification(
+                title: 'Time to take ${schedule.name}',
+                body:
+                    'Next intake scheduled for ${DateFormat.MMMMd().format(date)}',
+                year: date.year,
+                month: date.month,
+                day: date.day,
+                hour: preferencesService.notificationTime.hour,
+                minute: preferencesService.notificationTime.minute,
+              )));
     }
   }
 }
