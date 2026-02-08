@@ -7,7 +7,18 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
-  final _notificationsPlugin = FlutterLocalNotificationsPlugin();
+  static FlutterLocalNotificationsPlugin Function()? createPlugin =
+      () => FlutterLocalNotificationsPlugin();
+
+  static bool Function()? isPlatformSupported =
+      () => Platform.isAndroid || Platform.isIOS;
+
+  late final FlutterLocalNotificationsPlugin _notificationsPlugin;
+
+  NotificationService({FlutterLocalNotificationsPlugin? plugin}) {
+    _notificationsPlugin =
+        plugin ?? (createPlugin?.call() ?? FlutterLocalNotificationsPlugin());
+  }
 
   bool _initialized = false;
 
@@ -58,7 +69,9 @@ class NotificationService {
   }) async {
     id ??= Random().nextInt(1 << 31);
 
-    if (!Platform.isAndroid && !Platform.isIOS) {
+    final supported =
+        isPlatformSupported?.call() ?? (Platform.isAndroid || Platform.isIOS);
+    if (!supported) {
       print('Notification id $id: $title - $body');
       return;
     }

@@ -11,7 +11,7 @@ class NotificationScheduler {
   NotificationScheduler(
       this.medicationScheduleProvider, this.preferencesService);
 
-  bool shouldSkipNotificationForToday(DateTime date) {
+  bool _shouldSkipNotificationForToday(DateTime date) {
     if (!normalizeDate(date).isAtSameMomentAs(normalizedToday())) {
       return false;
     }
@@ -35,7 +35,7 @@ class NotificationScheduler {
     for (final schedule in medicationScheduleProvider.schedules) {
       await Future.wait(schedule
           .getNextDates(count: 5)
-          .where((date) => !shouldSkipNotificationForToday(date))
+          .where((date) => !_shouldSkipNotificationForToday(date))
           .map((date) => NotificationService().scheduleNotification(
                 title: 'Time to take ${schedule.name}',
                 body:
