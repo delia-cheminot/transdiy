@@ -46,7 +46,7 @@ void main() {
           1,
           'title',
           'body',
-          '{"scheduledAt":"${DateTime.now().subtract(Duration(days: 1)).toIso8601String()}"}',
+          '{"scheduledTime":"${DateTime.now().subtract(Duration(days: 1)).toIso8601String()}"}',
         );
 
         when(mockPlugin.pendingNotificationRequests())
@@ -81,7 +81,7 @@ void main() {
           1,
           'title',
           'body',
-          '{"scheduledAt":"${DateTime.now().add(Duration(days: 1)).toIso8601String()}"}',
+          '{"scheduledTime":"${DateTime.now().add(Duration(days: 1)).toIso8601String()}"}',
         );
 
         when(mockPlugin.pendingNotificationRequests())

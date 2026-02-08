@@ -188,7 +188,7 @@ void main() {
 
   test('triggerPastPendingNotifications shows past notifications', () async {
     final payload = jsonEncode({
-      'scheduledAt':
+      'scheduledTime':
           DateTime.now().subtract(Duration(days: 1)).toIso8601String()
     });
     fakePlugin.scheduled.add({

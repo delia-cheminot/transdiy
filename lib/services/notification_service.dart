@@ -55,6 +55,7 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.max),
       iOS: DarwinNotificationDetails(
+        interruptionLevel: InterruptionLevel.timeSensitive,
         presentAlert: true,
         presentBadge: true,
         presentSound: true,
@@ -131,9 +132,9 @@ class NotificationService {
 
     return pendingNotifications.where((notification) {
       final payload = jsonDecode(notification.payload ?? '{}');
-      final scheduledAt = DateTime.tryParse(payload['scheduledAt'] ?? '');
-      if (scheduledAt == null) return false;
-      return scheduledAt.isBefore(DateTime.now());
+      final scheduledTime = DateTime.tryParse(payload['scheduledTime'] ?? '');
+      if (scheduledTime == null) return false;
+      return scheduledTime.isBefore(DateTime.now());
     }).toList();
   }
 
