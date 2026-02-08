@@ -15,6 +15,8 @@ class MonaApp extends StatefulWidget {
 
 class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
   String? _lastTimeZone;
+  late MedicationScheduleProvider _medicationScheduleProvider;
+  late PreferencesService _preferencesService;
 
   ColorScheme _getLightColorScheme(ColorScheme? lightDynamic) {
     return lightDynamic ?? ColorScheme.fromSeed(seedColor: Colors.deepPurple);
@@ -33,24 +35,38 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _lastTimeZone = DateTime.now().timeZoneOffset.toString();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final medicationScheduleProvider =
+      _medicationScheduleProvider =
           context.read<MedicationScheduleProvider>();
-      final preferencesService = context.read<PreferencesService>();
-      NotificationScheduler(medicationScheduleProvider, preferencesService)
+      _preferencesService = context.read<PreferencesService>();
+
+      NotificationScheduler(_medicationScheduleProvider, _preferencesService)
           .regenerateAll();
+
+      _medicationScheduleProvider.addListener(_regenerateNotifications);
+      _preferencesService.addListener(_regenerateNotifications);
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _medicationScheduleProvider.removeListener(_regenerateNotifications);
+    _preferencesService.removeListener(_regenerateNotifications);
+    super.dispose();
+  }
+
+  void _regenerateNotifications() {
+    NotificationScheduler(_medicationScheduleProvider, _preferencesService)
+        .regenerateAll();
   }
 
   void _checkTimezoneChange() {
     final currentTimezone = DateTime.now().timeZoneOffset.toString();
     if (_lastTimeZone != currentTimezone) {
       _lastTimeZone = currentTimezone;
-      final medicationScheduleProvider =
-          context.read<MedicationScheduleProvider>();
-      final preferencesService = context.read<PreferencesService>();
-      NotificationScheduler(medicationScheduleProvider, preferencesService)
-          .regenerateAll();
+      _regenerateNotifications();
     }
   }
 
