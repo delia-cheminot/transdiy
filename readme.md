@@ -20,7 +20,7 @@ This project is developped in Flutter, granting Android and iOS releases.
 
 ## Download for Android
 
-https://github.com/delia-cheminot/transdiy/releases/tag/v0.3.0
+https://github.com/delia-cheminot/transdiy/releases/latest
 
 ## Download for iOS
 
