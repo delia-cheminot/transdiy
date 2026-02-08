@@ -37,15 +37,11 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     _lastTimeZone = DateTime.now().timeZoneOffset.toString();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _medicationScheduleProvider =
-          context.read<MedicationScheduleProvider>();
+      _medicationScheduleProvider = context.read<MedicationScheduleProvider>();
       _preferencesService = context.read<PreferencesService>();
-
-      NotificationScheduler(_medicationScheduleProvider, _preferencesService)
-          .regenerateAll();
-
       _medicationScheduleProvider.addListener(_regenerateNotifications);
       _preferencesService.addListener(_regenerateNotifications);
+      _regenerateNotifications();
     });
   }
 
