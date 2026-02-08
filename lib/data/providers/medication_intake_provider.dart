@@ -85,6 +85,13 @@ class MedicationIntakeProvider extends ChangeNotifier {
         .takenDateTime;
   }
 
+  DateTime? getLastIntakeDate() {
+    if (takenIntakes.isEmpty) return null;
+    return takenIntakes
+        .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b)
+        .takenDateTime;
+  }
+
   MedicationIntake? getLastTakenIntake() {
     if (takenIntakes.isEmpty) return null;
     return takenIntakes
