@@ -26,19 +26,10 @@ class PreferencesService extends ChangeNotifier {
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
-  Future<void> setNotificationHour(int hour) async {
-    await _prefs.setInt(_notificationHourKey, hour);
-    notifyListeners();
-  }
-
-  Future<void> setNotificationMinute(int minute) async {
-    await _prefs.setInt(_notificationMinuteKey, minute);
-    notifyListeners();
-  }
-
   Future<void> setNotificationTime(TimeOfDay time) async {
-    await setNotificationHour(time.hour);
-    await setNotificationMinute(time.minute);
+    await _prefs.setInt(_notificationHourKey, time.hour);
+    await _prefs.setInt(_notificationMinuteKey, time.minute);
+    notifyListeners();
   }
 
   Future<void> setNotificationsEnabled(bool isEnabled) async {

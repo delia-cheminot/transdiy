@@ -242,26 +242,6 @@ class MockPreferencesService extends _i1.Mock
       ) as bool);
 
   @override
-  _i6.Future<void> setNotificationHour(int? hour) => (super.noSuchMethod(
-        Invocation.method(
-          #setNotificationHour,
-          [hour],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-
-  @override
-  _i6.Future<void> setNotificationMinute(int? minute) => (super.noSuchMethod(
-        Invocation.method(
-          #setNotificationMinute,
-          [minute],
-        ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
-
-  @override
   _i6.Future<void> setNotificationTime(_i3.TimeOfDay? time) =>
       (super.noSuchMethod(
         Invocation.method(
