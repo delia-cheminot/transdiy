@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -51,16 +52,18 @@ class NotificationService {
   }
 
   Future<void> showNotification({
-    int id = 0,
+    int? id,
     String? title,
     String? body,
   }) async {
+    id ??= Random().nextInt(1 << 31);
+
     if (!Platform.isAndroid && !Platform.isIOS) {
       print('Notification id $id: $title - $body');
       return;
     }
 
-    return _notificationsPlugin.show(
+    await _notificationsPlugin.show(
       id,
       title,
       body,
@@ -69,7 +72,7 @@ class NotificationService {
   }
 
   Future<void> scheduleNotification({
-    int id = 1,
+    int? id,
     required String title,
     required String body,
     required int year,
@@ -78,11 +81,22 @@ class NotificationService {
     required int hour,
     required int minute,
   }) async {
+    id ??= Random().nextInt(1 << 31);
+
     var scheduledDate = tz.TZDateTime(tz.local, year, month, day, hour, minute);
 
     await _notificationsPlugin.zonedSchedule(
-        id, title, body, scheduledDate, notificationDetails(),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+      id,
+      title,
+      body,
+      scheduledDate,
+      notificationDetails(),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      payload: jsonEncode({
+        'scheduledTime':
+            DateTime(year, month, day, hour, minute).toIso8601String(),
+      }),
+    );
   }
 
   Future<void> cancelAllNotifications() async {
@@ -95,6 +109,29 @@ class NotificationService {
 
     for (final notification in pendingNotifications) {
       await _notificationsPlugin.cancel(notification.id);
+    }
+  }
+
+  Future<List<PendingNotificationRequest>> get pastPendingNotifications async {
+    final pendingNotifications =
+        await _notificationsPlugin.pendingNotificationRequests();
+
+    return pendingNotifications.where((notification) {
+      final payload = jsonDecode(notification.payload ?? '{}');
+      final scheduledAt = DateTime.tryParse(payload['scheduledAt'] ?? '');
+      if (scheduledAt == null) return false;
+      return scheduledAt.isBefore(DateTime.now());
+    }).toList();
+  }
+
+  Future<void> triggerPastPendingNotifications() async {
+    final pastPendingNotifications = await this.pastPendingNotifications;
+    for (final notification in pastPendingNotifications) {
+      await showNotification(
+        id: notification.id,
+        title: notification.title,
+        body: notification.body,
+      );
     }
   }
 }

@@ -8,7 +8,8 @@ class NotificationScheduler {
   final MedicationScheduleProvider medicationScheduleProvider;
   final PreferencesService preferencesService;
 
-  NotificationScheduler(this.medicationScheduleProvider, this.preferencesService);
+  NotificationScheduler(
+      this.medicationScheduleProvider, this.preferencesService);
 
   bool shouldSkipNotificationForToday(DateTime date) {
     if (!date.isAtSameMomentAs(normalizedToday())) {
@@ -28,11 +29,10 @@ class NotificationScheduler {
   }
 
   Future<void> regenerateAll() async {
+    NotificationService().triggerPastPendingNotifications();
     NotificationService().cancelPendingNotifications();
 
-    final schedules = medicationScheduleProvider.schedules;
-
-    for (final schedule in schedules) {
+    for (final schedule in medicationScheduleProvider.schedules) {
       for (final date in schedule.getNextDates(count: 5)) {
         if (shouldSkipNotificationForToday(date)) continue;
 
