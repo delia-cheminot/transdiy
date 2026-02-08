@@ -12,7 +12,7 @@ class NotificationScheduler {
       this.medicationScheduleProvider, this.preferencesService);
 
   bool shouldSkipNotificationForToday(DateTime date) {
-    if (!date.isAtSameMomentAs(normalizedToday())) {
+    if (!normalizeDate(date).isAtSameMomentAs(normalizedToday())) {
       return false;
     }
 

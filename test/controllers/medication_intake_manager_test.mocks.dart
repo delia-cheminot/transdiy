@@ -162,6 +162,16 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
+  Map<int, double> getDaysAndDoses() => (super.noSuchMethod(
+        Invocation.method(
+          #getDaysAndDoses,
+          [],
+        ),
+        returnValue: <int, double>{},
+        returnValueForMissingStub: <int, double>{},
+      ) as Map<int, double>);
+
+  @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
