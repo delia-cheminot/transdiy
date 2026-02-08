@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/services/notifications/notification_service.dart';
+import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/util/date_helpers.dart';
 

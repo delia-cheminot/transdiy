@@ -47,7 +47,7 @@ class NotificationService {
     ));
   }
 
-  NotificationDetails notificationDetails() {
+  NotificationDetails _notificationDetails() {
     return const NotificationDetails(
       android: AndroidNotificationDetails(
           'medication_intakes', 'Medication Intakes',
@@ -80,7 +80,7 @@ class NotificationService {
       id,
       title,
       body,
-      notificationDetails(),
+      _notificationDetails(),
     );
   }
 
@@ -103,7 +103,7 @@ class NotificationService {
       title,
       body,
       scheduledDate,
-      notificationDetails(),
+      _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       payload: jsonEncode({
         'scheduledTime':
@@ -125,7 +125,7 @@ class NotificationService {
     }
   }
 
-  Future<List<PendingNotificationRequest>> get pastPendingNotifications async {
+  Future<List<PendingNotificationRequest>> get _pastPendingNotifications async {
     final pendingNotifications =
         await _notificationsPlugin.pendingNotificationRequests();
 
@@ -138,7 +138,7 @@ class NotificationService {
   }
 
   Future<void> triggerPastPendingNotifications() async {
-    final pastPendingNotifications = await this.pastPendingNotifications;
+    final pastPendingNotifications = await _pastPendingNotifications;
     for (final notification in pastPendingNotifications) {
       await showNotification(
         title: notification.title,
