@@ -36,8 +36,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => SupplyItemProvider()),
         ChangeNotifierProvider(create: (_) => MedicationIntakeProvider()),
         ChangeNotifierProvider(create: (_) => MedicationScheduleProvider()),
-        ChangeNotifierProvider<PreferencesService>.value(
-            value: preferencesService),
+        ChangeNotifierProvider.value(value: preferencesService),
       ],
       child: const MonaApp(),
     ),

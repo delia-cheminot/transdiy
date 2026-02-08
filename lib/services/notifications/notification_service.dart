@@ -128,7 +128,6 @@ class NotificationService {
     final pastPendingNotifications = await this.pastPendingNotifications;
     for (final notification in pastPendingNotifications) {
       await showNotification(
-        id: notification.id,
         title: notification.title,
         body: notification.body,
       );
