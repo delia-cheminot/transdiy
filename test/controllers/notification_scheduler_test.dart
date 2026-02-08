@@ -108,6 +108,47 @@ void main() {
       });
     });
 
+    group('notifications disabled', () {
+      test('regenerateAll should return early when notifications are disabled',
+          () async {
+        // Arrange
+        final origPlatformCheck = NotificationService.isPlatformSupported;
+        NotificationService.isPlatformSupported = () => true;
+
+        when(mockPreferencesService.notificationsEnabled).thenReturn(false);
+        when(mockMedicationScheduleProvider.schedules).thenReturn([
+          MedicationSchedule(
+              name: 'Test Medication',
+              dose: Decimal.fromInt(10),
+              intervalDays: 1)
+        ]);
+        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+                androidScheduleMode: anyNamed('androidScheduleMode'),
+                payload: anyNamed('payload')))
+            .thenAnswer((_) async {});
+
+        final origCreate = NotificationService.createPlugin;
+        NotificationService.createPlugin = () => mockPlugin;
+
+        final scheduler = NotificationScheduler(
+          mockMedicationScheduleProvider,
+          mockPreferencesService,
+        );
+
+        // Act
+        await scheduler.regenerateAll();
+
+        // Assert
+        verifyNever(mockPlugin.zonedSchedule(any, any, any, any, any,
+            androidScheduleMode: anyNamed('androidScheduleMode'),
+            payload: anyNamed('payload')));
+
+        // Cleanup
+        NotificationService.createPlugin = origCreate;
+        NotificationService.isPlatformSupported = origPlatformCheck;
+      });
+    });
+
     group('regenerateAll scheduling logic', () {
       test(
           'regenerateAll should schedule 5 notification when next is today and current time is before notification time',

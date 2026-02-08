@@ -32,6 +32,10 @@ class NotificationScheduler {
     NotificationService().triggerPastPendingNotifications();
     NotificationService().cancelPendingNotifications();
 
+    if (!preferencesService.notificationsEnabled) {
+      return;
+    }
+
     for (final schedule in medicationScheduleProvider.schedules) {
       await Future.wait(schedule
           .getNextDates(count: 5)
