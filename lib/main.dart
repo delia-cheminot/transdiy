@@ -23,12 +23,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   NotificationService().initialize();
+  final preferencesService = await PreferencesService.init();
 
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent));
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  final preferencesService = await PreferencesService.init();
 
   runApp(
     MultiProvider(
