@@ -37,7 +37,6 @@ class NotificationScheduler {
         if (shouldSkipNotificationForToday(date)) continue;
 
         await NotificationService().scheduleNotification(
-          id: date.millisecondsSinceEpoch ~/ 1000,
           title: 'Time to take ${schedule.name}',
           body: 'Next intake scheduled for ${DateFormat.MMMMd().format(date)}',
           year: date.year,
