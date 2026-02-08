@@ -29,6 +29,11 @@ class MainGraph extends StatelessWidget {
 
     Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final int totalDays = medicationIntakeProvider
+            .getLastIntakeDate()!
+            .difference(firstDay)
+            .inDays +
+        1;
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
@@ -56,7 +61,7 @@ class MainGraph extends StatelessWidget {
               child: LineChart(
                 LineChartData(
                   minX: 0,
-                  maxX: (daysAndDoses.keys.last + GraphCalculator.tMaxOffset),
+                  maxX: (totalDays + GraphCalculator.tMaxOffset),
                   minY: 0,
                   maxY: maxYWithPadding,
                   gridData: FlGridData(show: true),
