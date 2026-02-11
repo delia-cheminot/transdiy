@@ -21,9 +21,12 @@ class IntakesPage extends StatelessWidget {
               return ListTile(
                 title: Text(intake.scheduledDateTime.toString()),
                 subtitle: Text(intake.takenDateTime.toString()),
-                onTap: () {
-                  medicationIntakeProvider.deleteIntake(intake);
-                },
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete_outline),
+                  onPressed: () {
+                    medicationIntakeProvider.deleteIntake(intake);
+                  },
+                ),
               );
             },
           ),
