@@ -24,6 +24,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
   late TextEditingController _takenDoseController;
   InjectionSide _selectedSide = InjectionSide.left;
+  bool _hasInitializedSide = false;
 
   @override
   void initState() {
@@ -69,6 +70,33 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     Navigator.of(context).pop();
   }
 
+  List<DropdownMenuItem<InjectionSide>> get _injectionSideItems {
+    return InjectionSide.values
+        .map(
+          (side) => DropdownMenuItem<InjectionSide>(
+            value: side,
+            child: Text(
+              side.label[0].toUpperCase() + side.label.substring(1),
+            ),
+          ),
+        )
+        .toList();
+  }
+
+  void _onInjectionSideChanged(InjectionSide? side) {
+    if (side != null) {
+      setState(() {
+        _selectedSide = side;
+      });
+    }
+  }
+
+  void _onTakenDateChanged(DateTime date) {
+    setState(() {
+      _takenDate = date;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
@@ -76,11 +104,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
 
-        if (!isLoading) {
+        if (!isLoading && !_hasInitializedSide) {
           _selectedSide = MedicationIntakeManager(
             medicationIntakeProvider,
             supplyItemProvider,
           ).getNextSide();
+          _hasInitializedSide = true;
         }
 
         return Scaffold(
@@ -97,9 +126,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                     FormDateField(
                       date: _takenDate,
                       label: 'Date',
-                      onChanged: (date) => setState(() {
-                        _takenDate = date;
-                      }),
+                      onChanged: _onTakenDateChanged,
                     ),
                     FormTextField(
                       controller: _takenDoseController,
@@ -118,25 +145,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                           labelText: 'Injection side',
                           border: OutlineInputBorder(),
                         ),
-                        isExpanded: true,
-                        items: InjectionSide.values
-                            .map(
-                              (side) => DropdownMenuItem<InjectionSide>(
-                                value: side,
-                                child: Text(
-                                  side.label[0].toUpperCase() +
-                                      side.label.substring(1),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (side) {
-                          if (side != null) {
-                            setState(() {
-                              _selectedSide = side;
-                            });
-                          }
-                        },
+                        items: _injectionSideItems,
+                        onChanged: _onInjectionSideChanged,
                       ),
                     ),
                     const SizedBox(height: 16),
