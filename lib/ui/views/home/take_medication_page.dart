@@ -8,6 +8,7 @@ import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/fropm_dropdown_field.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -137,17 +138,11 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 6),
-                      child: DropdownButtonFormField<InjectionSide>(
-                        initialValue: _selectedSide,
-                        decoration: const InputDecoration(
-                          labelText: 'Injection side',
-                          border: OutlineInputBorder(),
-                        ),
-                        items: _injectionSideItems,
-                        onChanged: _onInjectionSideChanged,
-                      ),
+                    FormDropdownField<InjectionSide>(
+                      value: _selectedSide,
+                      items: _injectionSideItems,
+                      onChanged: _onInjectionSideChanged,
+                      label: 'Injection side',
                     ),
                     const SizedBox(height: 16),
                     Container(
