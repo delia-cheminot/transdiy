@@ -44,7 +44,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   String? get _takenDoseError {
     final text = _takenDoseController.text.replaceAll(',', '.');
     final dose = Decimal.tryParse(text);
-    if (dose == null || dose <= Decimal.zero) return 'Enter a dose';
+    if (dose == null || dose <= Decimal.zero) return 'Enter a valid dose';
     return null;
   }
 
@@ -71,18 +71,17 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     Navigator.of(context).pop();
   }
 
-  List<DropdownMenuItem<InjectionSide>> get _injectionSideItems {
-    return InjectionSide.values
-        .map(
-          (side) => DropdownMenuItem<InjectionSide>(
-            value: side,
-            child: Text(
-              side.label[0].toUpperCase() + side.label.substring(1),
+  late final List<DropdownMenuItem<InjectionSide>> _injectionSideItems =
+      InjectionSide.values
+          .map(
+            (side) => DropdownMenuItem<InjectionSide>(
+              value: side,
+              child: Text(
+                side.label[0].toUpperCase() + side.label.substring(1),
+              ),
             ),
-          ),
-        )
-        .toList();
-  }
+          )
+          .toList();
 
   void _onInjectionSideChanged(InjectionSide? side) {
     if (side != null) {
@@ -96,6 +95,10 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     setState(() {
       _takenDate = date;
     });
+  }
+
+  void _onTakenDoseChanged() {
+    setState(() {});
   }
 
   @override
@@ -132,7 +135,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                     FormTextField(
                       controller: _takenDoseController,
                       label: 'Amount',
-                      onChanged: () => setState(() {}),
+                      onChanged: _onTakenDoseChanged,
                       inputType: TextInputType.number,
                       suffixText: 'mg',
                       errorText: _takenDoseError,
