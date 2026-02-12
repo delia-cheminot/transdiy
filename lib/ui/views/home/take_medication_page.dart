@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -6,6 +7,8 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/fropm_dropdown_field.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -20,79 +23,151 @@ class TakeMedicationPage extends StatefulWidget {
 
 class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
+  late TextEditingController _takenDoseController;
+  InjectionSide _selectedSide = InjectionSide.left;
+  bool _hasInitializedSide = false;
 
   @override
   void initState() {
     super.initState();
-    _takenDate = widget.scheduledDate;
+    _takenDate = DateTime.now();
+    _takenDoseController =
+        TextEditingController(text: widget.schedule.dose.toString());
   }
 
   @override
   void dispose() {
+    _takenDoseController.dispose();
     super.dispose();
   }
 
-  void _takeIntake(SupplyItemProvider supplyItemProvider,
-      MedicationIntakeProvider medicationIntakeProvider, InjectionSide side) {
+  String? get _takenDoseError {
+    final text = _takenDoseController.text.replaceAll(',', '.');
+    final dose = Decimal.tryParse(text);
+    if (dose == null || dose <= Decimal.zero) return 'Enter a valid dose';
+    return null;
+  }
+
+  bool get _isFormValid => _takenDoseError == null;
+
+  void _takeIntake(
+    MedicationIntakeProvider medicationIntakeProvider,
+    SupplyItemProvider supplyItemProvider,
+  ) {
+    if (!_isFormValid) return;
+    if (!mounted) return;
+
+    final dose = Decimal.parse(_takenDoseController.text.replaceAll(',', '.'));
+
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
-        .takeMedication(widget.schedule.dose, widget.scheduledDate, _takenDate,
-            supplyItemProvider.getMostUsedItem(), widget.schedule, side);
+        .takeMedication(
+      dose: dose,
+      scheduledDate: widget.scheduledDate,
+      takenDate: _takenDate,
+      supplyItem: supplyItemProvider.getMostUsedItem(),
+      schedule: widget.schedule,
+      side: _selectedSide,
+    );
     Navigator.of(context).pop();
+  }
+
+  late final List<DropdownMenuItem<InjectionSide>> _injectionSideItems =
+      InjectionSide.values
+          .map(
+            (side) => DropdownMenuItem<InjectionSide>(
+              value: side,
+              child: Text(
+                side.label[0].toUpperCase() + side.label.substring(1),
+              ),
+            ),
+          )
+          .toList();
+
+  void _onInjectionSideChanged(InjectionSide? side) {
+    if (side != null) {
+      setState(() {
+        _selectedSide = side;
+      });
+    }
+  }
+
+  void _onTakenDateChanged(DateTime date) {
+    setState(() {
+      _takenDate = date;
+    });
+  }
+
+  void _onTakenDoseChanged() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final supplyItemProvider = Provider.of<SupplyItemProvider>(context);
-    final medicationIntakeProvider =
-        Provider.of<MedicationIntakeProvider>(context);
+    return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
+      builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
+        final bool isLoading =
+            medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
 
-    final side =
-        MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
-            .getNextSide();
+        if (!isLoading && !_hasInitializedSide) {
+          _selectedSide = MedicationIntakeManager(
+            medicationIntakeProvider,
+            supplyItemProvider,
+          ).getNextSide();
+          _hasInitializedSide = true;
+        }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Text('Take intake'),
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: pagePadding,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Take intake on ${side.label} side',
-                ),
-                SizedBox(height: 8),
-                FormDateField(
-                  date: _takenDate,
-                  label: 'Date taken',
-                  onChanged: (date) => setState(() {
-                    _takenDate = date;
-                  }),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  width: double.infinity,
-                  child: supplyItemProvider.isLoading
-                      ? CircularProgressIndicator()
-                      : FilledButton(
-                          onPressed: () => _takeIntake(supplyItemProvider,
-                              medicationIntakeProvider, side),
-                          child: Text('Take intake'),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Take intake'),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: pagePadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FormDateField(
+                      date: _takenDate,
+                      label: 'Date',
+                      onChanged: _onTakenDateChanged,
+                    ),
+                    FormTextField(
+                      controller: _takenDoseController,
+                      label: 'Amount',
+                      onChanged: _onTakenDoseChanged,
+                      inputType: TextInputType.number,
+                      suffixText: 'mg',
+                      errorText: _takenDoseError,
+                      regexFormatter: r'[0-9.,]',
+                    ),
+                    FormDropdownField<InjectionSide>(
+                      value: _selectedSide,
+                      items: _injectionSideItems,
+                      onChanged: _onInjectionSideChanged,
+                      label: 'Injection side',
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          onPressed: (!isLoading && _isFormValid)
+                              ? () => _takeIntake(
+                                  medicationIntakeProvider, supplyItemProvider)
+                              : null, // null = bouton grisé
+                          child: const Text('Take intake'),
                         ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
