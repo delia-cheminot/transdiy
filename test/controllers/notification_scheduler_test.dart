@@ -166,6 +166,7 @@ void main() {
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: futureHour, minute: 0));
+        when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(any, any, any, any, any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
@@ -209,6 +210,7 @@ void main() {
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: pastHour, minute: 0));
+        when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(any, any, any, any, any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
@@ -251,6 +253,7 @@ void main() {
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(const TimeOfDay(hour: 12, minute: 0));
+        when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(any, any, any, any, any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
