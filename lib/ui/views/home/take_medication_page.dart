@@ -20,6 +20,7 @@ class TakeMedicationPage extends StatefulWidget {
 
 class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
+  InjectionSide _selectedSide = InjectionSide.left;
 
   @override
   void initState() {
@@ -27,72 +28,104 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     _takenDate = widget.scheduledDate;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  void _takeIntake(SupplyItemProvider supplyItemProvider,
-      MedicationIntakeProvider medicationIntakeProvider, InjectionSide side) {
+  void _takeIntake(
+    MedicationIntakeProvider medicationIntakeProvider,
+    SupplyItemProvider supplyItemProvider,
+  ) {
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
-        .takeMedication(widget.schedule.dose, widget.scheduledDate, _takenDate,
-            supplyItemProvider.getMostUsedItem(), widget.schedule, side);
+        .takeMedication(
+      widget.schedule.dose,
+      widget.scheduledDate,
+      _takenDate,
+      supplyItemProvider.getMostUsedItem(),
+      widget.schedule,
+      _selectedSide,
+    );
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    final supplyItemProvider = Provider.of<SupplyItemProvider>(context);
-    final medicationIntakeProvider =
-        Provider.of<MedicationIntakeProvider>(context);
+    return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
+      builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
+        final bool isLoading =
+            medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
 
-    final side =
-        MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
-            .getNextSide();
+        if (!isLoading) {
+          _selectedSide = MedicationIntakeManager(
+            medicationIntakeProvider,
+            supplyItemProvider,
+          ).getNextSide();
+        }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Text('Take intake'),
-          ],
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: pagePadding,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Take intake on ${side.label} side',
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Take intake'),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: pagePadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<InjectionSide>(
+                      initialValue: _selectedSide,
+                      decoration: const InputDecoration(
+                        labelText: 'Injection side',
+                        border: OutlineInputBorder(),
+                      ),
+                      isExpanded: true,
+                      items: InjectionSide.values
+                          .map(
+                            (side) => DropdownMenuItem<InjectionSide>(
+                              value: side,
+                              child: Text(
+                                side.label[0].toUpperCase() +
+                                    side.label.substring(1),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (side) {
+                        if (side != null) {
+                          setState(() {
+                            _selectedSide = side;
+                          });
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    FormDateField(
+                      date: _takenDate,
+                      label: 'Date taken',
+                      onChanged: (date) => setState(() {
+                        _takenDate = date;
+                      }),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      alignment: Alignment.center,
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : SizedBox(
+                              width: double.infinity,
+                              child: FilledButton(
+                                onPressed: () => _takeIntake(
+                                    medicationIntakeProvider,
+                                    supplyItemProvider),
+                                child: const Text('Take intake'),
+                              ),
+                            ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 8),
-                FormDateField(
-                  date: _takenDate,
-                  label: 'Date taken',
-                  onChanged: (date) => setState(() {
-                    _takenDate = date;
-                  }),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  width: double.infinity,
-                  child: supplyItemProvider.isLoading
-                      ? CircularProgressIndicator()
-                      : FilledButton(
-                          onPressed: () => _takeIntake(supplyItemProvider,
-                              medicationIntakeProvider, side),
-                          child: Text('Take intake'),
-                        ),
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
