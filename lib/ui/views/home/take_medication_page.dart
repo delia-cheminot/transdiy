@@ -30,7 +30,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   @override
   void initState() {
     super.initState();
-    _takenDate = widget.scheduledDate;
+    _takenDate = DateTime.now();
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
   }
