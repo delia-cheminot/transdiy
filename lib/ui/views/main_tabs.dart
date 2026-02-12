@@ -31,12 +31,6 @@ final List<MainTabConfig> mainTabs = [
     page: IntakesPage(),
     icon: Icons.event_outlined,
     selectedIcon: Icons.event_rounded,
-    buildActions: (context) => [
-      IconButton(
-        icon: const Icon(Icons.calendar_month),
-        onPressed: () {},
-      ),
-    ],
   ),
   MainTabConfig(
     title: 'Levels',
