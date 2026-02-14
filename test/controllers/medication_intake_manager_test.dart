@@ -54,7 +54,13 @@ void main() {
         });
 
         await manager.takeMedication(
-            dose, date, date, supplyItem, schedule, side);
+          dose: dose,
+          scheduledDate: date,
+          takenDate: date,
+          supplyItem: supplyItem,
+          schedule: schedule,
+          side: side,
+        );
 
         expect(
           addedIntake,
@@ -96,7 +102,12 @@ void main() {
       });
 
       await manager.takeMedication(
-          dose, scheduledDate, takenDate, supplyItem, schedule, null);
+          dose: dose,
+          scheduledDate: scheduledDate,
+          takenDate: takenDate,
+          supplyItem: supplyItem,
+          schedule: schedule,
+          side: null);
 
       expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
     });
