@@ -108,5 +108,49 @@ void main() {
         ],
       );
     });
+
+    test('takenIntakesSortedDesc returns taken intakes sorted descending',
+        () async {
+      await provider.fetchIntakes();
+      provider.add(MedicationIntake(
+        id: 100,
+        scheduledDateTime: DateTime(2025, 9, 14, 8, 0),
+        dose: Decimal.parse('1.0'),
+        takenDateTime: DateTime(2025, 9, 14, 8, 10),
+      ));
+      provider.add(MedicationIntake(
+        id: 101,
+        scheduledDateTime: DateTime(2025, 9, 15, 8, 0),
+        dose: Decimal.parse('1.0'),
+      ));
+      provider.add(MedicationIntake(
+        id: 102,
+        scheduledDateTime: DateTime(2025, 9, 16, 8, 0),
+        dose: Decimal.parse('1.0'),
+        takenDateTime: DateTime(2025, 9, 16, 8, 10),
+      ));
+
+      final sorted = provider.takenIntakesSortedDesc;
+
+      expect(
+        sorted.asMap().entries.every((entry) {
+          final i = entry.key;
+          final intake = entry.value;
+          if (!intake.isTaken) return false;
+          if (i < sorted.length - 1) {
+            final next = sorted[i + 1];
+            if (intake.takenDateTime!.isBefore(next.takenDateTime!)) {
+              return false;
+            }
+          }
+          return true;
+        }),
+        true,
+      );
+
+      provider.deleteIntakeFromId(100);
+      provider.deleteIntakeFromId(101);
+      provider.deleteIntakeFromId(102);
+    });
   });
 }
