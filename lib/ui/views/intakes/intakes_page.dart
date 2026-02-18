@@ -19,30 +19,34 @@ class IntakesPage extends StatelessWidget {
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
               MedicationIntake intake =
-                  medicationIntakeProvider.takenIntakes[index];
-              final intakeDate =
-                  intake.takenDateTime ?? intake.scheduledDateTime;
-              // TODO make taken non nullable and remove scheduled
-              final dateText = DateFormat.yMMMd().format(intakeDate);
-              final sideText =
-                  intake.side?.label != null ? ' • ${intake.side!.label}' : '';
-              return ListTile(
-                title: Text(dateText),
-                subtitle: Text('${intake.dose} mg$sideText'),
-                trailing: IconButton(
-                  icon: const Icon(Icons.delete_outline),
-                  onPressed: () async {
-                    final confirmed = await Dialogs.confirmDelete(context);
-                    if (confirmed == true) {
-                      medicationIntakeProvider.deleteIntake(intake);
-                    }
-                  },
-                ),
-              );
+                  medicationIntakeProvider.takenIntakesSortedDesc[index];
+              return _buildIntakeTile(
+                  context, intake, medicationIntakeProvider);
             },
           ),
         );
       },
+    );
+  }
+
+  Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
+      MedicationIntakeProvider medicationIntakeProvider) {
+    final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
+    final sideText =
+        intake.side?.label != null ? ' • ${intake.side!.label}' : '';
+
+    return ListTile(
+      title: Text(dateText),
+      subtitle: Text('${intake.dose} mg$sideText'),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete_outline),
+        onPressed: () async {
+          final confirmed = await Dialogs.confirmDelete(context);
+          if (confirmed == true) {
+            medicationIntakeProvider.deleteIntake(intake);
+          }
+        },
+      ),
     );
   }
 }
