@@ -19,8 +19,17 @@ class MainPageOestradiol extends StatelessWidget {
     return Card(
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
          ListTile(
-          leading: Icon(Icons.trending_up_sharp),
-          title: Text('Your oestrogen levels today are estimated to be ${ todaySpot.y.toStringAsFixed(1)} pg/ml'),
+          //leading: Icon(Icons.trending_up_sharp),
+          leading: SizedBox(
+            width: 80,
+            child: Center(
+              child: Text(
+                todaySpot.y.round().toString(),
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          title: Text('dosage estimated\nfor today in pg/ml'),
         ),
       ]),
     );
