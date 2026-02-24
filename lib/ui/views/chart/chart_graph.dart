@@ -28,7 +28,6 @@ class MainGraph extends StatelessWidget {
     final theme = Theme.of(context);
 
     Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
-
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
     final int daysSinceStart = DateTime.now().difference(firstDay).inDays;
     final int totalDays = medicationIntakeProvider
@@ -38,7 +37,6 @@ class MainGraph extends StatelessWidget {
         1;
 
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
-
     final FlSpot? todaySpot =
         (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset)
             ? spots.reduce(
@@ -104,13 +102,13 @@ class MainGraph extends StatelessWidget {
       verticalLines: [
         VerticalLine(
           x: daysSinceStart.toDouble(),
-          color: theme.colorScheme.error.withValues(alpha: 0.7),
+          color: theme.colorScheme.tertiary,
           strokeWidth: 2,
           dashArray: [6, 4],
           label: VerticalLineLabel(
             show: true,
-            labelResolver: (_) => 'Now ${todaySpot.y.toStringAsFixed(1)} pg/ml',
-            style: TextStyle(fontSize: 11, color: theme.colorScheme.error),
+            labelResolver: (_) => 'Now ${todaySpot.y.toStringAsFixed(0)} pg/ml',
+            style: TextStyle(fontSize: 11, color: theme.colorScheme.tertiary),
           ),
         )
       ],
