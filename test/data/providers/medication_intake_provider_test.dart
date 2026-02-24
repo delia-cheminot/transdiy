@@ -15,6 +15,7 @@ void main() {
         scheduledDateTime: i.scheduledDateTime,
         dose: i.dose,
         takenDateTime: i.takenDateTime,
+        scheduleId: i.scheduleId,
       ),
     );
     provider = MedicationIntakeProvider(repository: repo);
@@ -151,6 +152,104 @@ void main() {
       provider.deleteIntakeFromId(100);
       provider.deleteIntakeFromId(101);
       provider.deleteIntakeFromId(102);
+    });
+
+    group('getTakenIntakesForSchedule', () {
+      test('returns only taken intakes for the given schedule', () async {
+        repo.insert(MedicationIntake(
+            id: 100,
+            scheduleId: 100,
+            scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
+            dose: Decimal.parse('10.0'),
+            takenDateTime: DateTime(2025, 9, 13, 8, 15)));
+        repo.insert(MedicationIntake(
+            id: 200,
+            scheduleId: 200,
+            scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
+            dose: Decimal.parse('10.0'),
+            takenDateTime: DateTime(2025, 9, 13, 8, 15)));
+        await provider.fetchIntakes();
+
+        expect(provider.getTakenIntakesForSchedule(100).length, 1);
+      });
+
+      test('returns empty list if no taken intakes for schedule', () async {
+        await provider.fetchIntakes();
+
+        expect(provider.getTakenIntakesForSchedule(3), isEmpty);
+      });
+    });
+
+    group('getLastIntakeDateFromList', () {
+      test('returns null if the list is empty', () {
+        final result = provider.getLastIntakeDateFromList([]);
+        expect(result, isNull);
+      });
+
+      test('returns the only takenDateTime if list has one intake', () {
+        final intake = MedicationIntake(
+          id: 1,
+          scheduleId: 1,
+          scheduledDateTime: DateTime(2025, 9, 12, 8, 0),
+          dose: Decimal.parse('10.5'),
+          takenDateTime: DateTime(2025, 9, 12, 8, 15),
+        );
+
+        final result = provider.getLastIntakeDateFromList([intake]);
+        expect(result, intake.takenDateTime);
+      });
+
+      test('returns the latest takenDateTime if list has multiple intakes', () {
+        final intake1 = MedicationIntake(
+          id: 1,
+          scheduleId: 1,
+          scheduledDateTime: DateTime(2025, 9, 12, 8, 0),
+          dose: Decimal.parse('10.5'),
+          takenDateTime: DateTime(2025, 9, 12, 8, 15),
+        );
+
+        final intake2 = MedicationIntake(
+          id: 2,
+          scheduleId: 1,
+          scheduledDateTime: DateTime(2025, 9, 12, 20, 0),
+          dose: Decimal.parse('5.0'),
+          takenDateTime: DateTime(2025, 9, 12, 20, 10),
+        );
+
+        final intake3 = MedicationIntake(
+          id: 3,
+          scheduleId: 1,
+          scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
+          dose: Decimal.parse('2.5'),
+          takenDateTime: DateTime(2025, 9, 13, 8, 5),
+        );
+
+        final result =
+            provider.getLastIntakeDateFromList([intake1, intake2, intake3]);
+        expect(result, intake3.takenDateTime);
+      });
+
+      test('handles intakes with same takenDateTime correctly', () {
+        final dt = DateTime(2025, 9, 12, 8, 0);
+        final intake1 = MedicationIntake(
+          id: 1,
+          scheduleId: 1,
+          scheduledDateTime: dt,
+          dose: Decimal.parse('10.5'),
+          takenDateTime: dt,
+        );
+
+        final intake2 = MedicationIntake(
+          id: 2,
+          scheduleId: 1,
+          scheduledDateTime: dt,
+          dose: Decimal.parse('5.0'),
+          takenDateTime: dt,
+        );
+
+        final result = provider.getLastIntakeDateFromList([intake1, intake2]);
+        expect(result, dt);
+      });
     });
   });
 }
