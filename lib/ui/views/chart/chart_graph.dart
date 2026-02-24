@@ -30,26 +30,25 @@ class MainGraph extends StatelessWidget {
     Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
 
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final int daysSinceStart = DateTime.now().difference(firstDay).inDays;
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
             .difference(firstDay)
             .inDays +
         1;
 
-    final todayX = DateTime.now()
-                              .difference(firstDay)
-                              .inDays
-                              .toDouble();
-
-    
     final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
-    
 
-    final todaySpot = spots.reduce(
-  (a, b) => (a.x - todayX).abs() < (b.x - todayX).abs() ? a : b,
-);
+    final FlSpot? todaySpot =
+        (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset)
+            ? spots.reduce(
+                (a, b) =>
+                    (a.x - daysSinceStart).abs() < (b.x - daysSinceStart).abs()
+                        ? a
+                        : b,
+              )
+            : null;
 
-    
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
 
@@ -75,43 +74,47 @@ class MainGraph extends StatelessWidget {
             Expanded(
               child: LineChart(
                 LineChartData(
-                    minX: 0,
-                    maxX: (totalDays + GraphCalculator.tMaxOffset),
-                    minY: 0,
-                    maxY: maxYWithPadding,
-                    gridData: FlGridData(show: true),
-                    titlesData: _buildTitlesData(firstDay),
-                    borderData: FlBorderData(show: true),
-                    lineBarsData: [
-                      _buildLineBarData(spots, theme),
-                    ],
-                    lineTouchData: _buildLineTouchData(theme),
-                    extraLinesData: ExtraLinesData(
-                      verticalLines: [
-                        VerticalLine(
-                          x: DateTime.now()
-                              .difference(firstDay)
-                              .inDays
-                              .toDouble(),
-                          color: theme.colorScheme.error.withValues(alpha: 0.7),
-                          strokeWidth: 2,
-                          dashArray: [6, 4],
-                          label: VerticalLineLabel(
-                            show: true,
-                            labelResolver: (_) => 
-                                'Now ${todaySpot.y.toStringAsFixed(1) } pg/ml',
-                            style: TextStyle(
-                                fontSize: 11, color: theme.colorScheme.error),
-                          ),
-                        )
-                      ],
-                      extraLinesOnTop: true,
-                    )),
+                  minX: 0,
+                  maxX: (totalDays + GraphCalculator.tMaxOffset),
+                  minY: 0,
+                  maxY: maxYWithPadding,
+                  gridData: FlGridData(show: true),
+                  titlesData: _buildTitlesData(firstDay),
+                  borderData: FlBorderData(show: true),
+                  lineBarsData: [
+                    _buildLineBarData(spots, theme),
+                  ],
+                  lineTouchData: _buildLineTouchData(theme),
+                  extraLinesData:
+                      _buildTodayVerticalLine(theme, todaySpot, daysSinceStart),
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  ExtraLinesData? _buildTodayVerticalLine(
+      ThemeData theme, FlSpot? todaySpot, int daysSinceStart) {
+    if (todaySpot == null) return null;
+
+    return ExtraLinesData(
+      verticalLines: [
+        VerticalLine(
+          x: daysSinceStart.toDouble(),
+          color: theme.colorScheme.error.withValues(alpha: 0.7),
+          strokeWidth: 2,
+          dashArray: [6, 4],
+          label: VerticalLineLabel(
+            show: true,
+            labelResolver: (_) => 'Now ${todaySpot.y.toStringAsFixed(1)} pg/ml',
+            style: TextStyle(fontSize: 11, color: theme.colorScheme.error),
+          ),
+        )
+      ],
+      extraLinesOnTop: true,
     );
   }
 
