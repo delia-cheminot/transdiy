@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/util/date_helpers.dart';
 
 void main() {
   group('MedicationSchedule model', () {
@@ -415,6 +416,113 @@ void main() {
         () => s.getNextDates(count: -1, referenceDate: today),
         throwsArgumentError,
       );
+    });
+  });
+
+  group('isScheduledForToday', () {
+    test('returns true when today is a scheduled date', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday(),
+      );
+
+      expect(s.isScheduledForToday(), isTrue);
+    });
+
+    test('returns false when next scheduled date is in future', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().add(Duration(days: 3)),
+      );
+
+      expect(s.isScheduledForToday(), isFalse);
+    });
+
+    test('returns false when next scheduled date is in past', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().subtract(Duration(days: 3)),
+      );
+
+      expect(s.isScheduledForToday(), isFalse);
+    });
+  });
+
+  group('isLate', () {
+    test('returns true when lastTaken is before lastDate', () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().subtract(Duration(days: 14)));
+
+      final lastTaken = s.getLastDate()!.subtract(Duration(days: 1));
+
+      expect(s.isLate(lastTaken), isTrue);
+    });
+
+    test('returns false when lastTaken is on lastDate', () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().subtract(Duration(days: 14)));
+
+      final lastTaken = s.getLastDate()!;
+
+      expect(s.isLate(lastTaken), isFalse);
+    });
+
+    test('returns false when lastTaken is after lastDate', () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().subtract(Duration(days: 14)));
+
+      final lastTaken = s.getLastDate()!.add(Duration(days: 1));
+
+      expect(s.isLate(lastTaken), isFalse);
+    });
+
+    test('returns true when lastTaken is null but schedule is overdue', () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().subtract(Duration(days: 14)));
+
+      expect(s.isLate(null), isTrue);
+    });
+
+    test(
+        'returns false when lastTaken is null but treatment is scheduled for today',
+        () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday());
+
+      expect(s.isLate(null), isFalse);
+    });
+
+    test(
+        'returns false when lastTaken is null but next scheduled date is in the future',
+        () {
+      final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().add(Duration(days: 3)));
+
+      expect(s.isLate(null), isFalse);
     });
   });
 }

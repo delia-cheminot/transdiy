@@ -47,6 +47,7 @@ dependencies:
   timezone: ^0.10.1
   flutter_timezone: ^5.0.1
   shared_preferences: ^2.5.4
+  material_symbols_icons: ^4.2906.0
 
 dev_dependencies:
   flutter_test:

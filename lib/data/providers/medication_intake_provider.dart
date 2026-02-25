@@ -27,6 +27,9 @@ class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> get notTakenIntakes =>
       _intakes.where((intake) => !intake.isTaken).toList();
 
+  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
+      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
+
   MedicationIntakeProvider({Repository<MedicationIntake>? repository})
       : repository = repository ?? defaultRepository {
     _init();
@@ -97,11 +100,20 @@ class MedicationIntakeProvider extends ChangeNotifier {
         .takenDateTime;
   }
 
-  DateTime? getLastIntakeDate() {
-    if (takenIntakes.isEmpty) return null;
-    return takenIntakes
+  DateTime? getLastIntakeDateFromList(List<MedicationIntake> intakes) {
+    if (intakes.isEmpty) return null;
+    return intakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b)
         .takenDateTime;
+  }
+
+  DateTime? getLastIntakeDate() {
+    return getLastIntakeDateFromList(takenIntakes);
+  }
+
+  DateTime? getLastIntakeDateForSchedule(int scheduleId) {
+    final scheduleIntakes = getTakenIntakesForSchedule(scheduleId);
+    return getLastIntakeDateFromList(scheduleIntakes);
   }
 
   MedicationIntake? getLastTakenIntake() {
