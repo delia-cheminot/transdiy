@@ -84,15 +84,16 @@ class HomePage extends StatelessWidget {
     }
 
     for (final schedule in overdueSchedules) {
-      widgets.add(_buildOverdueTile(context, schedule));
+      widgets.add(_buildIntakeTile(context, schedule, ScheduleStatus.overdue));
     }
 
     for (final schedule in todayOverdueSchedules) {
-      widgets.add(_buildTodayOverdueTile(context, schedule));
+      widgets.add(
+          _buildIntakeTile(context, schedule, ScheduleStatus.todayOverdue));
     }
 
     for (final schedule in todaySchedules) {
-      widgets.add(_buildTodayTile(context, schedule));
+      widgets.add(_buildIntakeTile(context, schedule, ScheduleStatus.today));
     }
 
     return widgets;
@@ -124,59 +125,92 @@ class HomePage extends StatelessWidget {
     ];
 
     for (final schedule in upcomingSchedules) {
-      widgets.add(_buildUpcomingTile(context, schedule));
+      widgets.add(_buildIntakeTile(context, schedule, ScheduleStatus.upcoming));
     }
 
     return widgets;
   }
 
-  Widget _buildTodayTile(
-    BuildContext context,
-    MedicationSchedule schedule,
-  ) {
+  Widget _buildIntakeTile(BuildContext context, MedicationSchedule schedule,
+      ScheduleStatus status) {
     final theme = Theme.of(context);
-    return Card(
-      color: theme.colorScheme.primaryContainer,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              fullscreenDialog: true,
-              builder: (context) =>
-                  TakeMedicationPage(schedule, normalizedToday()),
-            ),
+
+    List<String> buildSubtitle() {
+      switch (status) {
+        case ScheduleStatus.today:
+          return ["Next intake today"];
+
+        case ScheduleStatus.overdue:
+          final lastTaken = context
+              .watch<MedicationIntakeProvider>()
+              .getLastIntakeDateForSchedule(schedule.id);
+          final lastTakenText = lastTaken != null
+              ? "Last taken ${DateFormat.MMMMd().format(lastTaken)}"
+              : "Never taken yet";
+          final lastScheduledText =
+              DateFormat.MMMMd().format(schedule.getLastDate()!);
+          return [
+            "Due $lastScheduledText",
+            lastTakenText,
+          ];
+
+        case ScheduleStatus.todayOverdue:
+          final lastTaken = context
+              .watch<MedicationIntakeProvider>()
+              .getLastIntakeDateForSchedule(schedule.id);
+          final lastTakenText = lastTaken != null
+              ? "Last taken ${DateFormat.MMMMd().format(lastTaken)}"
+              : "Never taken yet";
+          return [
+            "Scheduled today",
+            lastTakenText,
+          ];
+
+        case ScheduleStatus.upcoming:
+          final nextDateText =
+              DateFormat.MMMMd().format(schedule.getNextDate());
+          return ["Next intake on $nextDateText"];
+      }
+    }
+
+    Color? getTileColor() {
+      switch (status) {
+        case ScheduleStatus.today:
+          return Theme.of(context).colorScheme.primaryContainer;
+        case ScheduleStatus.overdue:
+          return Theme.of(context).colorScheme.errorContainer;
+        case ScheduleStatus.todayOverdue:
+          return Theme.of(context).colorScheme.errorContainer;
+        default:
+          return null;
+      }
+    }
+
+    CircleAvatar getTileIcon() {
+      switch (status) {
+        case ScheduleStatus.today:
+          return CircleAvatar(
+            backgroundColor: theme.colorScheme.onPrimaryContainer,
+            child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg"),
           );
-        },
-        child: ListTile(
-          leading: CircleAvatar(
+        case ScheduleStatus.overdue:
+          return CircleAvatar(
+              backgroundColor: theme.colorScheme.onErrorContainer,
+              child: Icon(Icons.error_outline));
+        case ScheduleStatus.todayOverdue:
+          return CircleAvatar(
+              backgroundColor: theme.colorScheme.onErrorContainer,
+              child: Icon(Icons.error_outline));
+        default:
+          return CircleAvatar(
             backgroundColor: Colors.transparent,
             child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg"),
-          ),
-          title: Text(schedule.name),
-          subtitle: Text("Next intake today"),
-          trailing: const Icon(Icons.play_circle),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTodayOverdueTile(
-    BuildContext context,
-    MedicationSchedule schedule,
-  ) {
-    final theme = Theme.of(context);
-
-    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-
-    final lastTaken =
-        medicationIntakeProvider.getLastIntakeDateForSchedule(schedule.id);
-    final lastTakenText = lastTaken != null
-        ? "Last taken ${DateFormat.MMMMd().format(lastTaken)}"
-        : "Never taken yet";
+          );
+      }
+    }
 
     return Card(
-      color: theme.colorScheme.errorContainer,
+      color: getTileColor(),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
@@ -189,90 +223,12 @@ class HomePage extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: Icon(Icons.access_time, color: theme.colorScheme.onErrorContainer),
-          ),
-          title: Text(schedule.name),
-          subtitle: Text("Scheduled today\n$lastTakenText"),
-          trailing: const Icon(Icons.play_circle),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOverdueTile(
-    BuildContext context,
-    MedicationSchedule schedule,
-  ) {
-    final theme = Theme.of(context);
-    final intakeProvider = context.watch<MedicationIntakeProvider>();
-
-    final lastTaken = intakeProvider.getLastIntakeDateForSchedule(schedule.id);
-    final lastScheduledText =
-        DateFormat.MMMMd().format(schedule.getLastDate()!);
-    final lastTakenText =
-        lastTaken != null ? DateFormat.MMMMd().format(lastTaken) : "Never";
-
-    return Card(
-      color: theme.colorScheme.errorContainer,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              fullscreenDialog: true,
-              builder: (context) =>
-                  TakeMedicationPage(schedule, normalizedToday()),
-            ),
-          );
-        },
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: Icon(Icons.error_outline, color: theme.colorScheme.onErrorContainer),
-          ),
+          leading: getTileIcon(),
           title: Text(schedule.name),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Due $lastScheduledText"),
-              Text("Last taken: $lastTakenText"),
-            ],
+            children: buildSubtitle().map((text) => Text(text)).toList(),
           ),
-          trailing: const Icon(Icons.play_circle),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUpcomingTile(
-    BuildContext context,
-    MedicationSchedule schedule,
-  ) {
-    final nextDate = schedule.getNextDate();
-    final nextDateText = DateFormat.MMMMd().format(nextDate);
-
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: SvgPicture.asset("assets/pharmacie/tablets/full_tablet.svg"),
-          ),
-          title: Text(schedule.name),
-          subtitle: Text("Next intake on $nextDateText"),
-          trailing: const Icon(Icons.play_circle),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                fullscreenDialog: true,
-                builder: (context) =>
-                    TakeMedicationPage(schedule, normalizedToday()),
-              ),
-            );
-          },
         ),
       ),
     );
