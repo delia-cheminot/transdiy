@@ -35,90 +35,74 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildTodaySection(BuildContext context) {
+  List<Widget> _buildScheduleSection(
+    BuildContext context, {
+    required String title,
+    required List<ScheduleStatus> statuses,
+    bool showAllDoneMessage = false,
+  }) {
     final theme = Theme.of(context);
-    final medicationScheduleProvider =
-        context.watch<MedicationScheduleProvider>();
-    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-    final scheduleManager =
-        ScheduleManager(medicationScheduleProvider, medicationIntakeProvider);
-
-    final overdueSchedules =
-        scheduleManager.getSchedulesByStatus(ScheduleStatus.overdue);
-
-    final todayOverdueSchedules =
-        scheduleManager.getSchedulesByStatus(ScheduleStatus.todayOverdue);
-
-    final todaySchedules =
-        scheduleManager.getSchedulesByStatus(ScheduleStatus.today);
-
-    final hasSchedulesToday = overdueSchedules.isNotEmpty ||
-        todayOverdueSchedules.isNotEmpty ||
-        todaySchedules.isNotEmpty;
-
-    final widgets = <Widget>[];
-
-    if (!hasSchedulesToday) {
-      return [];
-    }
-
-    widgets.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 8, bottom: 8),
-        child: Text(
-          "Today - ${DateFormat.MMMMd().format(DateTime.now())}",
-          style: theme.textTheme.headlineMedium,
-        ),
-      ),
+    final scheduleManager = ScheduleManager(
+      context.watch<MedicationScheduleProvider>(),
+      context.watch<MedicationIntakeProvider>(),
     );
 
-    for (final schedule in overdueSchedules) {
-      widgets
-          .add(IntakeTile(schedule: schedule, status: ScheduleStatus.overdue));
-    }
+    final schedules = statuses
+        .expand((status) => scheduleManager.getSchedulesByStatus(status))
+        .toList();
 
-    for (final schedule in todayOverdueSchedules) {
-      widgets.add(
-          IntakeTile(schedule: schedule, status: ScheduleStatus.todayOverdue));
-    }
-
-    for (final schedule in todaySchedules) {
-      widgets.add(IntakeTile(schedule: schedule, status: ScheduleStatus.today));
-    }
-
-    return widgets;
-  }
-
-  List<Widget> _buildUpcomingSection(BuildContext context) {
-    final theme = Theme.of(context);
-    final medicationScheduleProvider =
-        context.watch<MedicationScheduleProvider>();
-    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-    final scheduleManager =
-        ScheduleManager(medicationScheduleProvider, medicationIntakeProvider);
-
-    final upcomingSchedules =
-        scheduleManager.getSchedulesByStatus(ScheduleStatus.upcoming);
-
-    if (upcomingSchedules.isEmpty) {
-      return [];
-    }
+    if (schedules.isEmpty && !showAllDoneMessage) return [];
 
     final widgets = <Widget>[
       Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          "Upcoming",
-          style: theme.textTheme.headlineMedium,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Text(title, style: theme.textTheme.headlineMedium),
       ),
     ];
 
-    for (final schedule in upcomingSchedules) {
-      widgets
-          .add(IntakeTile(schedule: schedule, status: ScheduleStatus.upcoming));
+    if (schedules.isEmpty && showAllDoneMessage) {
+      widgets.add(
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(Icons.check_circle_outline,
+                  color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Text("All done for today!", style: theme.textTheme.bodyMedium),
+            ],
+          ),
+        ),
+      );
+      return widgets;
     }
+
+    widgets.addAll(schedules.map((schedule) {
+      final status = statuses.firstWhere(
+        (s) => scheduleManager.getSchedulesByStatus(s).contains(schedule),
+      );
+      return IntakeTile(schedule: schedule, status: status);
+    }));
 
     return widgets;
   }
+
+  List<Widget> _buildTodaySection(BuildContext context) =>
+      _buildScheduleSection(
+        context,
+        title: "Today - ${DateFormat.MMMMd().format(DateTime.now())}",
+        statuses: [
+          ScheduleStatus.overdue,
+          ScheduleStatus.todayOverdue,
+          ScheduleStatus.today
+        ],
+        showAllDoneMessage: true,
+      );
+
+  List<Widget> _buildUpcomingSection(BuildContext context) =>
+      _buildScheduleSection(
+        context,
+        title: "Upcoming",
+        statuses: [ScheduleStatus.upcoming],
+      );
 }
