@@ -14,18 +14,18 @@ import 'package:provider/provider.dart';
 class IntakeTile extends StatelessWidget {
   const IntakeTile({
     super.key,
-    required this.context,
     required this.schedule,
     required this.status,
   });
 
-  final BuildContext context;
   final MedicationSchedule schedule;
   final ScheduleStatus status;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final supplyItemProvider = context.watch<SupplyItemProvider>();
 
     String getDaysUntilIntake() {
       return schedule
@@ -36,8 +36,7 @@ class IntakeTile extends StatelessWidget {
     }
 
     String? getDaysSinceLastTaken() {
-      return context
-          .watch<MedicationIntakeProvider>()
+      return medicationIntakeProvider
           .getLastIntakeDateForSchedule(schedule.id)
           ?.difference(DateTime.now())
           .inDays
@@ -56,8 +55,8 @@ class IntakeTile extends StatelessWidget {
 
     String getIntakeInfo() {
       InjectionSide nextSide = MedicationIntakeManager(
-        context.watch<MedicationIntakeProvider>(),
-        context.watch<SupplyItemProvider>(),
+        medicationIntakeProvider,
+        supplyItemProvider,
       ).getNextSide();
       return "${schedule.dose} mg • ${nextSide.name} side";
     }
@@ -83,8 +82,7 @@ class IntakeTile extends StatelessWidget {
     String? getWarningText() {
       switch (status) {
         case ScheduleStatus.today:
-          final lastTaken = context
-              .watch<MedicationIntakeProvider>()
+          final lastTaken = medicationIntakeProvider
               .getLastIntakeDateForSchedule(schedule.id);
           final lastScheduled = schedule.getLastDate();
           if (lastTaken != null && lastTaken != lastScheduled) {
@@ -97,8 +95,7 @@ class IntakeTile extends StatelessWidget {
 
         case ScheduleStatus.overdue:
         case ScheduleStatus.todayOverdue:
-          final lastTaken = context
-              .watch<MedicationIntakeProvider>()
+          final lastTaken = medicationIntakeProvider
               .getLastIntakeDateForSchedule(schedule.id);
           final lastTakenText = lastTaken != null
               ? "Last taken ${getDaysSinceLastTaken()} days ago (${DateFormat.MMMd().format(lastTaken)})"

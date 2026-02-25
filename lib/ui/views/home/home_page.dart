@@ -86,22 +86,17 @@ class HomePage extends StatelessWidget {
     }
 
     for (final schedule in overdueSchedules) {
-      widgets.add(IntakeTile(
-          context: context,
-          schedule: schedule,
-          status: ScheduleStatus.overdue));
+      widgets
+          .add(IntakeTile(schedule: schedule, status: ScheduleStatus.overdue));
     }
 
     for (final schedule in todayOverdueSchedules) {
-      widgets.add(IntakeTile(
-          context: context,
-          schedule: schedule,
-          status: ScheduleStatus.todayOverdue));
+      widgets.add(
+          IntakeTile(schedule: schedule, status: ScheduleStatus.todayOverdue));
     }
 
     for (final schedule in todaySchedules) {
-      widgets.add(IntakeTile(
-          context: context, schedule: schedule, status: ScheduleStatus.today));
+      widgets.add(IntakeTile(schedule: schedule, status: ScheduleStatus.today));
     }
 
     return widgets;
@@ -134,7 +129,6 @@ class HomePage extends StatelessWidget {
 
     for (final schedule in upcomingSchedules) {
       widgets.add(IntakeTile(
-          context: context,
           schedule: schedule,
           status: ScheduleStatus.upcoming));
     }
