@@ -41,11 +41,11 @@ class GraphCalculator {
   }
 
   List<FlSpot> generateFlSpots(Map<int, double> daysAndDoses,
-      {double tMin = 0, double tMax = 120, int numPoints = 1000}) {
+      {double tMin = 0, int numPoints = 1000}) {
     final List<math.Point> points = [];
     if (daysAndDoses.isEmpty) return <FlSpot>[];
     final int maxDay = daysAndDoses.keys.reduce(math.max);
-    tMax = maxDay.toDouble() + tMaxOffset;
+    final double tMax = maxDay.toDouble() + tMaxOffset;
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;

@@ -209,8 +209,20 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i2.Repository<_i9.MedicationIntake>);
 
   @override
+  bool get isLoading => (super.noSuchMethod(
+        Invocation.getter(#isLoading),
+        returnValue: false,
+      ) as bool);
+
+  @override
   List<_i9.MedicationIntake> get intakes => (super.noSuchMethod(
         Invocation.getter(#intakes),
+        returnValue: <_i9.MedicationIntake>[],
+      ) as List<_i9.MedicationIntake>);
+
+  @override
+  List<_i9.MedicationIntake> get takenIntakesSortedDesc => (super.noSuchMethod(
+        Invocation.getter(#takenIntakesSortedDesc),
         returnValue: <_i9.MedicationIntake>[],
       ) as List<_i9.MedicationIntake>);
 
@@ -227,16 +239,20 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as List<_i9.MedicationIntake>);
 
   @override
-  bool get isLoading => (super.noSuchMethod(
-        Invocation.getter(#isLoading),
-        returnValue: false,
-      ) as bool);
-
-  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
       ) as bool);
+
+  @override
+  List<_i9.MedicationIntake> getTakenIntakesForSchedule(int? scheduleId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTakenIntakesForSchedule,
+          [scheduleId],
+        ),
+        returnValue: <_i9.MedicationIntake>[],
+      ) as List<_i9.MedicationIntake>);
 
   @override
   _i5.Future<void> fetchIntakes() => (super.noSuchMethod(
@@ -315,6 +331,20 @@ class MockMedicationIntakeProvider extends _i1.Mock
         ),
         returnValue: <int, double>{},
       ) as Map<int, double>);
+
+  @override
+  DateTime? getLastIntakeDateFromList(List<_i9.MedicationIntake>? intakes) =>
+      (super.noSuchMethod(Invocation.method(
+        #getLastIntakeDateFromList,
+        [intakes],
+      )) as DateTime?);
+
+  @override
+  DateTime? getLastIntakeDateForSchedule(int? scheduleId) =>
+      (super.noSuchMethod(Invocation.method(
+        #getLastIntakeDateForSchedule,
+        [scheduleId],
+      )) as DateTime?);
 
   @override
   void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(

@@ -1,0 +1,194 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/controllers/schedule_manager.dart';
+import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/ui/views/home/take_medication_page.dart';
+import 'package:mona/util/date_helpers.dart';
+import 'package:provider/provider.dart';
+
+class IntakeTile extends StatelessWidget {
+  const IntakeTile({
+    super.key,
+    required this.schedule,
+    required this.status,
+  });
+
+  final MedicationSchedule schedule;
+  final ScheduleStatus status;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final supplyItemProvider = context.watch<SupplyItemProvider>();
+    final now = DateTime.now();
+
+    final viewModel = IntakeTileViewModel(
+      schedule: schedule,
+      status: status,
+      intakeProvider: medicationIntakeProvider,
+      supplyProvider: supplyItemProvider,
+      now: now,
+      theme: Theme.of(context),
+    );
+
+    return Card.filled(
+      color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              fullscreenDialog: true,
+              builder: (context) =>
+                  TakeMedicationPage(schedule, normalizedToday()),
+            ),
+          );
+        },
+        child: ListTile(
+          leading: viewModel.tileIcon,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                viewModel.scheduledText,
+                style: theme.textTheme.labelMedium,
+              ),
+              Text(schedule.name, style: theme.textTheme.titleMedium),
+            ],
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (status != ScheduleStatus.upcoming) Text(viewModel.intakeInfo),
+              if (viewModel.warningText != null)
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      WidgetSpan(
+                        child: Icon(Icons.error_outline, size: 16),
+                      ),
+                      const TextSpan(text: " "),
+                      TextSpan(text: viewModel.warningText!),
+                    ],
+                  ),
+                )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class IntakeTileViewModel {
+  IntakeTileViewModel(
+      {required this.schedule,
+      required this.status,
+      required this.intakeProvider,
+      required this.supplyProvider,
+      required this.now,
+      required this.theme});
+
+  final MedicationSchedule schedule;
+  final ScheduleStatus status;
+  final MedicationIntakeProvider intakeProvider;
+  final SupplyItemProvider supplyProvider;
+  final DateTime now;
+  final ThemeData theme;
+
+  DateTime get nextScheduled => schedule.getNextDate();
+  DateTime? get lastScheduled => schedule.getLastDate();
+  DateTime? get lastTaken =>
+      intakeProvider.getLastIntakeDateForSchedule(schedule.id);
+
+  int get daysUntilIntake => nextScheduled.difference(now).inDays;
+
+  int? get daysSinceLastTaken => lastTaken?.difference(now).inDays.abs();
+
+  int? get daysSinceLastScheduled =>
+      lastScheduled?.difference(now).inDays.abs();
+
+  String get intakeInfo {
+    final nextSide = MedicationIntakeManager(
+      intakeProvider,
+      supplyProvider,
+    ).getNextSide();
+
+    return "${schedule.dose} mg • ${nextSide.name} side";
+  }
+
+  String get scheduledText {
+    switch (status) {
+      case ScheduleStatus.today:
+      case ScheduleStatus.todayOverdue:
+        return "Today";
+
+      case ScheduleStatus.overdue:
+        final formatted = DateFormat.MMMMd().format(lastScheduled!);
+        return "$formatted - $daysSinceLastScheduled days ago";
+
+      case ScheduleStatus.upcoming:
+        final formatted = DateFormat.MMMMd().format(nextScheduled);
+        return "$formatted - in $daysUntilIntake days";
+    }
+  }
+
+  String? get warningText {
+    switch (status) {
+      case ScheduleStatus.today:
+        if (lastTaken != null && lastTaken != lastScheduled) {
+          final formatted = DateFormat.MMMd().format(lastTaken!);
+          return "Last taken $daysSinceLastTaken days ago ($formatted)";
+        }
+        return null;
+
+      case ScheduleStatus.upcoming:
+        return null;
+
+      case ScheduleStatus.overdue:
+      case ScheduleStatus.todayOverdue:
+        if (lastTaken == null) {
+          return "Never taken yet";
+        }
+
+        final formatted = DateFormat.MMMd().format(lastTaken!);
+        return "Last taken $daysSinceLastTaken days ago ($formatted)";
+    }
+  }
+
+  bool get isActive =>
+      status == ScheduleStatus.today ||
+      status == ScheduleStatus.overdue ||
+      status == ScheduleStatus.todayOverdue;
+
+  Widget get tileIcon {
+    if (status == ScheduleStatus.upcoming) {
+      return CircleAvatar(
+        backgroundColor: theme.colorScheme.secondary,
+        child: Text(
+          daysUntilIntake.toString(),
+          style: TextStyle(
+            color: theme.colorScheme.onSecondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+
+    final icon =
+        status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
+
+    return CircleAvatar(
+      backgroundColor: theme.colorScheme.onPrimaryContainer,
+      child: Icon(
+        icon,
+        color: theme.colorScheme.primaryContainer,
+      ),
+    );
+  }
+}

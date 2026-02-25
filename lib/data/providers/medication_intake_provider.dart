@@ -5,6 +5,7 @@ import 'package:mona/services/repository.dart';
 
 class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
+  List<MedicationIntake> _takenIntakesSortedDesc = [];
   bool _isLoading = true;
   final Repository<MedicationIntake> repository;
 
@@ -14,12 +15,20 @@ class MedicationIntakeProvider extends ChangeNotifier {
     fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
   );
 
+  bool get isLoading => _isLoading;
+
   List<MedicationIntake> get intakes => _intakes;
+
+  List<MedicationIntake> get takenIntakesSortedDesc => _takenIntakesSortedDesc;
+
   List<MedicationIntake> get takenIntakes =>
       _intakes.where((intake) => intake.isTaken).toList();
+
   List<MedicationIntake> get notTakenIntakes =>
       _intakes.where((intake) => !intake.isTaken).toList();
-  bool get isLoading => _isLoading;
+
+  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
+      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
 
   MedicationIntakeProvider({Repository<MedicationIntake>? repository})
       : repository = repository ?? defaultRepository {
@@ -28,14 +37,20 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Future<void> _init() async {
     _intakes = await repository.getAll();
+    _updateTakenSorted();
     _isLoading = false;
     notifyListeners();
   }
 
   Future<void> fetchIntakes() async {
     _intakes = await repository.getAll();
-    _intakes.sort((a, b) => b.scheduledDateTime.compareTo(a.scheduledDateTime));
+    _updateTakenSorted();
     notifyListeners();
+  }
+
+  void _updateTakenSorted() {
+    _takenIntakesSortedDesc = List<MedicationIntake>.from(takenIntakes)
+      ..sort((a, b) => b.takenDateTime!.compareTo(a.takenDateTime!));
   }
 
   Future<void> deleteIntakeFromId(int id) async {
@@ -85,11 +100,20 @@ class MedicationIntakeProvider extends ChangeNotifier {
         .takenDateTime;
   }
 
-  DateTime? getLastIntakeDate() {
-    if (takenIntakes.isEmpty) return null;
-    return takenIntakes
+  DateTime? getLastIntakeDateFromList(List<MedicationIntake> intakes) {
+    if (intakes.isEmpty) return null;
+    return intakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b)
         .takenDateTime;
+  }
+
+  DateTime? getLastIntakeDate() {
+    return getLastIntakeDateFromList(takenIntakes);
+  }
+
+  DateTime? getLastIntakeDateForSchedule(int scheduleId) {
+    final scheduleIntakes = getTakenIntakesForSchedule(scheduleId);
+    return getLastIntakeDateFromList(scheduleIntakes);
   }
 
   MedicationIntake? getLastTakenIntake() {

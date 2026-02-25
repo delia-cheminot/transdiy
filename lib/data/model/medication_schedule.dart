@@ -171,6 +171,18 @@ class MedicationSchedule {
     return dates;
   }
 
+  bool isScheduledForToday() {
+    return getNextDate() == normalizedToday();
+  }
+
+  bool isLate(DateTime? lastTakenDate) {
+    final lastDate = getLastDate();
+
+    if (lastDate == null || !lastDate.isBefore(normalizedToday())) return false;
+
+    return lastTakenDate == null || lastTakenDate.isBefore(lastDate);
+  }
+
   String generateUid() {
     return '$name-$dose-$intervalDays-${DateTime.now().toIso8601String()}';
   }
