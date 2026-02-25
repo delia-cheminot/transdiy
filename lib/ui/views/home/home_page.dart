@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +21,15 @@ class HomePage extends StatelessWidget {
       isEmpty: medicationScheduleProvider.schedules.isEmpty,
       emptyMessage: 'Add a schedule in your profile to get started!',
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ..._buildTodaySection(context),
-            ..._buildUpcomingSection(context),
-          ],
+        child: Padding(
+          padding: pagePadding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ..._buildTodaySection(context),
+              ..._buildUpcomingSection(context),
+            ],
+          ),
         ),
       ),
     );
@@ -55,7 +60,7 @@ class HomePage extends StatelessWidget {
 
     widgets.add(
       Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 8, bottom: 8),
         child: Text(
           "Today - ${DateFormat.MMMMd().format(DateTime.now())}",
           style: theme.textTheme.headlineMedium,
