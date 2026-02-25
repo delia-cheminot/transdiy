@@ -33,33 +33,8 @@ class IntakeTile extends StatelessWidget {
       intakeProvider: medicationIntakeProvider,
       supplyProvider: supplyItemProvider,
       now: now,
+      theme: Theme.of(context),
     );
-
-    CircleAvatar getTileIcon() {
-      if (status == ScheduleStatus.upcoming) {
-        return CircleAvatar(
-          backgroundColor: theme.colorScheme.secondary,
-          child: Text(
-            viewModel.daysUntilIntake.toString(),
-            style: TextStyle(
-              color: theme.colorScheme.onSecondary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
-      }
-
-      final icon =
-          status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
-
-      return CircleAvatar(
-        backgroundColor: theme.colorScheme.onPrimaryContainer,
-        child: Icon(
-          icon,
-          color: theme.colorScheme.primaryContainer,
-        ),
-      );
-    }
 
     return Card.filled(
       color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
@@ -75,7 +50,7 @@ class IntakeTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          leading: getTileIcon(),
+          leading: viewModel.tileIcon,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -111,19 +86,20 @@ class IntakeTile extends StatelessWidget {
 }
 
 class IntakeTileViewModel {
-  IntakeTileViewModel({
-    required this.schedule,
-    required this.status,
-    required this.intakeProvider,
-    required this.supplyProvider,
-    required this.now,
-  });
+  IntakeTileViewModel(
+      {required this.schedule,
+      required this.status,
+      required this.intakeProvider,
+      required this.supplyProvider,
+      required this.now,
+      required this.theme});
 
   final MedicationSchedule schedule;
   final ScheduleStatus status;
   final MedicationIntakeProvider intakeProvider;
   final SupplyItemProvider supplyProvider;
   final DateTime now;
+  final ThemeData theme;
 
   DateTime get nextScheduled => schedule.getNextDate();
   DateTime? get lastScheduled => schedule.getLastDate();
@@ -189,4 +165,30 @@ class IntakeTileViewModel {
       status == ScheduleStatus.today ||
       status == ScheduleStatus.overdue ||
       status == ScheduleStatus.todayOverdue;
+
+  Widget get tileIcon {
+    if (status == ScheduleStatus.upcoming) {
+      return CircleAvatar(
+        backgroundColor: theme.colorScheme.secondary,
+        child: Text(
+          daysUntilIntake.toString(),
+          style: TextStyle(
+            color: theme.colorScheme.onSecondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
+
+    final icon =
+        status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
+
+    return CircleAvatar(
+      backgroundColor: theme.colorScheme.onPrimaryContainer,
+      child: Icon(
+        icon,
+        color: theme.colorScheme.primaryContainer,
+      ),
+    );
+  }
 }
