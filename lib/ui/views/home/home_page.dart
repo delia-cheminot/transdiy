@@ -58,6 +58,10 @@ class HomePage extends StatelessWidget {
 
     final widgets = <Widget>[];
 
+    if (!hasSchedulesToday) {
+      return [];
+    }
+
     widgets.add(
       Padding(
         padding: const EdgeInsets.only(top: 8, bottom: 8),
@@ -67,23 +71,6 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-
-    if (!hasSchedulesToday) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Icon(Icons.check_circle_outline,
-                  color: theme.colorScheme.primary),
-              const SizedBox(width: 8),
-              Text("All done for today!", style: theme.textTheme.bodyMedium),
-            ],
-          ),
-        ),
-      );
-      return widgets;
-    }
 
     for (final schedule in overdueSchedules) {
       widgets
@@ -128,9 +115,8 @@ class HomePage extends StatelessWidget {
     ];
 
     for (final schedule in upcomingSchedules) {
-      widgets.add(IntakeTile(
-          schedule: schedule,
-          status: ScheduleStatus.upcoming));
+      widgets
+          .add(IntakeTile(schedule: schedule, status: ScheduleStatus.upcoming));
     }
 
     return widgets;
