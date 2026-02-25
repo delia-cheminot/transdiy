@@ -2,7 +2,7 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 
-enum ScheduleStatus { today, overdue, upcoming }
+enum ScheduleStatus { overdue, todayOverdue, today, upcoming }
 
 class ScheduleManager {
   final MedicationScheduleProvider _medicationScheduleProvider;
@@ -19,12 +19,17 @@ class ScheduleManager {
 
       switch (status) {
         case ScheduleStatus.today:
-          if (schedule.isScheduledForToday()) {
+          if (schedule.isScheduledForToday() && !schedule.isLate(lastTaken)) {
+            schedules.add(schedule);
+          }
+          break;
+        case ScheduleStatus.todayOverdue:
+          if (schedule.isScheduledForToday() && schedule.isLate(lastTaken)) {
             schedules.add(schedule);
           }
           break;
         case ScheduleStatus.overdue:
-          if (schedule.isLate(lastTaken)) {
+          if (!schedule.isScheduledForToday() && schedule.isLate(lastTaken)) {
             schedules.add(schedule);
           }
           break;

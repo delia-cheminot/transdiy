@@ -31,49 +31,68 @@ void main() {
 
   group('ScheduleManager - getSchedulesByStatus', () {
     late MedicationSchedule todaySchedule;
+    late MedicationSchedule todayOverdueSchedule;
     late MedicationSchedule overdueSchedule;
     late MedicationSchedule upcomingSchedule;
 
     setUp(() {
+      final today = normalizedToday();
+
       todaySchedule = MedicationSchedule(
         id: 1,
         name: 'TodayMed',
         dose: Decimal.one,
         intervalDays: 2,
-        startDate: normalizedToday(),
+        startDate: today,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(1))
-          .thenReturn(normalizedToday().subtract(const Duration(days: 2)));
+          .thenReturn(today.subtract(const Duration(days: 2)));
+
+      todayOverdueSchedule = MedicationSchedule(
+        id: 4,
+        name: 'TodayLateMed',
+        dose: Decimal.one,
+        intervalDays: 2,
+        startDate: today.subtract(const Duration(days: 4)),
+      );
+      when(mockIntakeProvider.getLastIntakeDateForSchedule(4))
+          .thenReturn(today.subtract(const Duration(days: 3)));
 
       overdueSchedule = MedicationSchedule(
         id: 2,
         name: 'OverdueMed',
         dose: Decimal.one,
         intervalDays: 2,
-        startDate: normalizedToday().subtract(const Duration(days: 9)),
+        startDate: today.subtract(const Duration(days: 9)),
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(2))
-          .thenReturn(normalizedToday().subtract(const Duration(days: 3)));
+          .thenReturn(today.subtract(const Duration(days: 4)));
 
       upcomingSchedule = MedicationSchedule(
         id: 3,
         name: 'UpcomingMed',
         dose: Decimal.one,
         intervalDays: 2,
-        startDate: normalizedToday().add(const Duration(days: 10)),
+        startDate: today.add(const Duration(days: 10)),
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(3)).thenReturn(null);
 
       when(mockScheduleProvider.schedules).thenReturn([
         todaySchedule,
+        todayOverdueSchedule,
         overdueSchedule,
         upcomingSchedule,
       ]);
     });
 
-    test('returns only today schedules', () {
+    test('returns only today schedules (not late)', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.today);
       expect(result, [todaySchedule]);
+    });
+
+    test('returns only todayOverdue schedules', () {
+      final result = manager.getSchedulesByStatus(ScheduleStatus.todayOverdue);
+      expect(result, [todayOverdueSchedule]);
     });
 
     test('returns only overdue schedules', () {
@@ -88,13 +107,21 @@ void main() {
 
     test('all schedules accounted for across statuses', () {
       final today = manager.getSchedulesByStatus(ScheduleStatus.today);
+      final todayOverdue =
+          manager.getSchedulesByStatus(ScheduleStatus.todayOverdue);
       final overdue = manager.getSchedulesByStatus(ScheduleStatus.overdue);
       final upcoming = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
 
-      final combined = [...today, ...overdue, ...upcoming];
-      expect(combined.length, 3);
-      expect(combined,
-          containsAll([todaySchedule, overdueSchedule, upcomingSchedule]));
+      final combined = [...today, ...todayOverdue, ...overdue, ...upcoming];
+      expect(combined.length, 4);
+      expect(
+          combined,
+          containsAll([
+            todaySchedule,
+            todayOverdueSchedule,
+            overdueSchedule,
+            upcomingSchedule
+          ]));
     });
   });
 }
