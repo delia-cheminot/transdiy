@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
@@ -62,15 +63,17 @@ class HomePage extends StatelessWidget {
 
     if (schedules.isEmpty && showAllDoneMessage) {
       widgets.add(
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Icon(Icons.check_circle_outline,
-                  color: theme.colorScheme.primary),
-              const SizedBox(width: 8),
-              Text("All done for today!", style: theme.textTheme.bodyMedium),
-            ],
+        Card.filled(
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: theme.colorScheme.tertiary,
+              child: Icon(
+                Symbols.check,
+                color: theme.colorScheme.onTertiary,
+              ),
+            ),
+            title: Text("All done !", style: theme.textTheme.titleMedium),
+            subtitle: Text("No intakes due today"),
           ),
         ),
       );
