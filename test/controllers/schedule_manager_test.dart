@@ -138,14 +138,15 @@ void main() {
       final upcoming = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
 
       final combined = [...today, ...todayOverdue, ...overdue, ...upcoming];
-      expect(combined.length, 4);
+      expect(combined.length, 5);
       expect(
           combined,
           containsAll([
             todaySchedule,
             todayOverdueSchedule,
             overdueSchedule,
-            upcomingSchedule
+            upcomingSchedule,
+            todayTakenSchedule
           ]));
     });
   });
