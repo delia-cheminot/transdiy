@@ -31,6 +31,7 @@ void main() {
 
   group('ScheduleManager - getSchedulesByStatus', () {
     late MedicationSchedule todaySchedule;
+    late MedicationSchedule todayTakenSchedule;
     late MedicationSchedule todayOverdueSchedule;
     late MedicationSchedule overdueSchedule;
     late MedicationSchedule upcomingSchedule;
@@ -47,6 +48,16 @@ void main() {
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(1))
           .thenReturn(today.subtract(const Duration(days: 2)));
+
+      todayTakenSchedule = MedicationSchedule(
+        id: 5,
+        name: 'TodayMed',
+        dose: Decimal.one,
+        intervalDays: 2,
+        startDate: today,
+      );
+      when(mockIntakeProvider.getLastIntakeDateForSchedule(5))
+          .thenReturn(normalizedToday());
 
       todayOverdueSchedule = MedicationSchedule(
         id: 4,
@@ -81,13 +92,32 @@ void main() {
         todaySchedule,
         todayOverdueSchedule,
         overdueSchedule,
+        todayTakenSchedule,
         upcomingSchedule,
       ]);
     });
 
-    test('returns only today schedules (not late)', () {
+    test('schedules due today, not late and not taken have today status', () {
+      final today = normalizedToday();
+
+      todaySchedule = MedicationSchedule(
+        id: 1,
+        name: 'TodayMed',
+        dose: Decimal.one,
+        intervalDays: 2,
+        startDate: today,
+      );
+
+      when(mockIntakeProvider.getLastIntakeDateForSchedule(1))
+          .thenReturn(today.subtract(const Duration(days: 2)));
+
       final result = manager.getSchedulesByStatus(ScheduleStatus.today);
       expect(result, [todaySchedule]);
+    });
+
+    test('upcoming schedules return upcoming and today if already taken', () {
+      final result = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
+      expect(result, [todayTakenSchedule, upcomingSchedule]);
     });
 
     test('returns only todayOverdue schedules', () {
@@ -98,11 +128,6 @@ void main() {
     test('returns only overdue schedules', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.overdue);
       expect(result, [overdueSchedule]);
-    });
-
-    test('returns only upcoming schedules', () {
-      final result = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
-      expect(result, [upcomingSchedule]);
     });
 
     test('all schedules accounted for across statuses', () {
