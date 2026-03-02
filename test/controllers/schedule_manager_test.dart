@@ -97,7 +97,7 @@ void main() {
       ]);
     });
 
-    test('schedules due today, not late and not taken have today status', () {
+    test('today returns schedules due today, not late and not taken', () {
       final today = normalizedToday();
 
       todaySchedule = MedicationSchedule(
@@ -115,17 +115,17 @@ void main() {
       expect(result, [todaySchedule]);
     });
 
-    test('upcoming schedules return upcoming and today if already taken', () {
+    test('upcoming return upcoming and today if already taken', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
       expect(result, [todayTakenSchedule, upcomingSchedule]);
     });
 
-    test('returns only todayOverdue schedules', () {
+    test('todayOverdue returns only todayOverdue schedules', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.todayOverdue);
       expect(result, [todayOverdueSchedule]);
     });
 
-    test('returns only overdue schedules', () {
+    test('overdue returns only overdue schedules', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.overdue);
       expect(result, [overdueSchedule]);
     });
