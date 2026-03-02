@@ -135,6 +135,9 @@ class IntakeTileViewModel {
       case ScheduleStatus.upcoming:
         final formatted = DateFormat.MMMMd().format(nextScheduled);
         return "$formatted - in $daysUntilIntake days";
+      
+      case ScheduleStatus.taken:
+        return "taken";
     }
   }
 
@@ -148,6 +151,7 @@ class IntakeTileViewModel {
         return null;
 
       case ScheduleStatus.upcoming:
+      case ScheduleStatus.taken:
         return null;
 
       case ScheduleStatus.overdue:

@@ -115,9 +115,9 @@ void main() {
       expect(result, [todaySchedule]);
     });
 
-    test('upcoming return upcoming and today if already taken', () {
+    test('upcoming return upcoming schedules', () {
       final result = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
-      expect(result, [todayTakenSchedule, upcomingSchedule]);
+      expect(result, [upcomingSchedule]);
     });
 
     test('todayOverdue returns only todayOverdue schedules', () {
@@ -136,8 +136,15 @@ void main() {
           manager.getSchedulesByStatus(ScheduleStatus.todayOverdue);
       final overdue = manager.getSchedulesByStatus(ScheduleStatus.overdue);
       final upcoming = manager.getSchedulesByStatus(ScheduleStatus.upcoming);
+      final taken = manager.getSchedulesByStatus(ScheduleStatus.taken);
 
-      final combined = [...today, ...todayOverdue, ...overdue, ...upcoming];
+      final combined = [
+        ...today,
+        ...todayOverdue,
+        ...overdue,
+        ...upcoming,
+        ...taken
+      ];
       expect(combined.length, 5);
       expect(
           combined,
