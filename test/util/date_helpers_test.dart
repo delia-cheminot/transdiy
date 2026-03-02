@@ -45,5 +45,29 @@ void main() {
         expect(today, equals(normalized));
       });
     });
+
+    group('daysBetweenDate', () {
+      final today = DateTime(2026, 3, 2);
+
+      test('returns correct absolute difference for future date', () {
+        final future = today.add(Duration(days: 5));
+        expect(daysBetweenDate(future, origin: today), equals(5));
+      });
+
+      test('returns correct absolute difference for past date', () {
+        final past = today.subtract(Duration(days: 3));
+        expect(daysBetweenDate(past, origin: today), equals(3));
+      });
+
+      test('returns 0 if same date', () {
+        expect(daysBetweenDate(today, origin: today), equals(0));
+      });
+
+      test('uses DateTime.now() if origin is null', () {
+        final now = DateTime.now();
+        final target = now.add(Duration(days: 2));
+        expect(daysBetweenDate(target), equals(2));
+      });
+    });
   });
 }
