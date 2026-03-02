@@ -457,10 +457,11 @@ void main() {
   group('isLate', () {
     test('returns true when lastTaken is before lastDate', () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday().subtract(Duration(days: 14)));
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().subtract(Duration(days: 14)),
+      );
 
       final lastTaken = s.getLastDate()!.subtract(Duration(days: 1));
 
@@ -469,10 +470,11 @@ void main() {
 
     test('returns false when lastTaken is on lastDate', () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday().subtract(Duration(days: 14)));
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().subtract(Duration(days: 14)),
+      );
 
       final lastTaken = s.getLastDate()!;
 
@@ -481,10 +483,11 @@ void main() {
 
     test('returns false when lastTaken is after lastDate', () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday().subtract(Duration(days: 14)));
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().subtract(Duration(days: 14)),
+      );
 
       final lastTaken = s.getLastDate()!.add(Duration(days: 1));
 
@@ -493,10 +496,11 @@ void main() {
 
     test('returns true when lastTaken is null but schedule is overdue', () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday().subtract(Duration(days: 14)));
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().subtract(Duration(days: 14)),
+      );
 
       expect(s.isLate(null), isTrue);
     });
@@ -505,10 +509,11 @@ void main() {
         'returns false when lastTaken is null but treatment is scheduled for today',
         () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday());
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday(),
+      );
 
       expect(s.isLate(null), isFalse);
     });
@@ -517,12 +522,52 @@ void main() {
         'returns false when lastTaken is null but next scheduled date is in the future',
         () {
       final s = MedicationSchedule(
-          name: 'A',
-          dose: Decimal.one,
-          intervalDays: 7,
-          startDate: normalizedToday().add(Duration(days: 3)));
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().add(Duration(days: 3)),
+      );
 
       expect(s.isLate(null), isFalse);
+    });
+  });
+
+  group('isTakenToday', () {
+    test('returns false if no last taken', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().add(Duration(days: 3)),
+      );
+
+      expect(s.isTakenToday(null), false);
+    });
+
+    test('returns false if last taken date is different than today', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().add(Duration(days: 3)),
+      );
+
+      final lastTakenDate = DateTime.now().subtract(const Duration(days: 1));
+
+      expect(s.isTakenToday(lastTakenDate), false);
+    });
+
+    test('returns true if last taken date is today', () {
+      final s = MedicationSchedule(
+        name: 'A',
+        dose: Decimal.one,
+        intervalDays: 7,
+        startDate: normalizedToday().add(Duration(days: 3)),
+      );
+
+      final lastTakenDate = DateTime.now();
+
+      expect(s.isTakenToday(lastTakenDate), true);
     });
   });
 }
