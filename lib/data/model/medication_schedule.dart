@@ -183,6 +183,12 @@ class MedicationSchedule {
     return lastTakenDate == null || lastTakenDate.isBefore(lastDate);
   }
 
+  bool isTakenToday(DateTime? lastTakenDate) {
+    if (lastTakenDate == null) return false;
+
+    return normalizeDate(lastTakenDate) == normalizedToday();
+  }
+
   String generateUid() {
     return '$name-$dose-$intervalDays-${DateTime.now().toIso8601String()}';
   }
