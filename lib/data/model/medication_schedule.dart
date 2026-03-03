@@ -210,12 +210,4 @@ class MedicationSchedule {
   String toString() {
     return 'MedicationSchedule{id: $id name: $name}';
   }
-
-  //     |------------------------|
-  //     |  TODO refactor getters |
-  //     |------------------------|
-  //        ||
-  // (\__/) ||
-  // (•ㅅ•) ||
-  // / 　 づ
 }
