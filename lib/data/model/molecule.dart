@@ -3,6 +3,7 @@ enum Ester {
   valerate,
   cypionate,
   undecylate,
+  propionate
 }
 
 extension EsterX on Ester {
@@ -16,6 +17,8 @@ extension EsterX on Ester {
         return 'cypionate';
       case Ester.undecylate:
         return 'undecylate';
+      case Ester.propionate:
+        return 'propionate';
     }
   }
 }
@@ -56,13 +59,36 @@ class Molecule {
 }
 
 class KnownMolecules {
+  // Estrogens
   static const estradiol = Molecule(name: 'estradiol', unit: 'mg');
-  static const testosterone = Molecule(name: 'testosterone', unit: 'mg');
+
+  // Progestogens
   static const progesterone = Molecule(name: 'progesterone', unit: 'mg');
+
+  // Androgens
+  static const testosterone = Molecule(name: 'testosterone', unit: 'mg');
+
+  // Anti-androgens
+  static const spironolactone = Molecule(name: 'spironolactone', unit: 'mg');
+  static const cyproteroneAcetate = Molecule(name: 'cyproterone acetate', unit: 'mg');
+  static const bicalutamide = Molecule(name: 'bicalutamide', unit: 'mg');
+  static const decapeptyl = Molecule(name: 'decapeptyl', unit: 'mg');
+
+  // Other
+  static const finasteride = Molecule(name: 'finasteride', unit: 'mg');
+  static const dutasteride = Molecule(name: 'dutasteride', unit: 'mg');
+  static const minoxidil = Molecule(name: 'minoxidil', unit: 'mg');
 
   static const all = [
     estradiol,
-    testosterone,
     progesterone,
+    testosterone,
+    spironolactone,
+    cyproteroneAcetate,
+    bicalutamide,
+    decapeptyl,
+    finasteride,
+    dutasteride,
+    minoxidil,
   ];
 }
