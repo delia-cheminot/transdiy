@@ -40,7 +40,7 @@ void main() {
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '0',
-        'dosePerUnit': '10',
+        'concentration': '10',
         'quantity': 1,
       });
 

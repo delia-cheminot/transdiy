@@ -10,7 +10,7 @@ void main() {
         name: 'Test Item',
         totalDose: Decimal.parse('100'),
         usedDose: Decimal.parse('20'),
-        dosePerUnit: Decimal.parse('10'),
+        concentration: Decimal.parse('10'),
         quantity: 2,
       );
 
@@ -23,7 +23,7 @@ void main() {
           fromMap.name,
           fromMap.totalDose,
           fromMap.usedDose,
-          fromMap.dosePerUnit,
+          fromMap.concentration,
           fromMap.quantity,
         ],
         [
@@ -31,7 +31,7 @@ void main() {
           item.name,
           item.totalDose,
           item.usedDose,
-          item.dosePerUnit,
+          item.concentration,
           item.quantity,
         ],
       );
@@ -42,7 +42,7 @@ void main() {
         id: 2,
         name: 'Copy Test',
         totalDose: Decimal.fromInt(50),
-        dosePerUnit: Decimal.fromInt(5),
+        concentration: Decimal.fromInt(5),
         usedDose: Decimal.fromInt(10),
         quantity: 1,
       );
@@ -54,7 +54,7 @@ void main() {
           copy.name,
           copy.totalDose,
           copy.usedDose,
-          copy.dosePerUnit,
+          copy.concentration,
           copy.quantity,
         ],
         [
@@ -62,7 +62,7 @@ void main() {
           item.name,
           item.totalDose,
           item.usedDose,
-          item.dosePerUnit,
+          item.concentration,
           item.quantity,
         ],
       );
@@ -73,7 +73,7 @@ void main() {
         {
           'name': 'Valid Item',
           'totalDose': Decimal.fromInt(100),
-          'dosePerUnit': Decimal.fromInt(10),
+          'concentration': Decimal.fromInt(10),
           'usedDose': Decimal.fromInt(50),
           'quantity': 1,
           'expected': true,
@@ -81,7 +81,7 @@ void main() {
         {
           'name': '',
           'totalDose': Decimal.zero,
-          'dosePerUnit': Decimal.zero,
+          'concentration': Decimal.zero,
           'usedDose': Decimal.fromInt(-1),
           'quantity': null,
           'expected': false,
@@ -89,7 +89,7 @@ void main() {
         {
           'name': 'No Dose',
           'totalDose': Decimal.zero,
-          'dosePerUnit': Decimal.one,
+          'concentration': Decimal.one,
           'usedDose': Decimal.zero,
           'quantity': null,
           'expected': false,
@@ -97,7 +97,7 @@ void main() {
         {
           'name': 'Negative Used',
           'totalDose': Decimal.fromInt(10),
-          'dosePerUnit': Decimal.one,
+          'concentration': Decimal.one,
           'usedDose': Decimal.fromInt(-5),
           'quantity': null,
           'expected': false,
@@ -105,7 +105,7 @@ void main() {
         {
           'name': 'Dose Per Unit Zero',
           'totalDose': Decimal.fromInt(10),
-          'dosePerUnit': Decimal.zero,
+          'concentration': Decimal.zero,
           'usedDose': Decimal.zero,
           'quantity': null,
           'expected': false,
@@ -113,7 +113,7 @@ void main() {
         {
           'name': 'Valid with quantity',
           'totalDose': Decimal.fromInt(20),
-          'dosePerUnit': Decimal.fromInt(2),
+          'concentration': Decimal.fromInt(2),
           'usedDose': Decimal.fromInt(4),
           'quantity': 2,
           'expected': true,
@@ -124,7 +124,7 @@ void main() {
         final item = SupplyItem(
           name: testCase['name'] as String,
           totalDose: testCase['totalDose'] as Decimal,
-          dosePerUnit: testCase['dosePerUnit'] as Decimal,
+          concentration: testCase['concentration'] as Decimal,
           usedDose: testCase['usedDose'] as Decimal,
           quantity: testCase['quantity'] as int? ?? 0,
         );
@@ -194,14 +194,14 @@ void main() {
         );
       });
 
-      test('validateDosePerUnit', () {
+      test('validateConcentration', () {
         expect(
           [
-            SupplyItem.validateDosePerUnit(null),
-            SupplyItem.validateDosePerUnit(''),
-            SupplyItem.validateDosePerUnit('0'),
-            SupplyItem.validateDosePerUnit('-1'),
-            SupplyItem.validateDosePerUnit('2.5'),
+            SupplyItem.validateConcentration(null),
+            SupplyItem.validateConcentration(''),
+            SupplyItem.validateConcentration('0'),
+            SupplyItem.validateConcentration('-1'),
+            SupplyItem.validateConcentration('2.5'),
           ],
           [
             isNotNull,
@@ -217,7 +217,7 @@ void main() {
         final item = SupplyItem(
           name: 'Dose Test',
           totalDose: Decimal.fromInt(100),
-          dosePerUnit: Decimal.one,
+          concentration: Decimal.one,
           usedDose: Decimal.fromInt(20),
         );
         expect(
@@ -234,7 +234,7 @@ void main() {
           name: 'Remaining',
           totalDose: Decimal.fromInt(100),
           usedDose: Decimal.fromInt(30),
-          dosePerUnit: Decimal.one,
+          concentration: Decimal.one,
         );
         expect(item.remainingDose, Decimal.fromInt(70));
       });

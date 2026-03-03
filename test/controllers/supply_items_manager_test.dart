@@ -21,7 +21,7 @@ void main() {
           id: 1,
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       final newItem = await manager.setFields(
         item,
@@ -40,7 +40,7 @@ void main() {
           name: 'h',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       expect(
         () => manager.setFields(
@@ -58,7 +58,7 @@ void main() {
           name: 'h',
           totalDose: Decimal.parse('20'),
           usedDose: Decimal.parse('5'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       late SupplyItem updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
@@ -78,7 +78,7 @@ void main() {
         name: 'h',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('5'),
-        dosePerUnit: Decimal.parse('1'),
+        concentration: Decimal.parse('1'),
       );
 
       late SupplyItem updatedItem;
@@ -99,7 +99,7 @@ void main() {
           name: 'h',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('5'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       await manager.useDose(item, Decimal.zero);
 

@@ -20,7 +20,7 @@ class EditItemPage extends StatefulWidget {
 class _EditItemPageState extends State<EditItemPage> {
   late TextEditingController _totalDoseController;
   late TextEditingController _usedDoseController;
-  late TextEditingController _dosePerUnitController;
+  late TextEditingController _concentrationController;
   late TextEditingController _nameController;
   late SupplyItemProvider _supplyItemProvider;
 
@@ -31,14 +31,14 @@ class _EditItemPageState extends State<EditItemPage> {
         _usedDoseController.text,
         _totalDoseController.text,
       );
-  String? get _dosePerUnitError =>
-      SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
+  String? get _concentrationError =>
+      SupplyItem.validateConcentration(_concentrationController.text);
 
   bool get _isFormValid =>
       _nameError == null &&
       _totalDoseError == null &&
       _usedDoseError == null &&
-      _dosePerUnitError == null;
+      _concentrationError == null;
 
   @override
   void initState() {
@@ -47,8 +47,8 @@ class _EditItemPageState extends State<EditItemPage> {
         TextEditingController(text: widget.item.totalDose.toString());
     _usedDoseController =
         TextEditingController(text: widget.item.usedDose.toString());
-    _dosePerUnitController =
-        TextEditingController(text: widget.item.dosePerUnit.toString());
+    _concentrationController =
+        TextEditingController(text: widget.item.concentration.toString());
     _nameController = TextEditingController(text: widget.item.name);
     _supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
@@ -58,7 +58,7 @@ class _EditItemPageState extends State<EditItemPage> {
   void dispose() {
     _totalDoseController.dispose();
     _usedDoseController.dispose();
-    _dosePerUnitController.dispose();
+    _concentrationController.dispose();
     _nameController.dispose();
     super.dispose();
   }
@@ -79,7 +79,7 @@ class _EditItemPageState extends State<EditItemPage> {
       newName: _nameController.text,
       newTotalDose: parseDecimal(_totalDoseController.text)!,
       newUsedDose: parseDecimal(_usedDoseController.text)!,
-      newDosePerUnit: parseDecimal(_dosePerUnitController.text)!,
+      newConcentration: parseDecimal(_concentrationController.text)!,
     );
 
     Navigator.of(context).pop();
@@ -130,12 +130,12 @@ class _EditItemPageState extends State<EditItemPage> {
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
-          controller: _dosePerUnitController,
+          controller: _concentrationController,
           label: 'Concentration',
           onChanged: _refresh,
           inputType: TextInputType.number,
           suffixText: 'mg/ml',
-          errorText: _dosePerUnitError,
+          errorText: _concentrationError,
           regexFormatter: r'[0-9]',
         ),
       ],

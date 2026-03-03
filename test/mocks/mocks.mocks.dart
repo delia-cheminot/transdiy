@@ -128,7 +128,7 @@ class MockSupplyItemProvider extends _i1.Mock
   _i5.Future<void> addItem(
     _i6.Decimal? totalDose,
     String? name,
-    _i6.Decimal? dosePerUnit,
+    _i6.Decimal? concentration,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -136,7 +136,7 @@ class MockSupplyItemProvider extends _i1.Mock
           [
             totalDose,
             name,
-            dosePerUnit,
+            concentration,
           ],
         ),
         returnValue: _i5.Future<void>.value(),
@@ -540,7 +540,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i12.SupplyItemManager {
     String? newName,
     _i6.Decimal? newTotalDose,
     _i6.Decimal? newUsedDose,
-    _i6.Decimal? newDosePerUnit,
+    _i6.Decimal? newConcentration,
     int? newQuantity,
   }) =>
       (super.noSuchMethod(
@@ -551,7 +551,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i12.SupplyItemManager {
             #newName: newName,
             #newTotalDose: newTotalDose,
             #newUsedDose: newUsedDose,
-            #newDosePerUnit: newDosePerUnit,
+            #newConcentration: newConcentration,
             #newQuantity: newQuantity,
           },
         ),
@@ -564,7 +564,7 @@ class MockSupplyItemManager extends _i1.Mock implements _i12.SupplyItemManager {
               #newName: newName,
               #newTotalDose: newTotalDose,
               #newUsedDose: newUsedDose,
-              #newDosePerUnit: newDosePerUnit,
+              #newConcentration: newConcentration,
               #newQuantity: newQuantity,
             },
           ),

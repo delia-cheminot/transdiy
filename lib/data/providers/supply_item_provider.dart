@@ -52,9 +52,9 @@ class SupplyItemProvider extends ChangeNotifier {
   }
 
   Future<void> addItem(
-      Decimal totalDose, String name, Decimal dosePerUnit) async {
+      Decimal totalDose, String name, Decimal concentration) async {
     await repository.insert(
-        SupplyItem(totalDose: totalDose, dosePerUnit: dosePerUnit, name: name));
+        SupplyItem(totalDose: totalDose, concentration: concentration, name: name));
     await fetchItems();
   }
 

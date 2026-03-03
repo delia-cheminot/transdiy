@@ -38,7 +38,7 @@ void main() {
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'),
+          concentration: Decimal.parse('1'),
         );
 
         final schedule = MedicationSchedule(
@@ -86,7 +86,7 @@ void main() {
         name: 'SupplySingle',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('1'),
-        dosePerUnit: Decimal.parse('1'),
+        concentration: Decimal.parse('1'),
       );
 
       final schedule = MedicationSchedule(

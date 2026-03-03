@@ -56,7 +56,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       totalDose TEXT NOT NULL,
       usedDose TEXT NOT NULL,
-      dosePerUnit TEXT NOT NULL,
+      concentration TEXT NOT NULL,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL
     )

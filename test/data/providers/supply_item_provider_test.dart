@@ -15,7 +15,7 @@ void main() {
         name: i.name,
         totalDose: i.totalDose,
         usedDose: i.usedDose,
-        dosePerUnit: i.dosePerUnit,
+        concentration: i.concentration,
       ),
     );
     provider = SupplyItemProvider(repository: repo);
@@ -27,13 +27,13 @@ void main() {
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('5')));
+          concentration: Decimal.parse('5')));
 
       await repo.insert(SupplyItem(
           id: 2,
           name: 'Test Item 2',
           totalDose: Decimal.parse('30'),
-          dosePerUnit: Decimal.parse('3')));
+          concentration: Decimal.parse('3')));
 
       await provider.fetchItems();
 
@@ -45,19 +45,19 @@ void main() {
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('5')));
+          concentration: Decimal.parse('5')));
 
       await repo.insert(SupplyItem(
           id: 2,
           name: 'Test Item 2',
           totalDose: Decimal.parse('30'),
-          dosePerUnit: Decimal.parse('3')));
+          concentration: Decimal.parse('3')));
 
       const name = 'New Item';
       final totalDose = Decimal.parse('20');
-      final dosePerUnit = Decimal.parse('2');
+      final concentration = Decimal.parse('2');
 
-      await provider.addItem(totalDose, name, dosePerUnit);
+      await provider.addItem(totalDose, name, concentration);
 
       final lastItem = provider.items.last;
       expect(
@@ -65,13 +65,13 @@ void main() {
           provider.items.length,
           lastItem.name,
           lastItem.totalDose,
-          lastItem.dosePerUnit,
+          lastItem.concentration,
         ],
         [
           3,
           name,
           totalDose,
-          dosePerUnit,
+          concentration,
         ],
       );
     });
@@ -81,26 +81,26 @@ void main() {
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('5')));
+          concentration: Decimal.parse('5')));
 
       await repo.insert(SupplyItem(
           id: 2,
           name: 'Test Item 2',
           totalDose: Decimal.parse('30'),
-          dosePerUnit: Decimal.parse('3')));
+          concentration: Decimal.parse('3')));
 
       final itemToUpdate = repo.items.first;
       final updatedItem = SupplyItem(
           id: itemToUpdate.id,
           name: 'Updated Name',
           totalDose: Decimal.parse('99'),
-          dosePerUnit: Decimal.parse('9'));
+          concentration: Decimal.parse('9'));
 
       await provider.updateItem(updatedItem);
 
       final firstItem = provider.items.first;
       expect(
-        [firstItem.name, firstItem.totalDose, firstItem.dosePerUnit],
+        [firstItem.name, firstItem.totalDose, firstItem.concentration],
         ['Updated Name', Decimal.parse('99'), Decimal.parse('9')],
       );
     });
@@ -110,13 +110,13 @@ void main() {
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('5')));
+          concentration: Decimal.parse('5')));
 
       await repo.insert(SupplyItem(
           id: 2,
           name: 'Test Item 2',
           totalDose: Decimal.parse('30'),
-          dosePerUnit: Decimal.parse('3')));
+          concentration: Decimal.parse('3')));
 
       await provider.deleteItemFromId(1);
 
@@ -131,13 +131,13 @@ void main() {
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('5')));
+          concentration: Decimal.parse('5')));
 
       await repo.insert(SupplyItem(
           id: 2,
           name: 'Test Item 2',
           totalDose: Decimal.parse('30'),
-          dosePerUnit: Decimal.parse('3')));
+          concentration: Decimal.parse('3')));
 
       final itemToDelete = repo.items.first;
 
@@ -156,21 +156,21 @@ void main() {
           name: 'A',
           totalDose: Decimal.parse('100'),
           usedDose: Decimal.parse('90'),
-          dosePerUnit: Decimal.parse('1')));
+          concentration: Decimal.parse('1')));
 
       await repo.insert(SupplyItem(
           id: 4,
           name: 'B',
           totalDose: Decimal.parse('100'),
           usedDose: Decimal.parse('10'),
-          dosePerUnit: Decimal.parse('1')));
+          concentration: Decimal.parse('1')));
 
       await repo.insert(SupplyItem(
           id: 5,
           name: 'C',
           totalDose: Decimal.parse('100'),
           usedDose: Decimal.parse('50'),
-          dosePerUnit: Decimal.parse('1')));
+          concentration: Decimal.parse('1')));
 
       await provider.fetchItems();
 
@@ -186,7 +186,7 @@ void main() {
           name: 'X',
           totalDose: Decimal.parse('200'),
           usedDose: Decimal.parse('150'),
-          dosePerUnit: Decimal.parse('2'));
+          concentration: Decimal.parse('2'));
 
       await repo.insert(supplyItem);
 

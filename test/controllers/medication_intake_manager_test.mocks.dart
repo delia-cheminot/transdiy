@@ -326,7 +326,7 @@ class MockSupplyItemProvider extends _i1.Mock
   _i5.Future<void> addItem(
     _i6.Decimal? totalDose,
     String? name,
-    _i6.Decimal? dosePerUnit,
+    _i6.Decimal? concentration,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -334,7 +334,7 @@ class MockSupplyItemProvider extends _i1.Mock
           [
             totalDose,
             name,
-            dosePerUnit,
+            concentration,
           ],
         ),
         returnValue: _i5.Future<void>.value(),

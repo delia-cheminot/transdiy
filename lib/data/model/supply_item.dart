@@ -3,9 +3,9 @@ import 'package:decimal/decimal.dart';
 class SupplyItem {
   final int id;
   final String name;
-  final Decimal totalDose; // mg
-  final Decimal usedDose; // mg
-  final Decimal dosePerUnit; // mg/ml
+  final Decimal totalDose;
+  final Decimal usedDose;
+  final Decimal concentration;
   final int quantity;
   bool get isUsed => usedDose > Decimal.zero;
   bool get isInStock => quantity > 0;
@@ -15,7 +15,7 @@ class SupplyItem {
     int? id,
     required this.name,
     required this.totalDose,
-    required this.dosePerUnit,
+    required this.concentration,
     Decimal? usedDose,
     this.quantity = 1,
   })  : usedDose = usedDose ?? Decimal.zero,
@@ -27,7 +27,7 @@ class SupplyItem {
       'name': name,
       'totalDose': totalDose.toString(),
       'usedDose': usedDose.toString(),
-      'dosePerUnit': dosePerUnit.toString(),
+      'concentration': concentration.toString(),
       'quantity': quantity,
     };
   }
@@ -38,7 +38,7 @@ class SupplyItem {
       name: map['name'] as String,
       totalDose: Decimal.parse(map['totalDose'] as String),
       usedDose: Decimal.parse(map['usedDose'] as String),
-      dosePerUnit: Decimal.parse(map['dosePerUnit'] as String),
+      concentration: Decimal.parse(map['concentration'] as String),
       quantity: map['quantity'] as int,
     );
   }
@@ -49,7 +49,7 @@ class SupplyItem {
       name: name,
       totalDose: totalDose,
       usedDose: usedDose,
-      dosePerUnit: dosePerUnit,
+      concentration: concentration,
       quantity: quantity,
     );
   }
@@ -59,7 +59,7 @@ class SupplyItem {
     String? name,
     Decimal? totalDose,
     Decimal? usedDose,
-    Decimal? dosePerUnit,
+    Decimal? concentration,
     int? quantity,
   }) {
     return SupplyItem(
@@ -67,7 +67,7 @@ class SupplyItem {
       name: name ?? this.name,
       totalDose: totalDose ?? this.totalDose,
       usedDose: usedDose ?? this.usedDose,
-      dosePerUnit: dosePerUnit ?? this.dosePerUnit,
+      concentration: concentration ?? this.concentration,
       quantity: quantity ?? this.quantity,
     );
   }
@@ -80,12 +80,12 @@ class SupplyItem {
           other.name == name &&
           other.totalDose == totalDose &&
           other.usedDose == usedDose &&
-          other.dosePerUnit == dosePerUnit &&
+          other.concentration == concentration &&
           other.quantity == quantity;
 
   @override
   int get hashCode =>
-      Object.hash(id, name, totalDose, usedDose, dosePerUnit, quantity);
+      Object.hash(id, name, totalDose, usedDose, concentration, quantity);
 
   @override
   String toString() {
@@ -97,7 +97,7 @@ class SupplyItem {
         usedDose >= Decimal.zero &&
         usedDose <= totalDose &&
         name != '' &&
-        dosePerUnit > Decimal.zero;
+        concentration > Decimal.zero;
   }
 
   static String? validateTotalAmount(String? value) {
@@ -135,7 +135,7 @@ class SupplyItem {
     return null;
   }
 
-  static String? validateDosePerUnit(String? value) {
+  static String? validateConcentration(String? value) {
     if (value == null || value.isEmpty) {
       return 'Required field';
     }

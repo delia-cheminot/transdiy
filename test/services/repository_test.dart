@@ -32,7 +32,7 @@ void main() {
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       int insertedId = await repository.insert(item);
       final items = await repository.getAll();
@@ -47,13 +47,13 @@ void main() {
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
       int id = await repository.insert(item);
       final updatedItem = SupplyItem(
           name: 'h',
           id: id,
           totalDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
 
       await repository.update(updatedItem, id);
 
@@ -68,7 +68,7 @@ void main() {
       final item = SupplyItem(
           name: 'h',
           totalDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
       int id = await repository.insert(item);
 
       await repository.delete(id);
@@ -82,12 +82,12 @@ void main() {
           id: 1,
           name: 'g',
           totalDose: Decimal.parse('1'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
       final item2 = SupplyItem(
           id: 2,
           name: 'h',
           totalDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
+          concentration: Decimal.parse('1'));
       int id1 = await repository.insert(item1);
       int id2 = await repository.insert(item2);
 

@@ -16,14 +16,14 @@ class SupplyItemManager {
     String? newName,
     Decimal? newTotalDose,
     Decimal? newUsedDose,
-    Decimal? newDosePerUnit,
+    Decimal? newConcentration,
     int? newQuantity,
   }) async {
     final newItem = item.copyWith(
       name: newName,
       totalDose: newTotalDose,
       usedDose: newUsedDose,
-      dosePerUnit: newDosePerUnit,
+      concentration: newConcentration,
       quantity: newQuantity,
     );
 

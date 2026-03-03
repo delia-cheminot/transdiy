@@ -14,32 +14,32 @@ class NewItemPage extends StatefulWidget {
 class _NewItemPageState extends State<NewItemPage> {
   late TextEditingController _totalDoseController;
   late TextEditingController _nameController;
-  late TextEditingController _dosePerUnitController;
+  late TextEditingController _concentrationController;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
   String? get _totalDoseError =>
       SupplyItem.validateTotalAmount(_totalDoseController.text);
-  String? get _dosePerUnitError =>
-      SupplyItem.validateDosePerUnit(_dosePerUnitController.text);
+  String? get _concentrationError =>
+      SupplyItem.validateConcentration(_concentrationController.text);
 
   bool get _isFormValid =>
       _nameError == null &&
       _totalDoseError == null &&
-      _dosePerUnitError == null;
+      _concentrationError == null;
 
   @override
   void initState() {
     super.initState();
     _totalDoseController = TextEditingController();
     _nameController = TextEditingController();
-    _dosePerUnitController = TextEditingController();
+    _concentrationController = TextEditingController();
   }
 
   @override
   void dispose() {
     _totalDoseController.dispose();
     _nameController.dispose();
-    _dosePerUnitController.dispose();
+    _concentrationController.dispose();
     super.dispose();
   }
 
@@ -50,12 +50,12 @@ class _NewItemPageState extends State<NewItemPage> {
   void _addItem() async {
     final totalDose =
         Decimal.parse(_totalDoseController.text.replaceAll(',', '.'));
-    final dosePerUnit =
-        Decimal.parse(_dosePerUnitController.text.replaceAll(',', '.'));
+    final concentration =
+        Decimal.parse(_concentrationController.text.replaceAll(',', '.'));
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    supplyItemProvider.addItem(totalDose, name, dosePerUnit);
+    supplyItemProvider.addItem(totalDose, name, concentration);
     Navigator.pop(context);
   }
 
@@ -82,7 +82,7 @@ class _NewItemPageState extends State<NewItemPage> {
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
-          controller: _dosePerUnitController,
+          controller: _concentrationController,
           label: 'Concentration',
           onChanged: _refresh,
           inputType: TextInputType.number,
