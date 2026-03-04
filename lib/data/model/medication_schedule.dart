@@ -201,17 +201,10 @@ class MedicationSchedule {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MedicationSchedule &&
-          id == other.id &&
-          name == other.name &&
-          dose == other.dose &&
-          intervalDays == other.intervalDays &&
-          startDate == other.startDate;
-  // TODO should we use id only in comparisons ? let's try when settled
+      identical(this, other) || other is MedicationSchedule && id == other.id;
 
   @override
-  int get hashCode => Object.hash(id, name, dose, intervalDays, startDate);
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {
