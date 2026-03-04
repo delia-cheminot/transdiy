@@ -9,40 +9,19 @@ void main() {
   group('MedicationSchedule model', () {
     test('toMap and fromMap should preserve values', () {
       final schedule = MedicationSchedule(
-        id: 1,
-        name: 'Test Med',
-        dose: Decimal.parse('10.5'),
-        intervalDays: 7,
-        molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.oral,
-      );
+          id: 1,
+          name: 'Test Med',
+          dose: Decimal.parse('10.5'),
+          intervalDays: 7,
+          startDate: DateTime.now(),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.injection,
+          ester: Ester.cypionate);
 
-      final map = {
-        'id': schedule.id,
-        'name': schedule.name,
-        'dose': schedule.dose.toString(),
-        'intervalDays': schedule.intervalDays,
-        'startDate': schedule.startDate.toIso8601String(),
-      };
-
+      final map = schedule.toMap();
       final fromMap = MedicationSchedule.fromMap(map);
 
-      expect(
-        [
-          fromMap.id,
-          fromMap.name,
-          fromMap.dose,
-          fromMap.intervalDays,
-          fromMap.startDate
-        ],
-        [
-          schedule.id,
-          schedule.name,
-          schedule.dose,
-          schedule.intervalDays,
-          schedule.startDate
-        ],
-      );
+      expect(fromMap, schedule);
     });
 
     test('validateName works correctly', () {
