@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
@@ -6,6 +5,7 @@ import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class EditSchedulePage extends StatefulWidget {
@@ -63,17 +63,12 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   void _refresh() => setState(() {});
 
   void _saveSchedule() {
-    Decimal? parseDecimal(String text) {
-      final sanitizedText = text.replaceAll(',', '.');
-      return Decimal.tryParse(sanitizedText);
-    }
-
     if (!_isFormValid) return;
     if (!mounted) return;
 
     final updatedSchedule = widget.schedule.copyWith(
       name: _nameController.text,
-      dose: parseDecimal(_doseController.text)!,
+      dose: parseDecimal(_doseController.text),
       intervalDays: int.parse(_intervalDaysController.text),
       startDate: _startDate,
     );

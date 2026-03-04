@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/supply_item.dart';
@@ -6,6 +5,7 @@ import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class EditItemPage extends StatefulWidget {
@@ -46,20 +46,15 @@ class _EditItemPageState extends State<EditItemPage> {
   void _refresh() => setState(() {});
 
   void _saveChanges() {
-    Decimal? parseDecimal(String text) {
-      final sanitizedText = text.replaceAll(',', '.');
-      return Decimal.tryParse(sanitizedText);
-    }
-
     if (!_isFormValid) return;
     if (!mounted) return;
 
     SupplyItemManager(_supplyItemProvider).setFields(
       widget.item,
       newName: _nameController.text,
-      newTotalDose: parseDecimal(_totalDoseController.text)!,
-      newUsedDose: parseDecimal(_usedDoseController.text)!,
-      newConcentration: parseDecimal(_concentrationController.text)!,
+      newTotalDose: parseDecimal(_totalDoseController.text),
+      newUsedDose: parseDecimal(_usedDoseController.text),
+      newConcentration: parseDecimal(_concentrationController.text),
     );
 
     Navigator.of(context).pop();

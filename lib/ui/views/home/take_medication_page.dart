@@ -41,6 +41,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     super.dispose();
   }
 
+  // TODO use validators
   String? get _takenDoseError {
     final text = _takenDoseController.text.replaceAll(',', '.');
     final dose = Decimal.tryParse(text);
