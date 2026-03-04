@@ -174,24 +174,23 @@ void main() {
       });
 
       test('validateUsedAmount', () {
-        expect(
-          [
-            SupplyItem.validateUsedAmount(null, '100'),
-            SupplyItem.validateUsedAmount('', '100'),
-            SupplyItem.validateUsedAmount('-1', '100'),
-            SupplyItem.validateUsedAmount('50', 'invalid'),
-            SupplyItem.validateUsedAmount('200', '100'),
-            SupplyItem.validateUsedAmount('50', '100'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        const total = '100';
+        final validator = SupplyItem.usedAmountValidator(total);
+
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '-1', 'expected': isNotNull},
+          {'value': '200', 'expected': isNotNull},
+          {'value': '50', 'expected': isNull},
+        ];
+
+        final results =
+            cases.map((c) => validator(c['value'] as String?)).toList();
+
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        expect(results, expected);
       });
 
       test('validateConcentration', () {

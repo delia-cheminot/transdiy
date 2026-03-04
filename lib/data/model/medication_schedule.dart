@@ -5,6 +5,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/date_helpers.dart';
+import 'package:mona/util/validators.dart';
 
 class MedicationSchedule {
   final int id;
@@ -174,32 +175,14 @@ class MedicationSchedule {
     );
   }
 
-  static String? validateName(String? name) {
-    return name == null || name.isEmpty ? 'Required field' : null;
-  }
+  static String? validateName(String? value) => requiredString(value);
 
-  static String? validateDose(String? dose) {
-    if (dose == null || dose.isEmpty) {
-      return 'Required field';
-    }
-    final parsedDose = Decimal.tryParse(dose);
-    return parsedDose == null || parsedDose <= Decimal.zero
-        ? 'Must be a positive number'
-        : null;
-  }
+  static String? validateDose(String? value) => requiredPositiveDecimal(value);
 
-  static String? validateIntervalDays(String? intervalDays) {
-    if (intervalDays == null || intervalDays.isEmpty) {
-      return 'Required field';
-    }
-    final parsedIntervalDays = int.tryParse(intervalDays);
-    return (parsedIntervalDays == null || parsedIntervalDays <= 0)
-        ? 'Must be a positive number'
-        : null;
-  }
+  static String? validateIntervalDays(String? value) =>
+      requiredPositiveInt(value);
 
-  static String? validateStartDate(DateTime? startDate) =>
-      startDate == null ? 'Required field' : null;
+  static String? validateStartDate(DateTime? value) => requiredDate(value);
 
   @override
   bool operator ==(Object other) =>

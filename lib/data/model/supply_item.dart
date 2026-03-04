@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/util/validators.dart';
 
 class SupplyItem {
   final int id;
@@ -21,17 +22,6 @@ class SupplyItem {
   })  : usedDose = usedDose ?? Decimal.zero,
         id = id ?? DateTime.now().millisecondsSinceEpoch;
 
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'totalDose': totalDose.toString(),
-      'usedDose': usedDose.toString(),
-      'concentration': concentration.toString(),
-      'quantity': quantity,
-    };
-  }
-
   factory SupplyItem.fromMap(Map<String, Object?> map) {
     return SupplyItem(
       id: map['id'] as int?,
@@ -41,6 +31,35 @@ class SupplyItem {
       concentration: Decimal.parse(map['concentration'] as String),
       quantity: map['quantity'] as int,
     );
+  }
+
+  bool isValid() {
+    return totalDose > Decimal.zero &&
+        usedDose >= Decimal.zero &&
+        usedDose <= totalDose &&
+        name != '' &&
+        concentration > Decimal.zero;
+  }
+
+  bool canUseDose(Decimal doseToUse) {
+    return usedDose + doseToUse <= totalDose;
+  }
+
+  double getRatio() {
+    return (remainingDose *
+            totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10))
+        .toDouble();
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'totalDose': totalDose.toString(),
+      'usedDose': usedDose.toString(),
+      'concentration': concentration.toString(),
+      'quantity': quantity,
+    };
   }
 
   SupplyItem copy() {
@@ -72,6 +91,25 @@ class SupplyItem {
     );
   }
 
+  static String? validateTotalAmount(String? value) =>
+      requiredPositiveDecimal(value);
+
+  static String? validateName(String? value) => requiredString(value);
+
+  static String? validateConcentration(String? value) => requiredString(value);
+
+  static String? Function(String?) usedAmountValidator(String totalAmount) {
+    return (String? value) {
+      return requiredPositiveDecimal(value) ??
+          (Decimal.tryParse(value!)! > Decimal.parse(totalAmount)
+              ? 'Cannot exceed total capacity'
+              : null) ??
+          (validateTotalAmount(totalAmount) != null
+              ? 'Invalid total amount'
+              : null);
+    };
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -90,69 +128,5 @@ class SupplyItem {
   @override
   String toString() {
     return 'SupplyItem{id: $id name: $name}';
-  }
-
-  bool isValid() {
-    return totalDose > Decimal.zero &&
-        usedDose >= Decimal.zero &&
-        usedDose <= totalDose &&
-        name != '' &&
-        concentration > Decimal.zero;
-  }
-
-  static String? validateTotalAmount(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    return null;
-  }
-
-  static String? validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    return null;
-  }
-
-  static String? validateUsedAmount(String? value, String totalAmount) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue < Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    if (validateTotalAmount(totalAmount) != null) {
-      return 'Invalid total amount';
-    }
-    if (parsedValue > Decimal.parse(totalAmount)) {
-      return 'Cannot exceed total capacity';
-    }
-    return null;
-  }
-
-  static String? validateConcentration(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    return null;
-  }
-
-  bool canUseDose(Decimal doseToUse) {
-    return usedDose + doseToUse <= totalDose;
-  }
-
-  double getRatio() {
-    return (remainingDose *
-            totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10))
-        .toDouble();
   }
 }

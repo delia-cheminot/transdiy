@@ -25,12 +25,15 @@ class _EditItemPageState extends State<EditItemPage> {
   late SupplyItemProvider _supplyItemProvider;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
+
   String? get _totalDoseError =>
       SupplyItem.validateTotalAmount(_totalDoseController.text);
-  String? get _usedDoseError => SupplyItem.validateUsedAmount(
-        _usedDoseController.text,
-        _totalDoseController.text,
-      );
+
+  String? get _usedDoseError {
+    final validator = SupplyItem.usedAmountValidator(_totalDoseController.text);
+    return validator(_usedDoseController.text);
+  }
+
   String? get _concentrationError =>
       SupplyItem.validateConcentration(_concentrationController.text);
 
@@ -39,29 +42,6 @@ class _EditItemPageState extends State<EditItemPage> {
       _totalDoseError == null &&
       _usedDoseError == null &&
       _concentrationError == null;
-
-  @override
-  void initState() {
-    super.initState();
-    _totalDoseController =
-        TextEditingController(text: widget.item.totalDose.toString());
-    _usedDoseController =
-        TextEditingController(text: widget.item.usedDose.toString());
-    _concentrationController =
-        TextEditingController(text: widget.item.concentration.toString());
-    _nameController = TextEditingController(text: widget.item.name);
-    _supplyItemProvider =
-        Provider.of<SupplyItemProvider>(context, listen: false);
-  }
-
-  @override
-  void dispose() {
-    _totalDoseController.dispose();
-    _usedDoseController.dispose();
-    _concentrationController.dispose();
-    _nameController.dispose();
-    super.dispose();
-  }
 
   void _refresh() => setState(() {});
 
@@ -93,6 +73,29 @@ class _EditItemPageState extends State<EditItemPage> {
       _supplyItemProvider.deleteItem(widget.item);
       Navigator.of(context).pop();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _totalDoseController =
+        TextEditingController(text: widget.item.totalDose.toString());
+    _usedDoseController =
+        TextEditingController(text: widget.item.usedDose.toString());
+    _concentrationController =
+        TextEditingController(text: widget.item.concentration.toString());
+    _nameController = TextEditingController(text: widget.item.name);
+    _supplyItemProvider =
+        Provider.of<SupplyItemProvider>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    _totalDoseController.dispose();
+    _usedDoseController.dispose();
+    _concentrationController.dispose();
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override
