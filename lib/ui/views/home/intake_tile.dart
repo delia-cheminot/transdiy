@@ -106,12 +106,14 @@ class IntakeTileViewModel {
   DateTime? get lastTaken =>
       intakeProvider.getLastIntakeDateForSchedule(schedule.id);
 
-  int get daysUntilIntake => nextScheduled.difference(now).inDays;
+  int get daysUntilIntake => daysBetweenDate(nextScheduled, origin: now);
 
-  int? get daysSinceLastTaken => lastTaken?.difference(now).inDays.abs();
+  int? get daysSinceLastTaken =>
+      lastTaken != null ? daysBetweenDate(lastTaken!, origin: now) : null;
 
-  int? get daysSinceLastScheduled =>
-      lastScheduled?.difference(now).inDays.abs();
+  int? get daysSinceLastScheduled => lastScheduled != null
+      ? daysBetweenDate(lastScheduled!, origin: now)
+      : null;
 
   String get intakeInfo {
     final nextSide = MedicationIntakeManager(
@@ -135,6 +137,9 @@ class IntakeTileViewModel {
       case ScheduleStatus.upcoming:
         final formatted = DateFormat.MMMMd().format(nextScheduled);
         return "$formatted - in $daysUntilIntake days";
+
+      case ScheduleStatus.taken:
+        return "taken";
     }
   }
 
@@ -148,6 +153,7 @@ class IntakeTileViewModel {
         return null;
 
       case ScheduleStatus.upcoming:
+      case ScheduleStatus.taken:
         return null;
 
       case ScheduleStatus.overdue:
