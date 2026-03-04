@@ -44,67 +44,6 @@ class MedicationSchedule {
     );
   }
 
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'dose': dose.toString(),
-      'intervalDays': intervalDays,
-      'startDate': startDate.toIso8601String(),
-      'moleculeJson': jsonEncode(molecule.toJson()),
-      'administrationRouteName': administrationRoute.name,
-      'esterName': ester?.name,
-    };
-  }
-
-  MedicationSchedule copyWith({
-    int? id,
-    String? name,
-    Decimal? dose,
-    int? intervalDays,
-    DateTime? startDate,
-    Molecule? molecule,
-    AdministrationRoute? administrationRoute,
-    Ester? ester,
-  }) {
-    return MedicationSchedule(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        dose: dose ?? this.dose,
-        intervalDays: intervalDays ?? this.intervalDays,
-        startDate: startDate ?? this.startDate,
-        molecule: molecule ?? this.molecule,
-        administrationRoute: administrationRoute ?? this.administrationRoute,
-        ester: ester ?? this.ester);
-  }
-
-  static String? validateName(String? name) {
-    return name == null || name.isEmpty ? 'Required field' : null;
-  }
-
-  static String? validateDose(String? dose) {
-    if (dose == null || dose.isEmpty) {
-      return 'Required field';
-    }
-    final parsedDose = Decimal.tryParse(dose);
-    return parsedDose == null || parsedDose <= Decimal.zero
-        ? 'Must be a positive number'
-        : null;
-  }
-
-  static String? validateIntervalDays(String? intervalDays) {
-    if (intervalDays == null || intervalDays.isEmpty) {
-      return 'Required field';
-    }
-    final parsedIntervalDays = int.tryParse(intervalDays);
-    return (parsedIntervalDays == null || parsedIntervalDays <= 0)
-        ? 'Must be a positive number'
-        : null;
-  }
-
-  static String? validateStartDate(DateTime? startDate) =>
-      startDate == null ? 'Required field' : null;
-
   /// Returns the next scheduled injection date relative to [referenceDate] (or today if null).
   ///
   /// - If the [startDate] is in the future or today, returns [startDate].
@@ -155,14 +94,6 @@ class MedicationSchedule {
     );
   }
 
-  MedicationIntake getIntakeForDate(DateTime date) {
-    return MedicationIntake(
-      scheduledDateTime: date,
-      dose: dose,
-      scheduleId: id,
-    );
-  }
-
   List<DateTime> getNextDates({int count = 1, DateTime? referenceDate}) {
     if (count < 0) {
       throw ArgumentError('Count must be a positive integer');
@@ -174,11 +105,20 @@ class MedicationSchedule {
 
     final dates = <DateTime>[];
     DateTime nextDate = getNextDate(referenceDate: referenceDate);
+
     for (int i = 0; i < count; i++) {
       dates.add(nextDate);
       nextDate = nextDate.add(Duration(days: intervalDays));
     }
     return dates;
+  }
+
+  MedicationIntake getIntakeForDate(DateTime date) {
+    return MedicationIntake(
+      scheduledDateTime: date,
+      dose: dose,
+      scheduleId: id,
+    );
   }
 
   bool isScheduledForToday() {
@@ -198,6 +138,68 @@ class MedicationSchedule {
 
     return normalizeDate(lastTakenDate) == normalizedToday();
   }
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'dose': dose.toString(),
+      'intervalDays': intervalDays,
+      'startDate': startDate.toIso8601String(),
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
+    };
+  }
+
+  MedicationSchedule copyWith({
+    int? id,
+    String? name,
+    Decimal? dose,
+    int? intervalDays,
+    DateTime? startDate,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
+  }) {
+    return MedicationSchedule(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      dose: dose ?? this.dose,
+      intervalDays: intervalDays ?? this.intervalDays,
+      startDate: startDate ?? this.startDate,
+      molecule: molecule ?? this.molecule,
+      administrationRoute: administrationRoute ?? this.administrationRoute,
+      ester: ester ?? this.ester,
+    );
+  }
+
+  static String? validateName(String? name) {
+    return name == null || name.isEmpty ? 'Required field' : null;
+  }
+
+  static String? validateDose(String? dose) {
+    if (dose == null || dose.isEmpty) {
+      return 'Required field';
+    }
+    final parsedDose = Decimal.tryParse(dose);
+    return parsedDose == null || parsedDose <= Decimal.zero
+        ? 'Must be a positive number'
+        : null;
+  }
+
+  static String? validateIntervalDays(String? intervalDays) {
+    if (intervalDays == null || intervalDays.isEmpty) {
+      return 'Required field';
+    }
+    final parsedIntervalDays = int.tryParse(intervalDays);
+    return (parsedIntervalDays == null || parsedIntervalDays <= 0)
+        ? 'Must be a positive number'
+        : null;
+  }
+
+  static String? validateStartDate(DateTime? startDate) =>
+      startDate == null ? 'Required field' : null;
 
   @override
   bool operator ==(Object other) =>

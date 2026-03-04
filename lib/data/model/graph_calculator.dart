@@ -13,7 +13,7 @@ class GraphCalculator {
     "k3": 0.15291485
   };
 
-  // een for now
+  // TODO use molecule and ester
   double singleInjectionConcentration(double t, int day, double doseMg) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
 
@@ -42,16 +42,18 @@ class GraphCalculator {
 
   List<FlSpot> generateFlSpots(Map<int, double> daysAndDoses,
       {double tMin = 0, int numPoints = 1000}) {
-    final List<math.Point> points = [];
     if (daysAndDoses.isEmpty) return <FlSpot>[];
+
     final int maxDay = daysAndDoses.keys.reduce(math.max);
     final double tMax = maxDay.toDouble() + tMaxOffset;
+    final List<math.Point> points = [];
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
       double concentration = totalConcentrationAtTime(t, daysAndDoses);
       points.add(math.Point(t, concentration));
     }
+
     return points.map((p) => FlSpot(p.x.toDouble(), p.y.toDouble())).toList();
   }
 }
