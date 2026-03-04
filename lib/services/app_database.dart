@@ -111,8 +111,8 @@ class AppDatabase {
       SELECT
         id, name, dose, intervalDays, startDate,
         '{"name":"estradiol","unit":"mg"}',
-        'enanthate',
-        'injection'
+        'injection',
+        'enanthate'
       FROM medication_schedules
       ''');
 
@@ -121,6 +121,35 @@ class AppDatabase {
       await db.execute('''
       ALTER TABLE medication_schedules_new
       RENAME TO medication_schedules
+      ''');
+    }
+
+    if (oldVersion < 3) {
+      await db.execute('''
+      CREATE TABLE supply_items_new(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        totalDose TEXT NOT NULL,
+        usedDose TEXT NOT NULL,
+        concentration TEXT NOT NULL,
+        name TEXT NOT NULL,
+        quantity INTEGER NOT NULL
+      );
+      ''');
+
+      await db.execute('''
+      INSERT INTO supply_items_new (
+        id, totalDose, usedDose, concentration, name, quantity
+      )
+      SELECT
+        id, totalDose, usedDose, dosePerUnit, name, quantity
+      FROM supply_items;
+      ''');
+
+      await db.execute('DROP TABLE supply_items');
+
+      await db.execute('''
+      ALTER TABLE supply_items_new
+      RENAME TO supply_items
       ''');
     }
   }
