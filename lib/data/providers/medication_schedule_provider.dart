@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
 
 class MedicationScheduleProvider extends ChangeNotifier {
@@ -51,14 +53,19 @@ class MedicationScheduleProvider extends ChangeNotifier {
     await fetchSchedules();
   }
 
+  // TODO create add method
   Future<void> addSchedule(String name, Decimal dose, int intervalDays,
-      {DateTime? startDate}) async {
+      Molecule molecule, AdministrationRoute administrationRoute,
+      {DateTime? startDate, Ester? ester}) async {
+    // TODO add named params ?
     await repository.insert(MedicationSchedule(
-      name: name,
-      dose: dose,
-      intervalDays: intervalDays,
-      startDate: startDate ?? DateTime.now(),
-    ));
+        name: name,
+        dose: dose,
+        intervalDays: intervalDays,
+        startDate: startDate ?? DateTime.now(),
+        molecule: molecule,
+        administrationRoute: administrationRoute,
+        ester: ester));
     await fetchSchedules();
   }
 

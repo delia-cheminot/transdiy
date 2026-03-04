@@ -45,8 +45,9 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _createDB,
+      onUpgrade: _upgradeDB,
     );
   }
 
@@ -79,9 +80,49 @@ class AppDatabase {
       name TEXT NOT NULL,
       dose TEXT NOT NULL,
       intervalDays INTEGER NOT NULL,
-      startDate TEXT NOT NULL
+      startDate TEXT NOT NULL,
+      moleculeJson TEXT NOT NULL,
+      administrationRouteName TEXT NOT NULL,
+      esterName TEXT
     )
     ''');
+  }
+
+  Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await db.execute('''
+      CREATE TABLE medication_schedules_new(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        dose TEXT NOT NULL,
+        intervalDays INTEGER NOT NULL,
+        startDate TEXT NOT NULL,
+        moleculeJson TEXT NOT NULL,
+        administrationRouteName TEXT NOT NULL,
+        esterName TEXT NOT NULL
+      )
+      ''');
+
+      await db.execute('''
+      INSERT INTO medication_schedules_new (
+        id, name, dose, intervalDays, startDate,
+        moleculeJson, administrationRouteName, esterName
+      )
+      SELECT
+        id, name, dose, intervalDays, startDate,
+        '{"name":"estradiol","unit":"mg"}',
+        'enanthate',
+        'injection'
+      FROM medication_schedules
+      ''');
+
+      await db.execute('DROP TABLE medication_schedules');
+
+      await db.execute('''
+      ALTER TABLE medication_schedules_new
+      RENAME TO medication_schedules
+      ''');
+    }
   }
 
   Future<void> close() async {

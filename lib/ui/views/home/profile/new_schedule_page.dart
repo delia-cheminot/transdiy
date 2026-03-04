@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
@@ -54,10 +56,15 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final name = _nameController.text;
     final dose = Decimal.parse(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
+    // TODO these should be changed
+    const molecule = KnownMolecules.estradiol;
+    const administrationRoute = AdministrationRoute.injection;
+    const ester = Ester.enanthate;
     final medicationScheduleProvider =
         Provider.of<MedicationScheduleProvider>(context, listen: false);
-    medicationScheduleProvider.addSchedule(name, dose, intervalDays,
-        startDate: _startDate);
+    medicationScheduleProvider.addSchedule(
+        name, dose, intervalDays, molecule, administrationRoute,
+        startDate: _startDate, ester: ester);
     Navigator.pop(context);
   }
 

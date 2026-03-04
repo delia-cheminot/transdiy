@@ -3,8 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -45,6 +47,8 @@ void main() {
           name: 'ScheduleSingle',
           dose: dose,
           intervalDays: 1,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
         );
 
         late MedicationIntake addedIntake;
@@ -93,6 +97,8 @@ void main() {
         name: 'ScheduleSingle',
         dose: dose,
         intervalDays: 1,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       late SupplyItem updatedSupplyItem;

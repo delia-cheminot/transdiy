@@ -35,4 +35,26 @@ class AdministrationRoute {
     name: 'suppository',
     unit: 'suppository',
   );
+
+  static const List<AdministrationRoute> all = [
+    injection,
+    oral,
+    sublingual,
+    patch,
+    gel,
+    implant,
+    suppository,
+  ];
+
+  static AdministrationRoute fromName(String name) {
+    return all.firstWhere((route) => route.name == name);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AdministrationRoute && name == other.name;
+
+  @override
+  int get hashCode => name.hashCode;
 }

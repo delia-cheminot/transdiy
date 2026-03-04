@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/date_helpers.dart';
 
 class MedicationSchedule {
@@ -8,6 +12,9 @@ class MedicationSchedule {
   final Decimal dose;
   final int intervalDays;
   final DateTime startDate;
+  final Molecule molecule;
+  final AdministrationRoute administrationRoute;
+  final Ester? ester;
 
   MedicationSchedule({
     int? id,
@@ -15,16 +22,25 @@ class MedicationSchedule {
     required this.dose,
     required this.intervalDays,
     DateTime? startDate,
+    required this.molecule,
+    required this.administrationRoute,
+    this.ester,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
         startDate = normalizeDate(startDate ?? DateTime.now());
 
   factory MedicationSchedule.fromMap(Map<String, Object?> map) {
     return MedicationSchedule(
-      id: map['id'] as int?,
+      id: map['id'] as int,
       name: map['name'] as String,
       dose: Decimal.parse(map['dose'] as String),
       intervalDays: map['intervalDays'] as int,
       startDate: DateTime.parse(map['startDate'] as String),
+      molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
+      administrationRoute: AdministrationRoute.fromName(
+          map['administrationRouteName'] as String),
+      ester: map['esterName'] != null
+          ? Ester.values.byName(map['esterName'] as String)
+          : null,
     );
   }
 
@@ -35,17 +51,10 @@ class MedicationSchedule {
       'dose': dose.toString(),
       'intervalDays': intervalDays,
       'startDate': startDate.toIso8601String(),
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
     };
-  }
-
-  MedicationSchedule copy() {
-    return MedicationSchedule(
-      id: id,
-      name: name,
-      dose: dose,
-      intervalDays: intervalDays,
-      startDate: startDate,
-    );
   }
 
   MedicationSchedule copyWith({
@@ -54,18 +63,19 @@ class MedicationSchedule {
     Decimal? dose,
     int? intervalDays,
     DateTime? startDate,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
   }) {
     return MedicationSchedule(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      dose: dose ?? this.dose,
-      intervalDays: intervalDays ?? this.intervalDays,
-      startDate: startDate ?? this.startDate,
-    );
-  }
-
-  bool isValid() {
-    return dose > Decimal.zero && intervalDays > 0 && name.isNotEmpty;
+        id: id ?? this.id,
+        name: name ?? this.name,
+        dose: dose ?? this.dose,
+        intervalDays: intervalDays ?? this.intervalDays,
+        startDate: startDate ?? this.startDate,
+        molecule: molecule ?? this.molecule,
+        administrationRoute: administrationRoute ?? this.administrationRoute,
+        ester: ester ?? this.ester);
   }
 
   static String? validateName(String? name) {
@@ -189,10 +199,6 @@ class MedicationSchedule {
     return normalizeDate(lastTakenDate) == normalizedToday();
   }
 
-  String generateUid() {
-    return '$name-$dose-$intervalDays-${DateTime.now().toIso8601String()}';
-  }
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -202,6 +208,7 @@ class MedicationSchedule {
           dose == other.dose &&
           intervalDays == other.intervalDays &&
           startDate == other.startDate;
+  // TODO should we use id only in comparisons ? let's try when settled
 
   @override
   int get hashCode => Object.hash(id, name, dose, intervalDays, startDate);

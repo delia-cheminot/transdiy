@@ -6,23 +6,6 @@ enum Ester {
   propionate
 }
 
-extension EsterX on Ester {
-  String get label {
-    switch (this) {
-      case Ester.enanthate:
-        return 'enanthate';
-      case Ester.valerate:
-        return 'valerate';
-      case Ester.cypionate:
-        return 'cypionate';
-      case Ester.undecylate:
-        return 'undecylate';
-      case Ester.propionate:
-        return 'propionate';
-    }
-  }
-}
-
 class Molecule {
   final String name;
   final String unit;

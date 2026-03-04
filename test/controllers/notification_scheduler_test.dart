@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
@@ -118,9 +120,12 @@ void main() {
         when(mockPreferencesService.notificationsEnabled).thenReturn(false);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPlugin.zonedSchedule(any, any, any, any, any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
@@ -160,9 +165,12 @@ void main() {
         final futureHour = (DateTime.now().hour + 1) % 24;
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: futureHour, minute: 0));
@@ -204,9 +212,12 @@ void main() {
         final pastHour = (DateTime.now().hour - 1) % 24;
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: pastHour, minute: 0));
@@ -246,10 +257,13 @@ void main() {
 
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1,
-              startDate: DateTime.now().add(const Duration(days: 1)))
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            startDate: DateTime.now().add(const Duration(days: 1)),
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(const TimeOfDay(hour: 12, minute: 0));

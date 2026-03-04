@@ -4,13 +4,15 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
-import 'dart:ui' as _i7;
+import 'dart:ui' as _i9;
 
 import 'package:decimal/decimal.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mona/data/model/medication_intake.dart' as _i9;
+import 'package:mona/data/model/administration_route.dart' as _i8;
+import 'package:mona/data/model/medication_intake.dart' as _i11;
 import 'package:mona/data/model/medication_schedule.dart' as _i4;
-import 'package:mona/data/providers/medication_intake_provider.dart' as _i8;
+import 'package:mona/data/model/molecule.dart' as _i7;
+import 'package:mona/data/providers/medication_intake_provider.dart' as _i10;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i3;
 import 'package:mona/services/repository.dart' as _i2;
 
@@ -122,8 +124,11 @@ class MockMedicationScheduleProvider extends _i1.Mock
   _i5.Future<void> addSchedule(
     String? name,
     _i6.Decimal? dose,
-    int? intervalDays, {
+    int? intervalDays,
+    _i7.Molecule? molecule,
+    _i8.AdministrationRoute? administrationRoute, {
     DateTime? startDate,
+    _i7.Ester? ester,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -132,8 +137,13 @@ class MockMedicationScheduleProvider extends _i1.Mock
             name,
             dose,
             intervalDays,
+            molecule,
+            administrationRoute,
           ],
-          {#startDate: startDate},
+          {
+            #startDate: startDate,
+            #ester: ester,
+          },
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
@@ -151,7 +161,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -160,7 +170,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
       );
 
   @override
-  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -191,19 +201,19 @@ class MockMedicationScheduleProvider extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockMedicationIntakeProvider extends _i1.Mock
-    implements _i8.MedicationIntakeProvider {
+    implements _i10.MedicationIntakeProvider {
   @override
-  _i2.Repository<_i9.MedicationIntake> get repository => (super.noSuchMethod(
+  _i2.Repository<_i11.MedicationIntake> get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeRepository_0<_i9.MedicationIntake>(
+        returnValue: _FakeRepository_0<_i11.MedicationIntake>(
           this,
           Invocation.getter(#repository),
         ),
-        returnValueForMissingStub: _FakeRepository_0<_i9.MedicationIntake>(
+        returnValueForMissingStub: _FakeRepository_0<_i11.MedicationIntake>(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.Repository<_i9.MedicationIntake>);
+      ) as _i2.Repository<_i11.MedicationIntake>);
 
   @override
   bool get isLoading => (super.noSuchMethod(
@@ -213,32 +223,32 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as bool);
 
   @override
-  List<_i9.MedicationIntake> get intakes => (super.noSuchMethod(
+  List<_i11.MedicationIntake> get intakes => (super.noSuchMethod(
         Invocation.getter(#intakes),
-        returnValue: <_i9.MedicationIntake>[],
-        returnValueForMissingStub: <_i9.MedicationIntake>[],
-      ) as List<_i9.MedicationIntake>);
+        returnValue: <_i11.MedicationIntake>[],
+        returnValueForMissingStub: <_i11.MedicationIntake>[],
+      ) as List<_i11.MedicationIntake>);
 
   @override
-  List<_i9.MedicationIntake> get takenIntakesSortedDesc => (super.noSuchMethod(
+  List<_i11.MedicationIntake> get takenIntakesSortedDesc => (super.noSuchMethod(
         Invocation.getter(#takenIntakesSortedDesc),
-        returnValue: <_i9.MedicationIntake>[],
-        returnValueForMissingStub: <_i9.MedicationIntake>[],
-      ) as List<_i9.MedicationIntake>);
+        returnValue: <_i11.MedicationIntake>[],
+        returnValueForMissingStub: <_i11.MedicationIntake>[],
+      ) as List<_i11.MedicationIntake>);
 
   @override
-  List<_i9.MedicationIntake> get takenIntakes => (super.noSuchMethod(
+  List<_i11.MedicationIntake> get takenIntakes => (super.noSuchMethod(
         Invocation.getter(#takenIntakes),
-        returnValue: <_i9.MedicationIntake>[],
-        returnValueForMissingStub: <_i9.MedicationIntake>[],
-      ) as List<_i9.MedicationIntake>);
+        returnValue: <_i11.MedicationIntake>[],
+        returnValueForMissingStub: <_i11.MedicationIntake>[],
+      ) as List<_i11.MedicationIntake>);
 
   @override
-  List<_i9.MedicationIntake> get notTakenIntakes => (super.noSuchMethod(
+  List<_i11.MedicationIntake> get notTakenIntakes => (super.noSuchMethod(
         Invocation.getter(#notTakenIntakes),
-        returnValue: <_i9.MedicationIntake>[],
-        returnValueForMissingStub: <_i9.MedicationIntake>[],
-      ) as List<_i9.MedicationIntake>);
+        returnValue: <_i11.MedicationIntake>[],
+        returnValueForMissingStub: <_i11.MedicationIntake>[],
+      ) as List<_i11.MedicationIntake>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -248,15 +258,15 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as bool);
 
   @override
-  List<_i9.MedicationIntake> getTakenIntakesForSchedule(int? scheduleId) =>
+  List<_i11.MedicationIntake> getTakenIntakesForSchedule(int? scheduleId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTakenIntakesForSchedule,
           [scheduleId],
         ),
-        returnValue: <_i9.MedicationIntake>[],
-        returnValueForMissingStub: <_i9.MedicationIntake>[],
-      ) as List<_i9.MedicationIntake>);
+        returnValue: <_i11.MedicationIntake>[],
+        returnValueForMissingStub: <_i11.MedicationIntake>[],
+      ) as List<_i11.MedicationIntake>);
 
   @override
   _i5.Future<void> fetchIntakes() => (super.noSuchMethod(
@@ -279,7 +289,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> deleteIntake(_i9.MedicationIntake? intake) =>
+  _i5.Future<void> deleteIntake(_i11.MedicationIntake? intake) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteIntake,
@@ -307,7 +317,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> add(_i9.MedicationIntake? intake) => (super.noSuchMethod(
+  _i5.Future<void> add(_i11.MedicationIntake? intake) => (super.noSuchMethod(
         Invocation.method(
           #add,
           [intake],
@@ -317,7 +327,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> updateIntake(_i9.MedicationIntake? intake) =>
+  _i5.Future<void> updateIntake(_i11.MedicationIntake? intake) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateIntake,
@@ -338,7 +348,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as Map<int, double>);
 
   @override
-  DateTime? getLastIntakeDateFromList(List<_i9.MedicationIntake>? intakes) =>
+  DateTime? getLastIntakeDateFromList(List<_i11.MedicationIntake>? intakes) =>
       (super.noSuchMethod(
         Invocation.method(
           #getLastIntakeDateFromList,
@@ -358,7 +368,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as DateTime?);
 
   @override
-  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -367,7 +377,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
       );
 
   @override
-  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i9.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],

@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'generic_repository_mock.dart';
 
@@ -15,6 +17,8 @@ void main() {
         name: i.name,
         dose: i.dose,
         intervalDays: i.intervalDays,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       ),
     );
     provider = MedicationScheduleProvider(repository: repo);
@@ -24,12 +28,16 @@ void main() {
       name: 'Estradiol',
       dose: Decimal.parse('2.0'),
       intervalDays: 1,
+      molecule: KnownMolecules.estradiol,
+      administrationRoute: AdministrationRoute.oral,
     ));
     repo.insert(MedicationSchedule(
       id: 2,
       name: 'Spironolactone',
       dose: Decimal.parse('100.0'),
       intervalDays: 1,
+      molecule: KnownMolecules.estradiol,
+      administrationRoute: AdministrationRoute.oral,
     ));
   });
 
@@ -44,9 +52,12 @@ void main() {
       const newName = 'Progesterone';
       final newDose = Decimal.parse('200.0');
       const intervalDays = 2;
+      const administrationRoute = AdministrationRoute.oral;
+      const molecule = KnownMolecules.estradiol;
 
       // Act
-      await provider.addSchedule(newName, newDose, intervalDays);
+      await provider.addSchedule(
+          newName, newDose, intervalDays, molecule, administrationRoute);
 
       // Assert
       expect(
@@ -73,6 +84,8 @@ void main() {
         name: scheduleToUpdate.name,
         dose: Decimal.parse('5.0'),
         intervalDays: scheduleToUpdate.intervalDays,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       // Act
