@@ -62,9 +62,16 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     const ester = Ester.enanthate;
     final medicationScheduleProvider =
         Provider.of<MedicationScheduleProvider>(context, listen: false);
-    medicationScheduleProvider.addSchedule(
-        name, dose, intervalDays, molecule, administrationRoute,
-        startDate: _startDate, ester: ester);
+    final schedule = MedicationSchedule(
+      name: name,
+      dose: dose,
+      intervalDays: intervalDays,
+      startDate: _startDate,
+      molecule: molecule,
+      administrationRoute: administrationRoute,
+      ester: ester,
+    );
+    medicationScheduleProvider.add(schedule);
     Navigator.pop(context);
   }
 

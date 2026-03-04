@@ -47,33 +47,20 @@ void main() {
       expect(provider.schedules.length, repo.items.length);
     });
 
-    test('addSchedule inserts a new item', () async {
+    test('add inserts a new schedule', () async {
       // Arrange
-      const newName = 'Progesterone';
-      final newDose = Decimal.parse('200.0');
-      const intervalDays = 2;
-      const administrationRoute = AdministrationRoute.oral;
-      const molecule = KnownMolecules.estradiol;
+      final schedule = MedicationSchedule(
+          name: 'Progesterone',
+          dose: Decimal.parse('200.0'),
+          intervalDays: 1,
+          molecule: KnownMolecules.progesterone,
+          administrationRoute: AdministrationRoute.suppository);
 
       // Act
-      await provider.addSchedule(
-          newName, newDose, intervalDays, molecule, administrationRoute);
+      await provider.add(schedule);
 
       // Assert
-      expect(
-        [
-          provider.schedules.length,
-          provider.schedules.last.name,
-          provider.schedules.last.dose,
-          provider.schedules.last.intervalDays,
-        ],
-        [
-          3,
-          newName,
-          newDose,
-          intervalDays,
-        ],
-      );
+      expect(provider.schedules, contains(schedule));
     });
 
     test('updateSchedule updates an existing item', () async {

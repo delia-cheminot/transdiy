@@ -53,19 +53,8 @@ class MedicationScheduleProvider extends ChangeNotifier {
     await fetchSchedules();
   }
 
-  // TODO create add method
-  Future<void> addSchedule(String name, Decimal dose, int intervalDays,
-      Molecule molecule, AdministrationRoute administrationRoute,
-      {DateTime? startDate, Ester? ester}) async {
-    // TODO add named params ?
-    await repository.insert(MedicationSchedule(
-        name: name,
-        dose: dose,
-        intervalDays: intervalDays,
-        startDate: startDate ?? DateTime.now(),
-        molecule: molecule,
-        administrationRoute: administrationRoute,
-        ester: ester));
+  Future<void> add(MedicationSchedule schedule) async {
+    await repository.insert(schedule);
     await fetchSchedules();
   }
 
