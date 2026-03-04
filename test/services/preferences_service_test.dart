@@ -119,7 +119,7 @@ void main() {
 
         final jsonString = jsonEncode([
           {
-            'name': 'nullcac2',
+            'name': 'nulcac2',
             'unit': 'mg',
           }
         ]);
@@ -131,7 +131,7 @@ void main() {
         final molecules = service.customMolecules;
 
         // Assert
-        expect(molecules, contains(Molecule(name: 'nullcac2', unit: 'mg')));
+        expect(molecules, contains(Molecule(name: 'nulcac2', unit: 'mg')));
       });
 
       test('should add new custom molecule', () async {
@@ -139,26 +139,26 @@ void main() {
         final service = await PreferencesService.init();
 
         // Act
-        await service.addCustomMolecule(Molecule(name: 'nullcac2', unit: 'mg'));
+        await service.addCustomMolecule(Molecule(name: 'nulcac2', unit: 'mg'));
 
         expect(service.customMolecules,
-            contains(Molecule(name: 'nullcac2', unit: 'mg')));
+            contains(Molecule(name: 'nulcac2', unit: 'mg')));
       });
 
       test('should not add duplicate molecule', () async {
         // Arrange
         final service = await PreferencesService.init();
-        await service.addCustomMolecule(Molecule(name: 'nullcac2', unit: 'mg'));
+        await service.addCustomMolecule(Molecule(name: 'nulcac2', unit: 'mg'));
 
         // Act
-        await service.addCustomMolecule(Molecule(name: 'Nullcac2', unit: 'mg'));
+        await service.addCustomMolecule(Molecule(name: 'Nulcac2', unit: 'mg'));
 
         // Assert
         expect(
             service.customMolecules
                 .map((m) => m.name)
                 .toList()
-                .where((n) => n == 'nullcac2')
+                .where((n) => n == 'nulcac2')
                 .length,
             1);
       });
