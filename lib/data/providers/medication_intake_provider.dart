@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/services/repository.dart';
