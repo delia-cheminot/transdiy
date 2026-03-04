@@ -8,11 +8,9 @@ import 'dart:ui' as _i7;
 
 import 'package:decimal/decimal.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mona/controllers/supply_item_manager.dart' as _i14;
-import 'package:mona/data/model/administration_route.dart' as _i13;
+import 'package:mona/controllers/supply_item_manager.dart' as _i12;
 import 'package:mona/data/model/medication_intake.dart' as _i9;
 import 'package:mona/data/model/medication_schedule.dart' as _i11;
-import 'package:mona/data/model/molecule.dart' as _i12;
 import 'package:mona/data/model/supply_item.dart' as _i3;
 import 'package:mona/data/providers/medication_intake_provider.dart' as _i8;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i10;
@@ -288,23 +286,6 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> addIntake(
-    DateTime? scheduledDateTime,
-    _i6.Decimal? dose,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #addIntake,
-          [
-            scheduledDateTime,
-            dose,
-          ],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
-
-  @override
   _i5.Future<void> add(_i9.MedicationIntake? intake) => (super.noSuchMethod(
         Invocation.method(
           #add,
@@ -460,29 +441,11 @@ class MockMedicationScheduleProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> addSchedule(
-    String? name,
-    _i6.Decimal? dose,
-    int? intervalDays,
-    _i12.Molecule? molecule,
-    _i13.AdministrationRoute? administrationRoute, {
-    DateTime? startDate,
-    _i12.Ester? ester,
-  }) =>
+  _i5.Future<void> add(_i11.MedicationSchedule? schedule) =>
       (super.noSuchMethod(
         Invocation.method(
-          #addSchedule,
-          [
-            name,
-            dose,
-            intervalDays,
-            molecule,
-            administrationRoute,
-          ],
-          {
-            #startDate: startDate,
-            #ester: ester,
-          },
+          #add,
+          [schedule],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
@@ -539,7 +502,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
 /// A class which mocks [SupplyItemManager].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSupplyItemManager extends _i1.Mock implements _i14.SupplyItemManager {
+class MockSupplyItemManager extends _i1.Mock implements _i12.SupplyItemManager {
   MockSupplyItemManager() {
     _i1.throwOnMissingStub(this);
   }
