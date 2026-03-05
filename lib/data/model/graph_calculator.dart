@@ -14,7 +14,7 @@ class GraphCalculator {
   };
 
   // TODO use molecule and ester
-  double singleInjectionConcentration(double t, int day, double doseMg) {
+  double _singleInjectionConcentration(double t, int day, double doseMg) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
 
     final k1 = _coef["k1"]!;
@@ -33,10 +33,10 @@ class GraphCalculator {
     return concentration;
   }
 
-  double totalConcentrationAtTime(double t, Map<int, double> daysAndDoses) {
+  double _totalConcentrationAtTime(double t, Map<int, double> daysAndDoses) {
     if (daysAndDoses.isEmpty) return 0.0;
     return daysAndDoses.entries
-        .map((e) => singleInjectionConcentration(t, e.key, e.value))
+        .map((e) => _singleInjectionConcentration(t, e.key, e.value))
         .fold(0.0, (sum, val) => sum + val);
   }
 
@@ -50,7 +50,7 @@ class GraphCalculator {
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
-      double concentration = totalConcentrationAtTime(t, daysAndDoses);
+      double concentration = _totalConcentrationAtTime(t, daysAndDoses);
       points.add(math.Point(t, concentration));
     }
 

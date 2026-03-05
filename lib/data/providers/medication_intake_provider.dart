@@ -8,11 +8,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
   bool _isLoading = true;
   final Repository<MedicationIntake> repository;
 
-  static final defaultRepository = Repository<MedicationIntake>(
-    tableName: 'medication_intakes',
-    toMap: (MedicationIntake intake) => intake.toMap(),
-    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
-  );
+  MedicationIntakeProvider({Repository<MedicationIntake>? repository})
+      : repository = repository ?? _medicationIntakeRepository {
+    _init();
+  }
 
   bool get isLoading => _isLoading;
 
@@ -26,14 +25,6 @@ class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> get notTakenIntakes =>
       _intakes.where((intake) => !intake.isTaken).toList();
 
-  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
-      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
-
-  MedicationIntakeProvider({Repository<MedicationIntake>? repository})
-      : repository = repository ?? defaultRepository {
-    _init();
-  }
-
   Future<void> _init() async {
     _intakes = await repository.getAll();
     _updateTakenSorted();
@@ -41,15 +32,18 @@ class MedicationIntakeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _updateTakenSorted() {
+    _takenIntakesSortedDesc = List<MedicationIntake>.from(takenIntakes)
+      ..sort((a, b) => b.takenDateTime!.compareTo(a.takenDateTime!));
+  }
+
+  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
+      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
+
   Future<void> fetchIntakes() async {
     _intakes = await repository.getAll();
     _updateTakenSorted();
     notifyListeners();
-  }
-
-  void _updateTakenSorted() {
-    _takenIntakesSortedDesc = List<MedicationIntake>.from(takenIntakes)
-      ..sort((a, b) => b.takenDateTime!.compareTo(a.takenDateTime!));
   }
 
   Future<void> deleteIntakeFromId(int id) async {
@@ -113,4 +107,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
     return takenIntakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b);
   }
+
+  static final _medicationIntakeRepository = Repository<MedicationIntake>(
+    tableName: 'medication_intakes',
+    toMap: (MedicationIntake intake) => intake.toMap(),
+    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
+  );
 }

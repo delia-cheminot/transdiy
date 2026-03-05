@@ -20,7 +20,7 @@ class NotificationService {
         plugin ?? (createPlugin?.call() ?? FlutterLocalNotificationsPlugin());
   }
 
-  bool _initialized = false;
+  final bool _initialized = false;
 
   bool get isInitialized => _initialized;
 

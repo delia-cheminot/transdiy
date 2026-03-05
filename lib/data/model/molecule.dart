@@ -1,10 +1,4 @@
-enum Ester {
-  enanthate,
-  valerate,
-  cypionate,
-  undecylate,
-  propionate
-}
+enum Ester { enanthate, valerate, cypionate, undecylate, propionate }
 
 class Molecule {
   final String name;
@@ -15,19 +9,19 @@ class Molecule {
     required this.unit,
   });
 
-  String get normalizedName => name.trim().toLowerCase();
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'unit': unit,
-      };
-
   factory Molecule.fromJson(Map<String, dynamic> json) {
     return Molecule(
       name: json['name'],
       unit: json['unit'],
     );
   }
+
+  String get normalizedName => name.trim().toLowerCase();
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'unit': unit,
+      };
 
   @override
   bool operator ==(Object other) =>
@@ -53,7 +47,8 @@ class KnownMolecules {
 
   // Anti-androgens
   static const spironolactone = Molecule(name: 'spironolactone', unit: 'mg');
-  static const cyproteroneAcetate = Molecule(name: 'cyproterone acetate', unit: 'mg');
+  static const cyproteroneAcetate =
+      Molecule(name: 'cyproterone acetate', unit: 'mg');
   static const bicalutamide = Molecule(name: 'bicalutamide', unit: 'mg');
   static const decapeptyl = Molecule(name: 'decapeptyl', unit: 'mg');
 
