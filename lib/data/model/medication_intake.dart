@@ -23,17 +23,6 @@ class MedicationIntake {
     this.side,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'scheduledDateTime': scheduledDateTime.toIso8601String(),
-      'takenDateTime': takenDateTime?.toIso8601String(),
-      'dose': dose.toString(),
-      'scheduleId': scheduleId,
-      'side': side?.name,
-    };
-  }
-
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
       id: map['id'] as int?,
@@ -49,15 +38,15 @@ class MedicationIntake {
     );
   }
 
-  MedicationIntake copy() {
-    return MedicationIntake(
-      id: id,
-      scheduledDateTime: scheduledDateTime,
-      takenDateTime: takenDateTime,
-      dose: dose,
-      scheduleId: scheduleId,
-      side: side,
-    );
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'scheduledDateTime': scheduledDateTime.toIso8601String(),
+      'takenDateTime': takenDateTime?.toIso8601String(),
+      'dose': dose.toString(),
+      'scheduleId': scheduleId,
+      'side': side?.name,
+    };
   }
 
   MedicationIntake copyWith({

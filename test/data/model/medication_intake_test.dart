@@ -23,24 +23,6 @@ void main() {
       expect(fromMap, intake);
     });
 
-    test('copy creates identical object but different instance', () {
-      final scheduled = DateTime(2025, 9, 14, 10, 30);
-      final taken = DateTime(2025, 9, 14, 12, 0);
-
-      final intake = MedicationIntake(
-        id: 2,
-        scheduledDateTime: scheduled,
-        dose: Decimal.fromInt(5),
-        takenDateTime: taken,
-        scheduleId: 7,
-        side: InjectionSide.left,
-      );
-
-      final copy = intake.copy();
-
-      expect(copy, intake);
-    });
-
     test('isTaken returns correct value', () {
       final scheduled = DateTime(2025, 9, 14, 10, 30);
 
