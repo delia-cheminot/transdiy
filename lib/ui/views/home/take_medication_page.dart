@@ -8,7 +8,7 @@ import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
-import 'package:mona/ui/widgets/forms/fropm_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -78,7 +78,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
             (side) => DropdownMenuItem<InjectionSide>(
               value: side,
               child: Text(
-                side.label[0].toUpperCase() + side.label.substring(1),
+                side.name[0].toUpperCase() + side.name.substring(1),
               ),
             ),
           )

@@ -7,12 +7,6 @@ class MedicationScheduleProvider extends ChangeNotifier {
   bool _isLoading = true;
   final Repository<MedicationSchedule> repository;
 
-  static final defaultRepository = Repository<MedicationSchedule>(
-    tableName: 'medication_schedules',
-    toMap: (MedicationSchedule schedule) => schedule.toMap(),
-    fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
-  );
-
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
 
@@ -25,7 +19,7 @@ class MedicationScheduleProvider extends ChangeNotifier {
   }
 
   MedicationScheduleProvider({Repository<MedicationSchedule>? repository})
-      : repository = repository ?? defaultRepository {
+      : repository = repository ?? _defaultRepository {
     _init();
   }
 
@@ -59,4 +53,10 @@ class MedicationScheduleProvider extends ChangeNotifier {
     await repository.update(schedule, schedule.id);
     await fetchSchedules();
   }
+
+  static final _defaultRepository = Repository<MedicationSchedule>(
+    tableName: 'medication_schedules',
+    toMap: (MedicationSchedule schedule) => schedule.toMap(),
+    fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
+  );
 }

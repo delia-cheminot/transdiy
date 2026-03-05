@@ -17,15 +17,11 @@ class PreferencesService extends ChangeNotifier {
 
   PreferencesService._(this._prefs);
 
-  static Future<PreferencesService> init() async {
-    final prefs = await SharedPreferences.getInstance();
-    return PreferencesService._(prefs);
-  }
-
   TimeOfDay get notificationTime => TimeOfDay(
         hour: _prefs.getInt(_notificationHourKey) ?? defaultHour,
         minute: _prefs.getInt(_notificationMinuteKey) ?? defaultMinute,
       );
+
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
@@ -45,7 +41,6 @@ class PreferencesService extends ChangeNotifier {
     if (jsonString == null) return [];
 
     final List<dynamic> decoded = jsonDecode(jsonString);
-
     return decoded
         .map((e) => Molecule.fromJson(Map<String, dynamic>.from(e)))
         .toList();
@@ -54,7 +49,6 @@ class PreferencesService extends ChangeNotifier {
   List<Molecule> get allMolecules {
     const builtIn = KnownMolecules.all;
     final custom = customMolecules;
-
     final Map<String, Molecule> map = {};
 
     for (final m in [...builtIn, ...custom]) {
@@ -72,7 +66,6 @@ class PreferencesService extends ChangeNotifier {
     }
 
     final updated = [...existing, molecule];
-
     final jsonString = jsonEncode(updated.map((m) => m.toJson()).toList());
 
     await _prefs.setString(_customMoleculesKey, jsonString);
@@ -88,5 +81,10 @@ class PreferencesService extends ChangeNotifier {
 
     await _prefs.setString(_customMoleculesKey, jsonString);
     notifyListeners();
+  }
+
+  static Future<PreferencesService> init() async {
+    final prefs = await SharedPreferences.getInstance();
+    return PreferencesService._(prefs);
   }
 }

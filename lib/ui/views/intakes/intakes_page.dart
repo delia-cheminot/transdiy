@@ -33,7 +33,7 @@ class IntakesPage extends StatelessWidget {
       MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
     final sideText =
-        intake.side?.label != null ? ' • ${intake.side!.label}' : '';
+        intake.side?.name != null ? ' • ${intake.side!.name}' : '';
 
     return ListTile(
       title: Text(dateText),

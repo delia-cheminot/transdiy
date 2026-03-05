@@ -7,10 +7,6 @@ class SupplyItemManager {
 
   SupplyItemManager(this._supplyItemProvider);
 
-  static SupplyItemManager create(SupplyItemProvider supplyItemProvider) {
-    return SupplyItemManager(supplyItemProvider);
-  }
-
   Future<SupplyItem> setFields(
     SupplyItem item, {
     String? newName,
