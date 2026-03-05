@@ -24,7 +24,22 @@ void main() {
       final map = intake.toMap();
       final fromMap = MedicationIntake.fromMap(map);
 
-      expect(fromMap, intake);
+      expect(
+        fromMap,
+        isA<MedicationIntake>()
+            .having((i) => i.id, 'id', intake.id)
+            .having((i) => i.scheduledDateTime, 'scheduledDateTime',
+                intake.scheduledDateTime)
+            .having(
+                (i) => i.takenDateTime, 'takenDateTime', intake.takenDateTime)
+            .having((i) => i.dose, 'dose', intake.dose)
+            .having((i) => i.scheduleId, 'scheduleId', intake.scheduleId)
+            .having((i) => i.side, 'side', intake.side)
+            .having((i) => i.molecule, 'molecule', intake.molecule)
+            .having((i) => i.administrationRoute, 'administrationRoute',
+                intake.administrationRoute)
+            .having((i) => i.ester, 'ester', intake.ester),
+      );
     });
 
     test('isTaken returns correct value', () {

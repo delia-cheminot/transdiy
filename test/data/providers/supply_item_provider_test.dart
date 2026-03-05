@@ -1,5 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'generic_repository_mock.dart';
@@ -16,6 +18,9 @@ void main() {
         totalDose: i.totalDose,
         usedDose: i.usedDose,
         concentration: i.concentration,
+        molecule: i.molecule,
+        administrationRoute: i.administrationRoute,
+        ester: i.ester,
       ),
     );
     provider = SupplyItemProvider(repository: repo);
@@ -23,17 +28,25 @@ void main() {
 
   group('SupplyItemProvider Tests', () {
     test('initialization loads items', () async {
-      await repo.insert(SupplyItem(
+      await repo.insert(
+        SupplyItem(
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
-          concentration: Decimal.parse('5')));
+          concentration: Decimal.parse('5'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        ),
+      );
 
       await repo.insert(SupplyItem(
-          id: 2,
-          name: 'Test Item 2',
-          totalDose: Decimal.parse('30'),
-          concentration: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        concentration: Decimal.parse('3'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await provider.fetchItems();
 
@@ -42,22 +55,31 @@ void main() {
 
     test('addItem inserts a new item', () async {
       await repo.insert(SupplyItem(
-          id: 1,
-          name: 'Test Item 1',
-          totalDose: Decimal.parse('50'),
-          concentration: Decimal.parse('5')));
+        id: 1,
+        name: 'Test Item 1',
+        totalDose: Decimal.parse('50'),
+        concentration: Decimal.parse('5'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 2,
-          name: 'Test Item 2',
-          totalDose: Decimal.parse('30'),
-          concentration: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        concentration: Decimal.parse('3'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       const name = 'New Item';
       final totalDose = Decimal.parse('20');
       final concentration = Decimal.parse('2');
+      final molecule = KnownMolecules.estradiol;
+      final administrationRoute = AdministrationRoute.oral;
 
-      await provider.addItem(totalDose, name, concentration);
+      await provider.addItem(
+          totalDose, name, concentration, molecule, administrationRoute, null);
 
       final lastItem = provider.items.last;
       expect(
@@ -78,23 +100,32 @@ void main() {
 
     test('updateItem updates an existing item', () async {
       await repo.insert(SupplyItem(
-          id: 1,
-          name: 'Test Item 1',
-          totalDose: Decimal.parse('50'),
-          concentration: Decimal.parse('5')));
+        id: 1,
+        name: 'Test Item 1',
+        totalDose: Decimal.parse('50'),
+        concentration: Decimal.parse('5'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 2,
-          name: 'Test Item 2',
-          totalDose: Decimal.parse('30'),
-          concentration: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        concentration: Decimal.parse('3'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       final itemToUpdate = repo.items.first;
       final updatedItem = SupplyItem(
-          id: itemToUpdate.id,
-          name: 'Updated Name',
-          totalDose: Decimal.parse('99'),
-          concentration: Decimal.parse('9'));
+        id: itemToUpdate.id,
+        name: 'Updated Name',
+        totalDose: Decimal.parse('99'),
+        concentration: Decimal.parse('9'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
 
       await provider.updateItem(updatedItem);
 
@@ -107,16 +138,22 @@ void main() {
 
     test('deleteItemFromId removes the item', () async {
       await repo.insert(SupplyItem(
-          id: 1,
-          name: 'Test Item 1',
-          totalDose: Decimal.parse('50'),
-          concentration: Decimal.parse('5')));
+        id: 1,
+        name: 'Test Item 1',
+        totalDose: Decimal.parse('50'),
+        concentration: Decimal.parse('5'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 2,
-          name: 'Test Item 2',
-          totalDose: Decimal.parse('30'),
-          concentration: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        concentration: Decimal.parse('3'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await provider.deleteItemFromId(1);
 
@@ -128,16 +165,22 @@ void main() {
 
     test('deleteItem removes the item by object', () async {
       await repo.insert(SupplyItem(
-          id: 1,
-          name: 'Test Item 1',
-          totalDose: Decimal.parse('50'),
-          concentration: Decimal.parse('5')));
+        id: 1,
+        name: 'Test Item 1',
+        totalDose: Decimal.parse('50'),
+        concentration: Decimal.parse('5'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 2,
-          name: 'Test Item 2',
-          totalDose: Decimal.parse('30'),
-          concentration: Decimal.parse('3')));
+        id: 2,
+        name: 'Test Item 2',
+        totalDose: Decimal.parse('30'),
+        concentration: Decimal.parse('3'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       final itemToDelete = repo.items.first;
 
@@ -152,25 +195,34 @@ void main() {
     test('orderedByRemainingDose orders items with most used/total first',
         () async {
       await repo.insert(SupplyItem(
-          id: 3,
-          name: 'A',
-          totalDose: Decimal.parse('100'),
-          usedDose: Decimal.parse('90'),
-          concentration: Decimal.parse('1')));
+        id: 3,
+        name: 'A',
+        totalDose: Decimal.parse('100'),
+        usedDose: Decimal.parse('90'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 4,
-          name: 'B',
-          totalDose: Decimal.parse('100'),
-          usedDose: Decimal.parse('10'),
-          concentration: Decimal.parse('1')));
+        id: 4,
+        name: 'B',
+        totalDose: Decimal.parse('100'),
+        usedDose: Decimal.parse('10'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await repo.insert(SupplyItem(
-          id: 5,
-          name: 'C',
-          totalDose: Decimal.parse('100'),
-          usedDose: Decimal.parse('50'),
-          concentration: Decimal.parse('1')));
+        id: 5,
+        name: 'C',
+        totalDose: Decimal.parse('100'),
+        usedDose: Decimal.parse('50'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      ));
 
       await provider.fetchItems();
 
@@ -182,11 +234,14 @@ void main() {
     test('getMostUsedItem returns the item with highest used/total dose',
         () async {
       final supplyItem = SupplyItem(
-          id: 6,
-          name: 'X',
-          totalDose: Decimal.parse('200'),
-          usedDose: Decimal.parse('150'),
-          concentration: Decimal.parse('2'));
+        id: 6,
+        name: 'X',
+        totalDose: Decimal.parse('200'),
+        usedDose: Decimal.parse('150'),
+        concentration: Decimal.parse('2'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
 
       await repo.insert(supplyItem);
 

@@ -21,7 +21,20 @@ void main() {
       final map = schedule.toMap();
       final fromMap = MedicationSchedule.fromMap(map);
 
-      expect(fromMap, schedule);
+      expect(
+        fromMap,
+        isA<MedicationSchedule>()
+            .having((s) => s.id, 'id', schedule.id)
+            .having((s) => s.name, 'name', schedule.name)
+            .having((s) => s.dose, 'dose', schedule.dose)
+            .having(
+                (s) => s.intervalDays, 'intervalDays', schedule.intervalDays)
+            .having((s) => s.startDate, 'startDate', schedule.startDate)
+            .having((s) => s.molecule, 'molecule', schedule.molecule)
+            .having((s) => s.administrationRoute, 'administrationRoute',
+                schedule.administrationRoute)
+            .having((s) => s.ester, 'ester', schedule.ester),
+      );
     });
 
     test('validateName works correctly', () {

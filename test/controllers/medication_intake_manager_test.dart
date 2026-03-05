@@ -41,6 +41,8 @@ void main() {
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('1'),
           concentration: Decimal.parse('1'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
         );
 
         final schedule = MedicationSchedule(
@@ -93,6 +95,8 @@ void main() {
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('1'),
         concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       final schedule = MedicationSchedule(

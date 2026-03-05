@@ -1,5 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 
 void main() {
@@ -12,59 +14,27 @@ void main() {
         usedDose: Decimal.parse('20'),
         concentration: Decimal.parse('10'),
         quantity: 2,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.injection,
+        ester: Ester.undecylate,
       );
 
       final map = item.toMap();
       final fromMap = SupplyItem.fromMap(map);
 
       expect(
-        [
-          fromMap.id,
-          fromMap.name,
-          fromMap.totalDose,
-          fromMap.usedDose,
-          fromMap.concentration,
-          fromMap.quantity,
-        ],
-        [
-          item.id,
-          item.name,
-          item.totalDose,
-          item.usedDose,
-          item.concentration,
-          item.quantity,
-        ],
-      );
-    });
-
-    test('copy creates an identical object', () {
-      final item = SupplyItem(
-        id: 2,
-        name: 'Copy Test',
-        totalDose: Decimal.fromInt(50),
-        concentration: Decimal.fromInt(5),
-        usedDose: Decimal.fromInt(10),
-        quantity: 1,
-      );
-
-      final copy = item.copy();
-      expect(
-        [
-          copy.id,
-          copy.name,
-          copy.totalDose,
-          copy.usedDose,
-          copy.concentration,
-          copy.quantity,
-        ],
-        [
-          item.id,
-          item.name,
-          item.totalDose,
-          item.usedDose,
-          item.concentration,
-          item.quantity,
-        ],
+        fromMap,
+        isA<SupplyItem>()
+            .having((s) => s.id, 'id', item.id)
+            .having((s) => s.name, 'name', item.name)
+            .having((s) => s.totalDose, 'totalDose', item.totalDose)
+            .having((s) => s.usedDose, 'usedDose', item.usedDose)
+            .having((s) => s.concentration, 'concentration', item.concentration)
+            .having((s) => s.quantity, 'quantity', item.quantity)
+            .having((s) => s.molecule, 'molecule', item.molecule)
+            .having((s) => s.administrationRoute, 'administrationRoute',
+                item.administrationRoute)
+            .having((s) => s.ester, 'ester', item.ester),
       );
     });
 
@@ -76,6 +46,8 @@ void main() {
           'concentration': Decimal.fromInt(10),
           'usedDose': Decimal.fromInt(50),
           'quantity': 1,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': true,
         },
         {
@@ -84,6 +56,8 @@ void main() {
           'concentration': Decimal.zero,
           'usedDose': Decimal.fromInt(-1),
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
@@ -92,6 +66,8 @@ void main() {
           'concentration': Decimal.one,
           'usedDose': Decimal.zero,
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
@@ -100,6 +76,8 @@ void main() {
           'concentration': Decimal.one,
           'usedDose': Decimal.fromInt(-5),
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
@@ -108,6 +86,8 @@ void main() {
           'concentration': Decimal.zero,
           'usedDose': Decimal.zero,
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
@@ -116,6 +96,8 @@ void main() {
           'concentration': Decimal.fromInt(2),
           'usedDose': Decimal.fromInt(4),
           'quantity': 2,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': true,
         },
       ];
@@ -127,6 +109,9 @@ void main() {
           concentration: testCase['concentration'] as Decimal,
           usedDose: testCase['usedDose'] as Decimal,
           quantity: testCase['quantity'] as int? ?? 0,
+          molecule: testCase['molecule'] as Molecule,
+          administrationRoute:
+              testCase['administrationRoute'] as AdministrationRoute,
         );
         return item.isValid();
       }).toList();
@@ -218,6 +203,8 @@ void main() {
           totalDose: Decimal.fromInt(100),
           concentration: Decimal.one,
           usedDose: Decimal.fromInt(20),
+          molecule: KnownMolecules.progesterone,
+          administrationRoute: AdministrationRoute.suppository,
         );
         expect(
           [
@@ -234,6 +221,8 @@ void main() {
           totalDose: Decimal.fromInt(100),
           usedDose: Decimal.fromInt(30),
           concentration: Decimal.one,
+          molecule: KnownMolecules.progesterone,
+          administrationRoute: AdministrationRoute.suppository,
         );
         expect(item.remainingDose, Decimal.fromInt(70));
       });

@@ -1,5 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
@@ -55,7 +57,14 @@ class _NewItemPageState extends State<NewItemPage> {
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    supplyItemProvider.addItem(totalDose, name, concentration);
+    supplyItemProvider.addItem(
+      totalDose,
+      name,
+      concentration,
+      KnownMolecules.estradiol,
+      AdministrationRoute.injection,
+      Ester.enanthate,
+    );
     Navigator.pop(context);
   }
 

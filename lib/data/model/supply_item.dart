@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/validators.dart';
 
 class SupplyItem {
@@ -7,10 +11,11 @@ class SupplyItem {
   final Decimal totalDose;
   final Decimal usedDose;
   final Decimal concentration;
+  // TODO remove quantity
   final int quantity;
-  bool get isUsed => usedDose > Decimal.zero;
-  bool get isInStock => quantity > 0;
-  Decimal get remainingDose => totalDose - usedDose;
+  final Molecule molecule;
+  final AdministrationRoute administrationRoute;
+  final Ester? ester;
 
   SupplyItem({
     int? id,
@@ -19,6 +24,9 @@ class SupplyItem {
     required this.concentration,
     Decimal? usedDose,
     this.quantity = 1,
+    required this.molecule,
+    required this.administrationRoute,
+    this.ester,
   })  : usedDose = usedDose ?? Decimal.zero,
         id = id ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -30,8 +38,18 @@ class SupplyItem {
       usedDose: Decimal.parse(map['usedDose'] as String),
       concentration: Decimal.parse(map['concentration'] as String),
       quantity: map['quantity'] as int,
+      molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
+      administrationRoute: AdministrationRoute.fromName(
+          map['administrationRouteName'] as String),
+      ester: map['esterName'] != null
+          ? Ester.values.byName(map['esterName'] as String)
+          : null,
     );
   }
+
+  bool get isUsed => usedDose > Decimal.zero;
+  bool get isInStock => quantity > 0;
+  Decimal get remainingDose => totalDose - usedDose;
 
   bool isValid() {
     return totalDose > Decimal.zero &&
@@ -59,18 +77,10 @@ class SupplyItem {
       'usedDose': usedDose.toString(),
       'concentration': concentration.toString(),
       'quantity': quantity,
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
     };
-  }
-
-  SupplyItem copy() {
-    return SupplyItem(
-      id: id,
-      name: name,
-      totalDose: totalDose,
-      usedDose: usedDose,
-      concentration: concentration,
-      quantity: quantity,
-    );
   }
 
   SupplyItem copyWith({
@@ -80,6 +90,9 @@ class SupplyItem {
     Decimal? usedDose,
     Decimal? concentration,
     int? quantity,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
   }) {
     return SupplyItem(
       id: id ?? this.id,
@@ -88,6 +101,9 @@ class SupplyItem {
       usedDose: usedDose ?? this.usedDose,
       concentration: concentration ?? this.concentration,
       quantity: quantity ?? this.quantity,
+      molecule: molecule ?? this.molecule,
+      administrationRoute: administrationRoute ?? this.administrationRoute,
+      ester: ester ?? this.ester,
     );
   }
 
@@ -113,18 +129,10 @@ class SupplyItem {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SupplyItem &&
-          other.id == id &&
-          other.name == name &&
-          other.totalDose == totalDose &&
-          other.usedDose == usedDose &&
-          other.concentration == concentration &&
-          other.quantity == quantity;
+      identical(this, other) || other is SupplyItem && other.id == id;
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, totalDose, usedDose, concentration, quantity);
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {

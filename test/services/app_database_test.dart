@@ -42,6 +42,8 @@ void main() {
         'usedDose': '0',
         'concentration': '10',
         'quantity': 1,
+        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+        'administrationRouteName': 'oral',
       });
 
       final item = await db.query(

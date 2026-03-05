@@ -8,7 +8,9 @@ import 'dart:ui' as _i6;
 
 import 'package:decimal/decimal.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mona/data/model/administration_route.dart' as _i11;
 import 'package:mona/data/model/medication_intake.dart' as _i4;
+import 'package:mona/data/model/molecule.dart' as _i10;
 import 'package:mona/data/model/supply_item.dart' as _i8;
 import 'package:mona/data/providers/medication_intake_provider.dart' as _i3;
 import 'package:mona/data/providers/supply_item_provider.dart' as _i7;
@@ -310,6 +312,9 @@ class MockSupplyItemProvider extends _i1.Mock
     _i9.Decimal? totalDose,
     String? name,
     _i9.Decimal? concentration,
+    _i10.Molecule? molecule,
+    _i11.AdministrationRoute? administrationRoute,
+    _i10.Ester? ester,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -318,6 +323,9 @@ class MockSupplyItemProvider extends _i1.Mock
             totalDose,
             name,
             concentration,
+            molecule,
+            administrationRoute,
+            ester,
           ],
         ),
         returnValue: _i5.Future<void>.value(),
