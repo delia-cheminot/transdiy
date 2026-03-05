@@ -7,6 +7,7 @@ import 'package:mona/data/model/supply_item.dart';
 void main() {
   group('SupplyItem model', () {
     test('toMap and fromMap should preserve values', () {
+      // Arrange
       final item = SupplyItem(
         id: 1,
         name: 'Test Item',
@@ -19,9 +20,11 @@ void main() {
         ester: Ester.undecylate,
       );
 
+      // Act
       final map = item.toMap();
       final fromMap = SupplyItem.fromMap(map);
 
+      // Assert
       expect(
         fromMap,
         isA<SupplyItem>()
@@ -39,6 +42,7 @@ void main() {
     });
 
     test('isValid returns correct values for multiple cases', () {
+      // Arrange
       final testCases = [
         {
           'name': 'Valid Item',
@@ -102,6 +106,7 @@ void main() {
         },
       ];
 
+      // Act
       final results = testCases.map((testCase) {
         final item = SupplyItem(
           name: testCase['name'] as String,
@@ -116,6 +121,7 @@ void main() {
         return item.isValid();
       }).toList();
 
+      // Assert
       expect(
         results,
         testCases.map((e) => e['expected'] as bool).toList(),
@@ -125,43 +131,47 @@ void main() {
 
     group('validators', () {
       test('validateTotalAmount', () {
-        expect(
-          [
-            SupplyItem.validateTotalAmount(null),
-            SupplyItem.validateTotalAmount(''),
-            SupplyItem.validateTotalAmount('0'),
-            SupplyItem.validateTotalAmount('-5'),
-            SupplyItem.validateTotalAmount('10'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '0', 'expected': isNotNull},
+          {'value': '-5', 'expected': isNotNull},
+          {'value': '10', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateTotalAmount(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
       test('validateName', () {
-        expect(
-          [
-            SupplyItem.validateName(null),
-            SupplyItem.validateName(''),
-            SupplyItem.validateName('Something'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': 'Something', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateName(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
       test('validateUsedAmount', () {
+        // Arrange
         const total = '100';
         final validator = SupplyItem.usedAmountValidator(total);
-
         final cases = [
           {'value': null, 'expected': isNotNull},
           {'value': '', 'expected': isNotNull},
@@ -170,34 +180,36 @@ void main() {
           {'value': '50', 'expected': isNull},
         ];
 
+        // Act
         final results =
             cases.map((c) => validator(c['value'] as String?)).toList();
-
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
         expect(results, expected);
       });
 
       test('validateConcentration', () {
-        expect(
-          [
-            SupplyItem.validateConcentration(null),
-            SupplyItem.validateConcentration(''),
-            SupplyItem.validateConcentration('0'),
-            SupplyItem.validateConcentration('-1'),
-            SupplyItem.validateConcentration('2.5'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '0', 'expected': isNotNull},
+          {'value': '-1', 'expected': isNotNull},
+          {'value': '2.5', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateConcentration(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
       test('canUseDose should return true if within totalDose', () {
+        // Arrange
         final item = SupplyItem(
           name: 'Dose Test',
           totalDose: Decimal.fromInt(100),
@@ -206,16 +218,19 @@ void main() {
           molecule: KnownMolecules.progesterone,
           administrationRoute: AdministrationRoute.suppository,
         );
-        expect(
-          [
-            item.canUseDose(Decimal.fromInt(80)),
-            item.canUseDose(Decimal.fromInt(81))
-          ],
-          [true, false],
-        );
+
+        // Act
+        final cases = [
+          {'value': item.canUseDose(Decimal.fromInt(80)), 'expected': true},
+          {'value': item.canUseDose(Decimal.fromInt(81)), 'expected': false}
+        ];
+
+        // Assert
+        expect(cases.map((c) => c['value']), cases.map((c) => c['expected']));
       });
 
       test('remainingDose returns correct value', () {
+        // Arrange
         final item = SupplyItem(
           name: 'Remaining',
           totalDose: Decimal.fromInt(100),
@@ -224,7 +239,12 @@ void main() {
           molecule: KnownMolecules.progesterone,
           administrationRoute: AdministrationRoute.suppository,
         );
-        expect(item.remainingDose, Decimal.fromInt(70));
+
+        // Act
+        final remaining = item.remainingDose;
+
+        // Assert
+        expect(remaining, Decimal.fromInt(70));
       });
     });
   });
