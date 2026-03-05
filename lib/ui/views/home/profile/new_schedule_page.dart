@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
@@ -7,6 +6,7 @@ import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -54,7 +54,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
   void _addSchedule() {
     final name = _nameController.text;
-    final dose = Decimal.parse(_doseController.text);
+    final dose = parseDecimal(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
     // TODO these should be changed
     const molecule = KnownMolecules.estradiol;
@@ -98,7 +98,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           label: 'Amount',
           suffixText: 'mg',
           onChanged: _refresh,
-          inputType: TextInputType.number,
+          inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
         ),
         FormTextField(
@@ -106,7 +106,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           label: 'Time interval',
           suffixText: 'days',
           onChanged: _refresh,
-          inputType: TextInputType.numberWithOptions(decimal: false),
+          inputType: TextInputType.number,
           regexFormatter: '[0-9]',
         ),
         FormDateField(

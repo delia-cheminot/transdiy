@@ -105,7 +105,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           controller: _doseController,
           label: 'Amount',
           onChanged: _refresh,
-          inputType: TextInputType.number,
+          inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: 'mg',
           errorText: _doseError,
           regexFormatter: r'[0-9.,]',

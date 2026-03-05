@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/molecule.dart';
@@ -6,6 +5,7 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class NewItemPage extends StatefulWidget {
@@ -50,10 +50,8 @@ class _NewItemPageState extends State<NewItemPage> {
   }
 
   void _addItem() async {
-    final totalDose =
-        Decimal.parse(_totalDoseController.text.replaceAll(',', '.'));
-    final concentration =
-        Decimal.parse(_concentrationController.text.replaceAll(',', '.'));
+    final totalDose = parseDecimal(_totalDoseController.text);
+    final concentration = parseDecimal(_concentrationController.text);
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
@@ -86,7 +84,7 @@ class _NewItemPageState extends State<NewItemPage> {
           controller: _totalDoseController,
           label: 'Total amount',
           onChanged: _refresh,
-          inputType: TextInputType.number,
+          inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: 'mg',
           regexFormatter: r'[0-9.,]',
         ),
@@ -94,9 +92,9 @@ class _NewItemPageState extends State<NewItemPage> {
           controller: _concentrationController,
           label: 'Concentration',
           onChanged: _refresh,
-          inputType: TextInputType.number,
+          inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: 'mg/ml',
-          regexFormatter: r'[0-9]',
+          regexFormatter: r'[0-9.,]',
         ),
       ],
     );

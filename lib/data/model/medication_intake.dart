@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/validators.dart';
 
 enum InjectionSide {
   left,
@@ -91,6 +92,8 @@ class MedicationIntake {
       ester: ester ?? this.ester,
     );
   }
+
+  static String? validateDose(String? value) => requiredPositiveDecimal(value);
 
   @override
   bool operator ==(Object other) =>

@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
@@ -11,6 +10,7 @@ import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -43,13 +43,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     super.dispose();
   }
 
-  // TODO use validators
-  String? get _takenDoseError {
-    final text = _takenDoseController.text.replaceAll(',', '.');
-    final dose = Decimal.tryParse(text);
-    if (dose == null || dose <= Decimal.zero) return 'Enter a valid dose';
-    return null;
-  }
+  String? get _takenDoseError =>
+      MedicationIntake.validateDose(_takenDoseController.text);
 
   bool get _isFormValid => _takenDoseError == null;
 
@@ -60,7 +55,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    final dose = Decimal.parse(_takenDoseController.text.replaceAll(',', '.'));
+    final dose = parseDecimal(_takenDoseController.text);
 
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
