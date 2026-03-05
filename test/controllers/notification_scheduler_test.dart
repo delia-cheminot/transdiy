@@ -53,8 +53,13 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.show(id: any, title: any, body: any, payload: any))
-            .thenAnswer((_) async {});
+        when(mockPlugin.show(
+          id: anyNamed('id'),
+          title: 'title',
+          body: 'body',
+          notificationDetails: anyNamed('notificationDetails'),
+          payload: anyNamed('payload'),
+        )).thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -69,8 +74,12 @@ void main() {
 
         // Assert
         verify(mockPlugin.show(
-                id: any, title: 'title', body: 'body', payload: any))
-            .called(1);
+          id: anyNamed('id'),
+          title: 'title',
+          body: 'body',
+          notificationDetails: anyNamed('notificationDetails'),
+          payload: anyNamed('payload'),
+        )).called(1);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -91,7 +100,7 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.cancel(id: any)).thenAnswer((_) async {});
+        when(mockPlugin.cancel(id: anyNamed('id'))).thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -131,11 +140,11 @@ void main() {
           )
         ]);
         when(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -153,11 +162,11 @@ void main() {
 
         // Assert
         verifyNever(mockPlugin.zonedSchedule(
-            id: any,
-            title: any,
-            body: any,
-            scheduledDate: any,
-            notificationDetails: any,
+            id: anyNamed('id'),
+            title: anyNamed('title'),
+            body: anyNamed('body'),
+            scheduledDate: anyNamed('scheduledDate'),
+            notificationDetails: anyNamed('notificationDetails'),
             androidScheduleMode: anyNamed('androidScheduleMode'),
             payload: anyNamed('payload')));
 
@@ -189,11 +198,11 @@ void main() {
             .thenReturn(TimeOfDay(hour: futureHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -211,11 +220,11 @@ void main() {
 
         // Assert
         verify(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
@@ -246,11 +255,11 @@ void main() {
             .thenReturn(TimeOfDay(hour: pastHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -268,11 +277,11 @@ void main() {
 
         // Assert
         verify(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(4);
@@ -302,11 +311,11 @@ void main() {
             .thenReturn(const TimeOfDay(hour: 12, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -324,11 +333,11 @@ void main() {
 
         // Assert
         verify(mockPlugin.zonedSchedule(
-                id: any,
-                title: any,
-                body: any,
-                scheduledDate: any,
-                notificationDetails: any,
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
