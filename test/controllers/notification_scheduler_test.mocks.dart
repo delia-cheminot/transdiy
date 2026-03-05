@@ -330,8 +330,8 @@ class MockPreferencesService extends _i1.Mock
 class MockFlutterLocalNotificationsPlugin extends _i1.Mock
     implements _i10.FlutterLocalNotificationsPlugin {
   @override
-  _i6.Future<bool?> initialize(
-    _i11.InitializationSettings? initializationSettings, {
+  _i6.Future<bool?> initialize({
+    required _i11.InitializationSettings? settings,
     _i12.DidReceiveNotificationResponseCallback?
         onDidReceiveNotificationResponse,
     _i12.DidReceiveBackgroundNotificationResponseCallback?
@@ -340,8 +340,9 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       (super.noSuchMethod(
         Invocation.method(
           #initialize,
-          [initializationSettings],
+          [],
           {
+            #settings: settings,
             #onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
             #onDidReceiveBackgroundNotificationResponse:
                 onDidReceiveBackgroundNotificationResponse,
@@ -364,38 +365,42 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
           ) as _i6.Future<_i12.NotificationAppLaunchDetails?>);
 
   @override
-  _i6.Future<void> show(
-    int? id,
+  _i6.Future<void> show({
+    required int? id,
     String? title,
     String? body,
-    _i13.NotificationDetails? notificationDetails, {
+    _i13.NotificationDetails? notificationDetails,
     String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #show,
-          [
-            id,
-            title,
-            body,
-            notificationDetails,
-          ],
-          {#payload: payload},
+          [],
+          {
+            #id: id,
+            #title: title,
+            #body: body,
+            #notificationDetails: notificationDetails,
+            #payload: payload,
+          },
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> cancel(
-    int? id, {
+  _i6.Future<void> cancel({
+    required int? id,
     String? tag,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #cancel,
-          [id],
-          {#tag: tag},
+          [],
+          {
+            #id: id,
+            #tag: tag,
+          },
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
@@ -422,28 +427,27 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> zonedSchedule(
-    int? id,
+  _i6.Future<void> zonedSchedule({
+    required int? id,
+    required _i14.TZDateTime? scheduledDate,
+    required _i13.NotificationDetails? notificationDetails,
+    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? title,
     String? body,
-    _i14.TZDateTime? scheduledDate,
-    _i13.NotificationDetails? notificationDetails, {
-    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? payload,
     _i16.DateTimeComponents? matchDateTimeComponents,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #zonedSchedule,
-          [
-            id,
-            title,
-            body,
-            scheduledDate,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #scheduledDate: scheduledDate,
+            #notificationDetails: notificationDetails,
             #androidScheduleMode: androidScheduleMode,
+            #title: title,
+            #body: body,
             #payload: payload,
             #matchDateTimeComponents: matchDateTimeComponents,
           },
@@ -453,27 +457,26 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> periodicallyShow(
-    int? id,
+  _i6.Future<void> periodicallyShow({
+    required int? id,
+    required _i12.RepeatInterval? repeatInterval,
+    required _i13.NotificationDetails? notificationDetails,
+    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? title,
     String? body,
-    _i12.RepeatInterval? repeatInterval,
-    _i13.NotificationDetails? notificationDetails, {
-    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #periodicallyShow,
-          [
-            id,
-            title,
-            body,
-            repeatInterval,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #repeatInterval: repeatInterval,
+            #notificationDetails: notificationDetails,
             #androidScheduleMode: androidScheduleMode,
+            #title: title,
+            #body: body,
             #payload: payload,
           },
         ),
@@ -482,12 +485,12 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> periodicallyShowWithDuration(
-    int? id,
+  _i6.Future<void> periodicallyShowWithDuration({
+    required int? id,
+    required Duration? repeatDurationInterval,
+    required _i13.NotificationDetails? notificationDetails,
     String? title,
     String? body,
-    Duration? repeatDurationInterval,
-    _i13.NotificationDetails? notificationDetails, {
     _i15.AndroidScheduleMode? androidScheduleMode =
         _i15.AndroidScheduleMode.exact,
     String? payload,
@@ -495,14 +498,13 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       (super.noSuchMethod(
         Invocation.method(
           #periodicallyShowWithDuration,
-          [
-            id,
-            title,
-            body,
-            repeatDurationInterval,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #repeatDurationInterval: repeatDurationInterval,
+            #notificationDetails: notificationDetails,
+            #title: title,
+            #body: body,
             #androidScheduleMode: androidScheduleMode,
             #payload: payload,
           },

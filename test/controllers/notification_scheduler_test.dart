@@ -53,7 +53,8 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.show(any, any, any, any)).thenAnswer((_) async {});
+        when(mockPlugin.show(id: any, title: any, body: any, payload: any))
+            .thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -67,7 +68,9 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.show(any, 'title', 'body', any)).called(1);
+        verify(mockPlugin.show(
+                id: any, title: 'title', body: 'body', payload: any))
+            .called(1);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -88,7 +91,7 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.cancel(any)).thenAnswer((_) async {});
+        when(mockPlugin.cancel(id: any)).thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -102,7 +105,7 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.cancel(pending.id)).called(1);
+        verify(mockPlugin.cancel(id: pending.id)).called(1);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -127,7 +130,12 @@ void main() {
             administrationRoute: AdministrationRoute.oral,
           )
         ]);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -144,7 +152,12 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verifyNever(mockPlugin.zonedSchedule(any, any, any, any, any,
+        verifyNever(mockPlugin.zonedSchedule(
+            id: any,
+            title: any,
+            body: any,
+            scheduledDate: any,
+            notificationDetails: any,
             androidScheduleMode: anyNamed('androidScheduleMode'),
             payload: anyNamed('payload')));
 
@@ -175,7 +188,12 @@ void main() {
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: futureHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -192,8 +210,13 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
-                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        verify(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
+                androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
 
@@ -222,7 +245,12 @@ void main() {
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: pastHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -239,7 +267,12 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
+        verify(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(4);
@@ -268,7 +301,12 @@ void main() {
         when(mockPreferencesService.notificationTime)
             .thenReturn(const TimeOfDay(hour: 12, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -285,8 +323,13 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
-                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        verify(mockPlugin.zonedSchedule(
+                id: any,
+                title: any,
+                body: any,
+                scheduledDate: any,
+                notificationDetails: any,
+                androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
 

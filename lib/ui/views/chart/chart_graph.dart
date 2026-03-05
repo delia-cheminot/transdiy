@@ -134,7 +134,8 @@ class MainGraph extends StatelessWidget {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
-        tooltipRoundedRadius: _ChartConstants.tooltipRadius,
+        tooltipBorderRadius:
+            BorderRadius.circular(_ChartConstants.tooltipRadius),
         tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
         getTooltipItems: (touchedSpots) {
           return touchedSpots
