@@ -53,49 +53,21 @@ void main() {
       expect(provider.items.length, repo.items.length);
     });
 
-    test('addItem inserts a new item', () async {
-      await repo.insert(SupplyItem(
-        id: 1,
-        name: 'Test Item 1',
-        totalDose: Decimal.parse('50'),
-        concentration: Decimal.parse('5'),
+    test('add inserts a new item', () async {
+      // Arrange
+      final itemToAdd = SupplyItem(
+        name: 'New Item',
+        totalDose: Decimal.parse('20'),
+        concentration: Decimal.parse('2'),
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.oral,
-      ));
-
-      await repo.insert(SupplyItem(
-        id: 2,
-        name: 'Test Item 2',
-        totalDose: Decimal.parse('30'),
-        concentration: Decimal.parse('3'),
-        molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.oral,
-      ));
-
-      const name = 'New Item';
-      final totalDose = Decimal.parse('20');
-      final concentration = Decimal.parse('2');
-      final molecule = KnownMolecules.estradiol;
-      final administrationRoute = AdministrationRoute.oral;
-
-      await provider.addItem(
-          totalDose, name, concentration, molecule, administrationRoute, null);
-
-      final lastItem = provider.items.last;
-      expect(
-        [
-          provider.items.length,
-          lastItem.name,
-          lastItem.totalDose,
-          lastItem.concentration,
-        ],
-        [
-          3,
-          name,
-          totalDose,
-          concentration,
-        ],
       );
+
+      // Act
+      await provider.add(itemToAdd);
+
+      // Assert
+      expect(provider.items, contains(itemToAdd));
     });
 
     test('updateItem updates an existing item', () async {

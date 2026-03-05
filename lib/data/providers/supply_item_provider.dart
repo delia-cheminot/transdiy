@@ -1,7 +1,4 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:mona/data/model/administration_route.dart';
-import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/services/repository.dart';
 
@@ -53,23 +50,8 @@ class SupplyItemProvider extends ChangeNotifier {
     await fetchItems();
   }
 
-  // TODO create add medthod
-  Future<void> addItem(
-    Decimal totalDose,
-    String name,
-    Decimal concentration,
-    Molecule molecule,
-    AdministrationRoute administrationRoute,
-    Ester? ester,
-  ) async {
-    await repository.insert(SupplyItem(
-      totalDose: totalDose,
-      concentration: concentration,
-      name: name,
-      molecule: molecule,
-      administrationRoute: administrationRoute,
-      ester: ester,
-    ));
+  Future<void> add(SupplyItem supplyItem) async {
+    await repository.insert(supplyItem);
     await fetchItems();
   }
 

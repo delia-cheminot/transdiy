@@ -57,14 +57,14 @@ class _NewItemPageState extends State<NewItemPage> {
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
-    supplyItemProvider.addItem(
-      totalDose,
-      name,
-      concentration,
-      KnownMolecules.estradiol,
-      AdministrationRoute.injection,
-      Ester.enanthate,
-    );
+    final item = SupplyItem(
+        name: name,
+        totalDose: totalDose,
+        concentration: concentration,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.injection,
+        ester: Ester.enanthate);
+    supplyItemProvider.add(item);
     Navigator.pop(context);
   }
 

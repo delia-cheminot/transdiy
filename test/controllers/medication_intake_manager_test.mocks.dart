@@ -333,6 +333,16 @@ class MockSupplyItemProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
+  _i5.Future<void> add(_i8.SupplyItem? supplyItem) => (super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [supplyItem],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
   _i5.Future<void> updateItem(_i8.SupplyItem? item) => (super.noSuchMethod(
         Invocation.method(
           #updateItem,
