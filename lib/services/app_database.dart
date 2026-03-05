@@ -70,7 +70,10 @@ class AppDatabase {
       takenDateTime TEXT,
       dose TEXT NOT NULL,
       scheduleId INTEGER,
-      side TEXT
+      side TEXT,
+      moleculeJson TEXT NOT NULL,
+      administrationRouteName TEXT NOT NULL,
+      esterName TEXT
     )
     ''');
 
@@ -122,9 +125,7 @@ class AppDatabase {
       ALTER TABLE medication_schedules_new
       RENAME TO medication_schedules
       ''');
-    }
 
-    if (oldVersion < 3) {
       await db.execute('''
       CREATE TABLE supply_items_new(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -150,6 +151,42 @@ class AppDatabase {
       await db.execute('''
       ALTER TABLE supply_items_new
       RENAME TO supply_items
+      ''');
+
+      await db.execute('''
+      CREATE TABLE medication_intakes_new(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        scheduledDateTime TEXT NOT NULL,
+        takenDateTime TEXT,
+        dose TEXT NOT NULL,
+        scheduleId INTEGER,
+        side TEXT,
+        moleculeJson TEXT NOT NULL,
+        administrationRouteName TEXT NOT NULL,
+        esterName TEXT
+      )
+      ''');
+
+      await db.execute('''
+      INSERT INTO medication_intakes_new (
+        id, scheduledDateTime, takenDateTime, dose,
+        scheduleId, side, moleculeJson,
+        administrationRouteName, esterName
+      )
+      SELECT
+        id, scheduledDateTime, takenDateTime, dose,
+        scheduleId, side,
+        '{"name":"estradiol","unit":"mg"}',
+        'injection',
+        'enanthate'
+      FROM medication_intakes
+      ''');
+
+      await db.execute('DROP TABLE medication_intakes');
+
+      await db.execute('''
+      ALTER TABLE medication_intakes_new
+      RENAME TO medication_intakes
       ''');
     }
   }

@@ -64,6 +64,8 @@ void main() {
           supplyItem: supplyItem,
           schedule: schedule,
           side: side,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.gel,
         );
 
         expect(
@@ -108,12 +110,15 @@ void main() {
       });
 
       await manager.takeMedication(
-          dose: dose,
-          scheduledDate: scheduledDate,
-          takenDate: takenDate,
-          supplyItem: supplyItem,
-          schedule: schedule,
-          side: null);
+        dose: dose,
+        scheduledDate: scheduledDate,
+        takenDate: takenDate,
+        supplyItem: supplyItem,
+        schedule: schedule,
+        side: null,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
+      );
 
       expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
     });
@@ -128,6 +133,8 @@ void main() {
         takenDateTime: DateTime(2025, 9, 14, 12, 0),
         scheduleId: 42,
         side: InjectionSide.left,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       when(mockMedicationIntakeProvider.getLastTakenIntake())
@@ -149,6 +156,8 @@ void main() {
         takenDateTime: DateTime(2025, 9, 15, 12, 0),
         scheduleId: 42,
         side: InjectionSide.right,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       when(mockMedicationIntakeProvider.getLastTakenIntake())
@@ -177,6 +186,8 @@ void main() {
         takenDateTime: DateTime(2025, 9, 16, 12, 0),
         scheduleId: 42,
         side: null,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       when(mockMedicationIntakeProvider.getLastTakenIntake())

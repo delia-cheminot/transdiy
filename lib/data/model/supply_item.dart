@@ -96,7 +96,8 @@ class SupplyItem {
 
   static String? validateName(String? value) => requiredString(value);
 
-  static String? validateConcentration(String? value) => requiredString(value);
+  static String? validateConcentration(String? value) =>
+      requiredPositiveDecimal(value);
 
   static String? Function(String?) usedAmountValidator(String totalAmount) {
     return (String? value) {

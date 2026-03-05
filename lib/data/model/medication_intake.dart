@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 
 enum InjectionSide {
   left,
@@ -13,6 +17,9 @@ class MedicationIntake {
   final int? scheduleId;
   final InjectionSide? side;
   bool get isTaken => takenDateTime != null;
+  final Molecule molecule;
+  final AdministrationRoute administrationRoute;
+  final Ester? ester;
 
   MedicationIntake({
     int? id,
@@ -21,6 +28,9 @@ class MedicationIntake {
     this.takenDateTime,
     this.scheduleId,
     this.side,
+    required this.molecule,
+    required this.administrationRoute,
+    this.ester,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
@@ -35,6 +45,12 @@ class MedicationIntake {
       side: map['side'] == null
           ? null
           : InjectionSide.values.byName(map['side'] as String),
+      molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
+      administrationRoute: AdministrationRoute.fromName(
+          map['administrationRouteName'] as String),
+      ester: map['esterName'] != null
+          ? Ester.values.byName(map['esterName'] as String)
+          : null,
     );
   }
 
@@ -46,6 +62,9 @@ class MedicationIntake {
       'dose': dose.toString(),
       'scheduleId': scheduleId,
       'side': side?.name,
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
     };
   }
 
@@ -56,6 +75,9 @@ class MedicationIntake {
     Decimal? dose,
     int? scheduleId,
     InjectionSide? side,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
   }) {
     return MedicationIntake(
       id: id ?? this.id,
@@ -64,23 +86,18 @@ class MedicationIntake {
       dose: dose ?? this.dose,
       scheduleId: scheduleId ?? this.scheduleId,
       side: side ?? this.side,
+      molecule: molecule ?? this.molecule,
+      administrationRoute: administrationRoute ?? this.administrationRoute,
+      ester: ester ?? this.ester,
     );
   }
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MedicationIntake &&
-          id == other.id &&
-          scheduledDateTime == other.scheduledDateTime &&
-          takenDateTime == other.takenDateTime &&
-          dose == other.dose &&
-          scheduleId == other.scheduleId &&
-          side == other.side;
+      identical(this, other) || other is MedicationIntake && id == other.id;
 
   @override
-  int get hashCode =>
-      Object.hash(dose, id, scheduleId, scheduledDateTime, takenDateTime, side);
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {

@@ -1,14 +1,16 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
-import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -68,6 +70,10 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       supplyItem: supplyItemProvider.getMostUsedItem(),
       schedule: widget.schedule,
       side: _selectedSide,
+      // TODO update
+      molecule: KnownMolecules.estradiol,
+      administrationRoute: AdministrationRoute.injection,
+      ester: Ester.enanthate,
     );
     Navigator.of(context).pop();
   }

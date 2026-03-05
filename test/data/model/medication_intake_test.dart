@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/molecule.dart';
 
 void main() {
   group('MedicationIntake model', () {
@@ -9,13 +11,15 @@ void main() {
       final taken = DateTime(2025, 9, 14, 12, 0);
 
       final intake = MedicationIntake(
-        id: 1,
-        scheduledDateTime: scheduled,
-        dose: Decimal.parse('2.5'),
-        takenDateTime: taken,
-        scheduleId: 42,
-        side: InjectionSide.left,
-      );
+          id: 1,
+          scheduledDateTime: scheduled,
+          dose: Decimal.parse('2.5'),
+          takenDateTime: taken,
+          scheduleId: 42,
+          side: InjectionSide.left,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.injection,
+          ester: Ester.cypionate);
 
       final map = intake.toMap();
       final fromMap = MedicationIntake.fromMap(map);
@@ -30,11 +34,15 @@ void main() {
         scheduledDateTime: scheduled,
         dose: Decimal.one,
         takenDateTime: DateTime(2025, 9, 14, 11, 0),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       final intakeNotTaken = MedicationIntake(
         scheduledDateTime: scheduled,
         dose: Decimal.one,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       expect(
@@ -55,6 +63,8 @@ void main() {
         id: 3,
         scheduledDateTime: scheduled,
         dose: Decimal.fromInt(2),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.gel,
       );
 
       final stringValue = intake.toString();

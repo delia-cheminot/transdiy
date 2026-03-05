@@ -114,14 +114,6 @@ class MedicationSchedule {
     return dates;
   }
 
-  MedicationIntake getIntakeForDate(DateTime date) {
-    return MedicationIntake(
-      scheduledDateTime: date,
-      dose: dose,
-      scheduleId: id,
-    );
-  }
-
   bool isScheduledForToday() {
     return getNextDate() == normalizedToday();
   }

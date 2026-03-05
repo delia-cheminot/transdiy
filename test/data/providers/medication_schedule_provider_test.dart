@@ -17,8 +17,9 @@ void main() {
         name: i.name,
         dose: i.dose,
         intervalDays: i.intervalDays,
-        molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.oral,
+        molecule: i.molecule,
+        administrationRoute: i.administrationRoute,
+        ester: i.ester
       ),
     );
     provider = MedicationScheduleProvider(repository: repo);
