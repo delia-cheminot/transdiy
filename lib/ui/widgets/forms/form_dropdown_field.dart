@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FormDropdownField<T> extends StatelessWidget {
-  final T value;
+  final T? value;
   final List<DropdownMenuItem<T>> items;
   final ValueChanged<T?> onChanged;
   final String label;
