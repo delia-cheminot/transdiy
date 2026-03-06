@@ -6,6 +6,7 @@ import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:mona/util/decimal_helpers.dart';
@@ -181,6 +182,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
+        FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
           items: _moleculeItems,
@@ -200,6 +202,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
             onChanged: _onEsterChanged,
             label: 'Ester',
           ),
+        FormSpacer(),
         FormTextField(
           controller: _doseController,
           label: 'Amount',
