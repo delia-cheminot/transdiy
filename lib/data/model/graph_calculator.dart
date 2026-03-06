@@ -20,36 +20,36 @@ class GraphCalculator {
     "k2": 0.23345814,
     "k3": 1.37642769
   };
-  //static const Map<String, double> _coefBenzoate = {
-  //  "D": 1.7050e+08,
-  //  "k1": 3.22397192,
-  //  "k2": 0.58870148,
-  //  "k3": 70721.4018
-  //};
+  static const Map<String, double> _coefBenzoate = {
+    "D": 1.7050e+08,
+    "k1": 3.22397192,
+    "k2": 0.58870148,
+    "k3": 70721.4018
+  };
   static const Map<String, double> _coefCypionate = {
     "D": 1920.89671,
     "k1": 0.10321089,
     "k2": 0.89854779,
     "k3": 0.89359759
   };
-  //static const Map<String, double> _coefCypionateSuspension = {
-  //  "D": 1.5669e+08,
-  //  "k1": 0.13586726,
-  //  "k2": 2.51772731,
-  //  "k3": 74768.1493
-  //};
+  static const Map<String, double> _coefCypionateSuspension = {
+    "D": 1.5669e+08,
+    "k1": 0.13586726,
+    "k2": 2.51772731,
+    "k3": 74768.1493
+  };
   static const Map<String, double> _coefUndecylate = {
     "D": 65.9493374,
     "k1": 0.29634323,
     "k2": 4799337.57,
     "k3": 0.03141554
   };
-  //static const Map<String, double> _coefPolyestradiolPhosphate = {
-  //  "D": 34.46836875,
-  //  "k1": 0.02456035,
-  //  "k2": 135643.711,
-  //  "k3": 0.10582368
-  //};
+  static const Map<String, double> _coefPolyestradiolPhosphate = {
+    "D": 34.46836875,
+    "k1": 0.02456035,
+    "k2": 135643.711,
+    "k3": 0.10582368
+  };
 
   Map<String, double> getCoef(GraphIntake intake) {
     if (intake.ester == null) {
@@ -60,16 +60,16 @@ class GraphCalculator {
         return _coefEnanthate;
       case Ester.valerate:
         return _coefValerate;
-      //case Ester.benzoate:
-      //  return _coefBenzoate;
+      case Ester.benzoate:
+        return _coefBenzoate;
       case Ester.cypionate:
         return _coefCypionate;
-      //case Ester.cypionateSuspension:
-      //  return _coefCypionateSuspension;
+      case Ester.cypionateSuspension:
+        return _coefCypionateSuspension;
       case Ester.undecylate:
         return _coefUndecylate;
-      //case Ester.polyestradiolPhosphate:    //doesn't exist, YET
-      //  return _coefPolyestradiolPhosphate;
+      case Ester.polyestradiolPhosphate:    
+        return _coefPolyestradiolPhosphate;
     }
   }
 

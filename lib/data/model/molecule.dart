@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Ester { enanthate, valerate, cypionate, undecylate }
+enum Ester { enanthate, valerate, cypionate, undecylate, benzoate, cypionateSuspension, polyestradiolPhosphate }
 
 extension EsterDropdown on Ester {
   static List<DropdownMenuItem<Ester>> get menuItems => Ester.values
