@@ -200,6 +200,8 @@ class MedicationSchedule {
 
   @override
   String toString() {
-    return 'MedicationSchedule{id: $id name: $name}';
+    return "$dose mg ${molecule.name} "
+        "${ester != null ? "${ester!.name} " : ""}"
+        "${administrationRoute.name} every $intervalDays days";
   }
 }
