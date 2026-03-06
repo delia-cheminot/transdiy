@@ -175,6 +175,22 @@ class MedicationSchedule {
 
   static String? validateStartDate(DateTime? value) => requiredDate(value);
 
+  static String? validateMolecule(Molecule? value) => requiredMolecule(value);
+
+  static String? validateAdministrationRoute(AdministrationRoute? value) =>
+      requiredAdministrationRoute(value);
+
+  static String? Function(Ester?) esterValidator(
+      Molecule? molecule, AdministrationRoute? administrationRoute) {
+    return (Ester? value) {
+      return (molecule == KnownMolecules.estradiol &&
+              administrationRoute == AdministrationRoute.injection &&
+              value == null)
+          ? 'Required field'
+          : null;
+    };
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) || other is MedicationSchedule && id == other.id;

@@ -1,4 +1,6 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 
 String? requiredString(String? value) =>
     value == null || value.isEmpty ? 'Required field' : null;
@@ -23,3 +25,9 @@ String? positiveInt(String? value) {
 
 String? requiredPositiveInt(String? value) =>
     requiredString(value) ?? positiveInt(value);
+
+String? requiredMolecule(Molecule? value) =>
+    value == null ? 'Required field' : null;
+
+String? requiredAdministrationRoute(AdministrationRoute? value) =>
+    value == null ? 'Required field' : null;
