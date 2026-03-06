@@ -4,6 +4,13 @@ import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
 
+class GraphIntake {
+  final double dose;
+  final Ester? ester;
+
+  GraphIntake(this.dose, this.ester);
+}
+
 class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
   List<MedicationIntake> _takenIntakesSortedDesc = [];
@@ -74,14 +81,14 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
-  Map<int, double> getDaysAndDoses() {
+  Map<int, GraphIntake> getDaysAndIntakes() {
     if (graphIntakes.isEmpty) return {};
     final startDate = getFirstIntakeDate()!;
     return Map.fromEntries(
       graphIntakes.map(
         (intake) => MapEntry(
           intake.takenDateTime!.difference(startDate).inDays,
-          intake.dose.toDouble(),
+          GraphIntake(intake.dose.toDouble(), intake.ester),
         ),
       ),
     );

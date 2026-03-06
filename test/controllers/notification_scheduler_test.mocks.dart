@@ -238,6 +238,14 @@ class MockPreferencesService extends _i1.Mock
       ) as List<_i9.Molecule>);
 
   @override
+  List<_i3.DropdownMenuItem<_i9.Molecule>> get moleculeDropdownItems =>
+      (super.noSuchMethod(
+        Invocation.getter(#moleculeDropdownItems),
+        returnValue: <_i3.DropdownMenuItem<_i9.Molecule>>[],
+        returnValueForMissingStub: <_i3.DropdownMenuItem<_i9.Molecule>>[],
+      ) as List<_i3.DropdownMenuItem<_i9.Molecule>>);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,

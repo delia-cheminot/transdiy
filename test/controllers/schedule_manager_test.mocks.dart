@@ -229,6 +229,13 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as List<_i8.MedicationIntake>);
 
   @override
+  List<_i8.MedicationIntake> get graphIntakes => (super.noSuchMethod(
+        Invocation.getter(#graphIntakes),
+        returnValue: <_i8.MedicationIntake>[],
+        returnValueForMissingStub: <_i8.MedicationIntake>[],
+      ) as List<_i8.MedicationIntake>);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
@@ -299,14 +306,14 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  Map<int, double> getDaysAndDoses() => (super.noSuchMethod(
+  Map<int, _i7.GraphIntake> getDaysAndIntakes() => (super.noSuchMethod(
         Invocation.method(
           #getDaysAndDoses,
           [],
         ),
-        returnValue: <int, double>{},
-        returnValueForMissingStub: <int, double>{},
-      ) as Map<int, double>);
+        returnValue: <int, _i7.GraphIntake>{},
+        returnValueForMissingStub: <int, _i7.GraphIntake>{},
+      ) as Map<int, _i7.GraphIntake>);
 
   @override
   DateTime? getLastIntakeDateFromList(List<_i8.MedicationIntake>? intakes) =>

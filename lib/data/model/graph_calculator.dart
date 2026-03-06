@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 
 class GraphCalculator {
   static const double tMaxOffset = 40.0;
@@ -14,7 +15,7 @@ class GraphCalculator {
   };
 
   // TODO use molecule and ester
-  double _singleInjectionConcentration(double t, int day, double doseMg) {
+  double _singleInjectionConcentration(double t, int day, GraphIntake intake) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
 
     final k1 = _coef["k1"]!;
@@ -29,28 +30,29 @@ class GraphCalculator {
         ((k1 - k2) * (k1 - k3) * (k2 - k3));
 
     double concentration =
-        doseMg * d * _dFactor * k1 * k2 * (part1 + part2 + part3);
+        intake.dose * d * _dFactor * k1 * k2 * (part1 + part2 + part3);
     return concentration;
   }
 
-  double _totalConcentrationAtTime(double t, Map<int, double> daysAndDoses) {
-    if (daysAndDoses.isEmpty) return 0.0;
-    return daysAndDoses.entries
+  double _totalConcentrationAtTime(
+      double t, Map<int, GraphIntake> daysAndIntakes) {
+    if (daysAndIntakes.isEmpty) return 0.0;
+    return daysAndIntakes.entries
         .map((e) => _singleInjectionConcentration(t, e.key, e.value))
         .fold(0.0, (sum, val) => sum + val);
   }
 
-  List<FlSpot> generateFlSpots(Map<int, double> daysAndDoses,
+  List<FlSpot> generateFlSpots(Map<int, GraphIntake> daysAndIntakes,
       {double tMin = 0, int numPoints = 1000}) {
-    if (daysAndDoses.isEmpty) return <FlSpot>[];
+    if (daysAndIntakes.isEmpty) return <FlSpot>[];
 
-    final int maxDay = daysAndDoses.keys.reduce(math.max);
+    final int maxDay = daysAndIntakes.keys.reduce(math.max);
     final double tMax = maxDay.toDouble() + tMaxOffset;
     final List<math.Point> points = [];
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
-      double concentration = _totalConcentrationAtTime(t, daysAndDoses);
+      double concentration = _totalConcentrationAtTime(t, daysAndIntakes);
       points.add(math.Point(t, concentration));
     }
 
