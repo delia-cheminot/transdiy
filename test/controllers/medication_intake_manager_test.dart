@@ -66,8 +66,6 @@ void main() {
           supplyItem: supplyItem,
           schedule: schedule,
           side: side,
-          molecule: KnownMolecules.estradiol,
-          administrationRoute: AdministrationRoute.gel,
         );
 
         expect(
@@ -120,8 +118,6 @@ void main() {
         supplyItem: supplyItem,
         schedule: schedule,
         side: null,
-        molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.gel,
       );
 
       expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);

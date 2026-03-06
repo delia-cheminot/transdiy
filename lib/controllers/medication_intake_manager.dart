@@ -1,8 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
-import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import '../data/model/medication_intake.dart';
@@ -22,9 +20,6 @@ class MedicationIntakeManager {
     SupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
-    required Molecule molecule,
-    required AdministrationRoute administrationRoute,
-    Ester? ester,
   }) async {
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
@@ -32,9 +27,9 @@ class MedicationIntakeManager {
       takenDateTime: takenDate,
       side: side,
       scheduleId: schedule.id,
-      molecule: molecule,
-      administrationRoute: administrationRoute,
-      ester: ester,
+      molecule: schedule.molecule,
+      administrationRoute: schedule.administrationRoute,
+      ester: schedule.ester,
     ));
 
     if (supplyItem != null) {
