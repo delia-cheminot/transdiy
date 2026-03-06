@@ -68,14 +68,14 @@ class GraphCalculator {
         return _coefCypionateSuspension;
       case Ester.undecylate:
         return _coefUndecylate;
-      case Ester.polyestradiolPhosphate:    
+      case Ester.polyphosphate:
         return _coefPolyestradiolPhosphate;
     }
   }
 
   double _singleInjectionConcentration(double t, int day, GraphIntake intake) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
-    
+
     Map<String, double> coef = getCoef(intake);
 
     final k1 = coef["k1"]!;

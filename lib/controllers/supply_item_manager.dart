@@ -1,4 +1,6 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import '../data/model/supply_item.dart';
 import '../data/providers/supply_item_provider.dart';
 
@@ -14,6 +16,9 @@ class SupplyItemManager {
     Decimal? newUsedDose,
     Decimal? newConcentration,
     int? newQuantity,
+    Molecule? newMolecule,
+    AdministrationRoute? newAdministrationRoute,
+    Ester? newEster,
   }) async {
     final newItem = item.copyWith(
       name: newName,
@@ -21,6 +26,9 @@ class SupplyItemManager {
       usedDose: newUsedDose,
       concentration: newConcentration,
       quantity: newQuantity,
+      molecule: newMolecule,
+      administrationRoute: newAdministrationRoute,
+      ester: newEster,
     );
 
     if (!newItem.isValid()) {
