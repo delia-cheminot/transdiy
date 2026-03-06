@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
 
 class MedicationIntakeProvider extends ChangeNotifier {
@@ -24,6 +26,12 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   List<MedicationIntake> get notTakenIntakes =>
       _intakes.where((intake) => !intake.isTaken).toList();
+
+  List<MedicationIntake> get graphIntakes => takenIntakes
+      .where((intake) =>
+          intake.molecule == KnownMolecules.estradiol &&
+          intake.administrationRoute == AdministrationRoute.injection)
+      .toList();
 
   Future<void> _init() async {
     _intakes = await repository.getAll();
@@ -67,10 +75,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
   }
 
   Map<int, double> getDaysAndDoses() {
-    if (takenIntakes.isEmpty) return {};
+    if (graphIntakes.isEmpty) return {};
     final startDate = getFirstIntakeDate()!;
     return Map.fromEntries(
-      takenIntakes.map(
+      graphIntakes.map(
         (intake) => MapEntry(
           intake.takenDateTime!.difference(startDate).inDays,
           intake.dose.toDouble(),
