@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:mona/util/decimal_helpers.dart';
@@ -22,6 +27,10 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
   late DateTime _startDate;
+  late Molecule _molecule;
+  late AdministrationRoute _administrationRoute;
+  late Ester? _ester;
+  late PreferencesService _preferencesService;
   late MedicationScheduleProvider _medicationScheduleProvider;
 
   String? get _nameError =>
@@ -32,32 +41,93 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
   String? get _startDateError =>
       MedicationSchedule.validateStartDate(_startDate);
+  String? get _moleculeError => MedicationSchedule.validateMolecule(_molecule);
+  String? get _administrationRouteError =>
+      MedicationSchedule.validateAdministrationRoute(_administrationRoute);
+  String? get _esterError {
+    final validator =
+        MedicationSchedule.esterValidator(_molecule, _administrationRoute);
+    return validator(_ester);
+  }
 
   bool get _isFormValid =>
       _nameError == null &&
       _doseError == null &&
       _intervalDaysError == null &&
-      _startDateError == null;
+      _startDateError == null &&
+      _moleculeError == null &&
+      _administrationRouteError == null &&
+      _esterError == null;
 
-  @override
-  void initState() {
-    super.initState();
-    _medicationScheduleProvider =
-        Provider.of<MedicationScheduleProvider>(context, listen: false);
-    _nameController = TextEditingController(text: widget.schedule.name);
-    _doseController =
-        TextEditingController(text: widget.schedule.dose.toString());
-    _intervalDaysController =
-        TextEditingController(text: widget.schedule.intervalDays.toString());
-    _startDate = widget.schedule.startDate;
+  bool get _useEsterField =>
+      _molecule == KnownMolecules.estradiol &&
+      _administrationRoute == AdministrationRoute.injection;
+
+  late final List<DropdownMenuItem<Molecule>> _moleculeItems =
+      _preferencesService.allMolecules
+          .map(
+            (molecule) => DropdownMenuItem<Molecule>(
+              value: molecule,
+              child: Text(
+                molecule.name[0].toUpperCase() + molecule.name.substring(1),
+              ),
+            ),
+          )
+          .toList();
+
+  late final List<DropdownMenuItem<AdministrationRoute>>
+      _administrationRouteItems = AdministrationRoute.all
+          .map(
+            (route) => DropdownMenuItem<AdministrationRoute>(
+              value: route,
+              child: Text(
+                route.name[0].toUpperCase() + route.name.substring(1),
+              ),
+            ),
+          )
+          .toList();
+
+  late final List<DropdownMenuItem<Ester>> _esterItems = Ester.values
+      .map(
+        (ester) => DropdownMenuItem<Ester>(
+          value: ester,
+          child: Text(
+            ester.name[0].toUpperCase() + ester.name.substring(1),
+          ),
+        ),
+      )
+      .toList();
+
+  void _onMoleculeChanged(Molecule? molecule) {
+    if (molecule != null) {
+      setState(() {
+        _molecule = molecule;
+
+        if (!_useEsterField) {
+          _ester = null;
+        }
+      });
+    }
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _doseController.dispose();
-    _intervalDaysController.dispose();
-    super.dispose();
+  void _onAdministrationRouteChanged(AdministrationRoute? administrationRoute) {
+    if (administrationRoute != null) {
+      setState(() {
+        _administrationRoute = administrationRoute;
+
+        if (!_useEsterField) {
+          _ester = null;
+        }
+      });
+    }
+  }
+
+  void _onEsterChanged(Ester? ester) {
+    if (ester != null) {
+      setState(() {
+        _ester = ester;
+      });
+    }
   }
 
   void _refresh() => setState(() {});
@@ -71,8 +141,12 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       dose: parseDecimal(_doseController.text),
       intervalDays: int.parse(_intervalDaysController.text),
       startDate: _startDate,
+      molecule: _molecule,
+      administrationRoute: _administrationRoute,
+      ester: _ester,
     );
     _medicationScheduleProvider.updateSchedule(updatedSchedule);
+
     Navigator.pop(context, updatedSchedule);
   }
 
@@ -83,6 +157,32 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       _medicationScheduleProvider.deleteSchedule(widget.schedule);
       Navigator.pop(context);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _medicationScheduleProvider =
+        Provider.of<MedicationScheduleProvider>(context, listen: false);
+    _preferencesService =
+        Provider.of<PreferencesService>(context, listen: false);
+    _nameController = TextEditingController(text: widget.schedule.name);
+    _doseController =
+        TextEditingController(text: widget.schedule.dose.toString());
+    _intervalDaysController =
+        TextEditingController(text: widget.schedule.intervalDays.toString());
+    _startDate = widget.schedule.startDate;
+    _molecule = widget.schedule.molecule;
+    _administrationRoute = widget.schedule.administrationRoute;
+    _ester = widget.schedule.ester;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _doseController.dispose();
+    _intervalDaysController.dispose();
+    super.dispose();
   }
 
   @override
@@ -101,6 +201,27 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           inputType: TextInputType.text,
           errorText: _nameError,
         ),
+        FormSpacer(),
+        FormDropdownField<Molecule>(
+          value: _molecule,
+          items: _moleculeItems,
+          onChanged: _onMoleculeChanged,
+          label: 'Molecule',
+        ),
+        FormDropdownField<AdministrationRoute>(
+          value: _administrationRoute,
+          items: _administrationRouteItems,
+          onChanged: _onAdministrationRouteChanged,
+          label: 'Administration route',
+        ),
+        if (_useEsterField)
+          FormDropdownField<Ester>(
+            value: _ester,
+            items: _esterItems,
+            onChanged: _onEsterChanged,
+            label: 'Ester',
+          ),
+        FormSpacer(),
         FormTextField(
           controller: _doseController,
           label: 'Amount',
