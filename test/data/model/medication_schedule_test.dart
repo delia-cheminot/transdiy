@@ -134,6 +134,24 @@ void main() {
       test('validateAdministrationRoute works correctly', () {
         // Arrange
         final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': AdministrationRoute.implant, 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => MedicationSchedule.validateAdministrationRoute(
+                c['value'] as AdministrationRoute?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
+      });
+
+      test('validateEster works correctly', () {
+        // Arrange
+        final cases = [
           {
             'molecule': null,
             'route': null,
