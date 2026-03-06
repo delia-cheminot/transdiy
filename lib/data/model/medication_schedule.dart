@@ -168,7 +168,8 @@ class MedicationSchedule {
 
   static String? validateName(String? value) => requiredString(value);
 
-  static String? validateDose(String? value) => requiredPositiveDecimal(value);
+  static String? validateDose(String? value) =>
+      requiredStrictlyPositiveDecimal(value);
 
   static String? validateIntervalDays(String? value) =>
       requiredPositiveInt(value);

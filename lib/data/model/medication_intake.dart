@@ -93,7 +93,8 @@ class MedicationIntake {
     );
   }
 
-  static String? validateDose(String? value) => requiredPositiveDecimal(value);
+  static String? validateDose(String? value) =>
+      requiredStrictlyPositiveDecimal(value);
 
   @override
   bool operator ==(Object other) =>

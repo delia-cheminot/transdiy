@@ -8,12 +8,22 @@ String? requiredString(String? value) =>
 String? requiredDate(DateTime? value) =>
     value == null ? 'Required field' : null;
 
-String? positiveDecimal(String? value) {
+String? strictlyPositiveDecimal(String? value) {
   final parsed = Decimal.tryParse(value?.replaceAll(',', '.') ?? '');
   return parsed == null || parsed <= Decimal.zero
       ? 'Must be a positive number'
       : null;
 }
+
+String? positiveDecimal(String? value) {
+  final parsed = Decimal.tryParse(value?.replaceAll(',', '.') ?? '');
+  return parsed == null || parsed < Decimal.zero
+      ? 'Must be a positive number'
+      : null;
+}
+
+String? requiredStrictlyPositiveDecimal(String? value) =>
+    requiredString(value) ?? strictlyPositiveDecimal(value);
 
 String? requiredPositiveDecimal(String? value) =>
     requiredString(value) ?? positiveDecimal(value);

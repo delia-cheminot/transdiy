@@ -108,12 +108,12 @@ class SupplyItem {
   }
 
   static String? validateTotalAmount(String? value) =>
-      requiredPositiveDecimal(value);
+      requiredStrictlyPositiveDecimal(value);
 
   static String? validateName(String? value) => requiredString(value);
 
   static String? validateConcentration(String? value) =>
-      requiredPositiveDecimal(value);
+      requiredStrictlyPositiveDecimal(value);
 
   static String? Function(String?) usedAmountValidator(String totalAmount) {
     return (String? value) {
