@@ -57,41 +57,6 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       _molecule == KnownMolecules.estradiol &&
       _administrationRoute == AdministrationRoute.injection;
 
-  late final List<DropdownMenuItem<Molecule>> _moleculeItems =
-      _preferencesService.allMolecules
-          .map(
-            (molecule) => DropdownMenuItem<Molecule>(
-              value: molecule,
-              child: Text(
-                molecule.name[0].toUpperCase() + molecule.name.substring(1),
-              ),
-            ),
-          )
-          .toList();
-
-  late final List<DropdownMenuItem<AdministrationRoute>>
-      _administrationRouteItems = AdministrationRoute.all
-          .map(
-            (route) => DropdownMenuItem<AdministrationRoute>(
-              value: route,
-              child: Text(
-                route.name[0].toUpperCase() + route.name.substring(1),
-              ),
-            ),
-          )
-          .toList();
-
-  late final List<DropdownMenuItem<Ester>> _esterItems = Ester.values
-      .map(
-        (ester) => DropdownMenuItem<Ester>(
-          value: ester,
-          child: Text(
-            ester.name[0].toUpperCase() + ester.name.substring(1),
-          ),
-        ),
-      )
-      .toList();
-
   void _onMoleculeChanged(Molecule? molecule) {
     if (molecule != null) {
       setState(() {
@@ -185,20 +150,20 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
-          items: _moleculeItems,
+          items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
           label: 'Molecule',
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
-          items: _administrationRouteItems,
+          items: AdministrationRoute.menuItems,
           onChanged: _onAdministrationRouteChanged,
           label: 'Administration route',
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: _esterItems,
+            items: EsterDropdown.menuItems,
             onChanged: _onEsterChanged,
             label: 'Ester',
           ),

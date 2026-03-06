@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AdministrationRoute {
   final String name;
   final String unit;
@@ -49,6 +51,17 @@ class AdministrationRoute {
   static AdministrationRoute fromName(String name) {
     return all.firstWhere((route) => route.name == name);
   }
+
+  static List<DropdownMenuItem<AdministrationRoute>> get menuItems => all
+      .map(
+        (route) => DropdownMenuItem<AdministrationRoute>(
+          value: route,
+          child: Text(
+            route.name[0].toUpperCase() + route.name.substring(1),
+          ),
+        ),
+      )
+      .toList();
 
   @override
   bool operator ==(Object other) =>

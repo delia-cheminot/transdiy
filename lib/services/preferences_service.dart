@@ -58,6 +58,17 @@ class PreferencesService extends ChangeNotifier {
     return map.values.toList();
   }
 
+  List<DropdownMenuItem<Molecule>> get moleculeDropdownItems => allMolecules
+      .map(
+        (molecule) => DropdownMenuItem<Molecule>(
+          value: molecule,
+          child: Text(
+            molecule.name[0].toUpperCase() + molecule.name.substring(1),
+          ),
+        ),
+      )
+      .toList();
+
   Future<void> addCustomMolecule(Molecule molecule) async {
     final existing = customMolecules;
 

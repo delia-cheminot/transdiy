@@ -63,18 +63,6 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       _molecule == KnownMolecules.estradiol &&
       _administrationRoute == AdministrationRoute.injection;
 
-  late final List<DropdownMenuItem<Molecule>> _moleculeItems =
-      _preferencesService.allMolecules
-          .map(
-            (molecule) => DropdownMenuItem<Molecule>(
-              value: molecule,
-              child: Text(
-                molecule.name[0].toUpperCase() + molecule.name.substring(1),
-              ),
-            ),
-          )
-          .toList();
-
   late final List<DropdownMenuItem<AdministrationRoute>>
       _administrationRouteItems = AdministrationRoute.all
           .map(
@@ -204,7 +192,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
-          items: _moleculeItems,
+          items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
           label: 'Molecule',
         ),
