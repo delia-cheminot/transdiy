@@ -14,7 +14,7 @@ class IntakesPage extends StatelessWidget {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
-          emptyMessage: 'Taken intakes will appear here.',
+          emptyMessage: 'Taken intakes will appear here',
           child: ListView.builder(
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
