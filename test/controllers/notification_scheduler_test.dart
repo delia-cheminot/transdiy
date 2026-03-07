@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
@@ -51,7 +53,13 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.show(any, any, any, any)).thenAnswer((_) async {});
+        when(mockPlugin.show(
+          id: anyNamed('id'),
+          title: 'title',
+          body: 'body',
+          notificationDetails: anyNamed('notificationDetails'),
+          payload: anyNamed('payload'),
+        )).thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -65,7 +73,13 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.show(any, 'title', 'body', any)).called(1);
+        verify(mockPlugin.show(
+          id: anyNamed('id'),
+          title: 'title',
+          body: 'body',
+          notificationDetails: anyNamed('notificationDetails'),
+          payload: anyNamed('payload'),
+        )).called(1);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -86,7 +100,7 @@ void main() {
 
         when(mockPlugin.pendingNotificationRequests())
             .thenAnswer((_) async => [pending]);
-        when(mockPlugin.cancel(any)).thenAnswer((_) async {});
+        when(mockPlugin.cancel(id: anyNamed('id'))).thenAnswer((_) async {});
 
         final origCreate = NotificationService.createPlugin;
         NotificationService.createPlugin = () => mockPlugin;
@@ -100,7 +114,7 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.cancel(pending.id)).called(1);
+        verify(mockPlugin.cancel(id: pending.id)).called(1);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -118,11 +132,19 @@ void main() {
         when(mockPreferencesService.notificationsEnabled).thenReturn(false);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -139,7 +161,12 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verifyNever(mockPlugin.zonedSchedule(any, any, any, any, any,
+        verifyNever(mockPlugin.zonedSchedule(
+            id: anyNamed('id'),
+            title: anyNamed('title'),
+            body: anyNamed('body'),
+            scheduledDate: anyNamed('scheduledDate'),
+            notificationDetails: anyNamed('notificationDetails'),
             androidScheduleMode: anyNamed('androidScheduleMode'),
             payload: anyNamed('payload')));
 
@@ -160,14 +187,22 @@ void main() {
         final futureHour = (DateTime.now().hour + 1) % 24;
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: futureHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -184,8 +219,13 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
-                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        verify(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
+                androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
 
@@ -204,14 +244,22 @@ void main() {
         final pastHour = (DateTime.now().hour - 1) % 24;
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1)
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(TimeOfDay(hour: pastHour, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -228,7 +276,12 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
+        verify(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(4);
@@ -246,15 +299,23 @@ void main() {
 
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
-              name: 'Test Medication',
-              dose: Decimal.fromInt(10),
-              intervalDays: 1,
-              startDate: DateTime.now().add(const Duration(days: 1)))
+            name: 'Test Medication',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            startDate: DateTime.now().add(const Duration(days: 1)),
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+          )
         ]);
         when(mockPreferencesService.notificationTime)
             .thenReturn(const TimeOfDay(hour: 12, minute: 0));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
-        when(mockPlugin.zonedSchedule(any, any, any, any, any,
+        when(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
                 androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .thenAnswer((_) async {});
@@ -271,8 +332,13 @@ void main() {
         await scheduler.regenerateAll();
 
         // Assert
-        verify(mockPlugin.zonedSchedule(any, any, any, any, any,
-                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        verify(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
+                androidScheduleMode: anyNamed('androidScheduleMode'),
                 payload: anyNamed('payload')))
             .called(5);
 

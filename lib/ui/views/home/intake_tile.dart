@@ -121,7 +121,7 @@ class IntakeTileViewModel {
       supplyProvider,
     ).getNextSide();
 
-    return "${schedule.dose} mg • ${nextSide.name} side";
+    return "${schedule.dose} mg • ${schedule.molecule.name} ${schedule.ester != null ? "${schedule.ester!.name} " : ""}${schedule.administrationRoute.name} • ${nextSide.name} side";
   }
 
   String get scheduledText {
@@ -186,8 +186,9 @@ class IntakeTileViewModel {
       );
     }
 
-    final icon =
-        status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
+    final icon = status == ScheduleStatus.today
+        ? schedule.administrationRoute.icon
+        : Symbols.schedule;
 
     return CircleAvatar(
       backgroundColor: theme.colorScheme.onPrimaryContainer,

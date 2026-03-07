@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/ui/views/supplies/edit_item_page.dart';
 
@@ -30,12 +31,19 @@ class SupplyItemCard extends StatelessWidget {
                   width: double.infinity,
                   color: Theme.of(context).colorScheme.primary,
                   child: Center(
-                    child: SvgPicture.asset(
-                      _getVialAsset(item.getRatio()),
-                      fit: BoxFit.contain,
-                      width: 72,
-                      height: 72,
-                    ),
+                    child: item.administrationRoute ==
+                            AdministrationRoute.injection
+                        ? SvgPicture.asset(
+                            _getVialAsset(item.getRatio()),
+                            fit: BoxFit.contain,
+                            width: 100,
+                            height: 100,
+                          )
+                        : Icon(
+                            item.administrationRoute.icon,
+                            size: 100,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                   ),
                 ),
               ),
@@ -51,7 +59,7 @@ class SupplyItemCard extends StatelessWidget {
                   ),
                   // text with description
                   Text(
-                    '${item.totalDose} mg',
+                    '$item',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(

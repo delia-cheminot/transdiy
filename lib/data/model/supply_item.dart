@@ -1,36 +1,35 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/validators.dart';
 
 class SupplyItem {
   final int id;
   final String name;
-  final Decimal totalDose; // mg
-  final Decimal usedDose; // mg
-  final Decimal dosePerUnit; // mg/ml
+  final Decimal totalDose;
+  final Decimal usedDose;
+  final Decimal concentration;
+  // TODO remove quantity
   final int quantity;
-  bool get isUsed => usedDose > Decimal.zero;
-  bool get isInStock => quantity > 0;
-  Decimal get remainingDose => totalDose - usedDose;
+  final Molecule molecule;
+  final AdministrationRoute administrationRoute;
+  final Ester? ester;
 
   SupplyItem({
     int? id,
     required this.name,
     required this.totalDose,
-    required this.dosePerUnit,
+    required this.concentration,
     Decimal? usedDose,
     this.quantity = 1,
+    required this.molecule,
+    required this.administrationRoute,
+    this.ester,
   })  : usedDose = usedDose ?? Decimal.zero,
         id = id ?? DateTime.now().millisecondsSinceEpoch;
-
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'totalDose': totalDose.toString(),
-      'usedDose': usedDose.toString(),
-      'dosePerUnit': dosePerUnit.toString(),
-      'quantity': quantity,
-    };
-  }
 
   factory SupplyItem.fromMap(Map<String, Object?> map) {
     return SupplyItem(
@@ -38,112 +37,25 @@ class SupplyItem {
       name: map['name'] as String,
       totalDose: Decimal.parse(map['totalDose'] as String),
       usedDose: Decimal.parse(map['usedDose'] as String),
-      dosePerUnit: Decimal.parse(map['dosePerUnit'] as String),
+      concentration: Decimal.parse(map['concentration'] as String),
       quantity: map['quantity'] as int,
+      molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
+      administrationRoute: AdministrationRoute.fromName(
+          map['administrationRouteName'] as String),
+      ester: Ester.fromName(map['esterName'] as String?),
     );
   }
 
-  SupplyItem copy() {
-    return SupplyItem(
-      id: id,
-      name: name,
-      totalDose: totalDose,
-      usedDose: usedDose,
-      dosePerUnit: dosePerUnit,
-      quantity: quantity,
-    );
-  }
-
-  SupplyItem copyWith({
-    int? id,
-    String? name,
-    Decimal? totalDose,
-    Decimal? usedDose,
-    Decimal? dosePerUnit,
-    int? quantity,
-  }) {
-    return SupplyItem(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      totalDose: totalDose ?? this.totalDose,
-      usedDose: usedDose ?? this.usedDose,
-      dosePerUnit: dosePerUnit ?? this.dosePerUnit,
-      quantity: quantity ?? this.quantity,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SupplyItem &&
-          other.id == id &&
-          other.name == name &&
-          other.totalDose == totalDose &&
-          other.usedDose == usedDose &&
-          other.dosePerUnit == dosePerUnit &&
-          other.quantity == quantity;
-
-  @override
-  int get hashCode =>
-      Object.hash(id, name, totalDose, usedDose, dosePerUnit, quantity);
-
-  @override
-  String toString() {
-    return 'SupplyItem{id: $id name: $name}';
-  }
+  bool get isUsed => usedDose > Decimal.zero;
+  bool get isInStock => quantity > 0;
+  Decimal get remainingDose => totalDose - usedDose;
 
   bool isValid() {
     return totalDose > Decimal.zero &&
         usedDose >= Decimal.zero &&
         usedDose <= totalDose &&
         name != '' &&
-        dosePerUnit > Decimal.zero;
-  }
-
-  static String? validateTotalAmount(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    return null;
-  }
-
-  static String? validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    return null;
-  }
-
-  static String? validateUsedAmount(String? value, String totalAmount) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue < Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    if (validateTotalAmount(totalAmount) != null) {
-      return 'Invalid total amount';
-    }
-    if (parsedValue > Decimal.parse(totalAmount)) {
-      return 'Cannot exceed total capacity';
-    }
-    return null;
-  }
-
-  static String? validateDosePerUnit(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Required field';
-    }
-    final parsedValue = Decimal.tryParse(value);
-    if (parsedValue == null || parsedValue <= Decimal.zero) {
-      return 'Must be a positive number';
-    }
-    return null;
+        concentration > Decimal.zero;
   }
 
   bool canUseDose(Decimal doseToUse) {
@@ -154,5 +66,93 @@ class SupplyItem {
     return (remainingDose *
             totalDose.inverse.toDecimal(scaleOnInfinitePrecision: 10))
         .toDouble();
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'totalDose': totalDose.toString(),
+      'usedDose': usedDose.toString(),
+      'concentration': concentration.toString(),
+      'quantity': quantity,
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
+    };
+  }
+
+  SupplyItem copyWith({
+    int? id,
+    String? name,
+    Decimal? totalDose,
+    Decimal? usedDose,
+    Decimal? concentration,
+    int? quantity,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
+  }) {
+    return SupplyItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      totalDose: totalDose ?? this.totalDose,
+      usedDose: usedDose ?? this.usedDose,
+      concentration: concentration ?? this.concentration,
+      quantity: quantity ?? this.quantity,
+      molecule: molecule ?? this.molecule,
+      administrationRoute: administrationRoute ?? this.administrationRoute,
+      ester: ester ?? this.ester,
+    );
+  }
+
+  static String? validateTotalAmount(String? value) =>
+      requiredStrictlyPositiveDecimal(value);
+
+  static String? validateName(String? value) => requiredString(value);
+
+  static String? validateConcentration(String? value) =>
+      requiredStrictlyPositiveDecimal(value);
+
+  static String? Function(String?) usedAmountValidator(String totalAmount) {
+    return (String? value) {
+      return requiredPositiveDecimal(value) ??
+          (validateTotalAmount(totalAmount) != null
+              ? 'Invalid total amount'
+              : null) ??
+          (Decimal.tryParse(value!)! > Decimal.parse(totalAmount)
+              ? 'Cannot exceed total capacity'
+              : null);
+    };
+  }
+
+  static String? validateMolecule(Molecule? value) => requiredMolecule(value);
+
+  static String? validateAdministrationRoute(AdministrationRoute? value) =>
+      requiredAdministrationRoute(value);
+
+  static String? Function(Ester?) esterValidator(
+      Molecule? molecule, AdministrationRoute? administrationRoute) {
+    return (Ester? value) {
+      return (molecule == KnownMolecules.estradiol &&
+              administrationRoute == AdministrationRoute.injection &&
+              value == null)
+          ? 'Required field'
+          : null;
+    };
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is SupplyItem && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return "${molecule.name} "
+        "${ester != null ? "${ester!.name} " : ""}"
+        " $concentration ${molecule.unit}/${administrationRoute.unit}";
   }
 }

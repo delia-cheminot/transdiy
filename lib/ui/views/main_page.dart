@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/ui/views/main_tab_config.dart';
 import 'main_tabs.dart';
 
 class MainPage extends StatefulWidget {
@@ -9,7 +10,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
-  get currentTab => mainTabs[_selectedIndex];
+  MainTabConfig get currentTab => mainTabs[_selectedIndex];
 
   void _selectIndex(int index) {
     setState(() => _selectedIndex = index);
@@ -26,7 +27,13 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: currentTab.page,
       ),
-      // TODO implement indexed stack + correct scroll bug
+      //     |----------------------------------------------------|
+      //     |  TODO implement indexed stack + correct scroll bug |
+      //     |----------------------------------------------------|
+      //        ||
+      // (\__/) ||
+      // (•ㅅ•) ||
+      // / 　 づ
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: _selectIndex,

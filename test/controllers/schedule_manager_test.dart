@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/schedule_manager.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/util/date_helpers.dart';
@@ -45,6 +47,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(1))
           .thenReturn(today.subtract(const Duration(days: 2)));
@@ -55,6 +59,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(5))
           .thenReturn(normalizedToday());
@@ -65,6 +71,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today.subtract(const Duration(days: 4)),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(4))
           .thenReturn(today.subtract(const Duration(days: 3)));
@@ -75,6 +83,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today.subtract(const Duration(days: 9)),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(2))
           .thenReturn(today.subtract(const Duration(days: 4)));
@@ -85,6 +95,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today.add(const Duration(days: 10)),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(3)).thenReturn(null);
 
@@ -106,6 +118,8 @@ void main() {
         dose: Decimal.one,
         intervalDays: 2,
         startDate: today,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       when(mockIntakeProvider.getLastIntakeDateForSchedule(1))

@@ -8,7 +8,6 @@ import 'main_tab_config.dart';
 import 'supplies/new_item_page.dart';
 import 'supplies/pharmacy_page.dart';
 
-
 final List<MainTabConfig> mainTabs = [
   MainTabConfig(
     title: 'Mona',
@@ -17,7 +16,7 @@ final List<MainTabConfig> mainTabs = [
     selectedIcon: Icons.home,
     buildActions: (context) => [
       IconButton(
-        icon: const Icon(Icons.account_circle),
+        icon: const Icon(Icons.settings),
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => ProfilePage()),

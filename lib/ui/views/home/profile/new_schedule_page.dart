@@ -1,10 +1,16 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -17,6 +23,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
   late DateTime _startDate;
+  Molecule? _molecule;
+  AdministrationRoute? _administrationRoute;
+  Ester? _ester;
+  late PreferencesService _preferencesService;
 
   String? get _nameError =>
       MedicationSchedule.validateName(_nameController.text);
@@ -26,16 +36,90 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
   String? get _startDateError =>
       MedicationSchedule.validateStartDate(_startDate);
+  String? get _moleculeError => MedicationSchedule.validateMolecule(_molecule);
+  String? get _administrationRouteError =>
+      MedicationSchedule.validateAdministrationRoute(_administrationRoute);
+  String? get _esterError {
+    final validator =
+        MedicationSchedule.esterValidator(_molecule, _administrationRoute);
+    return validator(_ester);
+  }
 
   bool get _isFormValid =>
       _nameError == null &&
       _doseError == null &&
       _intervalDaysError == null &&
-      _startDateError == null;
+      _startDateError == null &&
+      _moleculeError == null &&
+      _administrationRouteError == null &&
+      _esterError == null;
+
+  bool get _useEsterField =>
+      _molecule == KnownMolecules.estradiol &&
+      _administrationRoute == AdministrationRoute.injection;
+
+  void _onMoleculeChanged(Molecule? molecule) {
+    if (molecule != null) {
+      setState(() {
+        _molecule = molecule;
+
+        if (!_useEsterField) {
+          _ester = null;
+        }
+      });
+    }
+  }
+
+  void _onAdministrationRouteChanged(AdministrationRoute? administrationRoute) {
+    if (administrationRoute != null) {
+      setState(() {
+        _administrationRoute = administrationRoute;
+
+        if (!_useEsterField) {
+          _ester = null;
+        }
+      });
+    }
+  }
+
+  void _onEsterChanged(Ester? ester) {
+    if (ester != null) {
+      setState(() {
+        _ester = ester;
+      });
+    }
+  }
+
+  void _refresh() {
+    setState(() {});
+  }
+
+  void _addSchedule() {
+    final name = _nameController.text;
+    final dose = parseDecimal(_doseController.text);
+    final intervalDays = int.parse(_intervalDaysController.text);
+    final medicationScheduleProvider =
+        Provider.of<MedicationScheduleProvider>(context, listen: false);
+
+    final schedule = MedicationSchedule(
+      name: name,
+      dose: dose,
+      intervalDays: intervalDays,
+      startDate: _startDate,
+      molecule: _molecule!,
+      administrationRoute: _administrationRoute!,
+      ester: _ester,
+    );
+    medicationScheduleProvider.add(schedule);
+
+    Navigator.pop(context);
+  }
 
   @override
   void initState() {
     super.initState();
+    _preferencesService =
+        Provider.of<PreferencesService>(context, listen: false);
     _nameController = TextEditingController();
     _doseController = TextEditingController();
     _intervalDaysController = TextEditingController();
@@ -48,21 +132,6 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     _doseController.dispose();
     _intervalDaysController.dispose();
     super.dispose();
-  }
-
-  void _addSchedule() {
-    final name = _nameController.text;
-    final dose = Decimal.parse(_doseController.text);
-    final intervalDays = int.parse(_intervalDaysController.text);
-    final medicationScheduleProvider =
-        Provider.of<MedicationScheduleProvider>(context, listen: false);
-    medicationScheduleProvider.addSchedule(name, dose, intervalDays,
-        startDate: _startDate);
-    Navigator.pop(context);
-  }
-
-  void _refresh() {
-    setState(() {});
   }
 
   @override
@@ -79,20 +148,41 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
+        FormSpacer(),
+        FormDropdownField<Molecule>(
+          value: _molecule,
+          items: _preferencesService.moleculeDropdownItems,
+          onChanged: _onMoleculeChanged,
+          label: 'Molecule',
+        ),
+        FormDropdownField<AdministrationRoute>(
+          value: _administrationRoute,
+          items: AdministrationRoute.menuItems,
+          onChanged: _onAdministrationRouteChanged,
+          label: 'Administration route',
+        ),
+        if (_useEsterField)
+          FormDropdownField<Ester>(
+            value: _ester,
+            items: Ester.menuItems,
+            onChanged: _onEsterChanged,
+            label: 'Ester',
+          ),
+        FormSpacer(),
         FormTextField(
           controller: _doseController,
           label: 'Amount',
-          suffixText: 'mg',
+          suffixText: _molecule?.unit,
           onChanged: _refresh,
-          inputType: TextInputType.number,
+          inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
         ),
         FormTextField(
           controller: _intervalDaysController,
-          label: 'Time interval',
+          label: 'Every',
           suffixText: 'days',
           onChanged: _refresh,
-          inputType: TextInputType.numberWithOptions(decimal: false),
+          inputType: TextInputType.number,
           regexFormatter: '[0-9]',
         ),
         FormDateField(
