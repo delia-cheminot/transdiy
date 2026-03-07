@@ -203,35 +203,102 @@ void main() {
       expect(ordered.map((e) => e.name).toList(), ['A', 'C', 'B']);
     });
 
-    test('getMostUsedItem returns the item with highest used/total dose',
+    test(
+        'getMostUsedItemForMedication returns the most used item for medication',
         () async {
-      final supplyItem = SupplyItem(
-        id: 6,
-        name: 'X',
+      // Arrange
+      final baseItem = SupplyItem(
+        id: 1,
+        name: 'E vial',
         totalDose: Decimal.parse('200'),
         usedDose: Decimal.parse('150'),
         concentration: Decimal.parse('2'),
         molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.oral,
+        administrationRoute: AdministrationRoute.injection,
+        ester: Ester.valerate,
       );
 
-      await repo.insert(supplyItem);
-
-      await repo.insert(supplyItem.copyWith(
-        id: 7,
+      await repo.insert(baseItem);
+      await repo.insert(baseItem.copyWith(
+        id: 2,
         usedDose: Decimal.parse('50'),
       ));
-
-      await repo.insert(supplyItem.copyWith(
-        id: 8,
+      await repo.insert(baseItem.copyWith(
+        id: 3,
         usedDose: Decimal.parse('100'),
       ));
-
       await provider.fetchItems();
 
-      final mostUsed = provider.getMostUsedItem();
+      // Act
+      final mostUsed = provider.getMostUsedItemForMedication(
+        KnownMolecules.estradiol,
+        AdministrationRoute.injection,
+        Ester.valerate,
+      );
 
-      expect(mostUsed?.id, 6);
+      // Assert
+      expect(mostUsed?.id, 1);
+    });
+
+    test('getMostUsedItemForMedication ignores other administration routes',
+        () async {
+      // Arrange
+      final injectionItem = SupplyItem(
+        id: 1,
+        name: 'Injection',
+        totalDose: Decimal.parse('200'),
+        usedDose: Decimal.parse('50'),
+        concentration: Decimal.parse('2'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.injection,
+        ester: Ester.valerate,
+      );
+
+      final oralItem = injectionItem.copyWith(
+        id: 2,
+        administrationRoute: AdministrationRoute.oral,
+        usedDose: Decimal.parse('150'),
+        ester: null,
+      );
+      await repo.insert(injectionItem);
+      await repo.insert(oralItem);
+      await provider.fetchItems();
+
+      // Act
+      final mostUsed = provider.getMostUsedItemForMedication(
+        KnownMolecules.estradiol,
+        AdministrationRoute.injection,
+        Ester.valerate,
+      );
+
+      // Assert
+      expect(mostUsed?.id, 1);
+    });
+
+    test('getMostUsedItemForMedication returns null if no matching item',
+        () async {
+      // Arrange
+      final oralItem = SupplyItem(
+        id: 1,
+        name: 'Injection',
+        totalDose: Decimal.parse('200'),
+        usedDose: Decimal.parse('50'),
+        concentration: Decimal.parse('2'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
+      await repo.insert(oralItem);
+      await provider.fetchItems();
+
+      // Act
+      final mostUsed = provider.getMostUsedItemForMedication(
+        KnownMolecules.estradiol,
+        AdministrationRoute.injection,
+        Ester.valerate,
+      );
+
+      // Assert
+      expect(mostUsed, null);
     });
   });
 }

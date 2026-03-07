@@ -36,24 +36,28 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   bool get _isInjection =>
       widget.schedule.administrationRoute == AdministrationRoute.injection;
 
-  void _takeIntake(
-    MedicationIntakeProvider medicationIntakeProvider,
-    SupplyItemProvider supplyItemProvider,
-  ) {
+  void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
+      SupplyItemProvider supplyItemProvider) {
     if (!_isFormValid) return;
     if (!mounted) return;
 
     final dose = parseDecimal(_takenDoseController.text);
+    final itemToUse = supplyItemProvider.getMostUsedItemForMedication(
+      widget.schedule.molecule,
+      widget.schedule.administrationRoute,
+      widget.schedule.ester,
+    );
 
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: dose,
       scheduledDate: widget.scheduledDate,
       takenDate: _takenDate,
-      supplyItem: supplyItemProvider.getMostUsedItem(),
+      supplyItem: itemToUse,
       schedule: widget.schedule,
       side: _selectedSide,
     );
+
     Navigator.of(context).pop();
   }
 
