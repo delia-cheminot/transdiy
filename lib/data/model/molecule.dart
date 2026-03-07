@@ -1,26 +1,3 @@
-import 'package:flutter/material.dart';
-
-enum Ester {
-  enanthate,
-  valerate,
-  cypionate,
-  undecylate,
-  benzoate,
-  cypionateSuspension,
-  polyphosphate
-}
-
-extension EsterDropdown on Ester {
-  static List<DropdownMenuItem<Ester>> get menuItems => Ester.values
-      .map(
-        (ester) => DropdownMenuItem<Ester>(
-          value: ester,
-          child: Text(ester.name[0].toUpperCase() + ester.name.substring(1)),
-        ),
-      )
-      .toList();
-}
-
 class Molecule {
   final String name;
   final String unit;
@@ -49,11 +26,10 @@ class Molecule {
       identical(this, other) ||
       other is Molecule &&
           runtimeType == other.runtimeType &&
-          name == other.name &&
-          unit == other.unit;
+          name == other.name;
 
   @override
-  int get hashCode => name.hashCode ^ unit.hashCode;
+  int get hashCode => name.hashCode;
 }
 
 class KnownMolecules {

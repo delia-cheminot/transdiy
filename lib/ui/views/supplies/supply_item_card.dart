@@ -30,7 +30,6 @@ class SupplyItemCard extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   color: Theme.of(context).colorScheme.primary,
-                  // TODO use different pictures for routes
                   child: Center(
                     child: item.administrationRoute ==
                             AdministrationRoute.injection

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -155,7 +156,7 @@ class _NewItemPageState extends State<NewItemPage> {
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: EsterDropdown.menuItems,
+            items: Ester.menuItems,
             onChanged: _onEsterChanged,
             label: 'Ester',
           ),

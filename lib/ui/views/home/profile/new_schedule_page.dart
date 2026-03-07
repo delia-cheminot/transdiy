@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
@@ -163,7 +164,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: EsterDropdown.menuItems,
+            items: Ester.menuItems,
             onChanged: _onEsterChanged,
             label: 'Ester',
           ),

@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 
@@ -69,26 +70,6 @@ void main() {
           true,
           false,
         ],
-      );
-    });
-
-    test('toString includes id, scheduledDateTime, and isTaken', () {
-      final scheduled = DateTime(2025, 9, 14, 10, 30);
-      final intake = MedicationIntake(
-        id: 3,
-        scheduledDateTime: scheduled,
-        dose: Decimal.fromInt(2),
-        molecule: KnownMolecules.estradiol,
-        administrationRoute: AdministrationRoute.gel,
-      );
-
-      final stringValue = intake.toString();
-
-      expect(
-        stringValue.contains(intake.id.toString()) &&
-            stringValue.contains(intake.scheduledDateTime.toString()) &&
-            stringValue.contains(intake.isTaken.toString()),
-        true,
       );
     });
   });

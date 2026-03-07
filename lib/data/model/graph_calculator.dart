@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
-import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 
 class GraphCalculator {
@@ -52,10 +52,7 @@ class GraphCalculator {
   };
 
   Map<String, double> getCoef(GraphIntake intake) {
-    if (intake.ester == null) {
-      return _coefEnanthate;
-    }
-    switch (intake.ester!) {
+    switch (intake.ester) {
       case Ester.enanthate:
         return _coefEnanthate;
       case Ester.valerate:
@@ -68,9 +65,11 @@ class GraphCalculator {
         return _coefCypionateSuspension;
       case Ester.undecylate:
         return _coefUndecylate;
-      case Ester.polyphosphate:
+      case Ester.polyPhosphate:
         return _coefPolyestradiolPhosphate;
     }
+
+    return _coefEnanthate;
   }
 
   double _singleInjectionConcentration(double t, int day, GraphIntake intake) {

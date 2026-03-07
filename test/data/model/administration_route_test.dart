@@ -1,15 +1,37 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_symbols_icons/symbols.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/model/administration_route.dart';
 
 void main() {
   group('AdministrationRoute', () {
-    test('fromName returns correct route', () {
-      // Act
-      final route = AdministrationRoute.fromName('patch');
+    group('fromName', () {
+      test('returns correct route', () {
+        // Act
+        final route = AdministrationRoute.fromName('patch');
 
-      // Assert
-      expect(route, AdministrationRoute.patch);
+        // Assert
+        expect(route, AdministrationRoute.patch);
+      });
+    });
+
+    group('menuItems', () {
+      test('contains all items', () {
+        // Act
+        final items = AdministrationRoute.menuItems;
+
+        // Assert
+        expect(items.length, AdministrationRoute.all.length);
+      });
+
+      test('menu items labels are capitalized', () {
+        // Act
+        final items = AdministrationRoute.menuItems;
+        final firstLabel = (items.first.child as Text).data;
+
+        // Assert
+        expect(firstLabel, 'Injection');
+      });
     });
 
     group('equality', () {
@@ -17,7 +39,10 @@ void main() {
         // Arrange
         const r1 = AdministrationRoute.injection;
         const r2 = AdministrationRoute(
-            name: 'injection', unit: 'ml', icon: Symbols.syringe);
+          name: 'injection',
+          unit: 'ml',
+          icon: Symbols.syringe,
+        );
 
         // Act
         final equals = r1 == r2;
@@ -37,12 +62,17 @@ void main() {
         // Assert
         expect(equals, false);
       });
+    });
 
+    group('hashCode', () {
       test('hashCode is equal for identical routes', () {
         // Arrange
         const r1 = AdministrationRoute.injection;
         const r2 = AdministrationRoute(
-            name: 'injection', unit: 'ml', icon: Symbols.syringe);
+          name: 'injection',
+          unit: 'ml',
+          icon: Symbols.syringe,
+        );
 
         // Act
         final hash1 = r1.hashCode;

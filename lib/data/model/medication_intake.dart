@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/validators.dart';
 
@@ -62,9 +63,7 @@ class MedicationIntake {
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),
-      ester: map['esterName'] != null
-          ? Ester.values.byName(map['esterName'] as String)
-          : null,
+      ester: Ester.fromName(map['esterName'] as String?),
     );
   }
 
