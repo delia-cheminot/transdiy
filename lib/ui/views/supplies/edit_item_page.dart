@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
@@ -106,17 +105,16 @@ class _EditItemPageState extends State<EditItemPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    // TODO use updateItem instead
-    SupplyItemManager(_supplyItemProvider).setFields(
-      widget.item,
-      newName: _nameController.text,
-      newTotalDose: parseDecimal(_totalDoseController.text),
-      newUsedDose: parseDecimal(_usedDoseController.text),
-      newConcentration: parseDecimal(_concentrationController.text),
-      newMolecule: _molecule,
-      newAdministrationRoute: _administrationRoute,
-      newEster: _ester,
+    final updatedItem = widget.item.copyWith(
+      name: _nameController.text,
+      totalDose: parseDecimal(_totalDoseController.text),
+      concentration: parseDecimal(_concentrationController.text),
+      usedDose: parseDecimal(_usedDoseController.text),
+      molecule: _molecule,
+      administrationRoute: _administrationRoute,
+      ester: _ester,
     );
+    _supplyItemProvider.updateItem(updatedItem);
 
     Navigator.of(context).pop();
   }

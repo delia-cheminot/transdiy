@@ -1,6 +1,4 @@
 import 'package:decimal/decimal.dart';
-import 'package:mona/data/model/administration_route.dart';
-import 'package:mona/data/model/molecule.dart';
 import '../data/model/supply_item.dart';
 import '../data/providers/supply_item_provider.dart';
 
@@ -8,36 +6,6 @@ class SupplyItemManager {
   final SupplyItemProvider _supplyItemProvider;
 
   SupplyItemManager(this._supplyItemProvider);
-
-  Future<SupplyItem> setFields(
-    SupplyItem item, {
-    String? newName,
-    Decimal? newTotalDose,
-    Decimal? newUsedDose,
-    Decimal? newConcentration,
-    int? newQuantity,
-    Molecule? newMolecule,
-    AdministrationRoute? newAdministrationRoute,
-    Ester? newEster,
-  }) async {
-    final newItem = item.copyWith(
-      name: newName,
-      totalDose: newTotalDose,
-      usedDose: newUsedDose,
-      concentration: newConcentration,
-      quantity: newQuantity,
-      molecule: newMolecule,
-      administrationRoute: newAdministrationRoute,
-      ester: newEster,
-    );
-
-    if (!newItem.isValid()) {
-      throw ArgumentError('Invalid item');
-    }
-
-    await _supplyItemProvider.updateItem(newItem);
-    return newItem;
-  }
 
   /// Uses a portion of the amount of the [SupplyItem] and updates the database.
   Future<void> useDose(SupplyItem item, Decimal doseToUse) async {
