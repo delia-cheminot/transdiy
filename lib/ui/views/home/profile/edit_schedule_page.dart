@@ -199,7 +199,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
         ),
         FormTextField(
           controller: _intervalDaysController,
-          label: 'Time interval',
+          label: 'Every',
           suffixText: 'days',
           onChanged: _refresh,
           inputType: TextInputType.number,

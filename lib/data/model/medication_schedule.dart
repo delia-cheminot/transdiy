@@ -124,10 +124,13 @@ class MedicationSchedule {
     return lastTakenDate == null || lastTakenDate.isBefore(lastDate);
   }
 
-  bool isTakenToday(DateTime? lastTakenDate) {
+  bool isTakenTodayOrLater(DateTime? lastTakenDate) {
     if (lastTakenDate == null) return false;
 
-    return normalizeDate(lastTakenDate) == normalizedToday();
+    final date = normalizeDate(lastTakenDate);
+    final today = normalizedToday();
+
+    return date.isAtSameMomentAs(today) || date.isAfter(today);
   }
 
   Map<String, Object?> toMap() {

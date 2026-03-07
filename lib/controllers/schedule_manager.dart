@@ -21,7 +21,7 @@ class ScheduleManager {
         case ScheduleStatus.today:
           if (schedule.isScheduledForToday() &&
               !schedule.isLate(lastTaken) &&
-              !schedule.isTakenToday(lastTaken)) {
+              !schedule.isTakenTodayOrLater(lastTaken)) {
             schedules.add(schedule);
           }
           break;
@@ -43,7 +43,7 @@ class ScheduleManager {
           break;
         case ScheduleStatus.taken:
           if (schedule.isScheduledForToday() &&
-              schedule.isTakenToday(lastTaken)) {
+              schedule.isTakenTodayOrLater(lastTaken)) {
             schedules.add(schedule);
           }
           break;

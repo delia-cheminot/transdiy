@@ -174,7 +174,7 @@ class MainGraph extends StatelessWidget {
           showTitles: true,
           reservedSize: _ChartConstants.leftReservedSize,
           getTitlesWidget: (value, meta) {
-            return Text(value.toStringAsFixed(1),
+            return Text(value.toStringAsFixed(0),
                 style:
                     const TextStyle(fontSize: _ChartConstants.labelFontSize));
           },

@@ -692,7 +692,7 @@ void main() {
       });
     });
 
-    group('isTakenToday', () {
+    group('isTakenTodayOrLater', () {
       test('returns false if no last taken', () {
         final s = MedicationSchedule(
           name: 'A',
@@ -703,10 +703,10 @@ void main() {
           administrationRoute: AdministrationRoute.oral,
         );
 
-        expect(s.isTakenToday(null), false);
+        expect(s.isTakenTodayOrLater(null), false);
       });
 
-      test('returns false if last taken date is different than today', () {
+      test('returns false if last taken date is before today', () {
         final s = MedicationSchedule(
           name: 'A',
           dose: Decimal.one,
@@ -718,7 +718,22 @@ void main() {
 
         final lastTakenDate = DateTime.now().subtract(const Duration(days: 1));
 
-        expect(s.isTakenToday(lastTakenDate), false);
+        expect(s.isTakenTodayOrLater(lastTakenDate), false);
+      });
+
+      test('returns true if last taken date is after today', () {
+        final s = MedicationSchedule(
+          name: 'A',
+          dose: Decimal.one,
+          intervalDays: 7,
+          startDate: normalizedToday().add(Duration(days: 3)),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        final lastTakenDate = DateTime.now().add(const Duration(days: 1));
+
+        expect(s.isTakenTodayOrLater(lastTakenDate), true);
       });
 
       test('returns true if last taken date is today', () {
@@ -733,7 +748,7 @@ void main() {
 
         final lastTakenDate = DateTime.now();
 
-        expect(s.isTakenToday(lastTakenDate), true);
+        expect(s.isTakenTodayOrLater(lastTakenDate), true);
       });
     });
   });
