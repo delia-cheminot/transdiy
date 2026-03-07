@@ -152,6 +152,8 @@ class SupplyItem {
 
   @override
   String toString() {
-    return 'SupplyItem{id: $id name: $name}';
+    return "${molecule.name} "
+        "${ester != null ? "${ester!.name} " : ""}"
+        " $concentration ${molecule.unit}/${administrationRoute.unit}";
   }
 }

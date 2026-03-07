@@ -308,7 +308,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
   @override
   Map<int, _i7.GraphIntake> getDaysAndIntakes() => (super.noSuchMethod(
         Invocation.method(
-          #getDaysAndDoses,
+          #getDaysAndIntakes,
           [],
         ),
         returnValue: <int, _i7.GraphIntake>{},

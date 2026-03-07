@@ -32,12 +32,10 @@ class IntakesPage extends StatelessWidget {
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
-    final sideText =
-        intake.side?.name != null ? ' • ${intake.side!.name}' : '';
 
     return ListTile(
       title: Text(dateText),
-      subtitle: Text('${intake.dose} mg$sideText'),
+      subtitle: Text('$intake'),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {

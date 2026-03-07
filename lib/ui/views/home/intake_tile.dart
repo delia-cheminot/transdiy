@@ -121,7 +121,7 @@ class IntakeTileViewModel {
       supplyProvider,
     ).getNextSide();
 
-    return "${schedule.dose} mg • ${nextSide.name} side";
+    return "${schedule.dose} mg • ${schedule.molecule.name}${schedule.ester != null ? "${schedule.ester!.name} " : ""} ${schedule.administrationRoute.name} • ${nextSide.name} side";
   }
 
   String get scheduledText {

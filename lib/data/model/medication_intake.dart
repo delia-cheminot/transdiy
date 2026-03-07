@@ -105,6 +105,9 @@ class MedicationIntake {
 
   @override
   String toString() {
-    return 'MedicationIntake{id: $id dateTime: $scheduledDateTime} taken: $isTaken';
+    return "$dose mg • ${molecule.name} "
+        "${ester != null ? '${ester!.name} ' : ""}"
+        "${administrationRoute.name}"
+        "${side?.name != null ? ' • ${side!.name}' : ''}";
   }
 }

@@ -9,8 +9,10 @@ import 'dart:ui' as _i6;
 import 'package:decimal/decimal.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mona/controllers/supply_item_manager.dart' as _i11;
+import 'package:mona/data/model/administration_route.dart' as _i14;
 import 'package:mona/data/model/medication_intake.dart' as _i8;
 import 'package:mona/data/model/medication_schedule.dart' as _i10;
+import 'package:mona/data/model/molecule.dart' as _i13;
 import 'package:mona/data/model/supply_item.dart' as _i3;
 import 'package:mona/data/providers/medication_intake_provider.dart' as _i7;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i9;
@@ -306,7 +308,7 @@ class MockMedicationIntakeProvider extends _i1.Mock
   @override
   Map<int, _i7.GraphIntake> getDaysAndIntakes() => (super.noSuchMethod(
         Invocation.method(
-          #getDaysAndDoses,
+          #getDaysAndIntakes,
           [],
         ),
         returnValue: <int, _i7.GraphIntake>{},
@@ -512,6 +514,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i11.SupplyItemManager {
     _i12.Decimal? newUsedDose,
     _i12.Decimal? newConcentration,
     int? newQuantity,
+    _i13.Molecule? newMolecule,
+    _i14.AdministrationRoute? newAdministrationRoute,
+    _i13.Ester? newEster,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -523,6 +528,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i11.SupplyItemManager {
             #newUsedDose: newUsedDose,
             #newConcentration: newConcentration,
             #newQuantity: newQuantity,
+            #newMolecule: newMolecule,
+            #newAdministrationRoute: newAdministrationRoute,
+            #newEster: newEster,
           },
         ),
         returnValue: _i5.Future<_i3.SupplyItem>.value(_FakeSupplyItem_1(
@@ -536,6 +544,9 @@ class MockSupplyItemManager extends _i1.Mock implements _i11.SupplyItemManager {
               #newUsedDose: newUsedDose,
               #newConcentration: newConcentration,
               #newQuantity: newQuantity,
+              #newMolecule: newMolecule,
+              #newAdministrationRoute: newAdministrationRoute,
+              #newEster: newEster,
             },
           ),
         )),

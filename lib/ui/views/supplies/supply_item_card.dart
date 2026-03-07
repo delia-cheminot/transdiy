@@ -51,7 +51,7 @@ class SupplyItemCard extends StatelessWidget {
                   ),
                   // text with description
                   Text(
-                    '${item.totalDose} mg',
+                    '$item',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
