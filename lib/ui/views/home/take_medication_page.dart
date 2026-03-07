@@ -125,7 +125,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       label: 'Amount',
                       onChanged: _onTakenDoseChanged,
                       inputType: TextInputType.number,
-                      suffixText: 'mg',
+                      suffixText: widget.schedule.molecule.unit,
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
                     ),

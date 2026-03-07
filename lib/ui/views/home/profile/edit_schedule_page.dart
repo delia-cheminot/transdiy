@@ -192,7 +192,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
           label: 'Amount',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: 'mg',
+          suffixText: _molecule.unit,
           errorText: _doseError,
           regexFormatter: r'[0-9.,]',
         ),
