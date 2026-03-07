@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
@@ -24,27 +25,16 @@ class TakeMedicationPage extends StatefulWidget {
 class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
   late TextEditingController _takenDoseController;
-  InjectionSide _selectedSide = InjectionSide.left;
+  InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _takenDate = DateTime.now();
-    _takenDoseController =
-        TextEditingController(text: widget.schedule.dose.toString());
-  }
-
-  @override
-  void dispose() {
-    _takenDoseController.dispose();
-    super.dispose();
-  }
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
   bool get _isFormValid => _takenDoseError == null;
+
+  bool get _isInjection =>
+      widget.schedule.administrationRoute == AdministrationRoute.injection;
 
   void _takeIntake(
     MedicationIntakeProvider medicationIntakeProvider,
@@ -67,18 +57,6 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     Navigator.of(context).pop();
   }
 
-  late final List<DropdownMenuItem<InjectionSide>> _injectionSideItems =
-      InjectionSide.values
-          .map(
-            (side) => DropdownMenuItem<InjectionSide>(
-              value: side,
-              child: Text(
-                side.name[0].toUpperCase() + side.name.substring(1),
-              ),
-            ),
-          )
-          .toList();
-
   void _onInjectionSideChanged(InjectionSide? side) {
     if (side != null) {
       setState(() {
@@ -98,13 +76,27 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _takenDate = DateTime.now();
+    _takenDoseController =
+        TextEditingController(text: widget.schedule.dose.toString());
+  }
+
+  @override
+  void dispose() {
+    _takenDoseController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
 
-        if (!isLoading && !_hasInitializedSide) {
+        if (!isLoading && !_hasInitializedSide && _isInjection) {
           _selectedSide = MedicationIntakeManager(
             medicationIntakeProvider,
             supplyItemProvider,
@@ -137,12 +129,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
                     ),
-                    FormDropdownField<InjectionSide>(
-                      value: _selectedSide,
-                      items: _injectionSideItems,
-                      onChanged: _onInjectionSideChanged,
-                      label: 'Injection side',
-                    ),
+                    if (_isInjection)
+                      FormDropdownField<InjectionSide>(
+                        value: _selectedSide,
+                        items: InjectionSideDropdown.menuItems,
+                        onChanged: _onInjectionSideChanged,
+                        label: 'Injection side',
+                      ),
                     const SizedBox(height: 16),
                     Container(
                       alignment: Alignment.center,
