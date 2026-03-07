@@ -32,6 +32,7 @@ class MedicationIntakeManager {
       ester: schedule.ester,
     ));
 
+    // TODO select correct item to decrease
     if (supplyItem != null) {
       await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
     }

@@ -29,6 +29,7 @@ class SupplyItemCard extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   color: Theme.of(context).colorScheme.primary,
+                  // TODO use different pictures for routes
                   child: Center(
                     child: SvgPicture.asset(
                       _getVialAsset(item.getRatio()),

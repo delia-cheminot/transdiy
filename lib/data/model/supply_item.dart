@@ -118,11 +118,11 @@ class SupplyItem {
   static String? Function(String?) usedAmountValidator(String totalAmount) {
     return (String? value) {
       return requiredPositiveDecimal(value) ??
-          (Decimal.tryParse(value!)! > Decimal.parse(totalAmount)
-              ? 'Cannot exceed total capacity'
-              : null) ??
           (validateTotalAmount(totalAmount) != null
               ? 'Invalid total amount'
+              : null) ??
+          (Decimal.tryParse(value!)! > Decimal.parse(totalAmount)
+              ? 'Cannot exceed total capacity'
               : null);
     };
   }
