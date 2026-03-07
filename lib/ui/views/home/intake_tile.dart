@@ -186,9 +186,9 @@ class IntakeTileViewModel {
       );
     }
 
-    // TODO change symbol for different roas
-    final icon =
-        status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
+    final icon = status == ScheduleStatus.today
+        ? schedule.administrationRoute.icon
+        : Symbols.schedule;
 
     return CircleAvatar(
       backgroundColor: theme.colorScheme.onPrimaryContainer,

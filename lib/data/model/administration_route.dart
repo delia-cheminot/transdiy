@@ -1,41 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 
 class AdministrationRoute {
   final String name;
   final String unit;
+  final IconData icon;
 
   const AdministrationRoute({
     required this.name,
     required this.unit,
+    required this.icon,
   });
 
   static const injection = AdministrationRoute(
     name: 'injection',
     unit: 'ml',
+    icon: Symbols.syringe,
   );
   static const oral = AdministrationRoute(
     name: 'oral',
     unit: 'pill',
+    icon: Symbols.pill,
   );
   static const sublingual = AdministrationRoute(
     name: 'sublingual',
     unit: 'pill',
+    icon: Symbols.pill,
   );
   static const patch = AdministrationRoute(
     name: 'patch',
     unit: 'patch',
+    icon: Symbols.sticker,
   );
   static const gel = AdministrationRoute(
     name: 'gel',
     unit: 'pump',
+    icon: Symbols.sanitizer,
   );
   static const implant = AdministrationRoute(
     name: 'implant',
     unit: 'implant',
+    icon: Symbols.syringe,
   );
   static const suppository = AdministrationRoute(
     name: 'suppository',
     unit: 'suppository',
+    icon: Symbols.pill,
   );
 
   static const List<AdministrationRoute> all = [

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/data/model/administration_route.dart';
 
 void main() {
@@ -15,7 +16,8 @@ void main() {
       test('two routes with same name are equal', () {
         // Arrange
         const r1 = AdministrationRoute.injection;
-        const r2 = AdministrationRoute(name: 'injection', unit: 'ml');
+        const r2 = AdministrationRoute(
+            name: 'injection', unit: 'ml', icon: Symbols.syringe);
 
         // Act
         final equals = r1 == r2;
@@ -39,7 +41,8 @@ void main() {
       test('hashCode is equal for identical routes', () {
         // Arrange
         const r1 = AdministrationRoute.injection;
-        const r2 = AdministrationRoute(name: 'injection', unit: 'ml');
+        const r2 = AdministrationRoute(
+            name: 'injection', unit: 'ml', icon: Symbols.syringe);
 
         // Act
         final hash1 = r1.hashCode;
