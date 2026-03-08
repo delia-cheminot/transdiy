@@ -69,5 +69,42 @@ void main() {
         expect(daysBetweenDate(target), equals(2));
       });
     });
+
+    group('isSameDayAs', () {
+      test('returns true for same day with different times', () {
+        // Arrange
+        final d1 = DateTime(2026, 3, 8, 10, 30);
+        final d2 = DateTime(2026, 3, 8, 22, 15);
+
+        // Act
+        final isSameDay = isSameDayAs(d1, d2);
+
+        // Assert
+        expect(isSameDay, isTrue);
+      });
+
+      test('returns false for different days', () {
+        // Arrange
+        final d1 = DateTime(2026, 3, 8, 23, 59);
+        final d2 = DateTime(2026, 3, 9, 0, 1);
+
+        // Act
+        final isSameDay = isSameDayAs(d1, d2);
+
+        // Assert
+        expect(isSameDay, isFalse);
+      });
+
+      test('returns true for identical DateTime', () {
+        // Arrange
+        final date = DateTime(2026, 3, 8);
+
+        // Act
+        final isSameDay = isSameDayAs(date, date);
+
+        // Assert
+        expect(isSameDay, isTrue);
+      });
+    });
   });
 }

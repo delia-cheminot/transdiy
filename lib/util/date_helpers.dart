@@ -11,3 +11,7 @@ int daysBetweenDate(DateTime date, {DateTime? origin}) {
   final reference = origin ?? DateTime.now();
   return normalizeDate(date).difference(normalizeDate(reference)).inDays.abs();
 }
+
+bool isSameDayAs(DateTime a, DateTime b) {
+  return a.year == b.year && a.month == b.month && a.day == b.day;
+}
