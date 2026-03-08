@@ -70,17 +70,27 @@ class IntakeTile extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (status != ScheduleStatus.upcoming) Text(viewModel.intakeInfo),
+              if (status != ScheduleStatus.upcoming)
+                Text(
+                  viewModel.intakeInfo,
+                  style: TextStyle(color: textColor),
+                ),
               if (viewModel.warningText != null)
                 Text.rich(
                   TextSpan(
-                    style: TextStyle(color: textColor),
                     children: [
                       WidgetSpan(
-                        child: Icon(Icons.error_outline, size: 16),
+                        child: Icon(
+                          Icons.error_outline,
+                          size: 16,
+                          color: textColor,
+                        ),
                       ),
                       const TextSpan(text: " "),
-                      TextSpan(text: viewModel.warningText!),
+                      TextSpan(
+                        text: viewModel.warningText!,
+                        style: TextStyle(color: textColor),
+                      ),
                     ],
                   ),
                 )
