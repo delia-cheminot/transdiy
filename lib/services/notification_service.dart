@@ -20,7 +20,7 @@ class NotificationService {
         plugin ?? (createPlugin?.call() ?? FlutterLocalNotificationsPlugin());
   }
 
-  bool _initialized = false;
+  final bool _initialized = false;
 
   bool get isInitialized => _initialized;
 
@@ -41,7 +41,8 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
-    await _notificationsPlugin.initialize(InitializationSettings(
+    await _notificationsPlugin.initialize(
+        settings: InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
     ));
@@ -78,10 +79,10 @@ class NotificationService {
     }
 
     await _notificationsPlugin.show(
-      id,
-      title,
-      body,
-      _notificationDetails(),
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: _notificationDetails(),
     );
   }
 
@@ -100,11 +101,11 @@ class NotificationService {
     var scheduledDate = tz.TZDateTime(tz.local, year, month, day, hour, minute);
 
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledDate,
-      _notificationDetails(),
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduledDate,
+      notificationDetails: _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       payload: jsonEncode({
         'scheduledTime':
@@ -122,7 +123,7 @@ class NotificationService {
         await _notificationsPlugin.pendingNotificationRequests();
 
     for (final notification in pendingNotifications) {
-      await _notificationsPlugin.cancel(notification.id);
+      await _notificationsPlugin.cancel(id: notification.id);
     }
   }
 

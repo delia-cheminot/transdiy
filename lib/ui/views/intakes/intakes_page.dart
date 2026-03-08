@@ -14,7 +14,7 @@ class IntakesPage extends StatelessWidget {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
-          emptyMessage: 'Taken intakes will appear here.',
+          emptyMessage: 'Taken intakes will appear here',
           child: ListView.builder(
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
@@ -32,12 +32,10 @@ class IntakesPage extends StatelessWidget {
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
-    final sideText =
-        intake.side?.label != null ? ' • ${intake.side!.label}' : '';
 
     return ListTile(
       title: Text(dateText),
-      subtitle: Text('${intake.dose} mg$sideText'),
+      subtitle: Text('$intake'),
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {

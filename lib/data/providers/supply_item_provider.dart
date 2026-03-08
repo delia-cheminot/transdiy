@@ -1,5 +1,7 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/services/repository.dart';
 
@@ -15,7 +17,9 @@ class SupplyItemProvider extends ChangeNotifier {
   );
 
   List<SupplyItem> get items => _items;
+
   bool get isLoading => _isLoading;
+
   List<SupplyItem> get orderedByRemainingDose => [..._items]..sort(
       (a, b) => a.getRatio().compareTo(b.getRatio()),
     );
@@ -36,9 +40,18 @@ class SupplyItemProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  SupplyItem? getMostUsedItem() {
+  SupplyItem? getMostUsedItemForMedication(Molecule molecule,
+      AdministrationRoute administrationRoute, Ester? ester) {
     if (_items.isEmpty) return null;
-    return orderedByRemainingDose.first;
+
+    final filtered = orderedByRemainingDose.where(
+      (item) =>
+          item.molecule == molecule &&
+          item.administrationRoute == administrationRoute &&
+          item.ester == ester,
+    );
+
+    return filtered.isEmpty ? null : filtered.first;
   }
 
   Future<void> deleteItemFromId(int id) async {
@@ -51,10 +64,8 @@ class SupplyItemProvider extends ChangeNotifier {
     await fetchItems();
   }
 
-  Future<void> addItem(
-      Decimal totalDose, String name, Decimal dosePerUnit) async {
-    await repository.insert(
-        SupplyItem(totalDose: totalDose, dosePerUnit: dosePerUnit, name: name));
+  Future<void> add(SupplyItem supplyItem) async {
+    await repository.insert(supplyItem);
     await fetchItems();
   }
 

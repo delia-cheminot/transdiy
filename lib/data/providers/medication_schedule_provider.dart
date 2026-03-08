@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/services/repository.dart';
@@ -7,12 +6,6 @@ class MedicationScheduleProvider extends ChangeNotifier {
   List<MedicationSchedule> _schedules = [];
   bool _isLoading = true;
   final Repository<MedicationSchedule> repository;
-
-  static final defaultRepository = Repository<MedicationSchedule>(
-    tableName: 'medication_schedules',
-    toMap: (MedicationSchedule schedule) => schedule.toMap(),
-    fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
-  );
 
   List<MedicationSchedule> get schedules => _schedules;
   bool get isLoading => _isLoading;
@@ -26,7 +19,7 @@ class MedicationScheduleProvider extends ChangeNotifier {
   }
 
   MedicationScheduleProvider({Repository<MedicationSchedule>? repository})
-      : repository = repository ?? defaultRepository {
+      : repository = repository ?? _defaultRepository {
     _init();
   }
 
@@ -51,14 +44,8 @@ class MedicationScheduleProvider extends ChangeNotifier {
     await fetchSchedules();
   }
 
-  Future<void> addSchedule(String name, Decimal dose, int intervalDays,
-      {DateTime? startDate}) async {
-    await repository.insert(MedicationSchedule(
-      name: name,
-      dose: dose,
-      intervalDays: intervalDays,
-      startDate: startDate ?? DateTime.now(),
-    ));
+  Future<void> add(MedicationSchedule schedule) async {
+    await repository.insert(schedule);
     await fetchSchedules();
   }
 
@@ -66,4 +53,10 @@ class MedicationScheduleProvider extends ChangeNotifier {
     await repository.update(schedule, schedule.id);
     await fetchSchedules();
   }
+
+  static final _defaultRepository = Repository<MedicationSchedule>(
+    tableName: 'medication_schedules',
+    toMap: (MedicationSchedule schedule) => schedule.toMap(),
+    fromMap: (Map<String, Object?> map) => MedicationSchedule.fromMap(map),
+  );
 }

@@ -11,8 +11,8 @@ class FakeFlutterLocalNotificationsPlugin
   final List<Map<String, dynamic>> shown = [];
 
   @override
-  Future<bool?> initialize(
-    InitializationSettings initializationSettings, {
+  Future<bool?> initialize({
+    required InitializationSettings settings,
     void Function(NotificationResponse)? onDidReceiveNotificationResponse,
     void Function(NotificationResponse)?
         onDidReceiveBackgroundNotificationResponse,
@@ -22,15 +22,22 @@ class FakeFlutterLocalNotificationsPlugin
 
   @override
   Future<void> show(
-      int id, String? title, String? body, NotificationDetails? details,
-      {String? payload}) async {
+      {required int id,
+      String? title,
+      String? body,
+      NotificationDetails? notificationDetails,
+      String? payload}) async {
     shown.add({'id': id, 'title': title, 'body': body, 'payload': payload});
   }
 
   @override
-  Future<void> zonedSchedule(int id, String? title, String? body,
-      tz.TZDateTime scheduledDate, NotificationDetails details,
-      {required AndroidScheduleMode androidScheduleMode,
+  Future<void> zonedSchedule(
+      {required int id,
+      String? title,
+      String? body,
+      required tz.TZDateTime scheduledDate,
+      required NotificationDetails notificationDetails,
+      required AndroidScheduleMode androidScheduleMode,
       DateTimeComponents? matchDateTimeComponents,
       String? payload}) async {
     scheduled.add({
@@ -54,7 +61,7 @@ class FakeFlutterLocalNotificationsPlugin
   }
 
   @override
-  Future<void> cancel(int id, {String? tag}) async {
+  Future<void> cancel({required int id, String? tag}) async {
     scheduled.removeWhere((n) => n['id'] == id);
   }
 
@@ -80,23 +87,23 @@ class FakeFlutterLocalNotificationsPlugin
   }
 
   @override
-  Future<void> periodicallyShow(
-    int id,
+  Future<void> periodicallyShow({
+    required int id,
     String? title,
     String? body,
-    RepeatInterval repeatInterval,
-    NotificationDetails details, {
+    required RepeatInterval repeatInterval,
+    required NotificationDetails notificationDetails,
     required AndroidScheduleMode androidScheduleMode,
     String? payload,
   }) async {}
 
   @override
-  Future<void> periodicallyShowWithDuration(
-    int id,
+  Future<void> periodicallyShowWithDuration({
+    required int id,
     String? title,
     String? body,
-    Duration duration,
-    NotificationDetails details, {
+    required Duration repeatDurationInterval,
+    required NotificationDetails notificationDetails,
     AndroidScheduleMode? androidScheduleMode,
     String? payload,
   }) async {}

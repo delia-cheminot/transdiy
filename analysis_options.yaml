@@ -22,7 +22,7 @@ linter:
   # producing the lint.
   rules:
     prefer_const_constructors: false
-    prefer_final_fields: false
+    prefer_final_fields: true
     use_key_in_widget_constructors: false
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
@@ -33,9 +33,11 @@ linter:
     library_prefixes: true
     non_constant_identifier_names: true
     constant_identifier_names: true
-    
-
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    sort_child_properties_last: true
+    sort_unnamed_constructors_first: true
+    # always_put_control_body_on_new_line: true
+    # always_specify_types: true
+    # prefer_single_quotes: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

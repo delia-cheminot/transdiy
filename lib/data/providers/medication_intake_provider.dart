@@ -1,7 +1,16 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
+
+class GraphIntake {
+  final double dose;
+  final Ester ester;
+
+  GraphIntake(this.dose, this.ester);
+}
 
 class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> _intakes = [];
@@ -9,11 +18,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
   bool _isLoading = true;
   final Repository<MedicationIntake> repository;
 
-  static final defaultRepository = Repository<MedicationIntake>(
-    tableName: 'medication_intakes',
-    toMap: (MedicationIntake intake) => intake.toMap(),
-    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
-  );
+  MedicationIntakeProvider({Repository<MedicationIntake>? repository})
+      : repository = repository ?? _medicationIntakeRepository {
+    _init();
+  }
 
   bool get isLoading => _isLoading;
 
@@ -27,13 +35,12 @@ class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> get notTakenIntakes =>
       _intakes.where((intake) => !intake.isTaken).toList();
 
-  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
-      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
-
-  MedicationIntakeProvider({Repository<MedicationIntake>? repository})
-      : repository = repository ?? defaultRepository {
-    _init();
-  }
+  List<MedicationIntake> get graphIntakes => takenIntakes
+      .where((intake) =>
+          intake.molecule == KnownMolecules.estradiol &&
+          intake.administrationRoute == AdministrationRoute.injection &&
+          intake.ester != null)
+      .toList();
 
   Future<void> _init() async {
     _intakes = await repository.getAll();
@@ -42,15 +49,18 @@ class MedicationIntakeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _updateTakenSorted() {
+    _takenIntakesSortedDesc = List<MedicationIntake>.from(takenIntakes)
+      ..sort((a, b) => b.takenDateTime!.compareTo(a.takenDateTime!));
+  }
+
+  List<MedicationIntake> getTakenIntakesForSchedule(int scheduleId) =>
+      takenIntakes.where((intake) => intake.scheduleId == scheduleId).toList();
+
   Future<void> fetchIntakes() async {
     _intakes = await repository.getAll();
     _updateTakenSorted();
     notifyListeners();
-  }
-
-  void _updateTakenSorted() {
-    _takenIntakesSortedDesc = List<MedicationIntake>.from(takenIntakes)
-      ..sort((a, b) => b.takenDateTime!.compareTo(a.takenDateTime!));
   }
 
   Future<void> deleteIntakeFromId(int id) async {
@@ -60,13 +70,6 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Future<void> deleteIntake(MedicationIntake intake) async {
     await repository.delete(intake.id);
-    await fetchIntakes();
-  }
-
-  @Deprecated('use add through manager instead')
-  Future<void> addIntake(DateTime scheduledDateTime, Decimal dose) async {
-    await repository.insert(
-        MedicationIntake(scheduledDateTime: scheduledDateTime, dose: dose));
     await fetchIntakes();
   }
 
@@ -80,14 +83,14 @@ class MedicationIntakeProvider extends ChangeNotifier {
     await fetchIntakes();
   }
 
-  Map<int, double> getDaysAndDoses() {
-    if (takenIntakes.isEmpty) return {};
+  Map<int, GraphIntake> getDaysAndIntakes() {
+    if (graphIntakes.isEmpty) return {};
     final startDate = getFirstIntakeDate()!;
     return Map.fromEntries(
-      takenIntakes.map(
+      graphIntakes.map(
         (intake) => MapEntry(
           intake.takenDateTime!.difference(startDate).inDays,
-          intake.dose.toDouble(),
+          GraphIntake(intake.dose.toDouble(), intake.ester!),
         ),
       ),
     );
@@ -121,4 +124,10 @@ class MedicationIntakeProvider extends ChangeNotifier {
     return takenIntakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b);
   }
+
+  static final _medicationIntakeRepository = Repository<MedicationIntake>(
+    tableName: 'medication_intakes',
+    toMap: (MedicationIntake intake) => intake.toMap(),
+    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
+  );
 }

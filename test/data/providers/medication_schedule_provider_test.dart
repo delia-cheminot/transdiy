@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'generic_repository_mock.dart';
 
@@ -15,6 +17,9 @@ void main() {
         name: i.name,
         dose: i.dose,
         intervalDays: i.intervalDays,
+        molecule: i.molecule,
+        administrationRoute: i.administrationRoute,
+        ester: i.ester
       ),
     );
     provider = MedicationScheduleProvider(repository: repo);
@@ -24,12 +29,16 @@ void main() {
       name: 'Estradiol',
       dose: Decimal.parse('2.0'),
       intervalDays: 1,
+      molecule: KnownMolecules.estradiol,
+      administrationRoute: AdministrationRoute.oral,
     ));
     repo.insert(MedicationSchedule(
       id: 2,
       name: 'Spironolactone',
       dose: Decimal.parse('100.0'),
       intervalDays: 1,
+      molecule: KnownMolecules.estradiol,
+      administrationRoute: AdministrationRoute.oral,
     ));
   });
 
@@ -39,30 +48,20 @@ void main() {
       expect(provider.schedules.length, repo.items.length);
     });
 
-    test('addSchedule inserts a new item', () async {
+    test('add inserts a new schedule', () async {
       // Arrange
-      const newName = 'Progesterone';
-      final newDose = Decimal.parse('200.0');
-      const intervalDays = 2;
+      final schedule = MedicationSchedule(
+          name: 'Progesterone',
+          dose: Decimal.parse('200.0'),
+          intervalDays: 1,
+          molecule: KnownMolecules.progesterone,
+          administrationRoute: AdministrationRoute.suppository);
 
       // Act
-      await provider.addSchedule(newName, newDose, intervalDays);
+      await provider.add(schedule);
 
       // Assert
-      expect(
-        [
-          provider.schedules.length,
-          provider.schedules.last.name,
-          provider.schedules.last.dose,
-          provider.schedules.last.intervalDays,
-        ],
-        [
-          3,
-          newName,
-          newDose,
-          intervalDays,
-        ],
-      );
+      expect(provider.schedules, contains(schedule));
     });
 
     test('updateSchedule updates an existing item', () async {
@@ -73,6 +72,8 @@ void main() {
         name: scheduleToUpdate.name,
         dose: Decimal.parse('5.0'),
         intervalDays: scheduleToUpdate.intervalDays,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       // Act
