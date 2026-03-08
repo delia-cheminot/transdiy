@@ -36,6 +36,9 @@ class IntakeTile extends StatelessWidget {
       theme: Theme.of(context),
     );
 
+    final textColor =
+        viewModel.isActive ? theme.colorScheme.onPrimaryContainer : null;
+
     return Card.filled(
       color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
       clipBehavior: Clip.antiAlias,
@@ -56,9 +59,12 @@ class IntakeTile extends StatelessWidget {
             children: [
               Text(
                 viewModel.scheduledText,
-                style: theme.textTheme.labelMedium,
+                style: theme.textTheme.labelMedium?.copyWith(color: textColor),
               ),
-              Text(schedule.name, style: theme.textTheme.titleMedium),
+              Text(
+                schedule.name,
+                style: theme.textTheme.titleMedium?.copyWith(color: textColor),
+              ),
             ],
           ),
           subtitle: Column(
