@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Profile')),
+      appBar: AppBar(title: Text('Settings')),
       body: ListView(
         children: [
           ListTile(

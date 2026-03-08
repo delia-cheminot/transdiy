@@ -40,8 +40,10 @@ void main() {
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '0',
-        'dosePerUnit': '10',
+        'concentration': '10',
         'quantity': 1,
+        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+        'administrationRouteName': 'oral',
       });
 
       final item = await db.query(
@@ -68,6 +70,8 @@ void main() {
         'takenDateTime': null,
         'dose': '2.5',
         'side': null,
+        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+        'administrationRouteName': 'oral',
       });
 
       final allIntakes = await db.query(
@@ -95,6 +99,8 @@ void main() {
         'dose': '5',
         'intervalDays': 1,
         'startDate': DateTime(2025, 9, 13).toIso8601String(),
+        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+        'administrationRouteName': 'oral',
       });
 
       final schedule = await db.query(

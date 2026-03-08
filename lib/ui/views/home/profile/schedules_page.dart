@@ -36,8 +36,7 @@ class SchedulesPage extends StatelessWidget {
                   final schedule = medicationScheduleProvider.schedules[index];
                   return ListTile(
                     title: Text(schedule.name),
-                    subtitle: Text("${schedule.dose.toString()} mg "
-                        "every ${schedule.intervalDays.toString()} days"),
+                    subtitle: Text("$schedule"),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
@@ -58,7 +57,7 @@ class SchedulesPage extends StatelessWidget {
             builder: (context) => NewSchedulePage(),
           ));
         },
-        tooltip: 'Ajouter un traitement',
+        tooltip: 'Add a schedule',
         child: Icon(Icons.add),
       ),
     );

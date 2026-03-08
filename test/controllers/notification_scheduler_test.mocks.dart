@@ -4,9 +4,8 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
-import 'dart:ui' as _i8;
+import 'dart:ui' as _i7;
 
-import 'package:decimal/decimal.dart' as _i7;
 import 'package:flutter/material.dart' as _i3;
 import 'package:flutter_local_notifications/src/flutter_local_notifications_plugin.dart'
     as _i10;
@@ -21,8 +20,9 @@ import 'package:flutter_local_notifications_platform_interface/flutter_local_not
     as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mona/data/model/medication_schedule.dart' as _i5;
+import 'package:mona/data/model/molecule.dart' as _i9;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i4;
-import 'package:mona/services/preferences_service.dart' as _i9;
+import 'package:mona/services/preferences_service.dart' as _i8;
 import 'package:mona/services/repository.dart' as _i2;
 import 'package:timezone/timezone.dart' as _i14;
 
@@ -141,21 +141,10 @@ class MockMedicationScheduleProvider extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> addSchedule(
-    String? name,
-    _i7.Decimal? dose,
-    int? intervalDays, {
-    DateTime? startDate,
-  }) =>
-      (super.noSuchMethod(
+  _i6.Future<void> add(_i5.MedicationSchedule? schedule) => (super.noSuchMethod(
         Invocation.method(
-          #addSchedule,
-          [
-            name,
-            dose,
-            intervalDays,
-          ],
-          {#startDate: startDate},
+          #add,
+          [schedule],
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
@@ -173,7 +162,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  void addListener(_i8.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -182,7 +171,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
       );
 
   @override
-  void removeListener(_i8.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -213,7 +202,7 @@ class MockMedicationScheduleProvider extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPreferencesService extends _i1.Mock
-    implements _i9.PreferencesService {
+    implements _i8.PreferencesService {
   @override
   _i3.TimeOfDay get notificationTime => (super.noSuchMethod(
         Invocation.getter(#notificationTime),
@@ -233,6 +222,28 @@ class MockPreferencesService extends _i1.Mock
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
+  @override
+  List<_i9.Molecule> get customMolecules => (super.noSuchMethod(
+        Invocation.getter(#customMolecules),
+        returnValue: <_i9.Molecule>[],
+        returnValueForMissingStub: <_i9.Molecule>[],
+      ) as List<_i9.Molecule>);
+
+  @override
+  List<_i9.Molecule> get allMolecules => (super.noSuchMethod(
+        Invocation.getter(#allMolecules),
+        returnValue: <_i9.Molecule>[],
+        returnValueForMissingStub: <_i9.Molecule>[],
+      ) as List<_i9.Molecule>);
+
+  @override
+  List<_i3.DropdownMenuItem<_i9.Molecule>> get moleculeDropdownItems =>
+      (super.noSuchMethod(
+        Invocation.getter(#moleculeDropdownItems),
+        returnValue: <_i3.DropdownMenuItem<_i9.Molecule>>[],
+        returnValueForMissingStub: <_i3.DropdownMenuItem<_i9.Molecule>>[],
+      ) as List<_i3.DropdownMenuItem<_i9.Molecule>>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -264,7 +275,28 @@ class MockPreferencesService extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  void addListener(_i8.VoidCallback? listener) => super.noSuchMethod(
+  _i6.Future<void> addCustomMolecule(_i9.Molecule? molecule) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addCustomMolecule,
+          [molecule],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  _i6.Future<void> removeCustomMolecule(String? name) => (super.noSuchMethod(
+        Invocation.method(
+          #removeCustomMolecule,
+          [name],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+
+  @override
+  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -273,7 +305,7 @@ class MockPreferencesService extends _i1.Mock
       );
 
   @override
-  void removeListener(_i8.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -306,8 +338,8 @@ class MockPreferencesService extends _i1.Mock
 class MockFlutterLocalNotificationsPlugin extends _i1.Mock
     implements _i10.FlutterLocalNotificationsPlugin {
   @override
-  _i6.Future<bool?> initialize(
-    _i11.InitializationSettings? initializationSettings, {
+  _i6.Future<bool?> initialize({
+    required _i11.InitializationSettings? settings,
     _i12.DidReceiveNotificationResponseCallback?
         onDidReceiveNotificationResponse,
     _i12.DidReceiveBackgroundNotificationResponseCallback?
@@ -316,8 +348,9 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       (super.noSuchMethod(
         Invocation.method(
           #initialize,
-          [initializationSettings],
+          [],
           {
+            #settings: settings,
             #onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
             #onDidReceiveBackgroundNotificationResponse:
                 onDidReceiveBackgroundNotificationResponse,
@@ -340,38 +373,42 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
           ) as _i6.Future<_i12.NotificationAppLaunchDetails?>);
 
   @override
-  _i6.Future<void> show(
-    int? id,
+  _i6.Future<void> show({
+    required int? id,
     String? title,
     String? body,
-    _i13.NotificationDetails? notificationDetails, {
+    _i13.NotificationDetails? notificationDetails,
     String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #show,
-          [
-            id,
-            title,
-            body,
-            notificationDetails,
-          ],
-          {#payload: payload},
+          [],
+          {
+            #id: id,
+            #title: title,
+            #body: body,
+            #notificationDetails: notificationDetails,
+            #payload: payload,
+          },
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> cancel(
-    int? id, {
+  _i6.Future<void> cancel({
+    required int? id,
     String? tag,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #cancel,
-          [id],
-          {#tag: tag},
+          [],
+          {
+            #id: id,
+            #tag: tag,
+          },
         ),
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
@@ -398,28 +435,27 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> zonedSchedule(
-    int? id,
+  _i6.Future<void> zonedSchedule({
+    required int? id,
+    required _i14.TZDateTime? scheduledDate,
+    required _i13.NotificationDetails? notificationDetails,
+    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? title,
     String? body,
-    _i14.TZDateTime? scheduledDate,
-    _i13.NotificationDetails? notificationDetails, {
-    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? payload,
     _i16.DateTimeComponents? matchDateTimeComponents,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #zonedSchedule,
-          [
-            id,
-            title,
-            body,
-            scheduledDate,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #scheduledDate: scheduledDate,
+            #notificationDetails: notificationDetails,
             #androidScheduleMode: androidScheduleMode,
+            #title: title,
+            #body: body,
             #payload: payload,
             #matchDateTimeComponents: matchDateTimeComponents,
           },
@@ -429,27 +465,26 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> periodicallyShow(
-    int? id,
+  _i6.Future<void> periodicallyShow({
+    required int? id,
+    required _i12.RepeatInterval? repeatInterval,
+    required _i13.NotificationDetails? notificationDetails,
+    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? title,
     String? body,
-    _i12.RepeatInterval? repeatInterval,
-    _i13.NotificationDetails? notificationDetails, {
-    required _i15.AndroidScheduleMode? androidScheduleMode,
     String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #periodicallyShow,
-          [
-            id,
-            title,
-            body,
-            repeatInterval,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #repeatInterval: repeatInterval,
+            #notificationDetails: notificationDetails,
             #androidScheduleMode: androidScheduleMode,
+            #title: title,
+            #body: body,
             #payload: payload,
           },
         ),
@@ -458,12 +493,12 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       ) as _i6.Future<void>);
 
   @override
-  _i6.Future<void> periodicallyShowWithDuration(
-    int? id,
+  _i6.Future<void> periodicallyShowWithDuration({
+    required int? id,
+    required Duration? repeatDurationInterval,
+    required _i13.NotificationDetails? notificationDetails,
     String? title,
     String? body,
-    Duration? repeatDurationInterval,
-    _i13.NotificationDetails? notificationDetails, {
     _i15.AndroidScheduleMode? androidScheduleMode =
         _i15.AndroidScheduleMode.exact,
     String? payload,
@@ -471,14 +506,13 @@ class MockFlutterLocalNotificationsPlugin extends _i1.Mock
       (super.noSuchMethod(
         Invocation.method(
           #periodicallyShowWithDuration,
-          [
-            id,
-            title,
-            body,
-            repeatDurationInterval,
-            notificationDetails,
-          ],
+          [],
           {
+            #id: id,
+            #repeatDurationInterval: repeatDurationInterval,
+            #notificationDetails: notificationDetails,
+            #title: title,
+            #body: body,
             #androidScheduleMode: androidScheduleMode,
             #payload: payload,
           },

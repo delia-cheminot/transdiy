@@ -1,19 +1,27 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
+import 'package:flutter/material.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/validators.dart';
 
 enum InjectionSide {
   left,
   right,
 }
 
-extension InjectionSideX on InjectionSide {
-  String get label {
-    switch (this) {
-      case InjectionSide.left:
-        return 'left';
-      case InjectionSide.right:
-        return 'right';
-    }
-  }
+extension InjectionSideDropdown on InjectionSide {
+  static List<DropdownMenuItem<InjectionSide>> get menuItems =>
+      InjectionSide.values
+          .map(
+            (side) => DropdownMenuItem<InjectionSide>(
+              value: side,
+              child: Text(side.name[0].toUpperCase() + side.name.substring(1)),
+            ),
+          )
+          .toList();
 }
 
 class MedicationIntake {
@@ -24,6 +32,9 @@ class MedicationIntake {
   final int? scheduleId;
   final InjectionSide? side;
   bool get isTaken => takenDateTime != null;
+  final Molecule molecule;
+  final AdministrationRoute administrationRoute;
+  final Ester? ester;
 
   MedicationIntake({
     int? id,
@@ -32,18 +43,10 @@ class MedicationIntake {
     this.takenDateTime,
     this.scheduleId,
     this.side,
+    required this.molecule,
+    required this.administrationRoute,
+    this.ester,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
-
-  Map<String, Object?> toMap() {
-    return {
-      'id': id,
-      'scheduledDateTime': scheduledDateTime.toIso8601String(),
-      'takenDateTime': takenDateTime?.toIso8601String(),
-      'dose': dose.toString(),
-      'scheduleId': scheduleId,
-      'side': side?.name,
-    };
-  }
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
@@ -57,18 +60,25 @@ class MedicationIntake {
       side: map['side'] == null
           ? null
           : InjectionSide.values.byName(map['side'] as String),
+      molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
+      administrationRoute: AdministrationRoute.fromName(
+          map['administrationRouteName'] as String),
+      ester: Ester.fromName(map['esterName'] as String?),
     );
   }
 
-  MedicationIntake copy() {
-    return MedicationIntake(
-      id: id,
-      scheduledDateTime: scheduledDateTime,
-      takenDateTime: takenDateTime,
-      dose: dose,
-      scheduleId: scheduleId,
-      side: side,
-    );
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'scheduledDateTime': scheduledDateTime.toIso8601String(),
+      'takenDateTime': takenDateTime?.toIso8601String(),
+      'dose': dose.toString(),
+      'scheduleId': scheduleId,
+      'side': side?.name,
+      'moleculeJson': jsonEncode(molecule.toJson()),
+      'administrationRouteName': administrationRoute.name,
+      'esterName': ester?.name,
+    };
   }
 
   MedicationIntake copyWith({
@@ -78,6 +88,9 @@ class MedicationIntake {
     Decimal? dose,
     int? scheduleId,
     InjectionSide? side,
+    Molecule? molecule,
+    AdministrationRoute? administrationRoute,
+    Ester? ester,
   }) {
     return MedicationIntake(
       id: id ?? this.id,
@@ -86,26 +99,27 @@ class MedicationIntake {
       dose: dose ?? this.dose,
       scheduleId: scheduleId ?? this.scheduleId,
       side: side ?? this.side,
+      molecule: molecule ?? this.molecule,
+      administrationRoute: administrationRoute ?? this.administrationRoute,
+      ester: ester ?? this.ester,
     );
   }
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MedicationIntake &&
-          id == other.id &&
-          scheduledDateTime == other.scheduledDateTime &&
-          takenDateTime == other.takenDateTime &&
-          dose == other.dose &&
-          scheduleId == other.scheduleId &&
-          side == other.side;
+  static String? validateDose(String? value) =>
+      requiredStrictlyPositiveDecimal(value);
 
   @override
-  int get hashCode =>
-      Object.hash(dose, id, scheduleId, scheduledDateTime, takenDateTime, side);
+  bool operator ==(Object other) =>
+      identical(this, other) || other is MedicationIntake && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   @override
   String toString() {
-    return 'MedicationIntake{id: $id dateTime: $scheduledDateTime} taken: $isTaken';
+    return "$dose mg • ${molecule.name} "
+        "${ester != null ? '${ester!.name} ' : ""}"
+        "${administrationRoute.name}"
+        "${side?.name != null ? ' • ${side!.name}' : ''}";
   }
 }

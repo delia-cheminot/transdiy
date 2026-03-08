@@ -27,7 +27,8 @@ class MainGraph extends StatelessWidget {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final theme = Theme.of(context);
 
-    Map<int, double> daysAndDoses = medicationIntakeProvider.getDaysAndDoses();
+    Map<int, GraphIntake> daysAndIntakes =
+        medicationIntakeProvider.getDaysAndIntakes();
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
     final int daysSinceStart = DateTime.now().difference(firstDay).inDays;
     final int totalDays = medicationIntakeProvider
@@ -36,7 +37,8 @@ class MainGraph extends StatelessWidget {
             .inDays +
         1;
 
-    final List<FlSpot> spots = GraphCalculator().generateFlSpots(daysAndDoses);
+    final List<FlSpot> spots =
+        GraphCalculator().generateFlSpots(daysAndIntakes);
     final FlSpot? todaySpot =
         (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset)
             ? spots.reduce(
@@ -50,7 +52,7 @@ class MainGraph extends StatelessWidget {
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
 
-    if (daysAndDoses.isEmpty) return SizedBox.shrink();
+    if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -134,7 +136,8 @@ class MainGraph extends StatelessWidget {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
-        tooltipRoundedRadius: _ChartConstants.tooltipRadius,
+        tooltipBorderRadius:
+            BorderRadius.circular(_ChartConstants.tooltipRadius),
         tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
         getTooltipItems: (touchedSpots) {
           return touchedSpots
@@ -171,7 +174,7 @@ class MainGraph extends StatelessWidget {
           showTitles: true,
           reservedSize: _ChartConstants.leftReservedSize,
           getTitlesWidget: (value, meta) {
-            return Text(value.toStringAsFixed(1),
+            return Text(value.toStringAsFixed(0),
                 style:
                     const TextStyle(fontSize: _ChartConstants.labelFontSize));
           },

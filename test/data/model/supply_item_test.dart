@@ -1,136 +1,128 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 
 void main() {
   group('SupplyItem model', () {
     test('toMap and fromMap should preserve values', () {
+      // Arrange
       final item = SupplyItem(
         id: 1,
         name: 'Test Item',
         totalDose: Decimal.parse('100'),
         usedDose: Decimal.parse('20'),
-        dosePerUnit: Decimal.parse('10'),
+        concentration: Decimal.parse('10'),
         quantity: 2,
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.injection,
+        ester: Ester.undecylate,
       );
 
+      // Act
       final map = item.toMap();
       final fromMap = SupplyItem.fromMap(map);
 
+      // Assert
       expect(
-        [
-          fromMap.id,
-          fromMap.name,
-          fromMap.totalDose,
-          fromMap.usedDose,
-          fromMap.dosePerUnit,
-          fromMap.quantity,
-        ],
-        [
-          item.id,
-          item.name,
-          item.totalDose,
-          item.usedDose,
-          item.dosePerUnit,
-          item.quantity,
-        ],
-      );
-    });
-
-    test('copy creates an identical object', () {
-      final item = SupplyItem(
-        id: 2,
-        name: 'Copy Test',
-        totalDose: Decimal.fromInt(50),
-        dosePerUnit: Decimal.fromInt(5),
-        usedDose: Decimal.fromInt(10),
-        quantity: 1,
-      );
-
-      final copy = item.copy();
-      expect(
-        [
-          copy.id,
-          copy.name,
-          copy.totalDose,
-          copy.usedDose,
-          copy.dosePerUnit,
-          copy.quantity,
-        ],
-        [
-          item.id,
-          item.name,
-          item.totalDose,
-          item.usedDose,
-          item.dosePerUnit,
-          item.quantity,
-        ],
+        fromMap,
+        isA<SupplyItem>()
+            .having((s) => s.id, 'id', item.id)
+            .having((s) => s.name, 'name', item.name)
+            .having((s) => s.totalDose, 'totalDose', item.totalDose)
+            .having((s) => s.usedDose, 'usedDose', item.usedDose)
+            .having((s) => s.concentration, 'concentration', item.concentration)
+            .having((s) => s.quantity, 'quantity', item.quantity)
+            .having((s) => s.molecule, 'molecule', item.molecule)
+            .having((s) => s.administrationRoute, 'administrationRoute',
+                item.administrationRoute)
+            .having((s) => s.ester, 'ester', item.ester),
       );
     });
 
     test('isValid returns correct values for multiple cases', () {
+      // Arrange
       final testCases = [
         {
           'name': 'Valid Item',
           'totalDose': Decimal.fromInt(100),
-          'dosePerUnit': Decimal.fromInt(10),
+          'concentration': Decimal.fromInt(10),
           'usedDose': Decimal.fromInt(50),
           'quantity': 1,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': true,
         },
         {
           'name': '',
           'totalDose': Decimal.zero,
-          'dosePerUnit': Decimal.zero,
+          'concentration': Decimal.zero,
           'usedDose': Decimal.fromInt(-1),
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
           'name': 'No Dose',
           'totalDose': Decimal.zero,
-          'dosePerUnit': Decimal.one,
+          'concentration': Decimal.one,
           'usedDose': Decimal.zero,
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
           'name': 'Negative Used',
           'totalDose': Decimal.fromInt(10),
-          'dosePerUnit': Decimal.one,
+          'concentration': Decimal.one,
           'usedDose': Decimal.fromInt(-5),
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
           'name': 'Dose Per Unit Zero',
           'totalDose': Decimal.fromInt(10),
-          'dosePerUnit': Decimal.zero,
+          'concentration': Decimal.zero,
           'usedDose': Decimal.zero,
           'quantity': null,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': false,
         },
         {
           'name': 'Valid with quantity',
           'totalDose': Decimal.fromInt(20),
-          'dosePerUnit': Decimal.fromInt(2),
+          'concentration': Decimal.fromInt(2),
           'usedDose': Decimal.fromInt(4),
           'quantity': 2,
+          'molecule': KnownMolecules.estradiol,
+          'administrationRoute': AdministrationRoute.patch,
           'expected': true,
         },
       ];
 
+      // Act
       final results = testCases.map((testCase) {
         final item = SupplyItem(
           name: testCase['name'] as String,
           totalDose: testCase['totalDose'] as Decimal,
-          dosePerUnit: testCase['dosePerUnit'] as Decimal,
+          concentration: testCase['concentration'] as Decimal,
           usedDose: testCase['usedDose'] as Decimal,
           quantity: testCase['quantity'] as int? ?? 0,
+          molecule: testCase['molecule'] as Molecule,
+          administrationRoute:
+              testCase['administrationRoute'] as AdministrationRoute,
         );
         return item.isValid();
       }).toList();
 
+      // Assert
       expect(
         results,
         testCases.map((e) => e['expected'] as bool).toList(),
@@ -140,104 +132,205 @@ void main() {
 
     group('validators', () {
       test('validateTotalAmount', () {
-        expect(
-          [
-            SupplyItem.validateTotalAmount(null),
-            SupplyItem.validateTotalAmount(''),
-            SupplyItem.validateTotalAmount('0'),
-            SupplyItem.validateTotalAmount('-5'),
-            SupplyItem.validateTotalAmount('10'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '0', 'expected': isNotNull},
+          {'value': '-5', 'expected': isNotNull},
+          {'value': '10', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateTotalAmount(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
       test('validateName', () {
-        expect(
-          [
-            SupplyItem.validateName(null),
-            SupplyItem.validateName(''),
-            SupplyItem.validateName('Something'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': 'Something', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateName(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
       test('validateUsedAmount', () {
-        expect(
-          [
-            SupplyItem.validateUsedAmount(null, '100'),
-            SupplyItem.validateUsedAmount('', '100'),
-            SupplyItem.validateUsedAmount('-1', '100'),
-            SupplyItem.validateUsedAmount('50', 'invalid'),
-            SupplyItem.validateUsedAmount('200', '100'),
-            SupplyItem.validateUsedAmount('50', '100'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+        // Arrange
+        const total = '100';
+        final validator = SupplyItem.usedAmountValidator(total);
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '-1', 'expected': isNotNull},
+          {'value': '200', 'expected': isNotNull},
+          {'value': '50', 'expected': isNull},
+        ];
+
+        // Act
+        final results =
+            cases.map((c) => validator(c['value'] as String?)).toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        expect(results, expected);
       });
 
-      test('validateDosePerUnit', () {
-        expect(
-          [
-            SupplyItem.validateDosePerUnit(null),
-            SupplyItem.validateDosePerUnit(''),
-            SupplyItem.validateDosePerUnit('0'),
-            SupplyItem.validateDosePerUnit('-1'),
-            SupplyItem.validateDosePerUnit('2.5'),
-          ],
-          [
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNotNull,
-            isNull,
-          ],
-        );
+      test('validateConcentration', () {
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': '', 'expected': isNotNull},
+          {'value': '0', 'expected': isNotNull},
+          {'value': '-1', 'expected': isNotNull},
+          {'value': '2.5', 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateConcentration(c['value'] as String?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
-      test('canUseDose should return true if within totalDose', () {
-        final item = SupplyItem(
-          name: 'Dose Test',
-          totalDose: Decimal.fromInt(100),
-          dosePerUnit: Decimal.one,
-          usedDose: Decimal.fromInt(20),
-        );
-        expect(
-          [
-            item.canUseDose(Decimal.fromInt(80)),
-            item.canUseDose(Decimal.fromInt(81))
-          ],
-          [true, false],
-        );
+      test('validateMolecule works correctly', () {
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': KnownMolecules.decapeptyl, 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateMolecule(c['value'] as Molecule?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
 
-      test('remainingDose returns correct value', () {
-        final item = SupplyItem(
-          name: 'Remaining',
-          totalDose: Decimal.fromInt(100),
-          usedDose: Decimal.fromInt(30),
-          dosePerUnit: Decimal.one,
-        );
-        expect(item.remainingDose, Decimal.fromInt(70));
+      test('validateAdministrationRoute works correctly', () {
+        // Arrange
+        final cases = [
+          {'value': null, 'expected': isNotNull},
+          {'value': AdministrationRoute.implant, 'expected': isNull},
+        ];
+
+        // Act
+        final results = cases
+            .map((c) => SupplyItem.validateAdministrationRoute(
+                c['value'] as AdministrationRoute?))
+            .toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
       });
+
+      test('validateEster works correctly', () {
+        // Arrange
+        final cases = [
+          {
+            'molecule': null,
+            'route': null,
+            'value': null,
+            'expected': isNull,
+          },
+          {
+            'molecule': KnownMolecules.estradiol,
+            'route': AdministrationRoute.injection,
+            'value': null,
+            'expected': isNotNull,
+          },
+          {
+            'molecule': KnownMolecules.estradiol,
+            'route': AdministrationRoute.injection,
+            'value': Ester.enanthate,
+            'expected': isNull,
+          },
+          {
+            'molecule': KnownMolecules.estradiol,
+            'route': AdministrationRoute.oral,
+            'value': Ester.enanthate,
+            'expected': isNull,
+          },
+          {
+            'molecule': KnownMolecules.estradiol,
+            'route': AdministrationRoute.oral,
+            'value': null,
+            'expected': isNull,
+          },
+        ];
+
+        // Act
+        final results = cases.map((c) {
+          final validator = SupplyItem.esterValidator(
+            c['molecule'] as Molecule?,
+            c['route'] as AdministrationRoute?,
+          );
+          return validator(c['value'] as Ester?);
+        }).toList();
+        final expected = cases.map((c) => c['expected'] as Matcher).toList();
+
+        // Assert
+        expect(results, expected);
+      });
+    });
+
+    test('canUseDose should return true if within totalDose', () {
+      // Arrange
+      final item = SupplyItem(
+        name: 'Dose Test',
+        totalDose: Decimal.fromInt(100),
+        concentration: Decimal.one,
+        usedDose: Decimal.fromInt(20),
+        molecule: KnownMolecules.progesterone,
+        administrationRoute: AdministrationRoute.suppository,
+      );
+
+      // Act
+      final cases = [
+        {'value': item.canUseDose(Decimal.fromInt(80)), 'expected': true},
+        {'value': item.canUseDose(Decimal.fromInt(81)), 'expected': false}
+      ];
+
+      // Assert
+      expect(cases.map((c) => c['value']), cases.map((c) => c['expected']));
+    });
+
+    test('remainingDose returns correct value', () {
+      // Arrange
+      final item = SupplyItem(
+        name: 'Remaining',
+        totalDose: Decimal.fromInt(100),
+        usedDose: Decimal.fromInt(30),
+        concentration: Decimal.one,
+        molecule: KnownMolecules.progesterone,
+        administrationRoute: AdministrationRoute.suppository,
+      );
+
+      // Act
+      final remaining = item.remainingDose;
+
+      // Assert
+      expect(remaining, Decimal.fromInt(70));
     });
   });
 }

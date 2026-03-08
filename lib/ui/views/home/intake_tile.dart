@@ -36,6 +36,9 @@ class IntakeTile extends StatelessWidget {
       theme: Theme.of(context),
     );
 
+    final textColor =
+        viewModel.isActive ? theme.colorScheme.onPrimaryContainer : null;
+
     return Card.filled(
       color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
       clipBehavior: Clip.antiAlias,
@@ -56,24 +59,38 @@ class IntakeTile extends StatelessWidget {
             children: [
               Text(
                 viewModel.scheduledText,
-                style: theme.textTheme.labelMedium,
+                style: theme.textTheme.labelMedium?.copyWith(color: textColor),
               ),
-              Text(schedule.name, style: theme.textTheme.titleMedium),
+              Text(
+                schedule.name,
+                style: theme.textTheme.titleMedium?.copyWith(color: textColor),
+              ),
             ],
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (status != ScheduleStatus.upcoming) Text(viewModel.intakeInfo),
+              if (status != ScheduleStatus.upcoming)
+                Text(
+                  viewModel.intakeInfo,
+                  style: TextStyle(color: textColor),
+                ),
               if (viewModel.warningText != null)
                 Text.rich(
                   TextSpan(
                     children: [
                       WidgetSpan(
-                        child: Icon(Icons.error_outline, size: 16),
+                        child: Icon(
+                          Icons.error_outline,
+                          size: 16,
+                          color: textColor,
+                        ),
                       ),
                       const TextSpan(text: " "),
-                      TextSpan(text: viewModel.warningText!),
+                      TextSpan(
+                        text: viewModel.warningText!,
+                        style: TextStyle(color: textColor),
+                      ),
                     ],
                   ),
                 )
@@ -121,7 +138,7 @@ class IntakeTileViewModel {
       supplyProvider,
     ).getNextSide();
 
-    return "${schedule.dose} mg • ${nextSide.name} side";
+    return "${schedule.dose} mg • ${schedule.molecule.name} ${schedule.ester != null ? "${schedule.ester!.name} " : ""}${schedule.administrationRoute.name} • ${nextSide.name} side";
   }
 
   String get scheduledText {
@@ -146,7 +163,9 @@ class IntakeTileViewModel {
   String? get warningText {
     switch (status) {
       case ScheduleStatus.today:
-        if (lastTaken != null && lastTaken != lastScheduled) {
+        if (lastTaken != null &&
+            lastScheduled != null &&
+            isSameDayAs(lastTaken!, lastScheduled!)) {
           final formatted = DateFormat.MMMd().format(lastTaken!);
           return "Last taken $daysSinceLastTaken days ago ($formatted)";
         }
@@ -186,8 +205,9 @@ class IntakeTileViewModel {
       );
     }
 
-    final icon =
-        status == ScheduleStatus.today ? Symbols.syringe : Symbols.schedule;
+    final icon = status == ScheduleStatus.today
+        ? schedule.administrationRoute.icon
+        : Symbols.schedule;
 
     return CircleAvatar(
       backgroundColor: theme.colorScheme.onPrimaryContainer,

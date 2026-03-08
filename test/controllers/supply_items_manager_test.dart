@@ -2,6 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
+import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import '../mocks/mocks.mocks.dart';
 
@@ -15,50 +17,15 @@ void main() {
   });
 
   group('SupplyItemManager', () {
-    test('should update totalAmount and usedDose correctly', () async {
-      final item = SupplyItem(
-          name: 'h',
-          id: 1,
-          totalDose: Decimal.parse('10'),
-          usedDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
-
-      final newItem = await manager.setFields(
-        item,
-        newTotalDose: Decimal.parse('20'),
-        newUsedDose: Decimal.parse('5'),
-      );
-
-      expect(newItem.totalDose, Decimal.parse('20'));
-      expect(newItem.usedDose, Decimal.parse('5'));
-    });
-
-    test(
-        'should throw ArgumentError when invalid fields and item should remain unchanged',
-        () {
-      final item = SupplyItem(
-          name: 'h',
-          totalDose: Decimal.parse('10'),
-          usedDose: Decimal.parse('2'),
-          dosePerUnit: Decimal.parse('1'));
-
-      expect(
-        () => manager.setFields(
-          item,
-          newUsedDose: Decimal.parse('15'),
-        ),
-        throwsArgumentError,
-      );
-
-      expect(item.usedDose, Decimal.parse('2'));
-    });
-
     test('should use amount correctly', () async {
       final item = SupplyItem(
-          name: 'h',
-          totalDose: Decimal.parse('20'),
-          usedDose: Decimal.parse('5'),
-          dosePerUnit: Decimal.parse('1'));
+        name: 'h',
+        totalDose: Decimal.parse('20'),
+        usedDose: Decimal.parse('5'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
 
       late SupplyItem updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
@@ -78,7 +45,9 @@ void main() {
         name: 'h',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('5'),
-        dosePerUnit: Decimal.parse('1'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
       );
 
       late SupplyItem updatedItem;
@@ -96,10 +65,13 @@ void main() {
 
     test('use zero amount', () async {
       final item = SupplyItem(
-          name: 'h',
-          totalDose: Decimal.parse('10'),
-          usedDose: Decimal.parse('5'),
-          dosePerUnit: Decimal.parse('1'));
+        name: 'h',
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('5'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
 
       await manager.useDose(item, Decimal.zero);
 
