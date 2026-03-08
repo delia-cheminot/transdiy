@@ -106,7 +106,7 @@ class AppDatabase {
         startDate TEXT NOT NULL,
         moleculeJson TEXT NOT NULL,
         administrationRouteName TEXT NOT NULL,
-        esterName TEXT NOT NULL
+        esterName TEXT
       )
       ''');
 
@@ -148,7 +148,7 @@ class AppDatabase {
         moleculeJson, administrationRouteName, esterName
       )
       SELECT
-        id, totalDose, usedDose, concentration, name, quantity,
+        id, totalDose, usedDose, dosePerUnit, name, quantity,
         '{"name":"estradiol","unit":"mg"}',
         'injection',
         'enanthate'
