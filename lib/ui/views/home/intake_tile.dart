@@ -74,6 +74,7 @@ class IntakeTile extends StatelessWidget {
               if (viewModel.warningText != null)
                 Text.rich(
                   TextSpan(
+                    style: TextStyle(color: textColor),
                     children: [
                       WidgetSpan(
                         child: Icon(Icons.error_outline, size: 16),
