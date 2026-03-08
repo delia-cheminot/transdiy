@@ -7,7 +7,7 @@ import 'package:mona/services/repository.dart';
 
 class GraphIntake {
   final double dose;
-  final Ester? ester;
+  final Ester ester;
 
   GraphIntake(this.dose, this.ester);
 }
@@ -38,7 +38,8 @@ class MedicationIntakeProvider extends ChangeNotifier {
   List<MedicationIntake> get graphIntakes => takenIntakes
       .where((intake) =>
           intake.molecule == KnownMolecules.estradiol &&
-          intake.administrationRoute == AdministrationRoute.injection)
+          intake.administrationRoute == AdministrationRoute.injection &&
+          intake.ester != null)
       .toList();
 
   Future<void> _init() async {
@@ -89,7 +90,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
       graphIntakes.map(
         (intake) => MapEntry(
           intake.takenDateTime!.difference(startDate).inDays,
-          GraphIntake(intake.dose.toDouble(), intake.ester),
+          GraphIntake(intake.dose.toDouble(), intake.ester!),
         ),
       ),
     );
