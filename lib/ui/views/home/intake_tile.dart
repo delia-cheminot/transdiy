@@ -165,7 +165,7 @@ class IntakeTileViewModel {
       case ScheduleStatus.today:
         if (lastTaken != null &&
             lastScheduled != null &&
-            isSameDayAs(lastTaken!, lastScheduled!)) {
+            !isSameDayAs(lastTaken!, lastScheduled!)) {
           final formatted = DateFormat.MMMd().format(lastTaken!);
           return "Last taken $daysSinceLastTaken days ago ($formatted)";
         }
