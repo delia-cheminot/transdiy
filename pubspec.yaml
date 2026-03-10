@@ -60,7 +60,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   image_path_android: "assets/logo/mona_logo_light.png"
-  adaptive_icon_background: "FEF2E2"
+  adaptive_icon_background: "#fef2e2"
   adaptive_icon_foreground: "assets/logo/mona_logo_light_transparent.png"
   adaptive_icon_monochrome: "assets/logo/mona_logo_monochrome.png"
   ios: true
