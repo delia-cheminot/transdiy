@@ -59,10 +59,14 @@ dev_dependencies:
 
 flutter_launcher_icons:
   android: true
-  ios: true
-  image_path: assets/logo/mona_logo.png
+  image_path_android: "assets/logo/mona_logo_light.png"
   adaptive_icon_background: "FEF2E2"
-  adaptive_icon_foreground: assets/logo/mona_logo_transparent.png
+  adaptive_icon_foreground: "assets/logo/mona_logo_light_transparent.png"
+  adaptive_icon_monochrome: "assets/logo/mona_logo_monochrome.png"
+  ios: true
+  image_path_ios: "assets/logo/mona_logo_dark.png"
+  image_path_ios_dark_transparent: "assets/logo/mona_logo_dark_transparent.png"
+  image_path_ios_tinted_grayscale: "assets/logo/mona_logo_dark_greyscale.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
