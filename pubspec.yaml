@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.4.1+1
+version: 0.7.0+1
 
 environment:
   sdk: '>=3.3.4 <4.0.0'
@@ -48,6 +48,7 @@ dependencies:
   flutter_timezone: ^5.0.1
   shared_preferences: ^2.5.4
   material_symbols_icons: ^4.2906.0
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,17 @@ dev_dependencies:
   build_runner: ^2.4.9
   flutter_lints: ^6.0.0
   mockito: ^5.4.4
+
+flutter_launcher_icons:
+  android: true
+  image_path_android: "assets/logo/mona_logo_light.png"
+  adaptive_icon_background: "FEF2E2"
+  adaptive_icon_foreground: "assets/logo/mona_logo_light_transparent.png"
+  adaptive_icon_monochrome: "assets/logo/mona_logo_monochrome.png"
+  ios: true
+  image_path_ios: "assets/logo/mona_logo_dark.png"
+  image_path_ios_dark_transparent: "assets/logo/mona_logo_dark_transparent.png"
+  image_path_ios_tinted_grayscale: "assets/logo/mona_logo_dark_greyscale.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
