@@ -1,0 +1,1 @@
+Mona stores all your data locally on your device. No data is sent to any server. The app is open source and fully transparent. You are in control of your data at all times.
