@@ -29,7 +29,7 @@ https://testflight.apple.com/join/ersXvycy
 ## Discord
 
 ### Join Mona's Discord server
-[![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/WWgtw5HWGB)
+[![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/qsHzkX89vJ)
 
 ### Support us
  [![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](https://ko-fi.com/deliacheminot)
