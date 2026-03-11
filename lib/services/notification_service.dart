@@ -36,9 +36,9 @@ class NotificationService {
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
 
     await _notificationsPlugin.initialize(
@@ -66,12 +66,22 @@ class NotificationService {
     );
   }
 
-  Future<void> requestAndroidNotificationPermission() async {
+  Future<void> requestNotificationPermission() async {
     if (Platform.isAndroid) {
       final androidImplementation =
           _notificationsPlugin.resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
       await androidImplementation?.requestNotificationsPermission();
+    } else if (Platform.isIOS) {
+      final iosImplementation =
+          _notificationsPlugin.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
+
+      await iosImplementation?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
     }
   }
 

@@ -50,7 +50,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   Future<void> _toggleNotifications(bool value) async {
     if (value == true) {
-      await NotificationService().requestAndroidNotificationPermission();
+      await NotificationService().requestNotificationPermission();
     }
 
     await _preferencesService.setNotificationsEnabled(value);
