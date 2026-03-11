@@ -41,6 +41,7 @@ class KnownMolecules {
 
   // Androgens
   static const testosterone = Molecule(name: 'testosterone', unit: 'mg');
+  static const nandrolone = Molecule(name: 'nandrolone', unit: 'mg');
 
   // Anti-androgens
   static const spironolactone = Molecule(name: 'spironolactone', unit: 'mg');
@@ -58,6 +59,7 @@ class KnownMolecules {
     estradiol,
     progesterone,
     testosterone,
+    nandrolone,
     spironolactone,
     cyproteroneAcetate,
     bicalutamide,
