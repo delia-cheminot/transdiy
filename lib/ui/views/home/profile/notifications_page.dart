@@ -14,6 +14,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   late bool _notificationsEnabled;
   late TimeOfDay _notificationTime;
   late PreferencesService _preferencesService;
+  bool _permissionGranted = true;
 
   @override
   void initState() {
@@ -22,6 +23,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
         Provider.of<PreferencesService>(context, listen: false);
     _notificationsEnabled = _preferencesService.notificationsEnabled;
     _notificationTime = _preferencesService.notificationTime;
+    _checkPermission();
+  }
+
+  Future<void> _checkPermission() async {
+    final granted = await NotificationService().hasPermission();
+    setState(() {
+      _permissionGranted = granted;
+    });
   }
 
   Future<void> _pickTime() async {
@@ -40,15 +49,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   Future<void> _toggleNotifications(bool value) async {
-    setState(() {
-      _notificationsEnabled = value;
-    });
-
     if (value == true) {
       await NotificationService().requestAndroidNotificationPermission();
     }
 
     await _preferencesService.setNotificationsEnabled(value);
+    await _checkPermission();
+
+    setState(() {
+      _notificationsEnabled = value;
+    });
   }
 
   @override
@@ -57,6 +67,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
       appBar: AppBar(title: const Text('Notifications')),
       body: ListView(
         children: [
+          if (_notificationsEnabled && !_permissionGranted)
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('Notifications are disabled'),
+              subtitle: Text("You need to allow them in system settings."),
+            ),
           SwitchListTile(
             title: const Text('Enable notifications'),
             value: _notificationsEnabled,

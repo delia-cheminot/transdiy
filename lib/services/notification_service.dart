@@ -20,7 +20,7 @@ class NotificationService {
         plugin ?? (createPlugin?.call() ?? FlutterLocalNotificationsPlugin());
   }
 
-  final bool _initialized = false;
+  bool _initialized = false;
 
   bool get isInitialized => _initialized;
 
@@ -46,6 +46,8 @@ class NotificationService {
       android: androidSettings,
       iOS: iosSettings,
     ));
+
+    _initialized = true;
   }
 
   NotificationDetails _notificationDetails() {
@@ -71,6 +73,28 @@ class NotificationService {
               AndroidFlutterLocalNotificationsPlugin>();
       await androidImplementation?.requestNotificationsPermission();
     }
+  }
+
+  Future<bool> hasPermission() async {
+    if (Platform.isAndroid) {
+      final androidImplementation =
+          _notificationsPlugin.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+
+      final granted = await androidImplementation?.areNotificationsEnabled();
+      return granted ?? false;
+    }
+
+    if (Platform.isIOS) {
+      final iosImplementation =
+          _notificationsPlugin.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
+
+      final granted = await iosImplementation?.checkPermissions();
+      return granted?.isEnabled ?? false;
+    }
+
+    return true;
   }
 
   Future<void> showNotification({
