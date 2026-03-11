@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
     setState(() {
       _notificationsEnabled = value;
     });
+
+    if (value == true) {
+      await NotificationService().requestAndroidNotificationPermission();
+    }
 
     await _preferencesService.setNotificationsEnabled(value);
   }

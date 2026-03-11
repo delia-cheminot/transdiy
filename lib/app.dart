@@ -2,7 +2,6 @@ import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 import 'ui/views/main_page.dart';
@@ -42,7 +41,6 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
       _preferencesService = context.read<PreferencesService>();
       _medicationScheduleProvider.addListener(_regenerateNotifications);
       _preferencesService.addListener(_regenerateNotifications);
-      _preferencesService.addListener(_requestNotificationsAccess);
       _regenerateNotifications();
     });
   }
@@ -52,19 +50,12 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _medicationScheduleProvider.removeListener(_regenerateNotifications);
     _preferencesService.removeListener(_regenerateNotifications);
-    _preferencesService.removeListener(_requestNotificationsAccess);
     super.dispose();
   }
 
   void _regenerateNotifications() {
     NotificationScheduler(_medicationScheduleProvider, _preferencesService)
         .regenerateAll();
-  }
-
-  void _requestNotificationsAccess() async {
-    if (_preferencesService.notificationsEnabled) {
-      await NotificationService().requestAndroidNotificationPermission();
-    }
   }
 
   void _checkTimezoneChange() {
