@@ -64,6 +64,15 @@ class NotificationService {
     );
   }
 
+  Future<void> requestAndroidNotificationPermission() async {
+    if (Platform.isAndroid) {
+      final androidImplementation =
+          _notificationsPlugin.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+      await androidImplementation?.requestNotificationsPermission();
+    }
+  }
+
   Future<void> showNotification({
     int? id,
     String? title,
