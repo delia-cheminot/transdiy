@@ -82,6 +82,11 @@ class SupplyItem {
     };
   }
 
+  Decimal getAmount(Decimal dose) =>
+      (dose.toRational() / concentration.toRational()).toDecimal();
+
+  Decimal getDose(Decimal amount) => amount * concentration;
+
   SupplyItem copyWith({
     int? id,
     String? name,
