@@ -1,11 +1,11 @@
 # Mona
 Your hormonal memo
 
-Mona is a mobile transfeminine healthcare journal. Know when to take hour HRT, track your medication supplies and preview your hormone levels.
+Mona is a mobile transfeminine healthcare journal. Know when to take your HRT, track your medication supplies and preview your hormone levels.
 
-The app is currently under developpement at the Alpha stage. Any contribution is welcome!
+The app is currently under development at the Alpha stage. Any contribution is welcome!
 
-This project is developped in Flutter, granting Android and iOS releases.
+This project is developed in Flutter, granting Android and iOS releases.
 
 ![Homepage](/assets/readme/homepage.png)
 ![Homepage](/assets/readme/supplies_page.png)
