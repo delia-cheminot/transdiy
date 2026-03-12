@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -13,6 +15,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   late bool _notificationsEnabled;
   late TimeOfDay _notificationTime;
   late PreferencesService _preferencesService;
+  bool _permissionGranted = true;
 
   @override
   void initState() {
@@ -21,6 +24,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
         Provider.of<PreferencesService>(context, listen: false);
     _notificationsEnabled = _preferencesService.notificationsEnabled;
     _notificationTime = _preferencesService.notificationTime;
+    _checkPermission();
+  }
+
+  Future<void> _checkPermission() async {
+    final granted = await NotificationService().hasPermission();
+    setState(() {
+      _permissionGranted = granted;
+    });
   }
 
   Future<void> _pickTime() async {
@@ -39,11 +50,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 
   Future<void> _toggleNotifications(bool value) async {
+    if (value == true) {
+      await NotificationService().requestNotificationPermission();
+    }
+
+    await _preferencesService.setNotificationsEnabled(value);
+    await _checkPermission();
+
     setState(() {
       _notificationsEnabled = value;
     });
-
-    await _preferencesService.setNotificationsEnabled(value);
   }
 
   @override
@@ -52,6 +68,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
       appBar: AppBar(title: const Text('Notifications')),
       body: ListView(
         children: [
+          if (_notificationsEnabled && !_permissionGranted)
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('Notifications are disabled'),
+              subtitle: Text("Click to open settings"),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () async {
+                await openAppSettings();
+              },
+            ),
           SwitchListTile(
             title: const Text('Enable notifications'),
             value: _notificationsEnabled,

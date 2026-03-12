@@ -11,7 +11,7 @@ class PreferencesService extends ChangeNotifier {
 
   static const int defaultHour = 18;
   static const int defaultMinute = 0;
-  static const bool defaultNotificationsEnabled = true;
+  static const bool defaultNotificationsEnabled = false;
 
   late final SharedPreferences _prefs;
 
