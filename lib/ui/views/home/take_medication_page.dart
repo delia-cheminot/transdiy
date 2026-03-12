@@ -133,6 +133,24 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            const WidgetSpan(
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 16,
+                              ),
+                            ),
+                            const TextSpan(
+                                text:
+                                    " unit conversion will be displayed here"),
+                          ],
+                        ),
+                      ),
+                    ),
                     if (_isInjection)
                       FormDropdownField<InjectionSide>(
                         value: _selectedSide,
