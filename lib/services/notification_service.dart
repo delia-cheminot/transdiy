@@ -20,9 +20,17 @@ class NotificationService {
         plugin ?? (createPlugin?.call() ?? FlutterLocalNotificationsPlugin());
   }
 
-  final bool _initialized = false;
+  bool _initialized = false;
 
   bool get isInitialized => _initialized;
+
+  AndroidFlutterLocalNotificationsPlugin? get _androidImplementation =>
+      _notificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+
+  IOSFlutterLocalNotificationsPlugin? get _iosImplementation =>
+      _notificationsPlugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
 
   Future<void> initialize() async {
     if (_initialized) return;
@@ -36,9 +44,9 @@ class NotificationService {
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const iosSettings = DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
     );
 
     await _notificationsPlugin.initialize(
@@ -46,6 +54,8 @@ class NotificationService {
       android: androidSettings,
       iOS: iosSettings,
     ));
+
+    _initialized = true;
   }
 
   NotificationDetails _notificationDetails() {
@@ -62,6 +72,32 @@ class NotificationService {
         presentSound: true,
       ),
     );
+  }
+
+  Future<void> requestNotificationPermission() async {
+    if (Platform.isAndroid) {
+      await _androidImplementation?.requestNotificationsPermission();
+    } else if (Platform.isIOS) {
+      await _iosImplementation?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
+  }
+
+  Future<bool> hasPermission() async {
+    if (Platform.isAndroid) {
+      final granted = await _androidImplementation?.areNotificationsEnabled();
+      return granted ?? false;
+    }
+
+    if (Platform.isIOS) {
+      final granted = await _iosImplementation?.checkPermissions();
+      return granted?.isEnabled ?? false;
+    }
+
+    return true;
   }
 
   Future<void> showNotification({
@@ -98,7 +134,8 @@ class NotificationService {
   }) async {
     id ??= Random().nextInt(1 << 31);
 
-    var scheduledDate = tz.TZDateTime(tz.local, year, month, day, hour, minute);
+    final scheduledDate =
+        tz.TZDateTime(tz.local, year, month, day, hour, minute);
 
     await _notificationsPlugin.zonedSchedule(
       id: id,

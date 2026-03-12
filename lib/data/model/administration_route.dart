@@ -47,6 +47,11 @@ class AdministrationRoute {
     unit: 'suppository',
     icon: Symbols.pill,
   );
+  static const transdermal = AdministrationRoute(
+    name: 'transdermal spray',
+    unit: 'spray',
+    icon: Symbols.fragrance,
+  );
 
   static const List<AdministrationRoute> all = [
     injection,
@@ -56,6 +61,7 @@ class AdministrationRoute {
     gel,
     implant,
     suppository,
+    transdermal,
   ];
 
   static AdministrationRoute fromName(String name) {

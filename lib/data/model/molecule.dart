@@ -47,6 +47,8 @@ class KnownMolecules {
   static const spironolactone = Molecule(name: 'spironolactone', unit: 'mg');
   static const cyproteroneAcetate =
       Molecule(name: 'cyproterone acetate', unit: 'mg');
+  static const leuprorelinAcetate =
+      Molecule(name: 'leuprorelin acetate', unit: 'mg');
   static const bicalutamide = Molecule(name: 'bicalutamide', unit: 'mg');
   static const decapeptyl = Molecule(name: 'decapeptyl', unit: 'mg');
 
@@ -62,6 +64,7 @@ class KnownMolecules {
     nandrolone,
     spironolactone,
     cyproteroneAcetate,
+    leuprorelinAcetate,
     bicalutamide,
     decapeptyl,
     finasteride,

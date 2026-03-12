@@ -22,7 +22,7 @@ import 'app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  NotificationService().initialize();
+  await NotificationService().initialize();
   final preferencesService = await PreferencesService.init();
 
   SystemChrome.setSystemUIOverlayStyle(
