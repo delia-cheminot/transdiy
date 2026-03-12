@@ -171,13 +171,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
                     ),
-                    FormDropdownField<SupplyItem?>(
-                      value: _selectedSupplyItem,
-                      items: supplyItemDropdownItems,
-                      onChanged: _onSupplyItemChanged,
-                      label: 'Supply item',
-                    ),
-                    if (_selectedSupplyItem != null) ...[
+                    if (_selectedSupplyItem != null)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Text.rich(
@@ -197,7 +191,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                           ),
                         ),
                       ),
-                    ],
+                    FormDropdownField<SupplyItem?>(
+                      value: _selectedSupplyItem,
+                      items: supplyItemDropdownItems,
+                      onChanged: _onSupplyItemChanged,
+                      label: 'Supply item',
+                    ),
                     if (_isInjection)
                       FormDropdownField<InjectionSide>(
                         value: _selectedSide,
