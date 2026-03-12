@@ -158,6 +158,6 @@ class SupplyItem {
   String toString() {
     return "${molecule.name} "
         "${ester != null ? "${ester!.name} " : ""}"
-        " $concentration ${molecule.unit}/${administrationRoute.unit}";
+        "$concentration ${molecule.unit}/${administrationRoute.unit}";
   }
 }
