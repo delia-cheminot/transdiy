@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class NotificationsPage extends StatefulWidget {
@@ -71,7 +72,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
             ListTile(
               leading: const Icon(Icons.info_outline),
               title: const Text('Notifications are disabled'),
-              subtitle: Text("You need to allow them in system settings."),
+              subtitle: Text("Click to open settings"),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () async {
+                await openAppSettings();
+              },
             ),
           SwitchListTile(
             title: const Text('Enable notifications'),
