@@ -24,6 +24,14 @@ class NotificationService {
 
   bool get isInitialized => _initialized;
 
+  AndroidFlutterLocalNotificationsPlugin? get _androidImplementation =>
+      _notificationsPlugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+
+  IOSFlutterLocalNotificationsPlugin? get _iosImplementation =>
+      _notificationsPlugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+
   Future<void> initialize() async {
     if (_initialized) return;
 
@@ -68,16 +76,9 @@ class NotificationService {
 
   Future<void> requestNotificationPermission() async {
     if (Platform.isAndroid) {
-      final androidImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
-      await androidImplementation?.requestNotificationsPermission();
+      await _androidImplementation?.requestNotificationsPermission();
     } else if (Platform.isIOS) {
-      final iosImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>();
-
-      await iosImplementation?.requestPermissions(
+      await _iosImplementation?.requestPermissions(
         alert: true,
         badge: true,
         sound: true,
@@ -87,20 +88,12 @@ class NotificationService {
 
   Future<bool> hasPermission() async {
     if (Platform.isAndroid) {
-      final androidImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
-
-      final granted = await androidImplementation?.areNotificationsEnabled();
+      final granted = await _androidImplementation?.areNotificationsEnabled();
       return granted ?? false;
     }
 
     if (Platform.isIOS) {
-      final iosImplementation =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>();
-
-      final granted = await iosImplementation?.checkPermissions();
+      final granted = await _iosImplementation?.checkPermissions();
       return granted?.isEnabled ?? false;
     }
 
@@ -141,7 +134,8 @@ class NotificationService {
   }) async {
     id ??= Random().nextInt(1 << 31);
 
-    var scheduledDate = tz.TZDateTime(tz.local, year, month, day, hour, minute);
+    final scheduledDate =
+        tz.TZDateTime(tz.local, year, month, day, hour, minute);
 
     await _notificationsPlugin.zonedSchedule(
       id: id,
