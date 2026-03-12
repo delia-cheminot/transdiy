@@ -23,8 +23,8 @@ class EditItemPage extends StatefulWidget {
 }
 
 class _EditItemPageState extends State<EditItemPage> {
-  late TextEditingController _totalDoseController;
-  late TextEditingController _usedDoseController;
+  late TextEditingController _totalAmountController;
+  late TextEditingController _usedAmountController;
   late TextEditingController _concentrationController;
   late TextEditingController _nameController;
   late Molecule _molecule;
@@ -35,12 +35,13 @@ class _EditItemPageState extends State<EditItemPage> {
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
 
-  String? get _totalDoseError =>
-      SupplyItem.validateTotalAmount(_totalDoseController.text);
+  String? get _totalAmountError =>
+      SupplyItem.validateTotalAmount(_totalAmountController.text);
 
-  String? get _usedDoseError {
-    final validator = SupplyItem.usedAmountValidator(_totalDoseController.text);
-    return validator(_usedDoseController.text);
+  String? get _usedAmountError {
+    final validator =
+        SupplyItem.usedAmountValidator(_totalAmountController.text);
+    return validator(_usedAmountController.text);
   }
 
   String? get _concentrationError =>
@@ -57,8 +58,8 @@ class _EditItemPageState extends State<EditItemPage> {
 
   bool get _isFormValid =>
       _nameError == null &&
-      _totalDoseError == null &&
-      _usedDoseError == null &&
+      _totalAmountError == null &&
+      _usedAmountError == null &&
       _concentrationError == null &&
       _moleculeError == null &&
       _administrationRouteError == null &&
@@ -106,11 +107,15 @@ class _EditItemPageState extends State<EditItemPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
+    final concentration = parseDecimal(_concentrationController.text);
+    final totalDose = concentration * parseDecimal(_totalAmountController.text);
+    final usedDose = concentration * parseDecimal(_usedAmountController.text);
+
     final updatedItem = widget.item.copyWith(
       name: _nameController.text,
-      totalDose: parseDecimal(_totalDoseController.text),
-      concentration: parseDecimal(_concentrationController.text),
-      usedDose: parseDecimal(_usedDoseController.text),
+      totalDose: totalDose,
+      concentration: concentration,
+      usedDose: usedDose,
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,
@@ -133,10 +138,12 @@ class _EditItemPageState extends State<EditItemPage> {
   @override
   void initState() {
     super.initState();
-    _totalDoseController =
-        TextEditingController(text: widget.item.totalDose.toString());
-    _usedDoseController =
-        TextEditingController(text: widget.item.usedDose.toString());
+    final totalAmountText =
+        widget.item.getAmount(widget.item.totalDose).toString();
+    final usedAmountText =
+        widget.item.getAmount(widget.item.usedDose).toString();
+    _totalAmountController = TextEditingController(text: totalAmountText);
+    _usedAmountController = TextEditingController(text: usedAmountText);
     _concentrationController =
         TextEditingController(text: widget.item.concentration.toString());
     _nameController = TextEditingController(text: widget.item.name);
@@ -151,8 +158,8 @@ class _EditItemPageState extends State<EditItemPage> {
 
   @override
   void dispose() {
-    _totalDoseController.dispose();
-    _usedDoseController.dispose();
+    _totalAmountController.dispose();
+    _usedAmountController.dispose();
     _concentrationController.dispose();
     _nameController.dispose();
     super.dispose();
@@ -196,21 +203,21 @@ class _EditItemPageState extends State<EditItemPage> {
           ),
         FormSpacer(),
         FormTextField(
-          controller: _totalDoseController,
+          controller: _totalAmountController,
           label: 'Total amount',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: _molecule.unit,
-          errorText: _totalDoseError,
+          suffixText: _administrationRoute.unit,
+          errorText: _totalAmountError,
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
-          controller: _usedDoseController,
+          controller: _usedAmountController,
           label: 'Used amount',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: _molecule.unit,
-          errorText: _usedDoseError,
+          suffixText: _administrationRoute.unit,
+          errorText: _usedAmountError,
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
