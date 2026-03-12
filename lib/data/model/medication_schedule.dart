@@ -155,6 +155,7 @@ class MedicationSchedule {
     Molecule? molecule,
     AdministrationRoute? administrationRoute,
     Ester? ester,
+    bool clearEster = false,
   }) {
     return MedicationSchedule(
       id: id ?? this.id,
@@ -164,7 +165,7 @@ class MedicationSchedule {
       startDate: startDate ?? this.startDate,
       molecule: molecule ?? this.molecule,
       administrationRoute: administrationRoute ?? this.administrationRoute,
-      ester: ester ?? this.ester,
+      ester: clearEster ? null : (ester ?? this.ester),
     );
   }
 
