@@ -119,6 +119,7 @@ class _EditItemPageState extends State<EditItemPage> {
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,
+      clearEster: !_useEsterField,
     );
     _supplyItemProvider.updateItem(updatedItem);
 

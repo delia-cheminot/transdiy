@@ -97,6 +97,7 @@ class SupplyItem {
     Molecule? molecule,
     AdministrationRoute? administrationRoute,
     Ester? ester,
+    bool clearEster = false,
   }) {
     return SupplyItem(
       id: id ?? this.id,
@@ -107,7 +108,7 @@ class SupplyItem {
       quantity: quantity ?? this.quantity,
       molecule: molecule ?? this.molecule,
       administrationRoute: administrationRoute ?? this.administrationRoute,
-      ester: ester ?? this.ester,
+      ester: clearEster ? null : (ester ?? this.ester),
     );
   }
 

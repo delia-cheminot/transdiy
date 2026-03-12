@@ -134,7 +134,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           ...supplyItemOptions.map(
             (item) => DropdownMenuItem<SupplyItem?>(
               value: item,
-              child: Text(item.toString()),
+              child: Text(item.name),
             ),
           ),
         ];
