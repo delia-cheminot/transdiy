@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
@@ -10,7 +11,6 @@ import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
-import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -26,6 +26,7 @@ class TakeMedicationPage extends StatefulWidget {
 class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
   late TextEditingController _takenDoseController;
+  late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
   SupplyItem? _selectedSupplyItem;
@@ -44,11 +45,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    final dose = parseDecimal(_takenDoseController.text);
-
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
-      dose: dose,
+      dose: _takenDose,
       scheduledDate: widget.scheduledDate,
       takenDate: _takenDate,
       supplyItem: _selectedSupplyItem,
@@ -74,7 +73,14 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   }
 
   void _onTakenDoseChanged() {
-    setState(() {});
+    final dose = Decimal.tryParse(
+      _takenDoseController.text.replaceAll(',', '.'),
+    );
+    if (dose != null) {
+      setState(() {
+        _takenDose = dose;
+      });
+    }
   }
 
   void _onSupplyItemChanged(SupplyItem? item) {
@@ -87,6 +93,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   void initState() {
     super.initState();
     _takenDate = DateTime.now();
+    _takenDose = widget.schedule.dose;
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
   }
@@ -170,24 +177,27 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       onChanged: _onSupplyItemChanged,
                       label: 'Supply item',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const WidgetSpan(
-                              child: Icon(
-                                Icons.info_outline,
-                                size: 16,
+                    if (_selectedSupplyItem != null) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const WidgetSpan(
+                                child: Icon(
+                                  Icons.info_outline,
+                                  size: 16,
+                                ),
                               ),
-                            ),
-                            const TextSpan(
+                              TextSpan(
                                 text:
-                                    " unit conversion will be displayed here"),
-                          ],
+                                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                     if (_isInjection)
                       FormDropdownField<InjectionSide>(
                         value: _selectedSide,
