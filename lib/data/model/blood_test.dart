@@ -1,18 +1,17 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
-
+import 'package:decimal/decimal.dart';
 import 'package:mona/util/validators.dart';
 
 class BloodTest {
     final int id;
     DateTime date;
-    Double? oestradiolLevels;
-    Double? testosteroneLevels; 
+    Decimal? estradiolLevels;
+    Decimal? testosteroneLevels; 
     
     
     BloodTest({
         int? id,
         required this.date,
-        this.oestradiolLevels,
+        this.estradiolLevels,
         this.testosteroneLevels,
     }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -20,8 +19,8 @@ class BloodTest {
       return BloodTest(
         id: map['id'] as int?,
         date: DateTime.parse(map['date'] as String),
-        oestradiolLevels: map['oestradiolLevels'] as Double?,
-        testosteroneLevels: map['testosteroneLevels'] as Double?,
+        estradiolLevels: map['estradiolLevels'] as Decimal?,
+        testosteroneLevels: map['testosteroneLevels'] as Decimal?,
         );
     }
 
@@ -29,7 +28,7 @@ class BloodTest {
       return {
         'id': id,
         'date': date.toIso8601String(),
-        'oestradiolLevels': oestradiolLevels,
+        'oestradiolLevels': estradiolLevels,
         'testosteroneLevels': testosteroneLevels,
       };
     }
@@ -40,7 +39,7 @@ class BloodTest {
 
     @override
     bool operator ==(Object other) =>
-    identical(this, other) || other is BloodTest && (date == other.date) && (oestradiolLevels == other.oestradiolLevels) && (testosteroneLevels == other.testosteroneLevels);
+    identical(this, other) || other is BloodTest && (date == other.date) && (estradiolLevels == other.estradiolLevels) && (testosteroneLevels == other.testosteroneLevels);
 
     @override
     int get hashCode => id.hashCode;

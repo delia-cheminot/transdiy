@@ -24,6 +24,27 @@ class BloodTestProvider {
     _bloodtests = await repository.getAll();
   }
 
+   Future<void> deleteBloodTestFromId(int id) async {
+    await repository.delete(id);
+    await fetchBloodTests();
+  }
+
+  Future<void> deleteBloodTest(BloodTest intake) async {
+    await repository.delete(intake.id);
+    await fetchBloodTests();
+  }
+
+  Future<void> add(BloodTest bloodtest) async {
+    await repository.insert(bloodtest);
+    await fetchBloodTests();
+  }
+
+  Future<void> updateBloodTest(BloodTest bloodtest) async {
+    await repository.update(bloodtest, bloodtest.id);
+    await fetchBloodTests();
+  }
+
+
   static final _bloodTestRepository = Repository<BloodTest>(
     tableName: 'blood_tests',
     toMap: (BloodTest bloodtest) => bloodtest.toMap(),
