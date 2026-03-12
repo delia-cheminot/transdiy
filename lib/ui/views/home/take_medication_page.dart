@@ -1,15 +1,16 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
-import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -25,8 +26,11 @@ class TakeMedicationPage extends StatefulWidget {
 class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late DateTime _takenDate;
   late TextEditingController _takenDoseController;
+  late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
+  SupplyItem? _selectedSupplyItem;
+  bool _hasInitializedSupplyItem = false;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
@@ -41,19 +45,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    final dose = parseDecimal(_takenDoseController.text);
-    final itemToUse = supplyItemProvider.getMostUsedItemForMedication(
-      widget.schedule.molecule,
-      widget.schedule.administrationRoute,
-      widget.schedule.ester,
-    );
-
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
-      dose: dose,
+      dose: _takenDose,
       scheduledDate: widget.scheduledDate,
       takenDate: _takenDate,
-      supplyItem: itemToUse,
+      supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
     );
@@ -76,13 +73,27 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   }
 
   void _onTakenDoseChanged() {
-    setState(() {});
+    final dose = Decimal.tryParse(
+      _takenDoseController.text.replaceAll(',', '.'),
+    );
+    if (dose != null) {
+      setState(() {
+        _takenDose = dose;
+      });
+    }
+  }
+
+  void _onSupplyItemChanged(SupplyItem? item) {
+    setState(() {
+      _selectedSupplyItem = item;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _takenDate = DateTime.now();
+    _takenDose = widget.schedule.dose;
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
   }
@@ -108,6 +119,33 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           _hasInitializedSide = true;
         }
 
+        if (!isLoading && !_hasInitializedSupplyItem) {
+          _selectedSupplyItem = supplyItemProvider.getMostUsedItemForMedication(
+            widget.schedule.molecule,
+            widget.schedule.administrationRoute,
+            widget.schedule.ester,
+          );
+          _hasInitializedSupplyItem = true;
+        }
+
+        final supplyItemOptions = supplyItemProvider.getItemsForMedication(
+          widget.schedule.molecule,
+          widget.schedule.administrationRoute,
+          widget.schedule.ester,
+        );
+        final supplyItemDropdownItems = [
+          const DropdownMenuItem<SupplyItem?>(
+            value: null,
+            child: Text('None'),
+          ),
+          ...supplyItemOptions.map(
+            (item) => DropdownMenuItem<SupplyItem?>(
+              value: item,
+              child: Text(item.name),
+            ),
+          ),
+        ];
+
         return Scaffold(
           appBar: AppBar(
             title: const Text('Take intake'),
@@ -132,6 +170,32 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       suffixText: widget.schedule.molecule.unit,
                       errorText: _takenDoseError,
                       regexFormatter: r'[0-9.,]',
+                    ),
+                    if (_selectedSupplyItem != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const WidgetSpan(
+                                child: Icon(
+                                  Icons.info_outline,
+                                  size: 16,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    FormDropdownField<SupplyItem?>(
+                      value: _selectedSupplyItem,
+                      items: supplyItemDropdownItems,
+                      onChanged: _onSupplyItemChanged,
+                      label: 'Supply item',
                     ),
                     if (_isInjection)
                       FormDropdownField<InjectionSide>(

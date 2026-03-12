@@ -301,5 +301,167 @@ void main() {
       // Assert
       expect(mostUsed, null);
     });
+
+    group('getItemsForMedication', () {
+      test('returns matching items ordered by most used first', () async {
+        // Arrange
+        final baseItem = SupplyItem(
+          id: 1,
+          name: 'E vial A',
+          totalDose: Decimal.parse('200'),
+          usedDose: Decimal.parse('150'),
+          concentration: Decimal.parse('2'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.injection,
+          ester: Ester.valerate,
+        );
+        await repo.insert(baseItem);
+        await repo.insert(baseItem.copyWith(
+          id: 2,
+          name: 'E vial B',
+          usedDose: Decimal.parse('50'),
+        ));
+        await repo.insert(baseItem.copyWith(
+          id: 3,
+          name: 'E vial C',
+          usedDose: Decimal.parse('100'),
+        ));
+        await provider.fetchItems();
+
+        // Act
+        final items = provider.getItemsForMedication(
+          KnownMolecules.estradiol,
+          AdministrationRoute.injection,
+          Ester.valerate,
+        );
+
+        // Assert
+        expect(items.map((e) => e.id).toList(), [1, 3, 2]);
+      });
+
+      test('returns empty list when no matching item', () async {
+        // Arrange
+        await repo.insert(SupplyItem(
+          id: 1,
+          name: 'Oral only',
+          totalDose: Decimal.parse('50'),
+          concentration: Decimal.parse('5'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        ));
+        await provider.fetchItems();
+
+        // Act
+        final items = provider.getItemsForMedication(
+          KnownMolecules.estradiol,
+          AdministrationRoute.injection,
+          Ester.valerate,
+        );
+
+        // Assert
+        expect(items, isEmpty);
+      });
+
+      test('returns empty list when items list is empty', () async {
+        // Arrange
+        await provider.fetchItems();
+
+        // Act
+        final items = provider.getItemsForMedication(
+          KnownMolecules.estradiol,
+          AdministrationRoute.injection,
+          Ester.valerate,
+        );
+
+        // Assert
+        expect(items, isEmpty);
+      });
+
+      test('returns single item when only one matches molecule route and ester',
+          () async {
+        // Arrange
+        final matchItem = SupplyItem(
+          id: 1,
+          name: 'Match',
+          totalDose: Decimal.parse('200'),
+          usedDose: Decimal.parse('50'),
+          concentration: Decimal.parse('2'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.injection,
+          ester: Ester.valerate,
+        );
+        await repo.insert(matchItem);
+        await repo.insert(matchItem.copyWith(
+          id: 2,
+          name: 'Other molecule',
+          molecule: KnownMolecules.progesterone,
+        ));
+        await repo.insert(matchItem.copyWith(
+          id: 3,
+          name: 'Other route',
+          administrationRoute: AdministrationRoute.oral,
+          ester: null,
+        ));
+        await repo.insert(matchItem.copyWith(
+          id: 4,
+          name: 'Other ester',
+          ester: Ester.enanthate,
+        ));
+        await provider.fetchItems();
+
+        // Act
+        final items = provider.getItemsForMedication(
+          KnownMolecules.estradiol,
+          AdministrationRoute.injection,
+          Ester.valerate,
+        );
+
+        // Assert
+        expect(items.map((e) => e.id).toList(), [1]);
+      });
+
+      test('returns the matching item when others differ by molecule route or ester',
+          () async {
+        // Arrange
+        final matchItem = SupplyItem(
+          id: 1,
+          name: 'Match',
+          totalDose: Decimal.parse('200'),
+          usedDose: Decimal.parse('50'),
+          concentration: Decimal.parse('2'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.injection,
+          ester: Ester.valerate,
+        );
+        await repo.insert(matchItem);
+        await repo.insert(matchItem.copyWith(
+          id: 2,
+          name: 'Other molecule',
+          molecule: KnownMolecules.progesterone,
+        ));
+        await repo.insert(matchItem.copyWith(
+          id: 3,
+          name: 'Other route',
+          administrationRoute: AdministrationRoute.oral,
+          ester: null,
+        ));
+        await repo.insert(matchItem.copyWith(
+          id: 4,
+          name: 'Other ester',
+          ester: Ester.enanthate,
+        ));
+        await provider.fetchItems();
+
+        // Act
+        final items = provider.getItemsForMedication(
+          KnownMolecules.estradiol,
+          AdministrationRoute.injection,
+          Ester.valerate,
+        );
+
+        // Assert
+        expect(items.single.id, 1);
+      });
+    });
   });
 }

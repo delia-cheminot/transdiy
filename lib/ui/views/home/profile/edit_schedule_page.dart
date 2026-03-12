@@ -110,6 +110,7 @@ class _EditSchedulePageState extends State<EditSchedulePage> {
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,
+      clearEster: !_useEsterField,
     );
     _medicationScheduleProvider.updateSchedule(updatedSchedule);
 
