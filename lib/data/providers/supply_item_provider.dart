@@ -54,6 +54,20 @@ class SupplyItemProvider extends ChangeNotifier {
     return filtered.isEmpty ? null : filtered.first;
   }
 
+  List<SupplyItem> getItemsForMedication(Molecule molecule,
+      AdministrationRoute administrationRoute, Ester? ester) {
+    if (_items.isEmpty) return [];
+
+    return orderedByRemainingDose
+        .where(
+          (item) =>
+              item.molecule == molecule &&
+              item.administrationRoute == administrationRoute &&
+              item.ester == ester,
+        )
+        .toList();
+  }
+
   Future<void> deleteItemFromId(int id) async {
     await repository.delete(id);
     await fetchItems();
