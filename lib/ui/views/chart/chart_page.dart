@@ -19,7 +19,7 @@ class _ChartPageState extends State<ChartPage> {
         builder: (context, medicationIntakeProvider, child) {
       return MainPageWrapper(
         isLoading: medicationIntakeProvider.isLoading,
-        isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
+        isEmpty: medicationIntakeProvider.graphIntakes.isEmpty,
         emptyMessage: 'Estradiol injections will display in this tab',
         child: Column(
           children: [

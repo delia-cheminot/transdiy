@@ -332,5 +332,53 @@ void main() {
       // Assert
       expect(remaining, Decimal.fromInt(70));
     });
+
+    group('Dose/Amount calculations', () {
+      test('getAmount returns correct amount', () {
+        // Arrange
+        final item = SupplyItem(
+          name: 'Calc Test',
+          totalDose: Decimal.fromInt(100),
+          concentration: Decimal.parse('2.5'),
+          usedDose: Decimal.zero,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.patch,
+        );
+
+        final doses = [
+          {'dose': Decimal.fromInt(10), 'expected': Decimal.parse('4')},
+          {'dose': Decimal.zero, 'expected': Decimal.zero},
+        ];
+
+        // Act & Assert
+        for (final d in doses) {
+          expect(
+              item.getAmount(d['dose'] as Decimal), d['expected'] as Decimal);
+        }
+      });
+
+      test('getDose returns correct dose', () {
+        // Arrange
+        final item = SupplyItem(
+          name: 'Calc Test',
+          totalDose: Decimal.fromInt(100),
+          concentration: Decimal.parse('2.5'),
+          usedDose: Decimal.zero,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.patch,
+        );
+
+        final amounts = [
+          {'amount': Decimal.parse('4'), 'expected': Decimal.fromInt(10)},
+          {'amount': Decimal.zero, 'expected': Decimal.zero},
+        ];
+
+        // Act & Assert
+        for (final a in amounts) {
+          expect(
+              item.getDose(a['amount'] as Decimal), a['expected'] as Decimal);
+        }
+      });
+    });
   });
 }

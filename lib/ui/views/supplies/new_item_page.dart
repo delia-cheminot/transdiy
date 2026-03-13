@@ -18,7 +18,7 @@ class NewItemPage extends StatefulWidget {
 }
 
 class _NewItemPageState extends State<NewItemPage> {
-  late TextEditingController _totalDoseController;
+  late TextEditingController _totalAmountController;
   late TextEditingController _nameController;
   late TextEditingController _concentrationController;
   Molecule? _molecule;
@@ -27,8 +27,8 @@ class _NewItemPageState extends State<NewItemPage> {
   late PreferencesService _preferencesService;
 
   String? get _nameError => SupplyItem.validateName(_nameController.text);
-  String? get _totalDoseError =>
-      SupplyItem.validateTotalAmount(_totalDoseController.text);
+  String? get _totalAmountError =>
+      SupplyItem.validateTotalAmount(_totalAmountController.text);
   String? get _concentrationError =>
       SupplyItem.validateConcentration(_concentrationController.text);
   String? get _moleculeError => SupplyItem.validateMolecule(_molecule);
@@ -42,7 +42,7 @@ class _NewItemPageState extends State<NewItemPage> {
 
   bool get _isFormValid =>
       _nameError == null &&
-      _totalDoseError == null &&
+      _totalAmountError == null &&
       _concentrationError == null &&
       _moleculeError == null &&
       _administrationRouteError == null &&
@@ -89,8 +89,9 @@ class _NewItemPageState extends State<NewItemPage> {
   }
 
   void _addItem() async {
-    final totalDose = parseDecimal(_totalDoseController.text);
+    final totalAmount = parseDecimal(_totalAmountController.text);
     final concentration = parseDecimal(_concentrationController.text);
+    final totalDose = concentration * totalAmount;
     final name = _nameController.text;
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
@@ -113,14 +114,14 @@ class _NewItemPageState extends State<NewItemPage> {
     super.initState();
     _preferencesService =
         Provider.of<PreferencesService>(context, listen: false);
-    _totalDoseController = TextEditingController();
+    _totalAmountController = TextEditingController();
     _nameController = TextEditingController();
     _concentrationController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _totalDoseController.dispose();
+    _totalAmountController.dispose();
     _nameController.dispose();
     _concentrationController.dispose();
     super.dispose();
@@ -162,11 +163,11 @@ class _NewItemPageState extends State<NewItemPage> {
           ),
         FormSpacer(),
         FormTextField(
-          controller: _totalDoseController,
+          controller: _totalAmountController,
           label: 'Total amount',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: _molecule?.unit,
+          suffixText: _administrationRoute?.unit,
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
