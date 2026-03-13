@@ -26,9 +26,9 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
 
   String? get _testDateError => BloodTest.validateDate(_testDate);
   String? get _estradiolLevelsError =>
-      BloodTest.validateDose(_estradiolLevelsController.text);
+      BloodTest.validateLevel(_estradiolLevelsController.text);
   String? get _testosteroneLevelsError =>
-      BloodTest.validateDose(_testosteroneLevelsController.text);
+      BloodTest.validateLevel(_testosteroneLevelsController.text);
 
   bool get _isFormValid => _testDateError == null;
 

@@ -3,9 +3,9 @@ import 'package:mona/util/validators.dart';
 
 class BloodTest {
   final int id;
-  DateTime date;
-  Decimal? estradiolLevels;
-  Decimal? testosteroneLevels;
+  final DateTime date;
+  final Decimal? estradiolLevels;
+  final Decimal? testosteroneLevels;
 
   BloodTest({
     int? id,
@@ -18,10 +18,15 @@ class BloodTest {
     return BloodTest(
       id: map['id'] as int?,
       date: DateTime.parse(map['date'] as String),
-      estradiolLevels: map['estradiolLevels'] as Decimal?,
-      testosteroneLevels: map['testosteroneLevels'] as Decimal?,
+      estradiolLevels: map['estradiolLevels'] == null
+          ? null
+          : Decimal.parse(map['estradiolLevels'] as String),
+      testosteroneLevels: map['testosteroneLevels'] == null
+          ? null
+          : Decimal.parse(map['testosteroneLevels'] as String),
     );
   }
+
   BloodTest copyWith({
     int? id,
     DateTime? date,
@@ -40,23 +45,18 @@ class BloodTest {
     return {
       'id': id,
       'date': date.toIso8601String(),
-      'oestradiolLevels': estradiolLevels,
-      'testosteroneLevels': testosteroneLevels,
+      'estradiolLevels': estradiolLevels.toString(),
+      'testosteroneLevels': testosteroneLevels.toString(),
     };
   }
 
   static String? validateDate(DateTime? value) => requiredDate(value);
 
-  static String? validateDose(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateLevel(String? value) => strictlyPositiveDecimal(value);
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BloodTest &&
-          (date == other.date) &&
-          (estradiolLevels == other.estradiolLevels) &&
-          (testosteroneLevels == other.testosteroneLevels);
+      identical(this, other) || other is BloodTest && (id == other.id);
 
   @override
   int get hashCode => id.hashCode;
