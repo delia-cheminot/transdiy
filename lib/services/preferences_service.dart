@@ -14,7 +14,7 @@ class PreferencesService extends ChangeNotifier {
   static const bool defaultNotificationsEnabled = false;
 
   static const _autoCheckUpdatesKey = 'auto_check_updates';
-  static const bool defaultAutoCheckUpdates = true;
+  static const bool defaultAutoCheckUpdates = false;
 
   late final SharedPreferences _prefs;
 
