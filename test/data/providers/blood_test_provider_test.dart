@@ -100,7 +100,52 @@ void main(){
         [provider.bloodtests.length, provider.bloodtests.first.id],
         [1, 2],
       );
+     } 
+    );
+    test('takenIntakesSortedDesc returns taken intakes sorted descending',
+        () async {
+      await provider.fetchBloodTests();
+      provider.add(BloodTest(
+        id: 666,
+        date: DateTime(2025, 5, 4, 3, 0),
+        estradiolLevels: Decimal.parse('234.5'),
+        testosteroneLevels: Decimal.parse('2.34'),
+      ));
+      provider.add(BloodTest(
+        id: 667,
+        date: DateTime(2025, 6, 7, 8, 9),
+        estradiolLevels: Decimal.parse('292.9'),
+        testosteroneLevels: Decimal.parse('2.43'),
+      ));
+      provider.add(BloodTest(
+        id: 668,
+        date: DateTime(2025, 3, 2, 1, 0),
+        estradiolLevels: Decimal.parse('261.2'),
+        testosteroneLevels: Decimal.parse('3.3'),
+      ));
+
+      final sorted = provider.bloodtestsSortedDesc;
+
+      expect(
+        sorted.asMap().entries.every((entry) {
+          final i = entry.key;
+          final bloodtest = entry.value;
+          if (i < sorted.length - 1) {
+            final next = sorted[i + 1];
+            if (bloodtest.date!.isBefore(next.date!)) {
+              return false;
+            }
+          }
+          return true;
+        }),
+        true,
+      );
+
+      provider.deleteBloodTestFromId(666);
+      provider.deleteBloodTestFromId(667);
+      provider.deleteBloodTestFromId(668);
     });
+
   });
 
 
