@@ -64,12 +64,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".dev" // Appends a suffix to debug builds to prevent conflicts with release version
+            resValue 'string', 'app_name', '"Mona (dev)"'
+        }
         release {
             if (keystorePropertiesFile.exists()) {
                 signingConfig signingConfigs.release
             } else {
                 signingConfig signingConfigs.debug
             }
+            resValue 'string', 'app_name', '"Mona"'
         }
     }
 }
