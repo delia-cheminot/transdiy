@@ -52,6 +52,10 @@ class KnownMolecules {
   static const bicalutamide = Molecule(name: 'bicalutamide', unit: 'mg');
   static const decapeptyl = Molecule(name: 'decapeptyl', unit: 'mg');
 
+  // SERMs
+  static const raloxifene = Molecule(name: 'Raloxifene', unit: 'mg');
+  static const tamoxifen = Molecule(name: 'Tamoxifen', unit: 'mg');
+
   // Other
   static const finasteride = Molecule(name: 'finasteride', unit: 'mg');
   static const dutasteride = Molecule(name: 'dutasteride', unit: 'mg');
