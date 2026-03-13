@@ -64,6 +64,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".dev" // Appends a suffix to debug builds to prevent conflicts with release version
+        }
         release {
             signingConfig signingConfigs.release
         }
