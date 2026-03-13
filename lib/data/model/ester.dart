@@ -13,7 +13,6 @@ class Ester {
   static const undecylate = Ester(name: "undecylate");
   static const benzoate = Ester(name: "benzoate");
   static const cypionateSuspension = Ester(name: "cypionate suspension");
-  static const polyPhosphate = Ester(name: "poly phosphate");
 
   static const List<Ester> all = [
     enanthate,
@@ -22,7 +21,6 @@ class Ester {
     undecylate,
     benzoate,
     cypionateSuspension,
-    polyPhosphate,
   ];
 
   static Ester? fromName(String? name) {

@@ -7,74 +7,74 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 class GraphCalculator {
   static const double tMaxOffset = 40.0;
   static const double _inactiveWindow = 100.0;
-  static const double _dFactor = 0.2;
-  static final Map<Ester, Map<String, double>> _coefs = {
+  // Inferred with love exclusively for Mona
+  //                - alix, WHSAH Collective
+  static final Map<Ester, Map<String, double>> _pkparams = {
     Ester.enanthate: {
-      "D": 333.874181,
-      "k1": 0.42412968,
-      "k2": 0.43452980,
-      "k3": 0.15291485,
+      "F": 0.708,
+      "auc": 875.4,
+      "k1": 0.09441,
+      "k2": 3.354,
+      "k3": 0.4078,
     },
     Ester.valerate: {
-      "D": 2596.05956,
-      "k1": 2.38229125,
-      "k2": 0.23345814,
-      "k3": 1.37642769,
+      "F": 0.764,
+      "auc": 621.3,
+      "k1": 0.2230,
+      "k2": 17.62,
+      "k3": 1.305,
     },
     Ester.benzoate: {
-      "D": 1.7050e+08,
-      "k1": 3.22397192,
-      "k2": 0.58870148,
-      "k3": 70721.4018,
+      "F": 0.723,
+      "auc": 889.9,
+      "k1": 0.5220,
+      "k2": 521.9,
+      "k3": 5.223,
     },
     Ester.cypionate: {
-      "D": 1920.89671,
-      "k1": 0.10321089,
-      "k2": 0.89854779,
-      "k3": 0.89359759,
+      "F": 0.687,
+      "auc": 554.5,
+      "k1": 0.0880,
+      "k2": 17.95,
+      "k3": 0.7177,
     },
     Ester.cypionateSuspension: {
-      "D": 1.5669e+08,
-      "k1": 0.13586726,
-      "k2": 2.51772731,
-      "k3": 74768.1493,
+      "F": 0.687,
+      "auc": 852.6,
+      "k1": 0.0973,
+      "k2": 218.67,
+      "k3": 6.624,
     },
     Ester.undecylate: {
-      "D": 65.9493374,
-      "k1": 0.29634323,
-      "k2": 4799337.57,
-      "k3": 0.03141554,
-    },
-    Ester.polyPhosphate: {
-      "D": 34.46836875,
-      "k1": 0.02456035,
-      "k2": 135643.711,
-      "k3": 0.10582368,
+      "F": 0.618,
+      "auc": 385.8,
+      "k1": 0.02189,
+      "k2": 183.4,
+      "k3": 1.564,
     },
   };
 
-  Map<String, double> getCoef(GraphIntake intake) {
-    return _coefs[intake.ester] ?? _coefs[Ester.enanthate]!;
+  Map<String, double> getPKParams(GraphIntake intake) {
+    return _pkparams[intake.ester] ?? _pkparams[Ester.enanthate]!;
   }
 
   double _singleInjectionConcentration(double t, int day, GraphIntake intake) {
     if (t <= day || t >= day + _inactiveWindow) return 0.0;
 
-    Map<String, double> coef = getCoef(intake);
+    Map<String, double> pkparams = getPKParams(intake);
 
-    final k1 = coef["k1"]!;
-    final k2 = coef["k2"]!;
-    final k3 = coef["k3"]!;
-    final d = coef["D"]!;
+    final f = pkparams["F"]!;
+    final auc = pkparams["auc"]!;
+    final k1 = pkparams["k1"]!;
+    final k2 = pkparams["k2"]!;
+    final k3 = pkparams["k3"]!;
 
-    double part1 = math.exp((-t + day) * k1) / ((k1 - k2) * (k1 - k3));
-    double part2 = math.exp((-t + day) * k3) / ((k1 - k3) * (k2 - k3));
-    double part3 = math.exp((-t + day) * k2) *
-        (k3 - k1) /
-        ((k1 - k2) * (k1 - k3) * (k2 - k3));
+    double part1 = math.exp(-k1 * (t - day)) / ((k1 - k2) * (k1 - k3));
+    double part2 = math.exp(-k2 * (t - day)) / ((k1 - k2) * (k2 - k3));
+    double part3 = math.exp(-k3 * (t - day)) / ((k1 - k3) * (k2 - k3));
 
     double concentration =
-        intake.dose * d * _dFactor * k1 * k2 * (part1 + part2 + part3);
+        intake.dose * f * auc * k1 * k2 * k3 * (part1 - part2 + part3);
     return concentration;
   }
 
