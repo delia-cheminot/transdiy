@@ -22,7 +22,7 @@ class ProfilePage extends StatelessWidget {
 
       final response = await http.get(
         Uri.parse(
-            'https://api.github.com/repos/delia-cheminot/mona-hrt/releases/latest'),
+            'https://api.github.com/repos/melinokey/mona-hrt/releases/latest'),
       );
 
       if (response.statusCode == 200) {
