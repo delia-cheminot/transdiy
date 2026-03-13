@@ -1,6 +1,3 @@
-
-
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
@@ -10,7 +7,6 @@ import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:mona/util/decimal_helpers.dart';
 import 'package:provider/provider.dart';
-
 
 class NewBloodTestPage extends StatefulWidget {
   @override
@@ -22,28 +18,26 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
   late TextEditingController _testosteroneLevelsController;
   late DateTime _testDate;
 
-  String? get _testDateError =>
-      BloodTest.validateDate(_testDate);
+  String? get _testDateError => BloodTest.validateDate(_testDate);
+  String? get _estradiolError =>
+      BloodTest.validateLevel(_estradiolLevelsController.text);
+  String? get _testosteroneError =>
+      BloodTest.validateLevel(_testosteroneLevelsController.text);
 
   bool get _isFormValid =>
-      _testDateError == null;
-
-  Decimal? _parseOptionalDecimal(String decimalString) {
-    final decimal = decimalString.trim();
-    if (decimal.isEmpty) return null;
-    return parseDecimal(decimal);
-  }
+      _testDateError == null &&
+      _estradiolError == null &&
+      _testosteroneError == null;
 
   void _refresh() {
     setState(() {});
   }
 
-
   void _addBloodTest() {
     final estradiolLevels =
-        _parseOptionalDecimal(_estradiolLevelsController.text);
+        parseOptionalDecimal(_estradiolLevelsController.text);
     final testosteroneLevels =
-        _parseOptionalDecimal(_testosteroneLevelsController.text);
+        parseOptionalDecimal(_testosteroneLevelsController.text);
     final bloodTestProvider =
         Provider.of<BloodTestProvider>(context, listen: false);
 
@@ -72,7 +66,6 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ModelForm(
@@ -87,14 +80,17 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
+          errorText: _estradiolError,
+          suffixText: 'pg/ml',
         ),
-        FormSpacer(),
         FormTextField(
           controller: _testosteroneLevelsController,
           label: 'Testosterone levels',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
+          errorText: _testDateError,
+          suffixText: 'ng/ml', // TODO check si units
         ),
         FormSpacer(),
         FormDateField(
@@ -103,7 +99,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           errorText: _testDateError,
           onChanged: (date) => setState(() {
             _testDate = date;
-          }),
+          }), // TODO create a method onDateChanged
         ),
       ],
     );
