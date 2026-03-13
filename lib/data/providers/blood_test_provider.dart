@@ -13,8 +13,8 @@ class BloodTestProvider extends ChangeNotifier {
       : repository = repository ?? _bloodTestRepository {
     _init();
   }
-  bool get isLoading => _isLoading;
 
+  bool get isLoading => _isLoading;
   List<BloodTest> get bloodtests => _bloodtests;
   List<BloodTest> get bloodtestsSortedDesc => _bloodtestsSortedDesc;
 
@@ -27,6 +27,7 @@ class BloodTestProvider extends ChangeNotifier {
 
   Future<void> fetchBloodTests() async {
     _bloodtests = await repository.getAll();
+    _updateSorted();
     notifyListeners();
   }
 
@@ -36,12 +37,12 @@ class BloodTestProvider extends ChangeNotifier {
   }
 
   void _updateSorted() {
-    _bloodtestsSortedDesc = _bloodtests
+    _bloodtestsSortedDesc = List<BloodTest>.from(_bloodtests)
       ..sort((a, b) => b.date.compareTo(a.date));
   }
 
-  Future<void> deleteBloodTest(BloodTest intake) async {
-    await repository.delete(intake.id);
+  Future<void> deleteBloodTest(BloodTest bloodTest) async {
+    await repository.delete(bloodTest.id);
     await fetchBloodTests();
   }
 
