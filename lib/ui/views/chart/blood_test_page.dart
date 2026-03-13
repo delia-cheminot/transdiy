@@ -16,10 +16,7 @@ class BloodTestPage extends StatelessWidget {
     List<BloodTest> bloodtests = bloodTestProvider.bloodtests;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Blood Tests'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Blood Tests')),
       body: Consumer<BloodTestProvider>(
           builder: (context, bloodTestProvider, child) {
         return MainPageWrapper(
@@ -29,9 +26,8 @@ class BloodTestPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: bloodtests.length,
               itemBuilder: (context, index) {
-                BloodTest intake =
-                    bloodTestProvider.bloodtestsSortedDesc[index];
-                return _buildBloodTestTile(context, intake, bloodTestProvider);
+                BloodTest test = bloodTestProvider.bloodtestsSortedDesc[index];
+                return _buildBloodTestTile(context, test, bloodTestProvider);
               },
             ));
       }),
