@@ -20,7 +20,7 @@ This project is developed in Flutter, granting Android and iOS releases.
 
 ## Download for Android
 
-https://github.com/delia-cheminot/transdiy/releases/latest
+https://github.com/delia-cheminot/mona-hrt/releases/tag/v1.1.0
 
 ## Download for iOS
 
@@ -45,4 +45,3 @@ https://testflight.apple.com/join/ersXvycy
 
 ![Flutter Badge](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff&style=for-the-badge)
 ![Inkscape Badge](https://img.shields.io/badge/Inkscape-000?logo=inkscape&logoColor=fff&style=for-the-badge)
-
