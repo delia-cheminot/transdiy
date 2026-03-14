@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
@@ -15,7 +16,14 @@ class EditSchedulePage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final currentSchedule = medicationScheduleProvider.schedules
-        .firstWhere((s) => s.id == schedule.id);
+        .firstWhereOrNull((s) => s.id == schedule.id);
+
+    if (currentSchedule == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (Navigator.canPop(context)) Navigator.pop(context);
+      });
+      return SizedBox.shrink();
+    }
 
     return Scaffold(
       appBar: AppBar(
