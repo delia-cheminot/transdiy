@@ -49,7 +49,8 @@ class BloodTestPage extends StatelessWidget {
     final dateText = DateFormat.yMMMd().format(bloodtest.date);
     return ListTile(
       title: Text(dateText),
-      subtitle: Text('$bloodtest'),
+      subtitle: Text(
+          'Estradiol : ${bloodtest.estradiolLevels} pg/mL, Testosterone : ${bloodtest.testosteroneLevels} ng/dL'),
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute<void>(
           fullscreenDialog: true,

@@ -87,8 +87,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   @override
   Widget build(BuildContext context) {
     return ModelForm(
-      title: 'New blood test',
-      submitButtonLabel: 'Add',
+      title: 'Edit blood test',
+      submitButtonLabel: 'Save',
       isFormValid: _isFormValid,
       saveChanges: _saveBloodTest,
       onDelete: _confirmDelete,

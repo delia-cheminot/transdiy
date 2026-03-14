@@ -90,7 +90,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
           errorText: _testDateError,
-          suffixText: 'ng/ml', // TODO check si units
+          suffixText: 'ng/dL', // TODO check si units
         ),
         FormSpacer(),
         FormDateField(
