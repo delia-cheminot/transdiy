@@ -109,6 +109,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       molecule: _molecule!,
       administrationRoute: _administrationRoute!,
       ester: _ester,
+      notificationTimes: List.empty(),
     );
     medicationScheduleProvider.add(schedule);
 

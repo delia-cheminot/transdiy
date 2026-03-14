@@ -137,6 +137,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
+            notificationTimes: List.empty(),
           )
         ]);
         when(mockPlugin.zonedSchedule(
@@ -192,6 +193,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
+            notificationTimes: List.empty(),
           )
         ]);
         when(mockPreferencesService.notificationTime)
@@ -249,6 +251,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
+            notificationTimes: List.empty(),
           )
         ]);
         when(mockPreferencesService.notificationTime)
@@ -305,6 +308,7 @@ void main() {
             startDate: DateTime.now().add(const Duration(days: 1)),
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
+            notificationTimes: List.empty(),
           )
         ]);
         when(mockPreferencesService.notificationTime)
