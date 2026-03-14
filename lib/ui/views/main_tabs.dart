@@ -39,7 +39,7 @@ final List<MainTabConfig> mainTabs = [
     selectedIcon: Icons.trending_up_rounded,
     buildActions: (context) => [
       IconButton(
-        icon: const Icon(Icons.settings),
+        icon: const Icon(Icons.bloodtype_outlined),
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => BloodTestPage()),
