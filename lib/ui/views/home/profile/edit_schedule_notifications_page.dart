@@ -18,7 +18,7 @@ class EditScheduleNotificationsPage extends StatefulWidget {
 
 class _EditScheduleNotificationsPageState
     extends State<EditScheduleNotificationsPage> {
-  List<TimeOfDay> notificationTimes = [];
+  late List<TimeOfDay> _notificationTimes;
   late MedicationScheduleProvider _medicationScheduleProvider;
 
   Future<void> _pickTime() async {
@@ -29,7 +29,7 @@ class _EditScheduleNotificationsPageState
 
     if (picked != null) {
       setState(() {
-        notificationTimes.add(picked);
+        _notificationTimes.add(picked);
       });
     }
   }
@@ -38,22 +38,23 @@ class _EditScheduleNotificationsPageState
     if (!mounted) return;
 
     final updatedSchedule = widget.schedule.copyWith(
-      notificationTimes: notificationTimes,
+      notificationTimes: _notificationTimes,
     );
 
     if (widget.isNewSchedule) {
       _medicationScheduleProvider.add(updatedSchedule);
+      Navigator.pop(context);
     } else {
       _medicationScheduleProvider.updateSchedule(updatedSchedule);
     }
 
-    Navigator.pop(context);
     Navigator.pop(context);
   }
 
   @override
   void initState() {
     super.initState();
+    _notificationTimes = widget.schedule.notificationTimes.toList();
     _medicationScheduleProvider =
         Provider.of<MedicationScheduleProvider>(context, listen: false);
   }
@@ -93,7 +94,7 @@ class _EditScheduleNotificationsPageState
         child: Icon(Icons.add),
       ),
       resizeToAvoidBottomInset: false,
-      body: notificationTimes.isEmpty
+      body: _notificationTimes.isEmpty
           ? Center(
               child: Padding(
                 padding: pagePadding,
@@ -105,15 +106,15 @@ class _EditScheduleNotificationsPageState
             )
           : SafeArea(
               child: ListView.builder(
-                itemCount: notificationTimes.length,
+                itemCount: _notificationTimes.length,
                 itemBuilder: (context, index) {
-                  final time = notificationTimes[index];
+                  final time = _notificationTimes[index];
                   return ListTile(
                     title: Text(time.format(context)),
                     trailing: Icon(Icons.delete),
                     onTap: () {
                       setState(() {
-                        notificationTimes.removeAt(index);
+                        _notificationTimes.removeAt(index);
                       });
                     },
                   );

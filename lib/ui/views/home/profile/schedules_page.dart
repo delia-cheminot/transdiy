@@ -10,6 +10,8 @@ class SchedulesPage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
 
+    final theme = Theme.of(context);
+
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(
@@ -37,10 +39,17 @@ class SchedulesPage extends StatelessWidget {
                   return ListTile(
                     title: Text(schedule.name),
                     subtitle: Text("$schedule"),
+                    leading: CircleAvatar(
+                      backgroundColor: theme.colorScheme.onPrimaryContainer,
+                      child: Icon(
+                        schedule.administrationRoute.icon,
+                        color: theme.colorScheme.primaryContainer,
+                      ),
+                    ),
+                    trailing: Icon(Icons.chevron_right),
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          fullscreenDialog: true,
                           builder: (context) =>
                               EditSchedulePage(schedule: schedule),
                         ),
