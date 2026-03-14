@@ -3,8 +3,8 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:mona/ui/views/home/profile/edit_schedule_notifications_page.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -98,8 +98,6 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final name = _nameController.text;
     final dose = parseDecimal(_doseController.text);
     final intervalDays = int.parse(_intervalDaysController.text);
-    final medicationScheduleProvider =
-        Provider.of<MedicationScheduleProvider>(context, listen: false);
 
     final schedule = MedicationSchedule(
       name: name,
@@ -111,9 +109,18 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
       ester: _ester,
       notificationTimes: List.empty(),
     );
-    medicationScheduleProvider.add(schedule);
 
-    Navigator.pop(context);
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditScheduleNotificationsPage(
+          schedule: schedule,
+          isNewSchedule: true,
+        ),
+      ),
+    );
   }
 
   @override
@@ -139,7 +146,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   Widget build(BuildContext context) {
     return ModelForm(
       title: 'New schedule',
-      submitButtonLabel: 'Add',
+      submitButtonLabel: 'Next',
       isFormValid: _isFormValid,
       saveChanges: _addSchedule,
       fields: <Widget>[
