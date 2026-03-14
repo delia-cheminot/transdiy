@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/ui/views/home/profile/edit_schedule_main_info.dart';
-import 'package:mona/ui/views/home/profile/edit_schedule_notifications_page.dart';
+import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_main_info.dart';
+import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_notifications_page.dart';
 import 'package:provider/provider.dart';
 
 class EditSchedulePage extends StatelessWidget {
