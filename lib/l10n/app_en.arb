@@ -1,0 +1,42 @@
+{
+  "appTitle": "Mona",
+  "profileTitle": "Settings",
+  "intakesTitle": "Intakes",
+  "levelsTitle": "Levels",
+  "suppliesTitle": "Supplies",
+
+  "empty_home": "Start by adding a schedule in Settings",
+  "empty_intakes": "Taken instakes will appear here",
+  "empty_levels": "Estradiol injections will display in this tab",
+  "empty_supplies": "No supplies. Add an item to get started.",
+
+  "nav_home": "Mona",
+  "nav_intakes": "Intakes",
+  "nav_levels": "Levels",
+  "nav_supplies": "Supplies",
+
+  "schedules": "Schedules",
+  "noSchedules": "No schedules",
+  "schedulesCount": "{count} created",
+  "notifications": "Notifications",
+  "notificationsEnabled": "Enabled at {time}",
+  "notificationsDisabled": "Disabled",
+  "language": "Language",
+  "selectLanguage": "Select Language",
+
+  "newItem": "New item",
+  "name": "Name",
+  "molecule": "Molecule",
+  "adminRoute": "Administration route",
+  "totalAmount": "Total amount",
+  "concentration": "Concentration",
+
+  "injection": "Injection",
+  "oral": "Oral",
+  "sublingual": "Sublingual",
+  "patch": "Patch",
+  "gel": "Gel",
+  "implant": "Implant",
+  "suppository": "Suppository",
+  "transdermal": "Transdermal spray"
+}

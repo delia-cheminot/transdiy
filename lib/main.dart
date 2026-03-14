@@ -11,6 +11,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -34,6 +35,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MedicationIntakeProvider()),
         ChangeNotifierProvider(create: (_) => MedicationScheduleProvider()),
         ChangeNotifierProvider.value(value: preferencesService),
+        ChangeNotifierProvider(
+            create: (_) => LocaleProvider(preferencesService)),
       ],
       child: const MonaApp(),
     ),

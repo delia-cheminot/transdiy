@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
+import 'package:mona/ui/views/home/settings/language_page.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -83,6 +85,7 @@ class _SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final localeProvider = context.watch<LocaleProvider>();
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
@@ -106,6 +109,18 @@ class _SettingsPageState extends State<SettingsPage>
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (context) => SchedulesPage(),
               ));
+            },
+          ),
+          ListTile(
+            title: Text('Language'),
+            subtitle: Text(localeProvider.locale.languageCode == 'en'
+                ? 'English'
+                : 'Français'),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (context) => LanguagePage()),
+              );
             },
           ),
           SwitchListTile(

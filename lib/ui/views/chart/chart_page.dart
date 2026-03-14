@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/views/chart/chart_graph.dart';
 import 'package:mona/ui/views/chart/chart_slider.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -15,12 +16,13 @@ class _ChartPageState extends State<ChartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Consumer<MedicationIntakeProvider>(
         builder: (context, medicationIntakeProvider, child) {
       return MainPageWrapper(
         isLoading: medicationIntakeProvider.isLoading,
         isEmpty: medicationIntakeProvider.graphIntakes.isEmpty,
-        emptyMessage: 'Estradiol injections will display in this tab',
+        emptyMessage: localizations.empty_levels,
         child: Column(
           children: [
             ChartSlider(

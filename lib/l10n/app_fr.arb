@@ -1,0 +1,42 @@
+{
+  "appTitle": "Mona",
+  "profileTitle": "Paramètres",
+  "intakesTitle": "Prises",
+  "levelsTitle": "Niveaux",
+  "suppliesTitle": "Fournitures",
+
+  "empty_home": "Commencez par ajouter un planning dans les paramètres",
+  "empty_intakes": "Les prises enregistrées apparaîtront ici",
+  "empty_levels": "Les injections d’estradiol s’afficheront dans cet onglet",
+  "empty_supplies": "Aucune fourniture. Ajoutez un élément pour commencer.",
+
+  "nav_home": "Mona",
+  "nav_intakes": "Prises",
+  "nav_levels": "Niveaux",
+  "nav_supplies": "Fournitures",
+
+  "schedules": "Plannings",
+  "noSchedules": "Aucun planning",
+  "schedulesCount": "{count} créés",
+  "notifications": "Notifications",
+  "notificationsEnabled": "Activées à {time}",
+  "notificationsDisabled": "Désactivées",
+  "language": "Langue",
+  "selectLanguage": "Sélectionner la langue",
+
+  "newItem": "Nouvel élément",
+  "name": "Nom",
+  "molecule": "Molécule",
+  "adminRoute": "Voie d'administration",
+  "totalAmount": "Quantité totale",
+  "concentration": "Concentration",
+
+  "injection": "Injection",
+  "oral": "Oral",
+  "sublingual": "Sublingual",
+  "patch": "Patch",
+  "gel": "Gel",
+  "implant": "Implant",
+  "suppository": "Suppositoire",
+  "transdermal": "Spray transdermique"
+}
