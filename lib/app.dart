@@ -1,7 +1,10 @@
 import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
+import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 import 'ui/views/main_page.dart';
@@ -17,6 +20,7 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
   String? _lastTimeZone;
   late MedicationScheduleProvider _medicationScheduleProvider;
   late PreferencesService _preferencesService;
+  late LocaleProvider _localeProvider;
 
   ColorScheme _getLightColorScheme(ColorScheme? lightDynamic) {
     return lightDynamic ?? ColorScheme.fromSeed(seedColor: Colors.deepPurple);
@@ -42,6 +46,10 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
       _medicationScheduleProvider.addListener(_regenerateNotifications);
       _preferencesService.addListener(_regenerateNotifications);
       _regenerateNotifications();
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _localeProvider = context.read<LocaleProvider>();
     });
   }
 
@@ -81,7 +89,15 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
         final darkColorScheme = _getDarkColorScheme(darkDynamic);
 
         return MaterialApp(
-          title: 'Mona',
+          title: AppLocalizations.of(context)?.appTitle ?? 'Mona',
+          locale: context.watch<LocaleProvider>().locale,
+          supportedLocales: context.watch<LocaleProvider>().supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,
