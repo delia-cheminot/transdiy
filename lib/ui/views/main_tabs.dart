@@ -36,7 +36,6 @@ final List<MainTabConfig> mainTabs = [
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            fullscreenDialog: true,
             builder: (context) => ChooseSchedulePage(),
           ),
         );

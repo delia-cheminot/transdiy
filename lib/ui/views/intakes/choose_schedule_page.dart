@@ -7,36 +7,35 @@ import 'package:mona/util/date_helpers.dart';
 import 'package:provider/provider.dart';
 
 class ChooseSchedulePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    final MedicationScheduleProvider medicationScheduleProvider = context.read<MedicationScheduleProvider>();
+    final MedicationScheduleProvider medicationScheduleProvider =
+        context.read<MedicationScheduleProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose schedule'),
+        title: const Text('Choose a schedule'),
       ),
-      body:
-      SafeArea(
-        child: medicationScheduleProvider.schedules.isEmpty ? Center(
-          child: Text('Add schedules first.'),
-        ) : ListView.builder(
-          padding: pagePadding,
-          itemCount: medicationScheduleProvider.schedules.length,
-          itemBuilder: (context, index) {
-            return ChooseScheduleTile(schedule: medicationScheduleProvider.schedules[index]);
-          },
-        ),
+      body: SafeArea(
+        child: medicationScheduleProvider.schedules.isEmpty
+            ? Center(
+                child: Text('Add schedules first.'),
+              )
+            : ListView.builder(
+                padding: pagePadding,
+                itemCount: medicationScheduleProvider.schedules.length,
+                itemBuilder: (context, index) {
+                  return ChooseScheduleTile(
+                      schedule: medicationScheduleProvider.schedules[index]);
+                },
+              ),
       ),
     );
   }
 }
 
 class ChooseScheduleTile extends StatelessWidget {
-  const ChooseScheduleTile({
-    super.key,
-    required this.schedule
-  });
+  const ChooseScheduleTile({super.key, required this.schedule});
 
   final MedicationSchedule schedule;
 
@@ -44,7 +43,7 @@ class ChooseScheduleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    String subtitle =  "${schedule.dose} mg • ${schedule.molecule.name} "
+    String subtitle = "${schedule.dose} mg • ${schedule.molecule.name} "
         "${schedule.ester != null ? "${schedule.ester!.name} " : ""}"
         "${schedule.administrationRoute.name}";
 
@@ -61,9 +60,9 @@ class ChooseScheduleTile extends StatelessWidget {
           );
         },
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8.0),
-          leading:
-          CircleAvatar(
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: horizontalPadding, vertical: 8.0),
+          leading: CircleAvatar(
             backgroundColor: theme.colorScheme.primary,
             child: Icon(
               schedule.administrationRoute.icon,
