@@ -1,37 +1,40 @@
-# Mona
-Your hormonal memo
+![Mona](/assets/readme/mona_banner.png)
+Track your hormones. Manage your meds. All private, open, and free.
 
-Mona is a mobile transfeminine healthcare journal. Know when to take your HRT, track your medication supplies and preview your hormone levels.
+Take control of your hormonal health with Mona, the fully local, open-source app designed to help you track, understand, and manage your hormone journey.
 
-The app is currently under development at the Alpha stage. Any contribution is welcome!
+## Why Mona is different:
+- Completely private: All your data stays on your device. Nothing is sent to servers.
+- Open source: The app is fully open source, allowing maximum transparency and contributions from the community.
+- Free for life: No subscriptions, no premium features. Mona is free for everyone.
 
-This project is developed in Flutter, granting Android and iOS releases.
+## Medication reminders:
+- Add your medication regimens
+- Get detailed info for each upcoming dose (quantity, date, side, missed doses)
+- Receive notifications so you never miss a dose
 
-![Homepage](/assets/readme/homepage.png)
-![Homepage](/assets/readme/supplies_page.png)
+## Manage your medication stock efficiently:
+- Keep track of each medication in stock
+- Quantities are automatically updated with each intake
 
-## Features
-
-- Know when to take HRT
-- Manage HRT schedules
-- Preview estimated hormone levels
+## Hormone levels graph: 
+- For users on estradiol monotherapy, visualize simulated hormone levels over time
 
 
 
 ## Download for Android
+https://github.com/delia-cheminot/mona-hrt/releases/latest
 
-https://github.com/delia-cheminot/transdiy/releases/latest
+## Download for iOS on App Store
+https://apps.apple.com/app/mona-hrt-journal/id6757274628
 
-## Download for iOS
+## Contribute
+This project is developed in Flutter, granting Android and iOS releases.
 
-https://testflight.apple.com/join/ersXvycy
-    
-## Discord
-
-### Join Mona's Discord server
+## Join Mona's Discord server
 [![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/qsHzkX89vJ)
 
-### Support us
+## Support us
  [![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](https://ko-fi.com/deliacheminot)
 
 ## Maintainers
