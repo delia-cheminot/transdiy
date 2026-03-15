@@ -1,5 +1,5 @@
 name: mona
-description: "by délia"
+description: "Your hormonal journal"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -41,18 +41,18 @@ dependencies:
   graph_calculator: ^0.0.4
   fl_chart: ^1.1.1
   flutter_staggered_grid_view: ^0.7.0
-  dynamic_system_colors: ^1.8.0
+  dynamic_system_colors:
+    git:
+      url: https://github.com/hasali19/flutter_dynamic_system_colors.git
+      ref: 3b61760d5e0ac1229eefde5b61247947eede4110
   intl: ^0.20.2
-  flutter_local_notifications: ^20.1.0
-  timezone: ^0.10.1
+  flutter_local_notifications: ^21.0.0
+  timezone: ^0.11.0
   flutter_timezone: ^5.0.1
   shared_preferences: ^2.5.4
   material_symbols_icons: ^4.2906.0
   flutter_launcher_icons: ^0.14.4
   permission_handler: ^12.0.1
-
-dependency_overrides:
-  material_color_utilities: ^0.13.0
 
 dev_dependencies:
   flutter_test:
@@ -87,7 +87,7 @@ flutter:
     - assets/
     - assets/pharmacie/fioles/
     - assets/pharmacie/tablets/
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
