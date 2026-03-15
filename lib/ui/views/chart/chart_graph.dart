@@ -29,30 +29,30 @@ class MainGraph extends StatelessWidget {
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
+
+    if (daysAndIntakes.isEmpty) return SizedBox.shrink();
+
+    final List<FlSpot> spots =
+        GraphCalculator().generateFlSpots(daysAndIntakes);
+
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
-    final int daysSinceStart = DateTime.now().difference(firstDay).inDays;
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
             .difference(firstDay)
             .inDays +
         1;
+    final double daysSinceStart =
+        DateTime.now().difference(firstDay).inSeconds / 86400.0;
 
-    final List<FlSpot> spots =
-        GraphCalculator().generateFlSpots(daysAndIntakes);
-    final FlSpot? todaySpot =
-        (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset)
-            ? spots.reduce(
-                (a, b) =>
-                    (a.x - daysSinceStart).abs() < (b.x - daysSinceStart).abs()
-                        ? a
-                        : b,
-              )
-            : null;
+    FlSpot? todaySpot;
+    if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {
+      final todayConcentration = GraphCalculator()
+          .totalConcentrationAtTime(daysSinceStart, daysAndIntakes);
+      todaySpot = FlSpot(daysSinceStart, todayConcentration);
+    }
 
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
-
-    if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -97,13 +97,13 @@ class MainGraph extends StatelessWidget {
   }
 
   ExtraLinesData? _buildTodayVerticalLine(
-      ThemeData theme, FlSpot? todaySpot, int daysSinceStart) {
+      ThemeData theme, FlSpot? todaySpot, double daysSinceStart) {
     if (todaySpot == null) return null;
 
     return ExtraLinesData(
       verticalLines: [
         VerticalLine(
-          x: daysSinceStart.toDouble(),
+          x: daysSinceStart,
           color: theme.colorScheme.tertiary,
           strokeWidth: 2,
           dashArray: [6, 4],
@@ -187,6 +187,6 @@ class MainGraph extends StatelessWidget {
 
   String _getDateLabel(double value, DateTime firstDay) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return "${date.day}/${date.month}";
+    return "  ${date.day}/${date.month}  ";
   }
 }
