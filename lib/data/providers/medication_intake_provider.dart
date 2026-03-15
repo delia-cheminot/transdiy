@@ -4,6 +4,7 @@ import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
+import 'package:mona/util/date_helpers.dart';
 
 class GraphIntake {
   final double dose;
@@ -85,11 +86,11 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Map<int, GraphIntake> getDaysAndIntakes() {
     if (graphIntakes.isEmpty) return {};
-    final startDate = getFirstIntakeDate()!;
+    final startDate = normalizeDate(getFirstIntakeDate()!);
     return Map.fromEntries(
       graphIntakes.map(
         (intake) => MapEntry(
-          intake.takenDateTime!.difference(startDate).inDays,
+          normalizeDate(intake.takenDateTime!).difference(startDate).inDays,
           GraphIntake(intake.dose.toDouble(), intake.ester!),
         ),
       ),
