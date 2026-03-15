@@ -47,16 +47,18 @@ class UpdateService {
     try {
       final packageInfo = await PackageInfo.fromPlatform();
       final currentVersion = packageInfo.version;
+      final current = Version.parse(currentVersion);
 
       final data = await _fetchLatestRelease();
 
       if (data != null) {
         final latestVersion = data['tag_name'].toString().replaceAll('v', '');
+        final latest = Version.parse(latestVersion);
         final assets = data['assets'] as List;
 
         if (!context.mounted) return;
 
-        if (currentVersion != latestVersion) {
+        if (latest > current) {
           final bestAsset = await _getBestAssetForDevice(assets);
 
           if (!context.mounted) return;
