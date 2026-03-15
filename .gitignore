@@ -49,3 +49,5 @@ app.*.map.json
 .fvm/flutter_sdk
 .fvm/release
 .fvm/version
+
+android/.kotlin/
