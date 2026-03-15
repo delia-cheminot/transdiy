@@ -29,6 +29,12 @@ class MainGraph extends StatelessWidget {
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
+
+    if (daysAndIntakes.isEmpty) return SizedBox.shrink();
+
+    final List<FlSpot> spots =
+        GraphCalculator().generateFlSpots(daysAndIntakes);
+
     final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
@@ -38,17 +44,15 @@ class MainGraph extends StatelessWidget {
     final double daysSinceStart =
         DateTime.now().difference(firstDay).inSeconds / 86400.0;
 
-    final List<FlSpot> spots =
-        GraphCalculator().generateFlSpots(daysAndIntakes);
-
-    final double todayConcentration = GraphCalculator()
-        .totalConcentrationAtTime(daysSinceStart, daysAndIntakes);
-    final FlSpot todaySpot = FlSpot(daysSinceStart, todayConcentration);
+    FlSpot? todaySpot;
+    if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {
+      final todayConcentration = GraphCalculator()
+          .totalConcentrationAtTime(daysSinceStart, daysAndIntakes);
+      todaySpot = FlSpot(daysSinceStart, todayConcentration);
+    }
 
     final double maxYWithPadding =
         spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
-
-    if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
