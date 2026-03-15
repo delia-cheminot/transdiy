@@ -1,12 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 class UpdateService {
@@ -64,12 +65,12 @@ class UpdateService {
           if (!context.mounted) return;
 
           if (bestAsset != null) {
-            _showUpdateDialog(
-                context, currentVersion, latestVersion, bestAsset);
+            _showUpdateDialog(context, currentVersion, latestVersion, bestAsset);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text('No compatible update found for your device.')),
+                  content: Text('No compatible update found for your device.')
+              ),
             );
           }
         } else {
@@ -83,8 +84,7 @@ class UpdateService {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Could not check for updates right now.')),
+          const SnackBar(content: Text('Could not check for updates right now.')),
         );
       }
     }
@@ -113,8 +113,8 @@ class UpdateService {
     final universalAssets = apkAssets.where((a) {
       final name = a['name'].toString().toLowerCase();
       return !name.contains('arm64') &&
-          !name.contains('armeabi') &&
-          !name.contains('x86');
+        !name.contains('armeabi') &&
+        !name.contains('x86');
     }).toList();
 
     if (universalAssets.isNotEmpty) return universalAssets.first;
@@ -129,7 +129,8 @@ class UpdateService {
       builder: (context) => AlertDialog(
         title: const Text('Update Available'),
         content: Text(
-            'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.'),
+            'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.'
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -139,7 +140,8 @@ class UpdateService {
             onPressed: () {
               Navigator.pop(context);
               _downloadAndInstall(
-                  context, asset['browser_download_url'], asset['name']);
+                  context, asset['browser_download_url'], asset['name']
+              );
             },
             child: const Text('Download & Install'),
           ),
@@ -154,7 +156,8 @@ class UpdateService {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Permission is required to install updates.')),
+              content: Text('Permission is required to install updates.')
+          ),
         );
       }
       return;
@@ -162,11 +165,20 @@ class UpdateService {
 
     ValueNotifier<double> progressNotifier = ValueNotifier(0.0);
 
+    bool isCancelled = false;
+    StreamSubscription? subscription;
+    IOSink? sink;
+    final client = http.Client();
+
+    final dir = await getTemporaryDirectory();
+    final savePath = '${dir.path}/$fileName';
+    final file = File(savePath);
+
     if (context.mounted) {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => AlertDialog(
+        builder: (dialogContext) => AlertDialog(
           title: const Text('Downloading Update...'),
           content: ValueListenableBuilder<double>(
             valueListenable: progressNotifier,
@@ -181,15 +193,29 @@ class UpdateService {
               );
             },
           ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                isCancelled = true;
+
+                await subscription?.cancel();
+                client.close();
+
+                await sink?.close();
+                if (file.existsSync()) {
+                  await file.delete();
+                }
+
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext, rootNavigator: true).pop();
+                }
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
         ),
       );
     }
-
-    final dir = await getTemporaryDirectory();
-    final savePath = '${dir.path}/$fileName';
-    final client = http.Client();
-    final file = File(savePath);
-    final sink = file.openWrite();
 
     try {
       final request = http.Request('GET', Uri.parse(url));
@@ -198,51 +224,71 @@ class UpdateService {
       final contentLength = response.contentLength ?? 1;
       int downloadedLength = 0;
 
-      final subscription = response.stream.listen(
+      sink = file.openWrite();
+
+      Future<void> handleDone() async {
+        if (isCancelled) return;
+
+        await sink?.flush();
+        await sink?.close();
+        client.close();
+
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
+
+        final result = await OpenFilex.open(savePath);
+        if (result.type != ResultType.done && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('Failed to open installer: ${result.message}')
+            ),
+          );
+        }
+      }
+
+      Future<void> handleError(dynamic error) async {
+        if (isCancelled) return;
+
+        await sink?.close();
+        client.close();
+
+        if (context.mounted) {
+          Navigator.of(context, rootNavigator: true).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('Download failed. Please try again later.')
+            ),
+          );
+        }
+      }
+
+      subscription = response.stream.listen(
         (chunk) {
-          sink.add(chunk);
+          if (isCancelled) return;
+
+          sink!.add(chunk);
           downloadedLength += chunk.length;
-          progressNotifier.value = downloadedLength / contentLength;
-        },
-        onDone: () async {
-          await sink.close();
 
-          if (context.mounted) {
-            Navigator.pop(context);
-          }
-
-          final result = await OpenFilex.open(savePath);
-          if (result.type != ResultType.done && context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content: Text('Failed to open installer: ${result.message}')),
-            );
-          }
+          double progress = downloadedLength / contentLength;
+          progressNotifier.value = progress.clamp(0.0, 1.0);
         },
-        onError: (e) async {
-          await sink.close();
-
-          if (context.mounted) {
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content: Text('Download failed. Please try again later.')),
-            );
-          }
-        },
+        onDone: handleDone,
+        onError: handleError,
         cancelOnError: true,
       );
 
       await subscription.asFuture();
+
     } catch (e) {
-      if (context.mounted && Navigator.canPop(context)) {
-        Navigator.pop(context);
+      if (!isCancelled && context.mounted) {
+        Navigator.of(context, rootNavigator: true).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not start download.')),
+          const SnackBar(
+              content: Text('Could not start download. Please check your connection.')
+          ),
         );
       }
-    } finally {
-      client.close();
     }
   }
 }
