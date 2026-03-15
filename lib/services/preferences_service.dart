@@ -8,10 +8,12 @@ class PreferencesService extends ChangeNotifier {
   static const _notificationMinuteKey = 'notification_minute';
   static const _notificationsEnabledKey = 'notifications_enabled';
   static const _customMoleculesKey = 'custom_molecules';
+  static const _languageCodeKey = 'language_code';
 
   static const int defaultHour = 18;
   static const int defaultMinute = 0;
   static const bool defaultNotificationsEnabled = false;
+  static const String defaultLanguageCode = 'en';
 
   late final SharedPreferences _prefs;
 
@@ -25,6 +27,9 @@ class PreferencesService extends ChangeNotifier {
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
+  String get languageCode =>
+      _prefs.getString(_languageCodeKey) ?? defaultLanguageCode;
+
   Future<void> setNotificationTime(TimeOfDay time) async {
     await _prefs.setInt(_notificationHourKey, time.hour);
     await _prefs.setInt(_notificationMinuteKey, time.minute);
@@ -33,6 +38,11 @@ class PreferencesService extends ChangeNotifier {
 
   Future<void> setNotificationsEnabled(bool isEnabled) async {
     await _prefs.setBool(_notificationsEnabledKey, isEnabled);
+    notifyListeners();
+  }
+
+  Future<void> setLanguageCode(String code) async {
+    await _prefs.setString(_languageCodeKey, code);
     notifyListeners();
   }
 

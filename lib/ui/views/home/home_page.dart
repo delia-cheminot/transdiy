@@ -4,6 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -15,12 +16,13 @@ class HomePage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final localizations = AppLocalizations.of(context)!;
 
     return MainPageWrapper(
       isLoading: (medicationScheduleProvider.isLoading ||
           medicationIntakeProvider.isLoading),
       isEmpty: medicationScheduleProvider.schedules.isEmpty,
-      emptyMessage: 'Start by adding a schedule in Settings',
+      emptyMessage: localizations.empty_home,
       child: SingleChildScrollView(
         child: Padding(
           padding: pagePadding,
