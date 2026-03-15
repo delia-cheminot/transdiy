@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Check for Updates'),
-              subtitle: const Text('Check for the latest version manually\n(This will connect you to Internet, but no data will be sent)'),
+              subtitle: const Text('Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'),
               trailing: const Icon(Icons.system_update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),

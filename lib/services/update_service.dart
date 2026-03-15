@@ -7,67 +7,77 @@ import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:mona/services/preferences_service.dart';
-import 'package:provider/provider.dart';
 
 class UpdateService {
-  Future<void> checkForUpdates(BuildContext context, {bool isAutoCheck = false}) async {
-    if (!Platform.isAndroid) return;
+  static const String _releaseUrl = 'https://api.github.com/repos/delia-cheminot/mona-hrt/releases/latest';
 
-    final prefs = context.read<PreferencesService>();
-    if (isAutoCheck && !prefs.autoCheckUpdatesEnabled) return;
-
-    try {
-      final packageInfo = await PackageInfo.fromPlatform();
-      final currentVersion = packageInfo.version;
-
-      final response = await http.get(
-        Uri.parse('https://api.github.com/repos/delia-cheminot/mona-hrt/releases/latest'),
-      );
-
+    Future<Map<String, dynamic>?> _fetchLatestRelease() async {
+      final response = await http.get(Uri.parse(_releaseUrl));
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final latestVersion = data['tag_name'].toString().replaceAll('v', '');
-        final assets = data['assets'] as List;
+        return jsonDecode(response.body);
+      }
+      return null;
+    }
 
-        if (!context.mounted) return;
+    Future<bool> isUpdateAvailable() async {
+      if (!Platform.isAndroid) return false;
+      try {
+        final packageInfo = await PackageInfo.fromPlatform();
+        final data = await _fetchLatestRelease();
 
-        if (currentVersion != latestVersion) {
-          final bestAsset = await _getBestAssetForDevice(assets);
+        if (data != null) {
+          final latestVersion = data['tag_name'].toString().replaceAll('v', '');
+          return packageInfo.version != latestVersion;
+        }
+      } catch (e) {
+        // Silently fail for background checks
+      }
+      return false;
+    }
+
+    Future<void> checkForUpdates(BuildContext context) async {
+      if (!Platform.isAndroid) return;
+
+      try {
+        final packageInfo = await PackageInfo.fromPlatform();
+        final currentVersion = packageInfo.version;
+
+        final data = await _fetchLatestRelease();
+
+        if (data != null) {
+          final latestVersion = data['tag_name'].toString().replaceAll('v', '');
+          final assets = data['assets'] as List;
 
           if (!context.mounted) return;
 
-          if (bestAsset != null) {
-            if (isAutoCheck) {
-              _downloadAndInstall(context, bestAsset['browser_download_url'], bestAsset['name']);
-            } else {
+          if (currentVersion != latestVersion) {
+            final bestAsset = await _getBestAssetForDevice(assets);
+
+            if (!context.mounted) return;
+
+            if (bestAsset != null) {
               _showUpdateDialog(context, currentVersion, latestVersion, bestAsset);
-            }
-          } else {
-            if (!isAutoCheck) {
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('No compatible update found for your device.')),
               );
             }
-          }
-        } else {
-          if (!isAutoCheck) {
+          } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Your app is up to date!')),
             );
           }
+        } else {
+          throw Exception('Failed to fetch latest release');
         }
-      } else if (!isAutoCheck) {
-        throw Exception('Failed to fetch latest release');
-      }
-    } catch (e) {
-      if (!isAutoCheck && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not check for updates right now.')),
-        );
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not check for updates right now.')),
+          );
+        }
       }
     }
-  }
 
   Future<Map<String, dynamic>?> _getBestAssetForDevice(List assets) async {
     final apkAssets = assets.where((a) => a['name'].toString().endsWith('.apk')).toList();
