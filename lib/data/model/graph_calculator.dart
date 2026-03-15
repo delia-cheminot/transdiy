@@ -102,4 +102,11 @@ class GraphCalculator {
 
     return points.map((p) => FlSpot(p.x.toDouble(), p.y.toDouble())).toList();
   }
+
+  List<FlSpot> generateFlSpotsForBloodTests(Map<int, double> daysAndLevels) {
+    if (daysAndLevels.isEmpty) return <FlSpot>[];
+    return daysAndLevels.entries
+        .map((e) => FlSpot(e.key.toDouble(), e.value.toDouble()))
+        .toList();
+  }
 }

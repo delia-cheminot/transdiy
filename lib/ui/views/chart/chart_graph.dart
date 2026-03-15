@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/graph_calculator.dart';
+import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,17 +26,25 @@ class MainGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
+    final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
+
+    Map<int, double> daysAndBloodTests =
+        bloodTestProvider.getDaysAndBloodTests(true, firstDay);
 
     if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     final List<FlSpot> spots =
         GraphCalculator().generateFlSpots(daysAndIntakes);
 
-    final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final List<FlSpot> bloodSpots = daysAndBloodTests.entries
+        .map((e) => FlSpot(e.key.toDouble(), e.value))
+        .toList();
+
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
             .difference(firstDay)
@@ -51,8 +60,11 @@ class MainGraph extends StatelessWidget {
       todaySpot = FlSpot(daysSinceStart, todayConcentration);
     }
 
-    final double maxYWithPadding =
-        spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
+    final double maxY = [spots, bloodSpots]
+        .expand((l) => l)
+        .map((s) => s.y)
+        .fold(0.0, math.max);
+    final double maxYWithPadding = maxY * _ChartConstants.maxYPadding;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -83,6 +95,7 @@ class MainGraph extends StatelessWidget {
                   borderData: FlBorderData(show: true),
                   lineBarsData: [
                     _buildLineBarData(spots, theme),
+                    _buildBloodTestData(bloodSpots, theme),
                   ],
                   lineTouchData: _buildLineTouchData(theme),
                   extraLinesData:
@@ -132,6 +145,17 @@ class MainGraph extends StatelessWidget {
     );
   }
 
+  LineChartBarData _buildBloodTestData(
+      List<FlSpot> bloodSpots, ThemeData theme) {
+    return LineChartBarData(
+      spots: bloodSpots,
+      isCurved: false,
+      color: theme.colorScheme.tertiary,
+      barWidth: 0,
+      dotData: FlDotData(show: true),
+    );
+  }
+
   LineTouchData _buildLineTouchData(ThemeData theme) {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
@@ -140,13 +164,19 @@ class MainGraph extends StatelessWidget {
             BorderRadius.circular(_ChartConstants.tooltipRadius),
         tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
         getTooltipItems: (touchedSpots) {
-          return touchedSpots
-              .map((t) => LineTooltipItem(
-                  t.y.toStringAsFixed(1),
-                  theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onTertiaryContainer) ??
-                      const TextStyle()))
-              .toList();
+          return touchedSpots.map((t) {
+            String text;
+            if (t.barIndex == 0) {
+              text = t.y.toStringAsFixed(1);
+            } else {
+              text = 'Estradiol: ${t.y.toStringAsFixed(1)} pg/ml';
+            }
+            return LineTooltipItem(
+                text,
+                theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onTertiaryContainer) ??
+                    const TextStyle());
+          }).toList();
         },
       ),
     );
