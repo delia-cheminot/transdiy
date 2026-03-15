@@ -185,19 +185,18 @@ class UpdateService {
       );
     }
 
-    try {
-      final dir = await getTemporaryDirectory();
-      final savePath = '${dir.path}/$fileName';
+    final dir = await getTemporaryDirectory();
+    final savePath = '${dir.path}/$fileName';
+    final client = http.Client();
+    final file = File(savePath);
+    final sink = file.openWrite();
 
-      final client = http.Client();
+    try {
       final request = http.Request('GET', Uri.parse(url));
       final response = await client.send(request);
 
       final contentLength = response.contentLength ?? 1;
       int downloadedLength = 0;
-
-      final file = File(savePath);
-      final sink = file.openWrite();
 
       final subscription = response.stream.listen(
         (chunk) {
@@ -206,9 +205,7 @@ class UpdateService {
           progressNotifier.value = downloadedLength / contentLength;
         },
         onDone: () async {
-          await sink.flush();
           await sink.close();
-          client.close();
 
           if (context.mounted) {
             Navigator.pop(context);
@@ -224,7 +221,6 @@ class UpdateService {
         },
         onError: (e) async {
           await sink.close();
-          client.close();
 
           if (context.mounted) {
             Navigator.pop(context);
@@ -245,6 +241,8 @@ class UpdateService {
           const SnackBar(content: Text('Could not start download.')),
         );
       }
+    } finally {
+      client.close();
     }
   }
 }
