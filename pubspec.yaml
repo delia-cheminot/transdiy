@@ -57,6 +57,9 @@ dependencies:
   path_provider: ^2.1.4
   open_filex: ^4.5.0
 
+dependency_overrides:
+  material_color_utilities: ^0.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
