@@ -78,7 +78,7 @@ class GraphCalculator {
     return concentration;
   }
 
-  double _totalConcentrationAtTime(
+  double totalConcentrationAtTime(
       double t, Map<int, GraphIntake> daysAndIntakes) {
     if (daysAndIntakes.isEmpty) return 0.0;
     return daysAndIntakes.entries
@@ -96,7 +96,7 @@ class GraphCalculator {
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
-      double concentration = _totalConcentrationAtTime(t, daysAndIntakes);
+      double concentration = totalConcentrationAtTime(t, daysAndIntakes);
       points.add(math.Point(t, concentration));
     }
 
