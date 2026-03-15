@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_filex/open_filex.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -28,7 +29,11 @@ class UpdateService {
 
       if (data != null) {
         final latestVersion = data['tag_name'].toString().replaceAll('v', '');
-        return packageInfo.version != latestVersion;
+
+        final current = Version.parse(packageInfo.version);
+        final latest = Version.parse(latestVersion);
+
+        return latest > current;
       }
     } catch (e) {
       // Silently fail for background checks
@@ -192,32 +197,50 @@ class UpdateService {
       final file = File(savePath);
       final sink = file.openWrite();
 
-      await response.stream.forEach((chunk) {
-        sink.add(chunk);
-        downloadedLength += chunk.length;
-        progressNotifier.value = downloadedLength / contentLength;
-      });
+      final subscription = response.stream.listen(
+        (chunk) {
+          sink.add(chunk);
+          downloadedLength += chunk.length;
+          progressNotifier.value = downloadedLength / contentLength;
+        },
+        onDone: () async {
+          await sink.flush();
+          await sink.close();
+          client.close();
 
-      await sink.close();
-      client.close();
+          if (context.mounted) {
+            Navigator.pop(context);
+          }
 
-      if (context.mounted) {
-        Navigator.pop(context);
-      }
+          final result = await OpenFilex.open(savePath);
+          if (result.type != ResultType.done && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                  content: Text('Failed to open installer: ${result.message}')),
+            );
+          }
+        },
+        onError: (e) async {
+          await sink.close();
+          client.close();
 
-      final result = await OpenFilex.open(savePath);
-      if (result.type != ResultType.done && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Failed to open installer: ${result.message}')),
-        );
-      }
+          if (context.mounted) {
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text('Download failed. Please try again later.')),
+            );
+          }
+        },
+        cancelOnError: true,
+      );
+
+      await subscription.asFuture();
     } catch (e) {
-      if (context.mounted) {
+      if (context.mounted && Navigator.canPop(context)) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Download failed. Please try again later.')),
+          const SnackBar(content: Text('Could not start download.')),
         );
       }
     }
