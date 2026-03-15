@@ -183,6 +183,6 @@ class MainGraph extends StatelessWidget {
 
   String _getDateLabel(double value, DateTime firstDay) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return "${date.day}/${date.month}";
+    return "  ${date.day}/${date.month}  ";
   }
 }
