@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
-import 'package:mona/ui/widgets/update_banner.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
+import 'package:mona/ui/widgets/update_banner.dart';
 import 'package:provider/provider.dart';
 import 'main_tabs.dart';
 

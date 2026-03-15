@@ -59,6 +59,7 @@ dependencies:
   device_info_plus: ^12.3.0
   path_provider: ^2.1.4
   open_filex: ^4.5.0
+  pub_semver: ^2.2.0
 
 dev_dependencies:
   flutter_test:
