@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 class UpdateService {
@@ -65,12 +65,12 @@ class UpdateService {
           if (!context.mounted) return;
 
           if (bestAsset != null) {
-            _showUpdateDialog(context, currentVersion, latestVersion, bestAsset);
+            _showUpdateDialog(
+                context, currentVersion, latestVersion, bestAsset);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content: Text('No compatible update found for your device.')
-              ),
+                  content: Text('No compatible update found for your device.')),
             );
           }
         } else {
@@ -84,7 +84,8 @@ class UpdateService {
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not check for updates right now.')),
+          const SnackBar(
+              content: Text('Could not check for updates right now.')),
         );
       }
     }
@@ -113,8 +114,8 @@ class UpdateService {
     final universalAssets = apkAssets.where((a) {
       final name = a['name'].toString().toLowerCase();
       return !name.contains('arm64') &&
-        !name.contains('armeabi') &&
-        !name.contains('x86');
+          !name.contains('armeabi') &&
+          !name.contains('x86');
     }).toList();
 
     if (universalAssets.isNotEmpty) return universalAssets.first;
@@ -129,8 +130,7 @@ class UpdateService {
       builder: (context) => AlertDialog(
         title: const Text('Update Available'),
         content: Text(
-            'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.'
-        ),
+            'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -140,8 +140,7 @@ class UpdateService {
             onPressed: () {
               Navigator.pop(context);
               _downloadAndInstall(
-                  context, asset['browser_download_url'], asset['name']
-              );
+                  context, asset['browser_download_url'], asset['name']);
             },
             child: const Text('Download & Install'),
           ),
@@ -156,8 +155,7 @@ class UpdateService {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Permission is required to install updates.')
-          ),
+              content: Text('Permission is required to install updates.')),
         );
       }
       return;
@@ -248,19 +246,16 @@ class UpdateService {
         if (result.type != ResultType.done && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: Text('Failed to open installer: ${result.message}')
-            ),
+                content: Text('Failed to open installer: ${result.message}')),
           );
         }
       }
-
     } catch (e) {
       if (!isCancelled && context.mounted) {
         Navigator.of(context, rootNavigator: true).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Download failed. Please check your connection.')
-          ),
+              content: Text('Download failed. Please check your connection.')),
         );
       }
     } finally {
