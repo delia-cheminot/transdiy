@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/services/repository.dart';
+import 'package:mona/util/date_helpers.dart';
 
 class BloodTestProvider extends ChangeNotifier {
   List<BloodTest> _bloodtests = [];
@@ -54,6 +56,27 @@ class BloodTestProvider extends ChangeNotifier {
   Future<void> updateBloodTest(BloodTest bloodtest) async {
     await repository.update(bloodtest, bloodtest.id);
     await fetchBloodTests();
+  }
+
+  Map<int, double> getDaysAndBloodTests(bool isEstradiol, DateTime firstDay) {
+    if (bloodtests.isEmpty) return {};
+
+    final startDate = normalizeDate(firstDay);
+
+    return Map.fromEntries(
+      bloodtests
+          .where((bloodtest) => isEstradiol
+              ? bloodtest.estradiolLevels != null
+              : bloodtest.testosteroneLevels != null)
+          .map(
+            (bloodtest) => MapEntry(
+              normalizeDate(bloodtest.date).difference(startDate).inDays,
+              isEstradiol
+                  ? bloodtest.estradiolLevels!.toDouble()
+                  : bloodtest.testosteroneLevels!.toDouble(),
+            ),
+          ),
+    );
   }
 
   static final _bloodTestRepository = Repository<BloodTest>(
