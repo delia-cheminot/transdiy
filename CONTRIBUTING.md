@@ -1,6 +1,6 @@
 # Contributing to Mona
 
-First off, thank you for considering contributing to Mona! The app is currently in Alpha, and we welcome all forms of contributions—whether it's fixing bugs, adding new features, improving documentation, or reporting issues.
+First off, thank you for considering contributing to Mona! The app is currently in Beta, and we welcome all forms of contributions—whether it's fixing bugs, adding new features, improving documentation, or reporting issues.
 
 This document outlines the process and guidelines for contributing to this project.
 

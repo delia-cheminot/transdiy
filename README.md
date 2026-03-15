@@ -41,7 +41,7 @@ Take control of your hormonal health with Mona, the fully local, open-source app
 Mona is available for both Android and iOS. 
 
 - **Android:** [Download the latest APK](https://github.com/delia-cheminot/mona-hrt/releases/tag/latest)
-- **iOS:** [Join the TestFlight Beta](https://testflight.apple.com/join/ersXvycy)
+- **iOS:** [Join the TestFlight Beta](https://testflight.apple.com/join/ersXvycy) or [JDownload on the App Store](https://apps.apple.com/app/mona-hrt-journal/id6757274628)
 
 ---
 
