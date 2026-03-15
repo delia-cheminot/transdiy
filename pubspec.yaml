@@ -56,6 +56,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+dependency_overrides:
+  material_color_utilities: ^0.13.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
