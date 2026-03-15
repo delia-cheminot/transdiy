@@ -197,9 +197,7 @@ class UpdateService {
             TextButton(
               onPressed: () async {
                 isCancelled = true;
-
                 await subscription?.cancel();
-                client.close();
 
                 await sink?.close();
                 if (file.existsSync()) {
@@ -226,12 +224,21 @@ class UpdateService {
 
       sink = file.openWrite();
 
-      Future<void> handleDone() async {
+      subscription = response.stream.listen((chunk) {
         if (isCancelled) return;
 
-        await sink?.flush();
-        await sink?.close();
-        client.close();
+        sink!.add(chunk);
+        downloadedLength += chunk.length;
+
+        double progress = downloadedLength / contentLength;
+        progressNotifier.value = progress.clamp(0.0, 1.0);
+      });
+
+      await subscription.asFuture();
+
+      if (!isCancelled) {
+        await sink.flush();
+        await sink.close();
 
         if (context.mounted) {
           Navigator.of(context, rootNavigator: true).pop();
@@ -247,48 +254,18 @@ class UpdateService {
         }
       }
 
-      Future<void> handleError(dynamic error) async {
-        if (isCancelled) return;
-
-        await sink?.close();
-        client.close();
-
-        if (context.mounted) {
-          Navigator.of(context, rootNavigator: true).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Download failed. Please try again later.')
-            ),
-          );
-        }
-      }
-
-      subscription = response.stream.listen(
-        (chunk) {
-          if (isCancelled) return;
-
-          sink!.add(chunk);
-          downloadedLength += chunk.length;
-
-          double progress = downloadedLength / contentLength;
-          progressNotifier.value = progress.clamp(0.0, 1.0);
-        },
-        onDone: handleDone,
-        onError: handleError,
-        cancelOnError: true,
-      );
-
-      await subscription.asFuture();
-
     } catch (e) {
       if (!isCancelled && context.mounted) {
         Navigator.of(context, rootNavigator: true).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text('Could not start download. Please check your connection.')
+              content: Text('Download failed. Please check your connection.')
           ),
         );
       }
+    } finally {
+      await sink?.close();
+      client.close();
     }
   }
 }
