@@ -28,9 +28,15 @@ class _EditScheduleNotificationsPageState
     );
 
     if (picked != null) {
-      setState(() {
-        _notificationTimes.add(picked);
-      });
+      final alreadyExists = _notificationTimes.any(
+        (time) => time.hour == picked.hour && time.minute == picked.minute,
+      );
+
+      if (!alreadyExists) {
+        setState(() {
+          _notificationTimes.add(picked);
+        });
+      }
     }
   }
 
