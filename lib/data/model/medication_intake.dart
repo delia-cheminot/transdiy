@@ -120,6 +120,6 @@ class MedicationIntake {
     return "$dose mg • ${molecule.name} "
         "${ester != null ? '${ester!.name} ' : ""}"
         "${administrationRoute.name}"
-        "${side?.name != null ? ' • ${side!.name}' : ''}";
+        "${side?.name != null ? ' • ${side!.name} side' : ''}";
   }
 }

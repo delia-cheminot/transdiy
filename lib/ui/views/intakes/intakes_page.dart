@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/intakes/edit_intake_page.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -17,6 +18,7 @@ class IntakesPage extends StatelessWidget {
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
           emptyMessage: 'Taken intakes will appear here',
           child: ListView.builder(
+            padding: pagePadding,
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
               MedicationIntake intake =
@@ -34,27 +36,39 @@ class IntakesPage extends StatelessWidget {
       MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
 
-    return ListTile(
-      title: Text(dateText),
-      subtitle: Text('$intake'),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete_outline),
-        onPressed: () async {
-          final confirmed = await Dialogs.confirmDelete(context);
-          if (confirmed == true) {
-            medicationIntakeProvider.deleteIntake(intake);
-          }
+    final theme = Theme.of(context);
+
+    return Card.filled(
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        title: Text(dateText),
+        subtitle: Text('$intake'),
+        leading:
+        CircleAvatar(
+          backgroundColor: theme.colorScheme.primary,
+          child: Icon(
+            intake.administrationRoute.icon,
+            color: theme.colorScheme.primaryContainer,
+          ),
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete_outline),
+          onPressed: () async {
+            final confirmed = await Dialogs.confirmDelete(context);
+            if (confirmed == true) {
+              medicationIntakeProvider.deleteIntake(intake);
+            }
+          },
+        ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (context) =>
+                  EditIntakePage(intake),
+            ),
+          );
         },
       ),
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            fullscreenDialog: true,
-            builder: (context) =>
-                EditIntakePage(intake),
-          ),
-        );
-      },
     );
   }
 }
