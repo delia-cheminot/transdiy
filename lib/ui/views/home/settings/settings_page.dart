@@ -19,6 +19,7 @@ class _SettingsPageState extends State<SettingsPage>
     with WidgetsBindingObserver {
   late bool _notificationsEnabled;
   bool _permissionGranted = true;
+  bool _exactAlarmsGranted = true;
   late PreferencesService _preferencesService;
 
   @override
@@ -46,8 +47,11 @@ class _SettingsPageState extends State<SettingsPage>
 
   Future<void> _checkPermission() async {
     final granted = await NotificationService().hasPermission();
+    final exactAlarmsGranted =
+        await NotificationService().canScheduleExactAlarms();
     setState(() {
       _permissionGranted = granted;
+      _exactAlarmsGranted = exactAlarmsGranted;
     });
   }
 
@@ -103,6 +107,17 @@ class _SettingsPageState extends State<SettingsPage>
               leading: const Icon(Icons.info_outline),
               title: const Text('Notifications are disabled'),
               subtitle: const Text("Click to open settings"),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () async {
+                await openAppSettings();
+              },
+            ),
+          if (_notificationsEnabled && _permissionGranted && !_exactAlarmsGranted)
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('Exact reminder times are disabled'),
+              subtitle: const Text(
+                  'Reminders may be slightly delayed. Tap to open settings.'),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await openAppSettings();
