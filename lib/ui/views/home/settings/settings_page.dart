@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +18,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage>
     with WidgetsBindingObserver {
   late bool _notificationsEnabled;
-  late PreferencesService _preferencesService;
   bool _permissionGranted = true;
+  late PreferencesService _preferencesService;
+  late MedicationScheduleProvider _medicationScheduleProvider;
 
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _SettingsPageState extends State<SettingsPage>
     WidgetsBinding.instance.addObserver(this);
     _preferencesService =
         Provider.of<PreferencesService>(context, listen: false);
+    _medicationScheduleProvider = context.watch<MedicationScheduleProvider>();
     _notificationsEnabled = _preferencesService.notificationsEnabled;
     _checkPermission();
   }
@@ -64,10 +68,7 @@ class _SettingsPageState extends State<SettingsPage>
 
   @override
   Widget build(BuildContext context) {
-    final medicationScheduleProvider =
-        context.watch<MedicationScheduleProvider>();
-
-    if (medicationScheduleProvider.isLoading) {
+    if (_medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(title: const Text('Settings')),
         body: Center(child: CircularProgressIndicator()),
@@ -81,9 +82,9 @@ class _SettingsPageState extends State<SettingsPage>
           // Tile for medication schedules
           ListTile(
             title: Text('Schedules'),
-            subtitle: Text(medicationScheduleProvider.schedules.isEmpty
+            subtitle: Text(_medicationScheduleProvider.schedules.isEmpty
                 ? 'No schedules'
-                : '${medicationScheduleProvider.schedules.length} created'),
+                : '${_medicationScheduleProvider.schedules.length} created'),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
@@ -106,6 +107,25 @@ class _SettingsPageState extends State<SettingsPage>
                 await openAppSettings();
               },
             ),
+          if (Platform.isAndroid) ...[
+            const Divider(),
+            SwitchListTile(
+              title: const Text('Auto-Update'),
+              subtitle: const Text(
+                  'Automatically check new updates when app is launched'),
+              value: _preferencesService.autoCheckUpdatesEnabled,
+              onChanged: (bool value) {
+                _preferencesService.setAutoCheckUpdatesEnabled(value);
+              },
+            ),
+            ListTile(
+              title: const Text('Check for Updates'),
+              subtitle: const Text(
+                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'),
+              trailing: const Icon(Icons.system_update),
+              onTap: () => UpdateService().checkForUpdates(context),
+            ),
+          ],
         ],
       ),
     );

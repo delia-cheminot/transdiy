@@ -9,9 +9,20 @@ class PreferencesService extends ChangeNotifier {
 
   static const bool defaultNotificationsEnabled = false;
 
+  static const _autoCheckUpdatesKey = 'auto_check_updates';
+  static const bool defaultAutoCheckUpdates = false;
+
   late final SharedPreferences _prefs;
 
   PreferencesService._(this._prefs);
+
+  bool get autoCheckUpdatesEnabled =>
+      _prefs.getBool(_autoCheckUpdatesKey) ?? defaultAutoCheckUpdates;
+
+  Future<void> setAutoCheckUpdatesEnabled(bool isEnabled) async {
+    await _prefs.setBool(_autoCheckUpdatesKey, isEnabled);
+    notifyListeners();
+  }
 
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
