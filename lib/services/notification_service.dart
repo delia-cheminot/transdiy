@@ -77,6 +77,7 @@ class NotificationService {
   Future<void> requestNotificationPermission() async {
     if (Platform.isAndroid) {
       await _androidImplementation?.requestNotificationsPermission();
+      await _androidImplementation?.requestExactAlarmsPermission();
     } else if (Platform.isIOS) {
       await _iosImplementation?.requestPermissions(
         alert: true,
