@@ -28,7 +28,7 @@ void main() {
 
   setUpAll(() {
     tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('UTC'));
+    tz.setLocalLocation(tz.getLocation('Etc/UTC'));
   });
 
   setUp(() {
