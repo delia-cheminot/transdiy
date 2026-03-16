@@ -40,10 +40,8 @@ class SchedulesPage extends StatelessWidget {
                     title: Text(schedule.name),
                     subtitle: Text("$schedule"),
                     leading: CircleAvatar(
-                      backgroundColor: theme.colorScheme.onPrimaryContainer,
                       child: Icon(
                         schedule.administrationRoute.icon,
-                        color: theme.colorScheme.primaryContainer,
                       ),
                     ),
                     trailing: Icon(Icons.chevron_right),
