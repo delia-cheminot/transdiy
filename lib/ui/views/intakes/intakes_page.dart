@@ -40,7 +40,7 @@ class IntakesPage extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {
-          final confirmed = await Dialogs.confirmDelete(context);
+          final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
             medicationIntakeProvider.deleteIntake(intake);
           }
@@ -55,6 +55,13 @@ class IntakesPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  static Future<bool?> confirmDeleteIntake(BuildContext context) {
+    return Dialogs.confirmDialog(
+        context: context,
+        title: "Delete this intake?"
     );
   }
 }

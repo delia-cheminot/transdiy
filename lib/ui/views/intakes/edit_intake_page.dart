@@ -7,7 +7,7 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/constants/dimensions.dart';
-import 'package:mona/ui/widgets/dialogs.dart';
+import 'package:mona/ui/views/intakes/intakes_page.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
@@ -235,7 +235,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
                         width: double.infinity,
                         child: FilledButton(
                           onPressed: () async {
-                            final confirmed = await Dialogs.confirmDeleteIntake(context);
+                            final confirmed = await IntakesPage.confirmDeleteIntake(context);
                             if (confirmed == true) {
                               _deleteIntake(medicationIntakeProvider, widget.intake);
                             }
