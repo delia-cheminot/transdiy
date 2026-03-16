@@ -111,6 +111,7 @@ class _EditScheduleNotificationsPageState
                   final time = _notificationTimes[index];
                   return ListTile(
                     title: Text(time.format(context)),
+                    leading: Icon(Icons.alarm),
                     trailing: Icon(Icons.delete),
                     onTap: () {
                       setState(() {

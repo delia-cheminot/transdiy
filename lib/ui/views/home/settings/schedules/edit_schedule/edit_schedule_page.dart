@@ -46,12 +46,15 @@ class EditSchedulePage extends StatelessWidget {
           ListTile(
             title: Text('Notifications'),
             subtitle: currentSchedule.notificationTimes.isEmpty
-                ? Text('No notifications')
-                : Text(
-                    currentSchedule.notificationTimes
-                        .map((time) => time.format(context))
-                        .join(', '),
-                  ),
+                ? const Text('No notifications')
+                : currentSchedule.notificationTimes.length > 4
+                    ? Text(
+                        '${currentSchedule.notificationTimes.length} notifications')
+                    : Text(
+                        currentSchedule.notificationTimes
+                            .map((time) => time.format(context))
+                            .join(', '),
+                      ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
