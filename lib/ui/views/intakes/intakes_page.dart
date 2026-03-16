@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/ui/views/intakes/edit_intake_page.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,15 @@ class IntakesPage extends StatelessWidget {
           }
         },
       ),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            fullscreenDialog: true,
+            builder: (context) =>
+                EditIntakePage(intake),
+          ),
+        );
+      },
     );
   }
 }
