@@ -17,6 +17,10 @@ class SupplyItemManager {
       doseToUse = item.totalDose - item.usedDose;
     }
 
+    if(item.usedDose + doseToUse < Decimal.fromInt(0)) {
+      doseToUse = -item.usedDose;
+    }
+
     await _supplyItemProvider.updateItem(item.copyWith(
       usedDose: item.usedDose + doseToUse,
     ));
