@@ -10,8 +10,6 @@ class SchedulesPage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
 
-    final theme = Theme.of(context);
-
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(
