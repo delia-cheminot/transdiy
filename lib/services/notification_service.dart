@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -150,31 +149,20 @@ class NotificationService {
           DateTime(year, month, day, hour, minute).toIso8601String(),
     });
 
-    try {
-      await _notificationsPlugin.zonedSchedule(
-        id: id,
-        title: title,
-        body: body,
-        scheduledDate: scheduledDate,
-        notificationDetails: _notificationDetails(),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        payload: payload,
-      );
-    } on PlatformException catch (e) {
-      if (e.code == 'exact_alarms_not_permitted') {
-        await _notificationsPlugin.zonedSchedule(
-          id: id,
-          title: title,
-          body: body,
-          scheduledDate: scheduledDate,
-          notificationDetails: _notificationDetails(),
-          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-          payload: payload,
-        );
-      } else {
-        rethrow;
-      }
-    }
+    final useExact = await canScheduleExactAlarms();
+    final scheduleMode = useExact
+        ? AndroidScheduleMode.exactAllowWhileIdle
+        : AndroidScheduleMode.inexactAllowWhileIdle;
+
+    await _notificationsPlugin.zonedSchedule(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduledDate,
+      notificationDetails: _notificationDetails(),
+      androidScheduleMode: scheduleMode,
+      payload: payload,
+    );
   }
 
   Future<void> cancelAllNotifications() async {
