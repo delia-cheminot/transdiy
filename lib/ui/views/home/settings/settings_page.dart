@@ -20,7 +20,6 @@ class _SettingsPageState extends State<SettingsPage>
   late bool _notificationsEnabled;
   bool _permissionGranted = true;
   late PreferencesService _preferencesService;
-  late MedicationScheduleProvider _medicationScheduleProvider;
 
   @override
   void initState() {
@@ -28,7 +27,6 @@ class _SettingsPageState extends State<SettingsPage>
     WidgetsBinding.instance.addObserver(this);
     _preferencesService =
         Provider.of<PreferencesService>(context, listen: false);
-    _medicationScheduleProvider = context.watch<MedicationScheduleProvider>();
     _notificationsEnabled = _preferencesService.notificationsEnabled;
     _checkPermission();
   }
@@ -68,7 +66,10 @@ class _SettingsPageState extends State<SettingsPage>
 
   @override
   Widget build(BuildContext context) {
-    if (_medicationScheduleProvider.isLoading) {
+    final medicationScheduleProvider =
+        context.watch<MedicationScheduleProvider>();
+
+    if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(title: const Text('Settings')),
         body: Center(child: CircularProgressIndicator()),
@@ -82,9 +83,9 @@ class _SettingsPageState extends State<SettingsPage>
           // Tile for medication schedules
           ListTile(
             title: Text('Schedules'),
-            subtitle: Text(_medicationScheduleProvider.schedules.isEmpty
+            subtitle: Text(medicationScheduleProvider.schedules.isEmpty
                 ? 'No schedules'
-                : '${_medicationScheduleProvider.schedules.length} created'),
+                : '${medicationScheduleProvider.schedules.length} created'),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
