@@ -112,12 +112,14 @@ class _EditScheduleNotificationsPageState
                   return ListTile(
                     title: Text(time.format(context)),
                     leading: Icon(Icons.alarm),
-                    trailing: Icon(Icons.delete),
-                    onTap: () {
-                      setState(() {
-                        _notificationTimes.removeAt(index);
-                      });
-                    },
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        setState(() {
+                          _notificationTimes.removeAt(index);
+                        });
+                      },
+                    ),
                   );
                 },
               ),
