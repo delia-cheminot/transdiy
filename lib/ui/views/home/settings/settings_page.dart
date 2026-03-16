@@ -18,6 +18,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage>
     with WidgetsBindingObserver {
   late bool _notificationsEnabled;
+  late bool _autoCheckUpdatesEnabled;
   bool _permissionGranted = true;
   bool _exactAlarmsGranted = true;
   late PreferencesService _preferencesService;
@@ -29,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage>
     _preferencesService =
         Provider.of<PreferencesService>(context, listen: false);
     _notificationsEnabled = _preferencesService.notificationsEnabled;
+    _autoCheckUpdatesEnabled = _preferencesService.autoCheckUpdatesEnabled;
     _checkPermission();
   }
 
@@ -65,6 +67,14 @@ class _SettingsPageState extends State<SettingsPage>
 
     setState(() {
       _notificationsEnabled = value;
+    });
+  }
+
+  Future<void> _toggleAutoCheckUpdates(bool value) async {
+    await _preferencesService.setAutoCheckUpdatesEnabled(value);
+
+    setState(() {
+      _autoCheckUpdatesEnabled = value;
     });
   }
 
@@ -129,10 +139,8 @@ class _SettingsPageState extends State<SettingsPage>
               title: const Text('Auto-Update'),
               subtitle: const Text(
                   'Automatically check new updates when app is launched'),
-              value: _preferencesService.autoCheckUpdatesEnabled,
-              onChanged: (bool value) {
-                _preferencesService.setAutoCheckUpdatesEnabled(value);
-              },
+              value: _autoCheckUpdatesEnabled,
+              onChanged: _toggleAutoCheckUpdates,
             ),
             ListTile(
               title: const Text('Check for Updates'),
