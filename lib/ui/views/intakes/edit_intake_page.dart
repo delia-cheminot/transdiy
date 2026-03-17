@@ -40,22 +40,22 @@ class _EditIntakePageState extends State<EditIntakePage> {
   bool get _isInjection =>
       widget.intake.administrationRoute == AdministrationRoute.injection;
 
-  void _editIntake(MedicationIntakeProvider medicationIntakeProvider,
+  void _editIntake(
+      MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider,
-      MedicationIntake intake, SupplyItem? supplyItem) async {
+      MedicationIntake intake,
+      SupplyItem? supplyItem) async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
     if (supplyItem != null) {
       Decimal doseDifference = intake.dose - _takenDose;
-      SupplyItemManager(supplyItemProvider).useDose(supplyItem, -doseDifference); // Invert the difference
+      SupplyItemManager(supplyItemProvider)
+          .useDose(supplyItem, -doseDifference); // Invert the difference
     }
 
     MedicationIntake updatedIntake = intake.copyWith(
-        takenDateTime: _takenDate,
-        dose: _takenDose,
-        side: _selectedSide
-    );
+        takenDateTime: _takenDate, dose: _takenDose, side: _selectedSide);
 
     medicationIntakeProvider.updateIntake(updatedIntake);
     Navigator.of(context).pop();
@@ -68,7 +68,6 @@ class _EditIntakePageState extends State<EditIntakePage> {
     medicationIntakeProvider.deleteIntake(intake);
     Navigator.of(context).pop();
   }
-
 
   void _onInjectionSideChanged(InjectionSide? side) {
     if (side != null) {
@@ -120,7 +119,6 @@ class _EditIntakePageState extends State<EditIntakePage> {
   Widget build(BuildContext context) {
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
-
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
 
@@ -150,7 +148,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
             child: Text('None'),
           ),
           ...supplyItemOptions.map(
-                (item) => DropdownMenuItem<SupplyItem?>(
+            (item) => DropdownMenuItem<SupplyItem?>(
               value: item,
               child: Text(item.name),
             ),
@@ -159,22 +157,17 @@ class _EditIntakePageState extends State<EditIntakePage> {
 
         return ModelForm(
           title: 'Edit intake',
+          avatar: widget.intake.administrationRoute.icon,
           submitButtonLabel: 'Edit intake',
           isFormValid: _isFormValid,
-          saveChanges: (!isLoading && _isFormValid) ? () =>
-              _editIntake(
-            medicationIntakeProvider,
-            supplyItemProvider,
-            widget.intake,
-            _selectedSupplyItem
-          ) : () {},
+          saveChanges: (!isLoading && _isFormValid)
+              ? () => _editIntake(medicationIntakeProvider, supplyItemProvider,
+                  widget.intake, _selectedSupplyItem)
+              : () {},
           onDelete: () async {
             final confirmed = await IntakesPage.confirmDeleteIntake(context);
-            if(confirmed == false) return;
-              _deleteIntake(
-              medicationIntakeProvider,
-              widget.intake
-            );
+            if (confirmed == false) return;
+            _deleteIntake(medicationIntakeProvider, widget.intake);
           },
           fields: [
             FormDateField(
@@ -206,7 +199,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
                       ),
                       TextSpan(
                         text:
-                        ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
+                            ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
                       ),
                     ],
                   ),
