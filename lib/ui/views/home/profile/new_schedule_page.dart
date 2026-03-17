@@ -138,7 +138,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   Widget build(BuildContext context) {
     return ModelForm(
       title: 'New schedule',
-      submitButtonLabel: 'Add',
+      submitButtonLabel: 'Next',
       isFormValid: _isFormValid,
       saveChanges: _addSchedule,
       fields: <Widget>[

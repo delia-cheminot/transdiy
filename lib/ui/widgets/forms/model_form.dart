@@ -3,6 +3,7 @@ import 'package:mona/ui/constants/dimensions.dart';
 
 class ModelForm extends StatelessWidget {
   final String title;
+  final IconData? avatar;
   final List<Widget> fields;
   final VoidCallback? onDelete;
   final bool isFormValid;
@@ -11,6 +12,7 @@ class ModelForm extends StatelessWidget {
 
   const ModelForm({
     required this.title,
+    this.avatar,
     required this.fields,
     this.onDelete,
     required this.isFormValid,
@@ -20,6 +22,8 @@ class ModelForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -27,15 +31,6 @@ class ModelForm extends StatelessWidget {
           icon: Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: isFormValid ? saveChanges : null,
-              child: Text(submitButtonLabel),
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -43,25 +38,47 @@ class ModelForm extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (avatar != null) ...[
+                const SizedBox(height: 32),
+                Center(
+                  child: CircleAvatar(
+                    radius: 64,
+                    child: Icon(avatar, size: 64),
+                  ),
+                ),
+                const SizedBox(height: 32),
+              ],
               ...fields,
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(borderPadding),
+          child: Row(
+            children: [
               if (onDelete != null) ...[
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: theme.colorScheme.error,
+                      side: BorderSide(color: theme.colorScheme.error),
                     ),
-                    Container(
-                      padding: pagePadding,
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: onDelete,
-                        child: Text('Delete'),
-                      ),
-                    ),
-                  ],
+                    onPressed: onDelete,
+                    icon: const Icon(Icons.delete),
+                    label: const Text('Delete'),
+                  ),
                 ),
               ],
+              const SizedBox(width: borderPadding),
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: isFormValid ? saveChanges : null,
+                  icon: onDelete != null ? const Icon(Icons.save) : null,
+                  label: Text(submitButtonLabel),
+                ),
+              ),
             ],
           ),
         ),

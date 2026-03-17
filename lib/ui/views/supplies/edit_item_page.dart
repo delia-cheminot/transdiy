@@ -170,6 +170,7 @@ class _EditItemPageState extends State<EditItemPage> {
   Widget build(BuildContext context) {
     return ModelForm(
       title: 'Edit item',
+      avatar: widget.item.administrationRoute.icon,
       submitButtonLabel: 'Save',
       isFormValid: _isFormValid,
       saveChanges: _saveChanges,

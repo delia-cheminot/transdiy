@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-const horizontalPadding = 16.0;
+const borderPadding = 16.0;
 
-const EdgeInsets pagePadding =
-    EdgeInsets.symmetric(horizontal: horizontalPadding);
+const EdgeInsets pagePadding = EdgeInsets.symmetric(horizontal: borderPadding);
