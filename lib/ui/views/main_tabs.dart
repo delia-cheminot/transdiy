@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
-import 'home/profile/profile_page.dart';
+import 'home/settings/settings_page.dart';
+import 'intakes/choose_schedule_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
 import 'supplies/new_item_page.dart';
@@ -19,7 +20,7 @@ final List<MainTabConfig> mainTabs = [
         icon: const Icon(Icons.settings),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProfilePage()),
+            MaterialPageRoute(builder: (context) => SettingsPage()),
           );
         },
       ),
@@ -30,6 +31,17 @@ final List<MainTabConfig> mainTabs = [
     page: IntakesPage(),
     icon: Icons.event_outlined,
     selectedIcon: Icons.event_rounded,
+    buildFab: (context) => FloatingActionButton(
+      tooltip: 'Take an intake',
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (context) => ChooseSchedulePage(),
+          ),
+        );
+      },
+      child: const Icon(Icons.add),
+    ),
   ),
   MainTabConfig(
     title: 'Levels',
