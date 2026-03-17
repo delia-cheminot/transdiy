@@ -6,11 +6,12 @@ import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
-import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/intakes/intakes_page.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:provider/provider.dart';
 
 class EditIntakePage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   }
 
   void _deleteIntake(MedicationIntakeProvider medicationIntakeProvider,
-      MedicationIntake intake) {
+      MedicationIntake intake) async {
     if (!mounted) return;
 
     medicationIntakeProvider.deleteIntake(intake);
@@ -156,99 +157,75 @@ class _EditIntakePageState extends State<EditIntakePage> {
           ),
         ];
 
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Edit intake'),
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: pagePadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FormDateField(
-                      date: _takenDate,
-                      label: 'Date',
-                      onChanged: _onTakenDateChanged,
-                    ),
-                    FormTextField(
-                      controller: _takenDoseController,
-                      label: 'Amount',
-                      onChanged: _onTakenDoseChanged,
-                      inputType: TextInputType.number,
-                      suffixText: widget.intake.molecule.unit,
-                      errorText: _takenDoseError,
-                      regexFormatter: r'[0-9.,]',
-                    ),
-                    if (_selectedSupplyItem != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              const WidgetSpan(
-                                child: Icon(
-                                  Icons.info_outline,
-                                  size: 16,
-                                ),
-                              ),
-                              TextSpan(
-                                text:
-                                ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
-                              ),
-                            ],
-                          ),
+        return ModelForm(
+          title: 'Edit intake',
+          submitButtonLabel: 'Edit intake',
+          isFormValid: _isFormValid,
+          saveChanges: (!isLoading && _isFormValid) ? () =>
+              _editIntake(
+            medicationIntakeProvider,
+            supplyItemProvider,
+            widget.intake,
+            _selectedSupplyItem
+          ) : () {},
+          onDelete: () async {
+            final confirmed = await IntakesPage.confirmDeleteIntake(context);
+            if(confirmed == false) return;
+              _deleteIntake(
+              medicationIntakeProvider,
+              widget.intake
+            );
+          },
+          fields: [
+            FormDateField(
+              label: 'Date',
+              date: _takenDate,
+              onChanged: _onTakenDateChanged,
+            ),
+            FormSpacer(),
+            FormTextField(
+              controller: _takenDoseController,
+              label: 'Amount',
+              onChanged: _onTakenDoseChanged,
+              inputType: TextInputType.number,
+              suffixText: widget.intake.molecule.unit,
+              errorText: _takenDoseError,
+              regexFormatter: r'[0-9.,]',
+            ),
+            if (_selectedSupplyItem != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      const WidgetSpan(
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
                         ),
                       ),
-                    FormDropdownField<SupplyItem?>(
-                      value: _selectedSupplyItem,
-                      items: supplyItemDropdownItems,
-                      onChanged: _onSupplyItemChanged,
-                      label: 'Supply item',
-                    ),
-                    if (_isInjection)
-                      FormDropdownField<InjectionSide>(
-                        value: _selectedSide,
-                        items: InjectionSideDropdown.menuItems,
-                        onChanged: _onInjectionSideChanged,
-                        label: 'Injection side',
+                      TextSpan(
+                        text:
+                        ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
                       ),
-                    const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: (!isLoading && _isFormValid)
-                              ? () => _editIntake(
-                              medicationIntakeProvider, supplyItemProvider, widget.intake, _selectedSupplyItem)
-                              : null, // null = bouton grisé
-                          child: const Text('Edit intake'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: () async {
-                            final confirmed = await IntakesPage.confirmDeleteIntake(context);
-                            if (confirmed == true) {
-                              _deleteIntake(medicationIntakeProvider, widget.intake);
-                            }
-                          },
-                          child: const Text('Delete intake'),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+            FormDropdownField<SupplyItem?>(
+              value: _selectedSupplyItem,
+              items: supplyItemDropdownItems,
+              onChanged: _onSupplyItemChanged,
+              label: 'Supply item',
             ),
-          ),
+            if (_isInjection)
+              FormDropdownField<InjectionSide>(
+                value: _selectedSide,
+                items: InjectionSideDropdown.menuItems,
+                onChanged: _onInjectionSideChanged,
+                label: 'Injection side',
+              ),
+          ],
         );
       },
     );
