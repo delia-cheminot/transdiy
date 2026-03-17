@@ -34,19 +34,12 @@ class IntakesPage extends StatelessWidget {
       MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
 
-    final theme = Theme.of(context);
-
     return ListTile(
       title: Text(dateText),
       subtitle: Text('$intake'),
-      leading: Padding(
-        padding: EdgeInsets.only(left: 6),
-        child: CircleAvatar(
-          backgroundColor: theme.colorScheme.primary,
-          child: Icon(
-            intake.administrationRoute.icon,
-            color: theme.colorScheme.primaryContainer,
-          ),
+      leading: CircleAvatar(
+        child: Icon(
+          intake.administrationRoute.icon,
         ),
       ),
       trailing: IconButton(
@@ -61,8 +54,7 @@ class IntakesPage extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (context) =>
-                EditIntakePage(intake),
+            builder: (context) => EditIntakePage(intake),
           ),
         );
       },
