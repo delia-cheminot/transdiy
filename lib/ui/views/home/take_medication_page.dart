@@ -7,7 +7,6 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
-import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -149,14 +148,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
         ];
 
         return ModelForm(
-          title: 'Take intake',
+          title: 'Take ${widget.schedule.name}',
           submitButtonLabel: 'Take intake',
           isFormValid: _isFormValid,
-          saveChanges: (!isLoading && _isFormValid) ? () =>
-            _takeIntake(
-                medicationIntakeProvider,
-                supplyItemProvider
-            ) : () {},
+          saveChanges: (!isLoading && _isFormValid)
+              ? () => _takeIntake(medicationIntakeProvider, supplyItemProvider)
+              : () {},
           fields: [
             FormDateField(
               label: 'Date',
@@ -187,7 +184,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                       ),
                       TextSpan(
                         text:
-                        ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
+                            ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
                       ),
                     ],
                   ),
