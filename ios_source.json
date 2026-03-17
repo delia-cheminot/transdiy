@@ -26,6 +26,11 @@
       "screenshotURLs": [
         ""
       ],
+      "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.3.0/mona.ipa",
+      "size": 8351727,
+      "version": "1.3.0",
+      "versionDate": "2026-03-13T17:40:00+01:00",
+      "versionDescription": "- new exclusive pk values inferred using Esterlabe.jl/estrannaise models and data\n- new molecules : raloxifene and tamoxifen",
       "versions": [
         {
           "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.3.0/mona.ipa",
