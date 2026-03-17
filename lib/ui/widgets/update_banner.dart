@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mona/ui/views/home/profile/profile_page.dart';
+import 'package:mona/ui/views/home/settings/settings_page.dart';
 
 class UpdateBanner extends StatelessWidget {
   final VoidCallback onClose;
@@ -35,7 +35,7 @@ class UpdateBanner extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
                 );
               },
               child: const Text('Go to Settings'),
