@@ -158,7 +158,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
         return ModelForm(
           title: 'Edit intake',
           avatar: widget.intake.administrationRoute.icon,
-          submitButtonLabel: 'Edit intake',
+          submitButtonLabel: 'Save',
           isFormValid: _isFormValid,
           saveChanges: (!isLoading && _isFormValid)
               ? () => _editIntake(medicationIntakeProvider, supplyItemProvider,
