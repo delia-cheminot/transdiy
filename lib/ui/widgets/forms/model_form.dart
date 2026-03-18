@@ -77,8 +77,8 @@ class ModelForm extends StatelessWidget {
                     label: const Text('Delete'),
                   ),
                 ),
+                const SizedBox(width: borderPadding),
               ],
-              const SizedBox(width: borderPadding),
               Expanded(
                 child: FilledButton.icon(
                   onPressed: isFormValid ? saveChanges : null,
