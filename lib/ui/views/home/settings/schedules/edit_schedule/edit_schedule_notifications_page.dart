@@ -35,6 +35,7 @@ class _EditScheduleNotificationsPageState
       if (!alreadyExists) {
         setState(() {
           _notificationTimes.add(picked);
+          _notificationTimes.sort((a,b) => a.compareTo(b));
         });
       }
     }
@@ -119,7 +120,7 @@ class _EditScheduleNotificationsPageState
                     title: Text(time.format(context)),
                     leading: Icon(Icons.alarm),
                     trailing: IconButton(
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(Icons.delete, color: Color(0xFFD32F2F)),
                       onPressed: () {
                         setState(() {
                           _notificationTimes.removeAt(index);
