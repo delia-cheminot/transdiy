@@ -34,9 +34,10 @@ class EditSchedulePage extends StatelessWidget {
           ListTile(
             title: Text('Edit schedule info'),
             subtitle: Text(currentSchedule.toString()),
-            trailing: Icon(Icons.chevron_right),
+            trailing: Icon(Icons.edit),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
+                fullscreenDialog: true,
                 builder: (context) => EditScheduleMainInfoPage(
                   schedule: currentSchedule,
                 ),
