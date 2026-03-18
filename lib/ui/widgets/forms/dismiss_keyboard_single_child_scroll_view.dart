@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class DismissKeyboardSingleChildScrollView extends StatefulWidget {
   final Widget child;
-  const DismissKeyboardSingleChildScrollView({required this.child});
+  final EdgeInsets? padding;
+
+  const DismissKeyboardSingleChildScrollView(
+      {required this.child, this.padding});
 
   @override
   State<DismissKeyboardSingleChildScrollView> createState() =>
@@ -41,6 +44,7 @@ class _ScrollDismissKeyboardState
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       controller: _controller,
+      padding: widget.padding,
       child: widget.child,
     );
   }

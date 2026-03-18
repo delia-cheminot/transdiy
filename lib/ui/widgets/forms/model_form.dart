@@ -35,6 +35,7 @@ class ModelForm extends StatelessWidget {
       ),
       body: SafeArea(
         child: DismissKeyboardSingleChildScrollView(
+          padding: pagePadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
