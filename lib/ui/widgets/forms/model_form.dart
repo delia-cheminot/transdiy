@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/ui/constants/dimensions.dart';
+import 'package:mona/ui/widgets/forms/dismiss_keyboard_single_child_scroll_view.dart';
 
 class ModelForm extends StatelessWidget {
   final String title;
@@ -33,8 +34,7 @@ class ModelForm extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: pagePadding,
+        child: DismissKeyboardSingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,13 +49,19 @@ class ModelForm extends StatelessWidget {
                 const SizedBox(height: 32),
               ],
               ...fields,
+              const SizedBox(height: 32),
             ],
           ),
         ),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(borderPadding),
+          padding: EdgeInsets.only(
+            top: borderPadding,
+            left: borderPadding,
+            right: borderPadding,
+            bottom: borderPadding + MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: Row(
             children: [
               if (onDelete != null) ...[
