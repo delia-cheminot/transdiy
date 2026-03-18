@@ -1,8 +1,8 @@
 {
   "name": "Mona",
-  "subtitle": "Your hormonal journal",
+  "subtitle": "Apps for trans people's health",
   "identifier": "com.deliacheminot.mona",
-  "description": "Take control of your hormonal health with Mona, the fully local, open-source app designed to help you track, understand, and manage your hormone journey.\n\nWhy Mona is different:\n- Completely private: All your data stays on your device. Nothing is sent to servers.\n- Open source: The app is fully open source, allowing maximum transparency and contributions from the community.\n- Free for life: No subscriptions, no premium features. Mona is free for everyone.\n\nMedication reminders:\n- Add your medication regimens\n- Get detailed info for each upcoming dose (quantity, date, side, missed doses)\n- Receive notifications so you never miss a dose\n\nManage your medication stock efficiently:\n- Keep track of each medication in stock\n- Quantities are automatically updated with each intake\n\nHormone level graphs: \n- For users on estradiol monotherapy, visualize simulated hormone levels over time",
+  "description": "Take control of your hormonal health with Mona. We make apps for trans people's health.",
   "iconURL": "https://i.imgur.com/PeIdqwy.png",
   "website": "https://discord.gg/qsHzkX89vJ",
   "tintColor": "#4d0473",
