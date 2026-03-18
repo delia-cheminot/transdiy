@@ -63,29 +63,30 @@ void main() {
       expect(updatedItem.usedDose, Decimal.parse('10'));
     });
 
-    test('should clamp dose when putting back more than the maximum quantity of a supply and update provider',
-            () async {
-          final item = SupplyItem(
-            name: 'h',
-            totalDose: Decimal.parse('10'),
-            usedDose: Decimal.parse('5'),
-            concentration: Decimal.parse('1'),
-            molecule: KnownMolecules.estradiol,
-            administrationRoute: AdministrationRoute.oral,
-          );
+    test(
+        'should clamp dose when putting back more than the maximum quantity of a supply and update provider',
+        () async {
+      final item = SupplyItem(
+        name: 'h',
+        totalDose: Decimal.parse('10'),
+        usedDose: Decimal.parse('5'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.estradiol,
+        administrationRoute: AdministrationRoute.oral,
+      );
 
-          late SupplyItem updatedItem;
-          when(mockSupplyItemProvider.updateItem(any))
-              .thenAnswer((invocation) async {
-            updatedItem = invocation.positionalArguments.first as SupplyItem;
-            return Future.value();
-          });
+      late SupplyItem updatedItem;
+      when(mockSupplyItemProvider.updateItem(any))
+          .thenAnswer((invocation) async {
+        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
 
-          await manager.useDose(item, Decimal.parse('-6'));
+      await manager.useDose(item, Decimal.parse('-6'));
 
-          expect(item.usedDose, Decimal.parse('5'));
-          expect(updatedItem.usedDose, Decimal.parse('0'));
-        });
+      expect(item.usedDose, Decimal.parse('5'));
+      expect(updatedItem.usedDose, Decimal.parse('0'));
+    });
 
     test('use zero amount', () async {
       final item = SupplyItem(
