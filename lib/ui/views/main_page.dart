@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
+import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
 import 'package:mona/ui/widgets/update_banner.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _runAutomaticUpdateCheck();
+      _showUpdateDialog();
     });
   }
 
@@ -42,6 +44,32 @@ class _MainPageState extends State<MainPage> {
         _isUpdateAvailable = true;
       });
     }
+  }
+
+  void _showUpdateDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('title'),
+          content: const Text('content'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => SchedulesPage(),
+                  ),
+                );
+              },
+              child: const Text('Schedule settings'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
