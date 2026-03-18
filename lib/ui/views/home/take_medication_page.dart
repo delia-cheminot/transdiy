@@ -12,6 +12,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -32,11 +33,15 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   bool _hasInitializedSide = false;
   SupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
+  late TextEditingController _deadSpaceController;
+  late Decimal _deadSpace;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
-  bool get _isFormValid => _takenDoseError == null;
+  String? get _deadSpaceError => positiveDecimal(_takenDoseController.text);
+
+  bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 
   bool get _isInjection =>
       widget.schedule.administrationRoute == AdministrationRoute.injection;
@@ -54,6 +59,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
+      //deadSpace: _deadSpace,
     );
 
     Navigator.of(context).pop();
@@ -84,6 +90,18 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
+// TODO implement tryParseDecimal
+  void _onDeadSpaceChanged() {
+    final deadSpace = Decimal.tryParse(
+      _deadSpaceController.text.replaceAll(',', '.'),
+    );
+    if (deadSpace != null) {
+      setState(() {
+        _deadSpace = deadSpace;
+      });
+    }
+  }
+
   void _onSupplyItemChanged(SupplyItem? item) {
     setState(() {
       _selectedSupplyItem = item;
@@ -97,11 +115,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     _takenDose = widget.schedule.dose;
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
+    _deadSpaceController = TextEditingController(text: '0');
   }
 
   @override
   void dispose() {
     _takenDoseController.dispose();
+    _deadSpaceController.dispose();
     super.dispose();
   }
 
@@ -165,7 +185,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               controller: _takenDoseController,
               label: 'Amount',
               onChanged: _onTakenDoseChanged,
-              inputType: TextInputType.number,
+              inputType: TextInputType.numberWithOptions(decimal: true),
               suffixText: widget.schedule.molecule.unit,
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
@@ -196,13 +216,23 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               onChanged: _onSupplyItemChanged,
               label: 'Supply item',
             ),
-            if (_isInjection)
+            if (_isInjection) ...[
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
                 items: InjectionSideDropdown.menuItems,
                 onChanged: _onInjectionSideChanged,
                 label: 'Injection side',
               ),
+              FormTextField(
+                controller: _deadSpaceController,
+                label: 'Needle dead space',
+                onChanged: _onDeadSpaceChanged,
+                inputType: TextInputType.numberWithOptions(decimal: true),
+                suffixText: 'μl',
+                errorText: _deadSpaceError,
+                regexFormatter: r'[0-9.,]',
+              ),
+            ],
           ],
         );
       },
