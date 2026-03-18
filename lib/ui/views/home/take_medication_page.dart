@@ -169,6 +169,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
         return ModelForm(
           title: 'Take ${widget.schedule.name}',
+          avatar: widget.schedule.administrationRoute.icon,
           submitButtonLabel: 'Take intake',
           isFormValid: _isFormValid,
           saveChanges: (!isLoading && _isFormValid)
