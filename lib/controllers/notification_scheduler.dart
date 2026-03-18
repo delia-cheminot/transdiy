@@ -56,8 +56,7 @@ class NotificationScheduler {
 
           return NotificationService().scheduleNotification(
             title: 'Time to take ${schedule.name}',
-            body:
-                'Next intake scheduled for ${DateFormat.MMMMd().format(dateTime)}',
+            body: 'Scheduled for ${DateFormat.MMMMd().format(dateTime)}',
             year: dateTime.year,
             month: dateTime.month,
             day: dateTime.day,
