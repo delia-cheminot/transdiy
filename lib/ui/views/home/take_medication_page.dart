@@ -34,7 +34,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   SupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
   late TextEditingController _deadSpaceController;
-  late Decimal _deadSpace;
+  late Decimal? _deadSpace;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
