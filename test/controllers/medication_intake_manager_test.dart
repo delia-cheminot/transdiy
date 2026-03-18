@@ -123,6 +123,58 @@ void main() {
 
         expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
       });
+
+      test('adds deadSpace to dose when updating supply item', () async {
+        final manager = MedicationIntakeManager(
+            mockMedicationIntakeProvider, mockSupplyItemProvider);
+
+        final dose = Decimal.parse('2');
+        final deadSpace = Decimal.parse('100');
+        final expectedExtra = Decimal.parse('1');
+        final scheduledDate = DateTime.now();
+        final takenDate = DateTime.now();
+
+        final supplyItem = SupplyItem(
+          id: 10,
+          name: 'SupplySingle',
+          totalDose: Decimal.parse('10'),
+          usedDose: Decimal.parse('1'),
+          concentration: Decimal.parse('10'),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        final schedule = MedicationSchedule(
+          name: 'ScheduleSingle',
+          dose: dose,
+          intervalDays: 1,
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+          notificationTimes: List.empty(),
+        );
+
+        late SupplyItem updatedSupplyItem;
+
+        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+          updatedSupplyItem = inv.positionalArguments.first as SupplyItem;
+          return Future.value();
+        });
+
+        await manager.takeMedication(
+          dose: dose,
+          scheduledDate: scheduledDate,
+          takenDate: takenDate,
+          supplyItem: supplyItem,
+          schedule: schedule,
+          side: null,
+          deadSpace: deadSpace,
+        );
+
+        expect(
+          updatedSupplyItem.usedDose,
+          supplyItem.usedDose + dose + expectedExtra,
+        );
+      });
     });
 
     group('getNextSide', () {
