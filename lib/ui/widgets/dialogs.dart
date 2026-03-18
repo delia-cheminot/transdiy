@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Dialogs {
-
-  static Future<bool?> confirmDialog({
-    required BuildContext context,
-    String title = "Delete this element?",
-    String content = "This action can't be undone.",
-    String cancel = "Cancel",
-    String confirm = "Delete"
-  }) {
+  // TODO refactor this, it's a confirm delete dialog.
+  // we should just pass the name of the element or smth
+  static Future<bool?> confirmDialog(
+      {required BuildContext context,
+      String title = "Delete this element?",
+      String content = "This action can't be undone.",
+      String cancel = "Cancel",
+      String confirm = "Delete"}) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
