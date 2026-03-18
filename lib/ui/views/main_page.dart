@@ -17,6 +17,7 @@ class _MainPageState extends State<MainPage> {
 
   bool _isUpdateAvailable = false;
   bool _hideUpdateBanner = false;
+  bool _hideUpdateDialog = false;
 
   MainTabConfig get currentTab => mainTabs[_selectedIndex];
 
@@ -29,7 +30,11 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _runAutomaticUpdateCheck();
-      _showUpdateDialog();
+
+      if (context.read<PreferencesService>().shouldShowScheduleDialog &&
+          mounted) {
+        _showUpdateDialog();
+      }
     });
   }
 
@@ -52,12 +57,49 @@ class _MainPageState extends State<MainPage> {
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
-          title: const Text('title'),
-          content: const Text('content'),
+          title: const Text('Notifications have been updated!'),
+          content: StatefulBuilder(
+            builder: (context, setState) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                      'Each schedule now has its own notifications.\n\n'
+                      'Please set up notifications for your schedules to make sure you don’t miss anything.',
+                      textAlign: TextAlign.start),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: _hideUpdateDialog,
+                        onChanged: (value) {
+                          setState(() {
+                            _hideUpdateDialog = value ?? false;
+                          });
+                        },
+                      ),
+                      Text("Don't show again"),
+                    ],
+                  ),
+                ],
+              );
+            },
+          ),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                if (_hideUpdateDialog) {
+                  final preferencesService = context.read<PreferencesService>();
+                  await preferencesService.setShowScheduleDialog(false);
+                }
+
+                if (!context.mounted) return;
+
                 Navigator.of(context).pop();
+                if (!context.mounted) return;
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => SchedulesPage(),
