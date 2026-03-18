@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mona/ui/constants/dimensions.dart';
+import 'package:mona/ui/widgets/forms/dismiss_keyboard_single_child_scroll_view.dart';
 
 class ModelForm extends StatelessWidget {
   final String title;
+  final IconData? avatar;
   final List<Widget> fields;
   final VoidCallback? onDelete;
   final bool isFormValid;
@@ -11,6 +13,7 @@ class ModelForm extends StatelessWidget {
 
   const ModelForm({
     required this.title,
+    this.avatar,
     required this.fields,
     this.onDelete,
     required this.isFormValid,
@@ -20,44 +23,69 @@ class ModelForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: TextButton(
-              onPressed: isFormValid ? saveChanges : null,
-              child: Text(submitButtonLabel),
-            ),
-          ),
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: DismissKeyboardSingleChildScrollView(
           padding: pagePadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (avatar != null) ...[
+                const SizedBox(height: 32),
+                Center(
+                  child: CircleAvatar(
+                    radius: 64,
+                    child: Icon(avatar, size: 64),
+                  ),
+                ),
+                const SizedBox(height: 32),
+              ],
               ...fields,
+              const SizedBox(height: 32),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: borderPadding,
+            left: borderPadding,
+            right: borderPadding,
+            bottom: borderPadding + MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Row(
+            children: [
               if (onDelete != null) ...[
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Divider(),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: theme.colorScheme.error,
+                      side: BorderSide(color: theme.colorScheme.error),
                     ),
-                    Container(
-                      padding: pagePadding,
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: onDelete,
-                        child: Text('Delete'),
-                      ),
-                    ),
-                  ],
+                    onPressed: onDelete,
+                    icon: const Icon(Icons.delete),
+                    label: const Text('Delete'),
+                  ),
                 ),
               ],
+              const SizedBox(width: borderPadding),
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: isFormValid ? saveChanges : null,
+                  icon: onDelete != null ? const Icon(Icons.save) : null,
+                  label: Text(submitButtonLabel),
+                ),
+              ),
             ],
           ),
         ),
