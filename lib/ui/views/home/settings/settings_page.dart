@@ -5,6 +5,7 @@ import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -122,7 +123,9 @@ class _SettingsPageState extends State<SettingsPage>
                 await openAppSettings();
               },
             ),
-          if (_notificationsEnabled && _permissionGranted && !_exactAlarmsGranted)
+          if (_notificationsEnabled &&
+              _permissionGranted &&
+              !_exactAlarmsGranted)
             ListTile(
               leading: const Icon(Icons.info_outline),
               title: const Text('Exact reminder times are disabled'),
@@ -150,6 +153,21 @@ class _SettingsPageState extends State<SettingsPage>
               onTap: () => UpdateService().checkForUpdates(context),
             ),
           ],
+          const SizedBox(height: 32),
+
+          FutureBuilder<PackageInfo>(
+            future: PackageInfo.fromPlatform(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return const SizedBox.shrink();
+              final info = snapshot.data!;
+              return Center(
+                child: Text(
+                  'Mona version ${info.version}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
