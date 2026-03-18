@@ -55,6 +55,7 @@ class IntakesPage extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (context) => EditIntakePage(intake),
+            fullscreenDialog: true,
           ),
         );
       },
@@ -63,8 +64,6 @@ class IntakesPage extends StatelessWidget {
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
     return Dialogs.confirmDialog(
-        context: context,
-        title: "Delete this intake?"
-    );
+        context: context, title: "Delete this intake?");
   }
 }
