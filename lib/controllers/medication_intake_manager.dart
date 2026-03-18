@@ -36,7 +36,7 @@ class MedicationIntakeManager {
     if (supplyItem != null) {
       if (deadSpace != null && deadSpace > Decimal.zero) {
         final deadSpaceMl = deadSpace * Decimal.parse('0.001');
-        dose += deadSpaceMl;
+        dose += supplyItem.getDose(deadSpaceMl);
       }
 
       await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);

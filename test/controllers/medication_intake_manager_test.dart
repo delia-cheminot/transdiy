@@ -130,7 +130,7 @@ void main() {
 
         final dose = Decimal.parse('2');
         final deadSpace = Decimal.parse('100');
-        final expectedExtra = Decimal.parse('0.1');
+        final expectedExtra = Decimal.parse('1');
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
@@ -139,7 +139,7 @@ void main() {
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('1'),
-          concentration: Decimal.parse('1'),
+          concentration: Decimal.parse('10'),
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.oral,
         );
