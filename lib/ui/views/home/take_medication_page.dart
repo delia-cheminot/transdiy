@@ -59,7 +59,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
-      //deadSpace: _deadSpace,
+      deadSpace: _deadSpace,
     );
 
     Navigator.of(context).pop();
@@ -228,7 +228,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 label: 'Needle dead space',
                 onChanged: _onDeadSpaceChanged,
                 inputType: TextInputType.numberWithOptions(decimal: true),
-                suffixText: 'μl',
+                suffixText: 'μL',
                 errorText: _deadSpaceError,
                 regexFormatter: r'[0-9.,]',
               ),
