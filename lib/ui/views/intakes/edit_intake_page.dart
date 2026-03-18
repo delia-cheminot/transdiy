@@ -48,10 +48,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
+    // TODO create method in manager for this
     if (supplyItem != null) {
       Decimal doseDifference = intake.dose - _takenDose;
       SupplyItemManager(supplyItemProvider)
-          .useDose(supplyItem, -doseDifference); // Invert the difference
+          .useDose(supplyItem, -doseDifference);
     }
 
     MedicationIntake updatedIntake = intake.copyWith(
@@ -61,9 +62,18 @@ class _EditIntakePageState extends State<EditIntakePage> {
     Navigator.of(context).pop();
   }
 
-  void _deleteIntake(MedicationIntakeProvider medicationIntakeProvider,
-      MedicationIntake intake) async {
+  void _deleteIntake(
+    MedicationIntakeProvider medicationIntakeProvider,
+    SupplyItemProvider supplyItemProvider,
+    MedicationIntake intake,
+    SupplyItem? supplyItem,
+  ) async {
     if (!mounted) return;
+
+    // TODO create method in manager for this
+    if (supplyItem != null) {
+      SupplyItemManager(supplyItemProvider).useDose(supplyItem, -intake.dose);
+    }
 
     medicationIntakeProvider.deleteIntake(intake);
     Navigator.of(context).pop();
@@ -167,7 +177,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
           onDelete: () async {
             final confirmed = await IntakesPage.confirmDeleteIntake(context);
             if (confirmed == false) return;
-            _deleteIntake(medicationIntakeProvider, widget.intake);
+            _deleteIntake(medicationIntakeProvider, supplyItemProvider,
+                widget.intake, _selectedSupplyItem);
           },
           fields: [
             FormDateField(
