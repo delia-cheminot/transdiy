@@ -23,7 +23,7 @@ class Dialogs {
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text(confirm, style: TextStyle(color: Color(0xFFD32F2F))),
+              child: Text(confirm, style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ),
           ],
         );
