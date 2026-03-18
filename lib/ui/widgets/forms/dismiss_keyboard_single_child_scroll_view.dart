@@ -1,51 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class DismissKeyboardSingleChildScrollView extends StatefulWidget {
   final Widget child;
   final EdgeInsets? padding;
+  final double scrollThreshold;
 
-  const DismissKeyboardSingleChildScrollView(
-      {required this.child, this.padding});
+  const DismissKeyboardSingleChildScrollView({
+    required this.child,
+    this.padding,
+    this.scrollThreshold = 50,
+  });
 
   @override
   State<DismissKeyboardSingleChildScrollView> createState() =>
-      _ScrollDismissKeyboardState();
+      _DismissKeyboardSingleChildScrollViewState();
 }
 
-class _ScrollDismissKeyboardState
+class _DismissKeyboardSingleChildScrollViewState
     extends State<DismissKeyboardSingleChildScrollView> {
-  final ScrollController _controller = ScrollController();
-  double _startOffset = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    final offset = _controller.offset;
-    final delta = offset - _startOffset;
-
-    if (delta.abs() > 50) {
-      FocusScope.of(context).unfocus();
-      _startOffset = offset;
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.removeListener(_onScroll);
-    _controller.dispose();
-    super.dispose();
-  }
+  double _accumulatedDelta = 0;
+  bool _dragging = false;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      controller: _controller,
-      padding: widget.padding,
-      child: widget.child,
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        // on ne compte que le scroll initié par l’utilisateur
+        if (notification is UserScrollNotification) {
+          _dragging = notification.direction != ScrollDirection.idle;
+        }
+
+        if (notification is ScrollUpdateNotification && _dragging) {
+          _accumulatedDelta += notification.scrollDelta ?? 0;
+
+          if (_accumulatedDelta.abs() > widget.scrollThreshold) {
+            FocusScope.of(context).unfocus();
+            _accumulatedDelta = 0;
+          }
+        }
+        return false;
+      },
+      child: SingleChildScrollView(
+        padding: widget.padding,
+        child: widget.child,
+      ),
     );
   }
 }

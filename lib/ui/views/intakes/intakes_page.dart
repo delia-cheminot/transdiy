@@ -47,6 +47,7 @@ class IntakesPage extends StatelessWidget {
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
+            // TODO track supply item id in intake to put the quantity back
             medicationIntakeProvider.deleteIntake(intake);
           }
         },
