@@ -41,7 +41,7 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
 
     const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_launcher_monochrome');
 
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
