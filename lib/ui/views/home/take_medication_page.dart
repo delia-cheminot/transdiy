@@ -7,10 +7,12 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
-import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -31,11 +33,15 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   bool _hasInitializedSide = false;
   SupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
+  late TextEditingController _deadSpaceController;
+  Decimal? _deadSpace;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
-  bool get _isFormValid => _takenDoseError == null;
+  String? get _deadSpaceError => positiveDecimal(_takenDoseController.text);
+
+  bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 
   bool get _isInjection =>
       widget.schedule.administrationRoute == AdministrationRoute.injection;
@@ -53,6 +59,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
+      deadSpace: _deadSpace,
     );
 
     Navigator.of(context).pop();
@@ -83,6 +90,18 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
+// TODO implement tryParseDecimal
+  void _onDeadSpaceChanged() {
+    final deadSpace = Decimal.tryParse(
+      _deadSpaceController.text.replaceAll(',', '.'),
+    );
+    if (deadSpace != null) {
+      setState(() {
+        _deadSpace = deadSpace;
+      });
+    }
+  }
+
   void _onSupplyItemChanged(SupplyItem? item) {
     setState(() {
       _selectedSupplyItem = item;
@@ -96,11 +115,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     _takenDose = widget.schedule.dose;
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
+    _deadSpaceController = TextEditingController(text: '0');
   }
 
   @override
   void dispose() {
     _takenDoseController.dispose();
+    _deadSpaceController.dispose();
     super.dispose();
   }
 
@@ -146,83 +167,74 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           ),
         ];
 
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Take intake'),
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: pagePadding,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FormDateField(
-                      date: _takenDate,
-                      label: 'Date',
-                      onChanged: _onTakenDateChanged,
-                    ),
-                    FormTextField(
-                      controller: _takenDoseController,
-                      label: 'Amount',
-                      onChanged: _onTakenDoseChanged,
-                      inputType: TextInputType.number,
-                      suffixText: widget.schedule.molecule.unit,
-                      errorText: _takenDoseError,
-                      regexFormatter: r'[0-9.,]',
-                    ),
-                    if (_selectedSupplyItem != null)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              const WidgetSpan(
-                                child: Icon(
-                                  Icons.info_outline,
-                                  size: 16,
-                                ),
-                              ),
-                              TextSpan(
-                                text:
-                                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
-                              ),
-                            ],
-                          ),
+        return ModelForm(
+          title: 'Take ${widget.schedule.name}',
+          avatar: widget.schedule.administrationRoute.icon,
+          submitButtonLabel: 'Take intake',
+          isFormValid: _isFormValid,
+          saveChanges: (!isLoading && _isFormValid)
+              ? () => _takeIntake(medicationIntakeProvider, supplyItemProvider)
+              : () {},
+          fields: [
+            FormDateField(
+              label: 'Date',
+              date: _takenDate,
+              onChanged: _onTakenDateChanged,
+            ),
+            FormSpacer(),
+            FormTextField(
+              controller: _takenDoseController,
+              label: 'Amount',
+              onChanged: _onTakenDoseChanged,
+              inputType: TextInputType.numberWithOptions(decimal: true),
+              suffixText: widget.schedule.molecule.unit,
+              errorText: _takenDoseError,
+              regexFormatter: r'[0-9.,]',
+            ),
+            if (_selectedSupplyItem != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      const WidgetSpan(
+                        child: Icon(
+                          Icons.info_outline,
+                          size: 16,
                         ),
                       ),
-                    FormDropdownField<SupplyItem?>(
-                      value: _selectedSupplyItem,
-                      items: supplyItemDropdownItems,
-                      onChanged: _onSupplyItemChanged,
-                      label: 'Supply item',
-                    ),
-                    if (_isInjection)
-                      FormDropdownField<InjectionSide>(
-                        value: _selectedSide,
-                        items: InjectionSideDropdown.menuItems,
-                        onChanged: _onInjectionSideChanged,
-                        label: 'Injection side',
+                      TextSpan(
+                        text:
+                            ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
                       ),
-                    const SizedBox(height: 16),
-                    Container(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: (!isLoading && _isFormValid)
-                              ? () => _takeIntake(
-                                  medicationIntakeProvider, supplyItemProvider)
-                              : null, // null = bouton grisé
-                          child: const Text('Take intake'),
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
+            FormDropdownField<SupplyItem?>(
+              value: _selectedSupplyItem,
+              items: supplyItemDropdownItems,
+              onChanged: _onSupplyItemChanged,
+              label: 'Supply item',
             ),
-          ),
+            if (_isInjection) ...[
+              FormDropdownField<InjectionSide>(
+                value: _selectedSide,
+                items: InjectionSideDropdown.menuItems,
+                onChanged: _onInjectionSideChanged,
+                label: 'Injection side',
+              ),
+              FormTextField(
+                controller: _deadSpaceController,
+                label: 'Needle dead space',
+                onChanged: _onDeadSpaceChanged,
+                inputType: TextInputType.numberWithOptions(decimal: true),
+                suffixText: 'μL',
+                errorText: _deadSpaceError,
+                regexFormatter: r'[0-9.,]',
+              ),
+            ],
+          ],
         );
       },
     );

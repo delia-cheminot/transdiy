@@ -32,7 +32,6 @@ migrate_working_dir/
 .pub/
 /build/
 .packages
-pubspec.lock
 
 # Symbolication related
 app.*.symbols
@@ -45,5 +44,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+android/.kotlin/
+
 # FVM Version Cache
 .fvm/
+android/build/

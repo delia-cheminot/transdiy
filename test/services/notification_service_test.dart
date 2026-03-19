@@ -121,7 +121,7 @@ void main() {
 
   setUp(() {
     tzdata.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('UTC'));
+    tz.setLocalLocation(tz.getLocation('Etc/UTC'));
 
     NotificationService.isPlatformSupported = () => true;
     fakePlugin = FakeFlutterLocalNotificationsPlugin();

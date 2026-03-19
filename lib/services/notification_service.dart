@@ -41,7 +41,7 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
 
     const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_launcher_monochrome');
 
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
@@ -77,6 +77,7 @@ class NotificationService {
   Future<void> requestNotificationPermission() async {
     if (Platform.isAndroid) {
       await _androidImplementation?.requestNotificationsPermission();
+      await _androidImplementation?.requestExactAlarmsPermission();
     } else if (Platform.isIOS) {
       await _iosImplementation?.requestPermissions(
         alert: true,
@@ -98,6 +99,13 @@ class NotificationService {
     }
 
     return true;
+  }
+
+  Future<bool> canScheduleExactAlarms() async {
+    if (!Platform.isAndroid) return true;
+    final canSchedule =
+        await _androidImplementation?.canScheduleExactNotifications();
+    return canSchedule ?? false;
   }
 
   Future<void> showNotification({
@@ -137,17 +145,24 @@ class NotificationService {
     final scheduledDate =
         tz.TZDateTime(tz.local, year, month, day, hour, minute);
 
+    final payload = jsonEncode({
+      'scheduledTime':
+          DateTime(year, month, day, hour, minute).toIso8601String(),
+    });
+
+    final useExact = await canScheduleExactAlarms();
+    final scheduleMode = useExact
+        ? AndroidScheduleMode.exactAllowWhileIdle
+        : AndroidScheduleMode.inexactAllowWhileIdle;
+
     await _notificationsPlugin.zonedSchedule(
       id: id,
       title: title,
       body: body,
       scheduledDate: scheduledDate,
       notificationDetails: _notificationDetails(),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: jsonEncode({
-        'scheduledTime':
-            DateTime(year, month, day, hour, minute).toIso8601String(),
-      }),
+      androidScheduleMode: scheduleMode,
+      payload: payload,
     );
   }
 

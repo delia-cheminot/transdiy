@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  static Future<bool?> confirmDelete(BuildContext context) {
+  // TODO refactor this, it's a confirm delete dialog.
+  // we should just pass the name of the element or smth
+  static Future<bool?> confirmDialog(
+      {required BuildContext context,
+      String title = "Delete this element?",
+      String content = "This action can't be undone.",
+      String cancel = "Cancel",
+      String confirm = "Delete"}) {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete this element?'),
-          content: Text(
-              'This action cannot be undone.'),
+          title: Text(title),
+          content: Text(content),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Cancel'),
+              child: Text(cancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text('Delete'),
+              child: Text(confirm),
             ),
           ],
         );

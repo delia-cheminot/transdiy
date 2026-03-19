@@ -4,6 +4,7 @@ import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/decimal_helpers.dart';
 import 'package:mona/util/validators.dart';
 
 class SupplyItem {
@@ -126,7 +127,8 @@ class SupplyItem {
           (validateTotalAmount(totalAmount) != null
               ? 'Invalid total amount'
               : null) ??
-          (Decimal.tryParse(value!)! > Decimal.parse(totalAmount)
+          (Decimal.tryParse(value!.replaceAll(',', '.'))! >
+                  parseDecimal(totalAmount)
               ? 'Cannot exceed total capacity'
               : null);
     };
