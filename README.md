@@ -66,7 +66,7 @@ Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructi
 
 ## Support
 
-  <h3 align="center"><a href="https://discord.gg/qsHzkX89vJ"> Maintainers</a></h3>
+  <h3 align="center"><a href="https://github.com/delia-cheminot/mona-hrt/graphs/contributors"> Maintainers</a></h3>
 
 <p align="center">
   <br>
