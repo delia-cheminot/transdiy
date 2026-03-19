@@ -1,18 +1,38 @@
-![Mona](/assets/readme/mona_banner.png)
+<p align="center">
+    <img alt="GitPoint" title="GitPoint" src="https://github.com/delia-cheminot/mona-hrt/blob/main/assets/readme/mona_banner.png?raw=true" width="450">
+</p>
+
+<p align="center">
+    Track your hormones. Manage your meds. All private, open, and free.
+</p>
+
+
+<p align="center">
+  <a href="https://apps.apple.com/app/mona-hrt-journal/id6757274628">
+    <img alt="Download on the App Store" title="App Store" src="https://i.imgur.com/GZIiReo.png" height="45">
+  </a>
+  <a href="https://github.com/delia-cheminot/mona-hrt/releases/latest/download/app-universal-release.apk">
+    <img alt="Get it on Google Play" title="Google Play" src="https://i.imgur.com/CQBpKeT.png" height="45">
+  </a>
+</p>
+
+
+## Table of Contents
+- [Introduciton](#introduction)
+- [Features](#features)
+- [Contributing](#contributing)
+- [Support](#support)
 
 ---
 
-Track your hormones. Manage your meds. All private, open, and free.
-
+## Introduction
 Take control of your hormonal health with Mona, the fully local, open-source app designed to help you track, understand, and manage your hormone journey.
 
-## Table of Contents
-- [Features](#-features)
-- [Download](#-download)
-- [Contributing](#-contributing)
-- [Discord](#-discord)
-- [Support us](#-support-us)
-- [Maintainers](#-maintainers)
+**Available for both iOS and Android (Available on the Google Play Store coming soon).**
+
+<p align="center">
+    <img alt="Download on the App Store" title="App Store" src="https://i.imgur.com/zt5bNgg.png">
+</p>
 
 ---
 
@@ -36,37 +56,27 @@ Take control of your hormonal health with Mona, the fully local, open-source app
 
 ---
 
-## Download
-
-Mona is available for both Android and iOS. 
-
-- **Android:** [Download the latest APK](https://github.com/delia-cheminot/mona-hrt/releases/tag/latest)
-- **iOS:** [Join the TestFlight Beta](https://testflight.apple.com/join/ersXvycy) or [Download on the App Store](https://apps.apple.com/app/mona-hrt-journal/id6757274628)
-
----
-
 ## Contributing
 
-We welcome pull requests from external contributors! The app is currently under development at the Alpha stage, and any help is appreciated.
+We welcome pull requests from external contributors! The app is currently under development and any help is appreciated.
 
 Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
 
 ---
 
-## Discord
-[![Discord Badge](https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/qsHzkX89vJ)
+## Support
 
-## Support us
-[![Ko-fi Badge](https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge)](https://ko-fi.com/deliacheminot)
+  <h3 align="center"><a href="https://discord.gg/qsHzkX89vJ"> Maintainers</a></h3>
 
-## Maintainers
-[@délia](https://github.com/delia-cheminot)
-
-[@june](https://github.com/yakissa)
-
-
-
-
-
-![Flutter Badge](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff&style=for-the-badge)
-![Inkscape Badge](https://img.shields.io/badge/Inkscape-000?logo=inkscape&logoColor=fff&style=for-the-badge)
+<p align="center">
+  <br>
+  <a href="https://discord.gg/qsHzkX89vJ">
+    <img alt="Discord server community" title="Discord" src="https://img.shields.io/badge/Discord-5865F2?logo=discord&logoColor=fff&style=for-the-badge">
+  </a>
+  <a href="https://ko-fi.com/deliacheminot">
+    <img alt="Ko-Fi badge" title="Ko-Fi" src="https://img.shields.io/badge/Ko--fi-FF6433?logo=kofi&logoColor=fff&style=for-the-badge">
+  </a>
+  <br>
+  <img alt="Flutter badge" title="Flutter" src="https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=fff&style=for-the-badge">
+  <img alt="Inscape badge" title="Inscape" src="https://img.shields.io/badge/Inkscape-000?logo=inkscape&logoColor=fff&style=for-the-badge">
+</p>
