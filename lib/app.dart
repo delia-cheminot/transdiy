@@ -2,6 +2,7 @@ import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 import 'ui/views/main_page.dart';
@@ -36,7 +37,9 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _lastTimeZone = DateTime.now().timeZoneOffset.toString();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await NotificationService().initialize();
+      if (!mounted) return;
       _medicationScheduleProvider = context.read<MedicationScheduleProvider>();
       _preferencesService = context.read<PreferencesService>();
       _medicationScheduleProvider.addListener(_regenerateNotifications);
