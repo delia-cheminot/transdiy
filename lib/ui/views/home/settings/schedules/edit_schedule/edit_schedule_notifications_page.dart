@@ -35,6 +35,7 @@ class _EditScheduleNotificationsPageState
       if (!alreadyExists) {
         setState(() {
           _notificationTimes.add(picked);
+          _notificationTimes.sort((a,b) => a.compareTo(b));
         });
       }
     }

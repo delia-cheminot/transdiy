@@ -230,7 +230,16 @@ class MedicationSchedule {
   @override
   String toString() {
     return "$dose mg ${molecule.name} "
-        "${ester != null ? "${ester!.name} " : ""}"
-        "${administrationRoute.name} every $intervalDays days";
+        "${ester != null ? "${ester!.name} " : ""}${administrationRoute.name}\n"
+        "${formatFrequency()}";
+  }
+
+  String formatFrequency() {
+    if (intervalDays == 1) {
+      return "every day";
+    }
+    else {
+      return "every $intervalDays days";
+    }
   }
 }
