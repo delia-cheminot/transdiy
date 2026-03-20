@@ -7,6 +7,7 @@ import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:mona/services/backup_service.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -95,7 +96,14 @@ class _SettingsPageState extends State<SettingsPage>
       appBar: AppBar(title: Text('Settings')),
       body: ListView(
         children: [
-          // Tile for medication schedules
+          const Divider(color: Colors.grey),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Text(
+              'Notifications',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+            ),
+          ),
           ListTile(
             title: Text('Schedules'),
             subtitle: Text(medicationScheduleProvider.schedules.isEmpty
@@ -109,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage>
             },
           ),
           SwitchListTile(
-            title: const Text('Enable notifications'),
+            title: const Text('Send reminders for schedules'),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
@@ -137,7 +145,15 @@ class _SettingsPageState extends State<SettingsPage>
               },
             ),
           if (Platform.isAndroid) ...[
-            const Divider(),
+            const Divider(color: Colors.grey),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(
+                'Updates',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+            ),
             SwitchListTile(
               title: const Text('Auto-Update'),
               subtitle: const Text(
@@ -148,13 +164,101 @@ class _SettingsPageState extends State<SettingsPage>
             ListTile(
               title: const Text('Check for Updates'),
               subtitle: const Text(
-                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'),
+                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent'),
               trailing: const Icon(Icons.system_update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),
           ],
-          const SizedBox(height: 32),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Text(
+              'Data Management',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.upload_file),
+            title: const Text('Export Data'),
+            subtitle: const Text('Save your data to a JSON file'),
+            onTap: () async {
+              try {
+                final savedPath = await BackupService().exportData();
 
+                if (savedPath != null && context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Backup saved to: $savedPath'),
+                      duration: const Duration(seconds: 4),
+                    ),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to export: $e')),
+                  );
+                }
+              }
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.download),
+            title: const Text('Import Data'),
+            subtitle: const Text('Restore data from a JSON backup'),
+            onTap: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Import Data'),
+                  content: const Text(
+                      'This will overwrite all your current data with the backup. '
+                      'This action cannot be undone. Do you want to continue?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      style: TextButton.styleFrom(foregroundColor: Colors.red),
+                      child: const Text('Import'),
+                    ),
+                  ],
+                ),
+              );
+
+              if (confirm == true) {
+                try {
+                  final success = await BackupService().importData();
+                  if (success && context.mounted) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Import Successful'),
+                        content: const Text(
+                            'Please restart the app to apply the restored data.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => exit(0),
+                            child: const Text('Close App'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Failed to import: $e')),
+                    );
+                  }
+                }
+              }
+            },
+          ),
+          const SizedBox(height: 32),
           FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
             builder: (context, snapshot) {
