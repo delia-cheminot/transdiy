@@ -1,11 +1,14 @@
 {
   "name": "Mona",
   "subtitle": "Apps for trans people's health",
-  "description": "",
+  "identifier": "com.deliacheminot.mona",
+  "description": "Take control of your hormonal health with Mona. We make apps for trans people's health.",
   "iconURL": "https://i.imgur.com/PeIdqwy.png",
   "website": "https://discord.gg/qsHzkX89vJ",
   "tintColor": "#4d0473",
-  "featuredApps": [],
+  "featuredApps": [
+    "com.deliacheminot.mona"
+  ],
   "headerURL": "https://i.imgur.com/GfWYFgQ.png",
   "apps": [
     {
@@ -17,20 +20,52 @@
       "iconURL": "https://i.imgur.com/Xb9A1Lh.png",
       "tintColor": "#4d0473",
       "category": "utilities",
-      "screenshots": [],
+      "screenshots": [
+        "https://i.imgur.com/9lIZ9Ft.png",
+        "https://i.imgur.com/ZxD1twb.png",
+        "https://i.imgur.com/pGfNAcY.png"
+      ],
+      "screenshotURLs": [
+        "https://i.imgur.com/dSOQssK.png",
+        "https://i.imgur.com/vuSqW2l.png",
+        "https://i.imgur.com/5cjzlB0.png"
+      ],
+      "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.4.0/mona.ipa",
+      "size": 9556599,
+      "version": "1.4.0",
+      "versionDate": "2026-03-19T15:52:18Z",
+      "versionDescription": "- you can now add as many notifications as you want for a schedule. each schedule has its own notifications !\n- [android] update the app directly from the settings ! future versions won't require you to download the update yourself. this feature also allows for automatic update check.\n- adds a button to add an intake at any time. check it out on the intakes page !\n- you can now edit previous intakes\n- adds a field to specify the needle dead space when taking an injection\n- fixes a bug where injections would show at the wrong day on the graph\n- fixes a bug causing notifications to fail for some users",
       "versions": [
         {
+          "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.4.0/mona.ipa",
+          "size": 9556599,
+          "version": "1.4.0",
+          "buildVersion": "1",
+          "date": "2026-03-19T15:52:18Z",
+          "localizedDescription": "- you can now add as many notifications as you want for a schedule. each schedule has its own notifications !\n- [android] update the app directly from the settings ! future versions won't require you to download the update yourself. this feature also allows for automatic update check.\n- adds a button to add an intake at any time. check it out on the intakes page !\n- you can now edit previous intakes\n- adds a field to specify the needle dead space when taking an injection\n- fixes a bug where injections would show at the wrong day on the graph\n- fixes a bug causing notifications to fail for some users",
+          "minOSVersion": "13.0",
+          "sha256": "420be29eef0fbff71f5f398dd7bdb72cfa2ec15c36672456b437bcc9a99552d1"
+        },
+        {
           "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.3.0/mona.ipa",
-          "size": 8400000,
+          "size": 8351727,
           "version": "1.3.0",
-          "buildVersion": null,
+          "buildVersion": "1",
           "date": "2026-03-13T17:40:00+01:00",
-          "localizedDescription": null,
-          "minOSVersion": null
+          "localizedDescription": "- new exclusive pk values inferred using Esterlabe.jl/estrannaise models and data\n- new molecules : raloxifene and tamoxifen",
+          "minOSVersion": "13.0",
+          "sha256": "c12afe4e1eab000f161043409c9659a41094953d9c658ccd50255bd65acaec96"
         }
       ],
       "appPermissions": {
-        "entitlements": [],
+        "entitlements": [
+          {
+            "name": "com.apple.developer.usernotifications.time-sensitive"
+          },
+          {
+            "name": "get-task-allow"
+          }
+        ],
         "privacy": {}
       }
     }
