@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+// SPDX-FileContributor: Thomas "Seremptos"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:decimal/decimal.dart';
 import '../data/model/supply_item.dart';
 import '../data/providers/supply_item_provider.dart';

@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2026 Alice Lorido <alice@lori.do>
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+// SPDX-FileContributor: Thomas "Seremptos"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 // main_tabs.dart
 import 'package:flutter/material.dart';
 import 'chart/chart_page.dart';

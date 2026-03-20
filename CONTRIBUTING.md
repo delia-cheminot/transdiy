@@ -1,3 +1,10 @@
+<!--
+SPDX-FileCopyrightText: 2026 Mel "Melinokey"
+SPDX-FileCopyrightText: 2026 Benjamin Danlos
+
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 # Contributing to Mona
 
 First off, thank you for considering contributing to Mona! The app is currently in Beta, and we welcome all forms of contributions—whether it's fixing bugs, adding new features, improving documentation, or reporting issues.

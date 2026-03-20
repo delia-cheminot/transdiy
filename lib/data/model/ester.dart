@@ -1,3 +1,9 @@
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+// SPDX-FileCopyrightText: 2026 Alice Lorido <alice@lori.do>
+// SPDX-FileContributor: alix "a1ix2"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:flutter/material.dart';
 
 class Ester {

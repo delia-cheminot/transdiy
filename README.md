@@ -1,3 +1,13 @@
+<!--
+SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+SPDX-FileContributor: Alice Lorido <alice@lori.do>
+SPDX-FileContributor: Mel "Melinokey"
+SPDX-FileContributor: irismessage
+SPDX-FileContributor: Luna Fox
+
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <p align="center">
     <img alt="GitPoint" title="GitPoint" src="https://github.com/delia-cheminot/mona-hrt/blob/main/assets/readme/mona_banner.png?raw=true" width="450">
 </p>

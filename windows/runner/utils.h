@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 #ifndef RUNNER_UTILS_H_
 #define RUNNER_UTILS_H_
 

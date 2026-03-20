@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+// SPDX-FileContributor: Alice Lorido <alice@lori.do>
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:decimal/decimal.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/medication_schedule.dart';

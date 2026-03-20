@@ -1,3 +1,11 @@
+<!--
+SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+SPDX-FileContributor: Mel "Melinokey"
+SPDX-FileContributor: Thomas "Seremptos"
+
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>

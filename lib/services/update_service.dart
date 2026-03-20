@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Mel "Melinokey"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';

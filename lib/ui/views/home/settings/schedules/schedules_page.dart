@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_page.dart';

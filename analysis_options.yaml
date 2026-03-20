@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 # This file configures the analyzer, which statically analyzes Dart code to
 # check for errors, warnings, and lints.
 #

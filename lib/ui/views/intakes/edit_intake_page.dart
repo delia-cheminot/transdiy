@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Thomas "Seremptos"
+// SPDX-FileContributor: Thomas "Seremptos"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/controllers/supply_item_manager.dart';

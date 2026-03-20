@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Alice Lorido <alice@lori.do>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 build-apks:
   script:
     - chmod +x ./build_apk.sh
