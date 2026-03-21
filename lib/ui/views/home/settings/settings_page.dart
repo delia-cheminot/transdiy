@@ -148,7 +148,7 @@ class _SettingsPageState extends State<SettingsPage>
             ListTile(
               title: const Text('Check for Updates'),
               subtitle: const Text(
-                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'),
+                  'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)'),
               trailing: const Icon(Icons.system_update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),
