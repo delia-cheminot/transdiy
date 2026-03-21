@@ -26,6 +26,9 @@ String? positiveInt(String? value) {
   return value.intOrZero <= 0 ? 'Must be a positive number' : null;
 }
 
+String? requiredValue<T>(T? value) =>
+    value == null ? 'Required field' : null;
+
 String? requiredString(String? value) =>
     value.isEmpty ? 'Required field' : null;
 

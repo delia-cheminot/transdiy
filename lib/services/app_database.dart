@@ -47,7 +47,7 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
     );
@@ -57,14 +57,15 @@ class AppDatabase {
     await db.execute('''
     CREATE TABLE supply_items(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      totalDose TEXT NOT NULL,
-      usedDose TEXT NOT NULL,
-      concentration TEXT NOT NULL,
+      totalDose TEXT,
+      usedDose TEXT,
+      concentration TEXT,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL,
-      moleculeJson TEXT NOT NULL,
-      administrationRouteName TEXT NOT NULL,
-      esterName TEXT
+      moleculeJson TEXT,
+      administrationRouteName TEXT,
+      esterName TEXT,
+      type TEXT NOT NULL
     )
     ''');
 
@@ -270,6 +271,46 @@ class AppDatabase {
           );
         }
       }
+    }
+
+    if (oldVersion < 5) {
+      // supply_items : add column 'type' and drop not null on columns
+      await db.execute('''
+      CREATE TABLE supply_items_new(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        totalDose TEXT,
+        usedDose TEXT,
+        concentration TEXT,
+        name TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        moleculeJson TEXT,
+        administrationRouteName TEXT,
+        esterName TEXT,
+        type TEXT NOT NULL
+      )
+      ''');
+
+      await db.execute('''
+      INSERT INTO supply_items_new (
+        id, totalDose, usedDose, concentration, name, quantity,
+        moleculeJson, administrationRouteName, esterName, type
+      )
+      SELECT
+        id, 
+        totalDose,
+        usedDose,
+        concentration,
+        name,
+        quantity,
+        moleculeJson,
+        administrationRouteName,
+        esterName,
+        'medication'
+      FROM supply_items
+      ''');
+
+      await db.execute('DROP TABLE supply_items');
+      await db.execute('ALTER TABLE supply_items_new RENAME TO supply_items');
     }
   }
 

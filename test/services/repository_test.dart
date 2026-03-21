@@ -1,8 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/services/app_database.dart';
 import 'package:mona/services/repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -12,26 +12,26 @@ void main() {
   sqfliteFfiInit();
   databaseFactory = databaseFactoryFfi;
 
-  group('SupplyItemRepository tests', () {
+  group('MedicationSupplyRepository tests', () {
     late AppDatabase dbInstance;
     late Database db;
-    late Repository<SupplyItem> repository;
+    late Repository<MedicationSupply> repository;
 
     setUp(() async {
       AppDatabase.reset();
       dbInstance = AppDatabase.getInstance(inMemory: true);
       db = await dbInstance.database;
       await db.delete('supply_items');
-      repository = Repository<SupplyItem>(
+      repository = Repository<MedicationSupply>(
         db: db,
         tableName: 'supply_items',
-        toMap: (SupplyItem item) => item.toMap(),
-        fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),
+        toMap: (MedicationSupply item) => item.toMap(),
+        fromMap: (Map<String, Object?> map) => MedicationSupply.fromMap(map),
       );
     });
 
-    test('Insert and retrieve a SupplyItem', () async {
-      final item = SupplyItem(
+    test('Insert and retrieve a MedicationSupply', () async {
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('1'),
         concentration: Decimal.parse('1'),
@@ -48,8 +48,8 @@ void main() {
       );
     });
 
-    test('Update a SupplyItem', () async {
-      final item = SupplyItem(
+    test('Update a MedicationSupply', () async {
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('1'),
         concentration: Decimal.parse('1'),
@@ -57,7 +57,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       );
       int id = await repository.insert(item);
-      final updatedItem = SupplyItem(
+      final updatedItem = MedicationSupply(
         name: 'h',
         id: id,
         totalDose: Decimal.parse('2'),
@@ -75,8 +75,8 @@ void main() {
       );
     });
 
-    test('Delete a SupplyItem', () async {
-      final item = SupplyItem(
+    test('Delete a MedicationSupply', () async {
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('1'),
         concentration: Decimal.parse('1'),
@@ -91,8 +91,8 @@ void main() {
       expect(remainingItems.length, 0);
     });
 
-    test('Only delete the specified SupplyItem', () async {
-      final item1 = SupplyItem(
+    test('Only delete the specified MedicationSupply', () async {
+      final item1 = MedicationSupply(
         id: 1,
         name: 'g',
         totalDose: Decimal.parse('1'),
@@ -100,7 +100,7 @@ void main() {
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.oral,
       );
-      final item2 = SupplyItem(
+      final item2 = MedicationSupply(
         id: 2,
         name: 'h',
         totalDose: Decimal.parse('2'),
@@ -126,11 +126,11 @@ void main() {
       AppDatabase.reset();
       AppDatabase dbInstance = AppDatabase.getInstance(inMemory: true);
       Database db = await dbInstance.database;
-      Repository<SupplyItem> repository = Repository<SupplyItem>(
+      Repository<MedicationSupply> repository = Repository<MedicationSupply>(
         db: db,
         tableName: 'bad_table',
-        toMap: (SupplyItem item) => item.toMap(),
-        fromMap: (Map<String, Object?> map) => SupplyItem.fromMap(map),
+        toMap: (MedicationSupply item) => item.toMap(),
+        fromMap: (Map<String, Object?> map) => MedicationSupply.fromMap(map),
       );
 
       try {

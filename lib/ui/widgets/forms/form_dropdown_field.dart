@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mona/util/validators.dart';
 
 class FormDropdownField<T> extends StatelessWidget {
   final T? value;
   final List<DropdownMenuItem<T>> items;
   final ValueChanged<T?> onChanged;
   final String label;
+  final bool required;
 
   const FormDropdownField({
     super.key,
@@ -12,6 +14,7 @@ class FormDropdownField<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
     required this.label,
+    required this.required,
   });
 
   @override
@@ -26,6 +29,8 @@ class FormDropdownField<T> extends StatelessWidget {
         ),
         items: items,
         onChanged: onChanged,
+        validator: required ? requiredValue : null,
+        autovalidateMode: AutovalidateMode.always,
       ),
     );
   }

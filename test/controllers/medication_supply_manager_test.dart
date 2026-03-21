@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
+
 import '../mocks/mocks.mocks.dart';
 
 void main() {
@@ -16,9 +17,9 @@ void main() {
     manager = SupplyItemManager(mockSupplyItemProvider);
   });
 
-  group('SupplyItemManager', () {
+  group('MedicationSupplyManager', () {
     test('should use amount correctly', () async {
-      final item = SupplyItem(
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('20'),
         usedDose: Decimal.parse('5'),
@@ -27,10 +28,10 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       );
 
-      late SupplyItem updatedItem;
+      late MedicationSupply updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
           .thenAnswer((invocation) async {
-        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        updatedItem = invocation.positionalArguments.first as MedicationSupply;
         return Future.value();
       });
 
@@ -41,7 +42,7 @@ void main() {
 
     test('should clamp dose when using more than available and update provider',
         () async {
-      final item = SupplyItem(
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('5'),
@@ -50,10 +51,10 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       );
 
-      late SupplyItem updatedItem;
+      late MedicationSupply updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
           .thenAnswer((invocation) async {
-        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        updatedItem = invocation.positionalArguments.first as MedicationSupply;
         return Future.value();
       });
 
@@ -66,7 +67,7 @@ void main() {
     test(
         'should clamp dose when putting back more than the maximum quantity of a supply and update provider',
         () async {
-      final item = SupplyItem(
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('5'),
@@ -75,10 +76,10 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       );
 
-      late SupplyItem updatedItem;
+      late MedicationSupply updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
           .thenAnswer((invocation) async {
-        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        updatedItem = invocation.positionalArguments.first as MedicationSupply;
         return Future.value();
       });
 
@@ -89,7 +90,7 @@ void main() {
     });
 
     test('use zero amount', () async {
-      final item = SupplyItem(
+      final item = MedicationSupply(
         name: 'h',
         totalDose: Decimal.parse('10'),
         usedDose: Decimal.parse('5'),

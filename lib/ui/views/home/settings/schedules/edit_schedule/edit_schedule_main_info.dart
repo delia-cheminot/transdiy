@@ -177,12 +177,14 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
           items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
           label: 'Molecule',
+          required: false,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
           items: AdministrationRoute.menuItems,
           onChanged: _onAdministrationRouteChanged,
           label: 'Administration route',
+          required: false,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
@@ -190,6 +192,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
             items: Ester.menuItems,
             onChanged: _onEsterChanged,
             label: 'Ester',
+            required: false,
           ),
         FormSpacer(),
         FormTextField(

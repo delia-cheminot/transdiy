@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/generic_supply.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/supply_type.dart';
 import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
-  List<SupplyItem> _items = [];
+  List<MedicationSupply> _medicationItems = [];
+  List<GenericSupply> _genericItems = [];
   bool _isLoading = true;
   final Repository<SupplyItem> repository;
 
@@ -16,35 +20,56 @@ class SupplyItemProvider extends ChangeNotifier {
     fromMap: (map) => SupplyItem.fromMap(map),
   );
 
-  List<SupplyItem> get items => _items;
+  List<MedicationSupply> get medicationItems => _medicationItems..sort(
+        (a, b) => a.name.compareTo(b.name),
+  );
+  List<GenericSupply> get genericItems => _genericItems..sort(
+        (a, b) => a.name.compareTo(b.name),
+  );
 
   bool get isLoading => _isLoading;
 
-  List<SupplyItem> get orderedByRemainingDose => [..._items]..sort(
+  List<MedicationSupply> get medicationSuppliesOrderedByRemainingDose => [..._medicationItems]..sort(
       (a, b) => a.getRatio().compareTo(b.getRatio()),
     );
 
   SupplyItemProvider({Repository<SupplyItem>? repository})
       : repository = repository ?? defaultRepository {
-    _init();
+    fetchAll();
   }
 
-  Future<void> _init() async {
-    _items = await repository.getAll();
+  Future<void> fetchAll() async {
+    fetchMedicationItems();
+    fetchGenericItems();
+    notifyListeners();
     _isLoading = false;
+  }
+
+  Future<void> fetchMedicationItems() async {
+    _medicationItems = (await repository.getAll())
+      .where((item) =>
+          item.getType()==SupplyType.medication
+      )
+      .map((item)=>item as MedicationSupply)
+      .toList();
     notifyListeners();
   }
 
-  Future<void> fetchItems() async {
-    _items = await repository.getAll();
+  Future<void> fetchGenericItems() async {
+    _genericItems = (await repository.getAll())
+      .where((item) =>
+          item.getType()==SupplyType.generic
+      )
+      .map((item)=>item as GenericSupply)
+      .toList();
     notifyListeners();
   }
 
-  SupplyItem? getMostUsedItemForMedication(Molecule molecule,
+  MedicationSupply? getMostUsedItemForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_items.isEmpty) return null;
+    if (_medicationItems.isEmpty) return null;
 
-    final filtered = orderedByRemainingDose.where(
+    final filtered = medicationSuppliesOrderedByRemainingDose.where(
       (item) =>
           item.molecule == molecule &&
           item.administrationRoute == administrationRoute &&
@@ -54,11 +79,11 @@ class SupplyItemProvider extends ChangeNotifier {
     return filtered.isEmpty ? null : filtered.first;
   }
 
-  List<SupplyItem> getItemsForMedication(Molecule molecule,
+  List<MedicationSupply> getItemsForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_items.isEmpty) return [];
+    if (_medicationItems.isEmpty) return [];
 
-    return orderedByRemainingDose
+    return medicationSuppliesOrderedByRemainingDose
         .where(
           (item) =>
               item.molecule == molecule &&
@@ -70,21 +95,21 @@ class SupplyItemProvider extends ChangeNotifier {
 
   Future<void> deleteItemFromId(int id) async {
     await repository.delete(id);
-    await fetchItems();
+    await fetchAll();
   }
 
   Future<void> deleteItem(SupplyItem item) async {
-    await repository.delete(item.id);
-    await fetchItems();
+    await repository.delete(item.getId());
+    await fetchAll();
   }
 
-  Future<void> add(SupplyItem supplyItem) async {
-    await repository.insert(supplyItem);
-    await fetchItems();
+  Future<void> add(SupplyItem medicationSupply) async {
+    await repository.insert(medicationSupply);
+    await fetchAll();
   }
 
   Future<void> updateItem(SupplyItem item) async {
-    await repository.update(item, item.id);
-    await fetchItems();
+    await repository.update(item, item.getId());
+    await fetchAll();
   }
 }

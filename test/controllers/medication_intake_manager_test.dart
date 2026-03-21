@@ -6,8 +6,8 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 
@@ -35,7 +35,7 @@ void main() {
         final date = DateTime.now();
         const side = InjectionSide.left;
 
-        final supplyItem = SupplyItem(
+        final medicationSupply = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -65,7 +65,7 @@ void main() {
           scheduledDateTime: date,
           takenDateTime: date.toUtc(),
           takenTimeZone: 'Europe/Paris',
-          supplyItem: supplyItem,
+          supplyItem: medicationSupply,
           schedule: schedule,
           side: side,
         );
@@ -88,7 +88,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = SupplyItem(
+        final medicationSupply = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -107,9 +107,9 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late SupplyItem updatedSupplyItem;
+        late MedicationSupply updatedMedicationSupply;
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem = inv.positionalArguments.first as SupplyItem;
+          updatedMedicationSupply = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 
@@ -118,12 +118,12 @@ void main() {
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate.toUtc(),
           takenTimeZone: 'Europe/Paris',
-          supplyItem: supplyItem,
+          supplyItem: medicationSupply,
           schedule: schedule,
           side: null,
         );
 
-        expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
+        expect(updatedMedicationSupply.usedDose, medicationSupply.usedDose + dose);
       });
 
       test('adds deadSpace to dose when updating supply item', () async {
@@ -136,7 +136,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = SupplyItem(
+        final medicationSupply = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -155,10 +155,10 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late SupplyItem updatedSupplyItem;
+        late MedicationSupply updatedMedicationSupply;
 
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem = inv.positionalArguments.first as SupplyItem;
+          updatedMedicationSupply = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 
@@ -167,15 +167,15 @@ void main() {
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate.toUtc(),
           takenTimeZone: 'Europe/Paris',
-          supplyItem: supplyItem,
+          supplyItem: medicationSupply,
           schedule: schedule,
           side: null,
           deadSpace: deadSpace,
         );
 
         expect(
-          updatedSupplyItem.usedDose,
-          supplyItem.usedDose + dose + expectedExtra,
+          updatedMedicationSupply.usedDose,
+          medicationSupply.usedDose + dose + expectedExtra,
         );
       });
     });

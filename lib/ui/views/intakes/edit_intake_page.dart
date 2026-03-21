@@ -4,7 +4,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
-import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/views/intakes/intakes_page.dart';
@@ -33,7 +33,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-  SupplyItem? _selectedSupplyItem;
+  MedicationSupply? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
 
   String? get _takenDoseError =>
@@ -48,15 +48,15 @@ class _EditIntakePageState extends State<EditIntakePage> {
       MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider,
       MedicationIntake intake,
-      SupplyItem? supplyItem) async {
+      MedicationSupply? medicationSupply) async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
     // TODO create method in manager for this
-    if (supplyItem != null) {
+    if (medicationSupply != null) {
       Decimal doseDifference = intake.dose - _takenDose;
       SupplyItemManager(supplyItemProvider)
-          .useDose(supplyItem, -doseDifference);
+          .useDose(medicationSupply, -doseDifference);
     }
 
     final timezone =
@@ -77,15 +77,15 @@ class _EditIntakePageState extends State<EditIntakePage> {
 
   void _deleteIntake(
     MedicationIntakeProvider medicationIntakeProvider,
-    SupplyItemProvider supplyItemProvider,
+      SupplyItemProvider supplyItemProvider,
     MedicationIntake intake,
-    SupplyItem? supplyItem,
+    MedicationSupply? medicationSupply,
   ) async {
     if (!mounted) return;
 
     // TODO create method in manager for this
-    if (supplyItem != null) {
-      SupplyItemManager(supplyItemProvider).useDose(supplyItem, -intake.dose);
+    if (medicationSupply != null) {
+      SupplyItemManager(supplyItemProvider).useDose(medicationSupply, -intake.dose);
     }
 
     medicationIntakeProvider.deleteIntake(intake);
@@ -117,7 +117,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
     }
   }
 
-  void _onSupplyItemChanged(SupplyItem? item) {
+  void _onMedicationSupplyChanged(MedicationSupply? item) {
     setState(() {
       _selectedSupplyItem = item;
     });
@@ -159,19 +159,19 @@ class _EditIntakePageState extends State<EditIntakePage> {
           _hasInitializedSupplyItem = true;
         }
 
-        final supplyItemOptions = supplyItemProvider.getItemsForMedication(
+        final medicationSupplyOptions = supplyItemProvider.getItemsForMedication(
           widget.intake.molecule,
           widget.intake.administrationRoute,
           widget.intake.ester,
         );
 
-        final supplyItemDropdownItems = [
-          const DropdownMenuItem<SupplyItem?>(
+        final medicationSupplyDropdownItems = [
+          const DropdownMenuItem<MedicationSupply?>(
             value: null,
             child: Text('None'),
           ),
-          ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<SupplyItem?>(
+          ...medicationSupplyOptions.map(
+            (item) => DropdownMenuItem<MedicationSupply?>(
               value: item,
               child: Text(item.name),
             ),
@@ -215,11 +215,12 @@ class _EditIntakePageState extends State<EditIntakePage> {
                     ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
               ),
             FormSpacer(),
-            FormDropdownField<SupplyItem?>(
+            FormDropdownField<MedicationSupply?>(
               value: _selectedSupplyItem,
-              items: supplyItemDropdownItems,
-              onChanged: _onSupplyItemChanged,
+              items: medicationSupplyDropdownItems,
+              onChanged: _onMedicationSupplyChanged,
               label: 'Supply item',
+              required: false,
             ),
             if (_isInjection)
               FormDropdownField<InjectionSide>(
@@ -227,6 +228,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
                 items: InjectionSideDropdown.menuItems,
                 onChanged: _onInjectionSideChanged,
                 label: 'Injection side',
+                required: false,
               ),
           ],
         );

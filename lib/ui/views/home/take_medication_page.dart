@@ -5,7 +5,7 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
@@ -34,7 +34,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-  SupplyItem? _selectedSupplyItem;
+  MedicationSupply? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
   late TextEditingController _deadSpaceController;
   Decimal? _deadSpace;
@@ -110,7 +110,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
-  void _onSupplyItemChanged(SupplyItem? item) {
+  void _onMedicationSupplyChanged(MedicationSupply? item) {
     setState(() {
       _selectedSupplyItem = item;
     });
@@ -157,18 +157,18 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           _hasInitializedSupplyItem = true;
         }
 
-        final supplyItemOptions = supplyItemProvider.getItemsForMedication(
+        final medicationSupplyOptions = supplyItemProvider.getItemsForMedication(
           widget.schedule.molecule,
           widget.schedule.administrationRoute,
           widget.schedule.ester,
         );
-        final supplyItemDropdownItems = [
-          const DropdownMenuItem<SupplyItem?>(
+        final medicationSupplyDropdownItems = [
+          const DropdownMenuItem<MedicationSupply?>(
             value: null,
             child: Text('None'),
           ),
-          ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<SupplyItem?>(
+          ...medicationSupplyOptions.map(
+            (item) => DropdownMenuItem<MedicationSupply?>(
               value: item,
               child: Text(item.name),
             ),
@@ -205,11 +205,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                     ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
               ),
             FormSpacer(),
-            FormDropdownField<SupplyItem?>(
+            FormDropdownField<MedicationSupply?>(
               value: _selectedSupplyItem,
-              items: supplyItemDropdownItems,
-              onChanged: _onSupplyItemChanged,
+              items: medicationSupplyDropdownItems,
+              onChanged: _onMedicationSupplyChanged,
               label: 'Supply item',
+              required: false,
             ),
             if (_isInjection) ...[
               FormDropdownField<InjectionSide>(
@@ -217,6 +218,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 items: InjectionSideDropdown.menuItems,
                 onChanged: _onInjectionSideChanged,
                 label: 'Injection side',
+                required: false,
               ),
               FormTextField(
                 controller: _deadSpaceController,

@@ -44,6 +44,7 @@ void main() {
         'quantity': 1,
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
+        'type': 'medication'
       });
 
       final item = await db.query(

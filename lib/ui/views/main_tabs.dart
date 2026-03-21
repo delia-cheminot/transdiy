@@ -1,13 +1,13 @@
 // main_tabs.dart
 import 'package:flutter/material.dart';
 import 'package:mona/ui/views/chart/blood_test_page.dart';
+import 'package:mona/ui/views/supplies/supply_item_form_page.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
 import 'home/settings/settings_page.dart';
 import 'intakes/choose_schedule_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
-import 'supplies/new_item_page.dart';
 import 'supplies/pharmacy_page.dart';
 
 final List<MainTabConfig> mainTabs = [
@@ -71,7 +71,7 @@ final List<MainTabConfig> mainTabs = [
         Navigator.of(context).push(
           MaterialPageRoute<void>(
             fullscreenDialog: true,
-            builder: (context) => NewItemPage(),
+            builder: (context) => SupplyItemFormPage(null),
           ),
         );
       },
