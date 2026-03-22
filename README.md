@@ -128,6 +128,8 @@ Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructi
 
 ## Legal
 
+**Mona is software designed for informational and entertainment purposes only. Your use of any aspect of Mona is at your own risk. Mona's maintainers and contributors assume no liability for direct or indirect damages, either physical, psychological, or otherwise, resulting from the use of this software. Mona's maintainers and contributors are not providing any medical advice of any kind to you through Mona, and Mona's maintainers and contributors make no representations whatsoever in respect of Mona. Users are strongly advised to exercise caution and seek professional medical advice for health-related queries.**
+
 App Store is a trademark of Apple Inc., registered in the U.S. and other countries. Google Play is a trademark of Google LLC. Other product and company names mentioned herein may be trademarks of their respective companies.
 
 Mona is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3 of the License.
