@@ -32,12 +32,6 @@ class PreferencesService extends ChangeNotifier {
   String get languageCode =>
       _prefs.getString(_languageCodeKey) ?? defaultLanguageCode;
 
-  Future<void> setNotificationTime(TimeOfDay time) async {
-    await _prefs.setInt(_notificationHourKey, time.hour);
-    await _prefs.setInt(_notificationMinuteKey, time.minute);
-    notifyListeners();
-  }
-
   Future<void> setNotificationsEnabled(bool isEnabled) async {
     await _prefs.setBool(_notificationsEnabledKey, isEnabled);
     notifyListeners();

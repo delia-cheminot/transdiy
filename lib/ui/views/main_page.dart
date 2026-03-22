@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
@@ -19,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   bool _hideUpdateBanner = false;
   bool _hideUpdateDialog = false;
 
-  MainTabConfig get currentTab => mainTabs[_selectedIndex];
+  MainTabConfig get currentTab => getMainTabs(context)[_selectedIndex];
 
   void _selectIndex(int index) {
     setState(() => _selectedIndex = index);
@@ -52,21 +53,21 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _showUpdateDialog() {
+    final localizations = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Notifications have been updated!'),
+          title: Text(localizations.notificationsUpdated),
           content: StatefulBuilder(
             builder: (context, setState) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                      'Each schedule now has its own notifications.\n\n'
-                      'Please set up notifications for your schedules to make sure you don’t miss anything.',
+                  Text(localizations.notificationsUpdatedDescription,
                       textAlign: TextAlign.start),
                   const SizedBox(height: 16),
                   Row(
@@ -81,7 +82,7 @@ class _MainPageState extends State<MainPage> {
                           });
                         },
                       ),
-                      Text("Don't show again"),
+                      Text(localizations.dontShowAgain),
                     ],
                   ),
                 ],
@@ -106,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 );
               },
-              child: const Text('Schedule settings'),
+              child: Text(localizations.scheduleSettings),
             ),
           ],
         );
@@ -147,7 +148,7 @@ class _MainPageState extends State<MainPage> {
             selectedIndex: _selectedIndex,
             onDestinationSelected: _selectIndex,
             destinations: [
-              for (final tab in mainTabs)
+              for (final tab in getMainTabs(context))
                 NavigationDestination(
                   label: tab.title,
                   icon: Icon(tab.icon),

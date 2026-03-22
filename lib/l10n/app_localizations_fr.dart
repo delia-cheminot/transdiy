@@ -76,6 +76,64 @@ class AppLocalizationsFr extends AppLocalizations {
   String get selectLanguage => 'Sélectionner la langue';
 
   @override
+  String get settingsTitle => 'Paramètres';
+
+  @override
+  String schedulesCreated(Object count) {
+    return '$count créés';
+  }
+
+  @override
+  String get english => 'Anglais';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get enableNotifications => 'Activer les notifications';
+
+  @override
+  String get notificationsDisabledTitle => 'Les notifications sont désactivées';
+
+  @override
+  String get clickToOpenSettings => 'Cliquez pour ouvrir les paramètres';
+
+  @override
+  String get exactRemindersDisabled => 'Les heures de rappel exactes sont désactivées';
+
+  @override
+  String get remindersDelayed => 'Les rappels peuvent être légèrement retardés. Appuyez pour ouvrir les paramètres.';
+
+  @override
+  String get autoUpdate => 'Mise à jour automatique';
+
+  @override
+  String get autoUpdateDescription => 'Vérifier automatiquement les nouvelles mises à jour au lancement de l\'application';
+
+  @override
+  String get checkForUpdates => 'Vérifier les mises à jour';
+
+  @override
+  String get checkForUpdatesDescription => 'Vérifier manuellement la dernière version\nCela vous connectera à Internet\nAucune donnée ne sera envoyée)';
+
+  @override
+  String appVersion(Object version) {
+    return 'Mona version $version';
+  }
+
+  @override
+  String get notificationsUpdated => 'Les notifications ont été mises à jour !';
+
+  @override
+  String get notificationsUpdatedDescription => 'Chaque planning a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos plannings pour vous assurer de ne rien manquer.';
+
+  @override
+  String get dontShowAgain => 'Ne plus afficher';
+
+  @override
+  String get scheduleSettings => 'Paramètres des plannings';
+
+  @override
   String get newItem => 'Nouvel élément';
 
   @override

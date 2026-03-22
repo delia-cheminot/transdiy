@@ -76,6 +76,64 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectLanguage => 'Select Language';
 
   @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String schedulesCreated(Object count) {
+    return '$count created';
+  }
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get enableNotifications => 'Enable notifications';
+
+  @override
+  String get notificationsDisabledTitle => 'Notifications are disabled';
+
+  @override
+  String get clickToOpenSettings => 'Click to open settings';
+
+  @override
+  String get exactRemindersDisabled => 'Exact reminder times are disabled';
+
+  @override
+  String get remindersDelayed => 'Reminders may be slightly delayed. Tap to open settings.';
+
+  @override
+  String get autoUpdate => 'Auto-Update';
+
+  @override
+  String get autoUpdateDescription => 'Automatically check new updates when app is launched';
+
+  @override
+  String get checkForUpdates => 'Check for Updates';
+
+  @override
+  String get checkForUpdatesDescription => 'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)';
+
+  @override
+  String appVersion(Object version) {
+    return 'Mona version $version';
+  }
+
+  @override
+  String get notificationsUpdated => 'Notifications have been updated!';
+
+  @override
+  String get notificationsUpdatedDescription => 'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
+
+  @override
+  String get dontShowAgain => 'Don\'t show again';
+
+  @override
+  String get scheduleSettings => 'Schedule settings';
+
+  @override
   String get newItem => 'New item';
 
   @override

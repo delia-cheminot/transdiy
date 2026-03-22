@@ -221,6 +221,114 @@ abstract class AppLocalizations {
   /// **'Select Language'**
   String get selectLanguage;
 
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @schedulesCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} created'**
+  String schedulesCreated(Object count);
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @french.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get french;
+
+  /// No description provided for @enableNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable notifications'**
+  String get enableNotifications;
+
+  /// No description provided for @notificationsDisabledTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are disabled'**
+  String get notificationsDisabledTitle;
+
+  /// No description provided for @clickToOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to open settings'**
+  String get clickToOpenSettings;
+
+  /// No description provided for @exactRemindersDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Exact reminder times are disabled'**
+  String get exactRemindersDisabled;
+
+  /// No description provided for @remindersDelayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders may be slightly delayed. Tap to open settings.'**
+  String get remindersDelayed;
+
+  /// No description provided for @autoUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Update'**
+  String get autoUpdate;
+
+  /// No description provided for @autoUpdateDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically check new updates when app is launched'**
+  String get autoUpdateDescription;
+
+  /// No description provided for @checkForUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for Updates'**
+  String get checkForUpdates;
+
+  /// No description provided for @checkForUpdatesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'**
+  String get checkForUpdatesDescription;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Mona version {version}'**
+  String appVersion(Object version);
+
+  /// No description provided for @notificationsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications have been updated!'**
+  String get notificationsUpdated;
+
+  /// No description provided for @notificationsUpdatedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.'**
+  String get notificationsUpdatedDescription;
+
+  /// No description provided for @dontShowAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t show again'**
+  String get dontShowAgain;
+
+  /// No description provided for @scheduleSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule settings'**
+  String get scheduleSettings;
+
   /// No description provided for @newItem.
   ///
   /// In en, this message translates to:

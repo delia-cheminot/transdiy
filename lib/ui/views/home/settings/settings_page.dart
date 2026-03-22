@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
@@ -86,24 +87,26 @@ class _SettingsPageState extends State<SettingsPage>
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final localeProvider = context.watch<LocaleProvider>();
+    final localizations = AppLocalizations.of(context)!;
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Settings')),
+        appBar: AppBar(title: Text(localizations.settingsTitle)),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(title: Text(localizations.settingsTitle)),
       body: ListView(
         children: [
           // Tile for medication schedules
           ListTile(
-            title: Text('Schedules'),
+            title: Text(localizations.schedules),
             subtitle: Text(medicationScheduleProvider.schedules.isEmpty
-                ? 'No schedules'
-                : '${medicationScheduleProvider.schedules.length} created'),
+                ? localizations.noSchedules
+                : localizations.schedulesCreated(
+                    medicationScheduleProvider.schedules.length)),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
@@ -112,10 +115,10 @@ class _SettingsPageState extends State<SettingsPage>
             },
           ),
           ListTile(
-            title: Text('Language'),
+            title: Text(localizations.language),
             subtitle: Text(localeProvider.locale.languageCode == 'en'
-                ? 'English'
-                : 'Français'),
+                ? localizations.english
+                : localizations.french),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(
@@ -124,15 +127,15 @@ class _SettingsPageState extends State<SettingsPage>
             },
           ),
           SwitchListTile(
-            title: const Text('Enable notifications'),
+            title: Text(localizations.enableNotifications),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
           if (_notificationsEnabled && !_permissionGranted)
             ListTile(
               leading: const Icon(Icons.info_outline),
-              title: const Text('Notifications are disabled'),
-              subtitle: const Text("Click to open settings"),
+              title: Text(localizations.notificationsDisabledTitle),
+              subtitle: Text(localizations.clickToOpenSettings),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await openAppSettings();
@@ -143,9 +146,8 @@ class _SettingsPageState extends State<SettingsPage>
               !_exactAlarmsGranted)
             ListTile(
               leading: const Icon(Icons.info_outline),
-              title: const Text('Exact reminder times are disabled'),
-              subtitle: const Text(
-                  'Reminders may be slightly delayed. Tap to open settings.'),
+              title: Text(localizations.exactRemindersDisabled),
+              subtitle: Text(localizations.remindersDelayed),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await openAppSettings();
@@ -154,16 +156,14 @@ class _SettingsPageState extends State<SettingsPage>
           if (Platform.isAndroid) ...[
             const Divider(),
             SwitchListTile(
-              title: const Text('Auto-Update'),
-              subtitle: const Text(
-                  'Automatically check new updates when app is launched'),
+              title: Text(localizations.autoUpdate),
+              subtitle: Text(localizations.autoUpdateDescription),
               value: _autoCheckUpdatesEnabled,
               onChanged: _toggleAutoCheckUpdates,
             ),
             ListTile(
-              title: const Text('Check for Updates'),
-              subtitle: const Text(
-                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'),
+              title: Text(localizations.checkForUpdates),
+              subtitle: Text(localizations.checkForUpdatesDescription),
               trailing: const Icon(Icons.system_update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),
@@ -177,7 +177,7 @@ class _SettingsPageState extends State<SettingsPage>
               final info = snapshot.data!;
               return Center(
                 child: Text(
-                  'Mona version ${info.version}',
+                  localizations.appVersion(info.version),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               );
