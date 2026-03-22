@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD033 MD041 -->
 
 <p align="center">
-    <img alt="GitPoint" title="GitPoint" src="https://raw.githubusercontent.com/delia-cheminot/mona-hrt/refs/heads/main/assets/readme/mona_banner.png" width="450">
+    <img alt="Mona" title="Mona" src="https://raw.githubusercontent.com/delia-cheminot/mona-hrt/refs/heads/main/assets/readme/mona_banner.png" width="450">
 </p>
 
 <p align="center">
