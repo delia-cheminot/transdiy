@@ -61,7 +61,7 @@ class ChooseScheduleTile extends StatelessWidget {
         },
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
-              horizontal: horizontalPadding, vertical: 8.0),
+              horizontal: borderPadding, vertical: 8.0),
           leading: CircleAvatar(
             backgroundColor: theme.colorScheme.primary,
             child: Icon(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/ui/views/chart/blood_test_page.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
-import 'home/profile/profile_page.dart';
+import 'home/settings/settings_page.dart';
 import 'intakes/choose_schedule_page.dart';
 import 'intakes/intakes_page.dart';
 import 'main_tab_config.dart';
@@ -21,7 +21,7 @@ final List<MainTabConfig> mainTabs = [
         icon: const Icon(Icons.settings),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => ProfilePage()),
+            MaterialPageRoute(builder: (context) => SettingsPage()),
           );
         },
       ),

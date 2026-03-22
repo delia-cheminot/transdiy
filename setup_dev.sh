@@ -5,7 +5,7 @@ echo -e "Preparing local repository for development...\n"
 
 if ! command -v dart &> /dev/null; then
     echo -e "Error: Dart is not installed or not in your PATH.\n"
-    echo "FVM requires Dart to be installed initially.\n - Please install Flutter globally first.\n - If Flutter is install check 'flutter doctor' for more informations.\n"
+    echo "FVM requires Dart to be installed initially.\n - Please install Flutter globally first.\n - If Flutter is installed, check 'flutter doctor' for more information.\n"
     exit 1
 fi
 
@@ -49,8 +49,8 @@ fi
 
 export PATH="$PATH:$PUB_CACHE_BIN"
 
-echo -e "\nConfiguring project to use the latest stable Flutter SDK..."
-fvm use stable
+echo -e "\nConfiguring project to use the correct Flutter SDK..."
+fvm use 3.41.5
 
 echo -e "\nFetching the latest dependencies..."
 fvm flutter pub get

@@ -45,7 +45,7 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
     );
@@ -89,7 +89,8 @@ class AppDatabase {
       startDate TEXT NOT NULL,
       moleculeJson TEXT NOT NULL,
       administrationRouteName TEXT NOT NULL,
-      esterName TEXT
+      esterName TEXT,
+      notificationTimes TEXT NOT NULL
     )
     ''');
 
@@ -203,6 +204,11 @@ class AppDatabase {
     }
 
     if (oldVersion < 3) {
+      await db.execute(
+          "ALTER TABLE medication_schedules ADD COLUMN notificationTimes TEXT NOT NULL DEFAULT '[]'");
+    }
+
+    if (oldVersion < 4) {
       await db.execute('''
       CREATE TABLE blood_tests(
         id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -20,6 +20,7 @@ class MedicationIntakeManager {
     SupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
+    Decimal? deadSpace, //in μL
   }) async {
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
@@ -33,6 +34,11 @@ class MedicationIntakeManager {
     ));
 
     if (supplyItem != null) {
+      if (deadSpace != null && deadSpace > Decimal.zero) {
+        final deadSpaceMl = deadSpace * Decimal.parse('0.001');
+        dose += supplyItem.getDose(deadSpaceMl);
+      }
+
       await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
     }
   }
