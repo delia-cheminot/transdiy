@@ -197,4 +197,31 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get transdermal => 'Spray transdermique';
+
+  @override
+  String get chooseSchedule => 'Choisir un planning';
+
+  @override
+  String get addSchedulesFirst => 'Ajoutez d\'abord des plannings.';
+
+  @override
+  String get editIntake => 'Modifier la prise';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get amount => 'Quantité';
+
+  @override
+  String get none => 'Aucun';
+
+  @override
+  String get supplyItem => 'Article de fourniture';
+
+  @override
+  String get injectionSide => 'Côté d\'injection';
+
+  @override
+  String get deleteIntake => 'Supprimer cette prise ?';
 }

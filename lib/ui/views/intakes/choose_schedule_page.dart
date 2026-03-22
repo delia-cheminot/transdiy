@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:mona/util/date_helpers.dart';
@@ -9,17 +10,18 @@ import 'package:provider/provider.dart';
 class ChooseSchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     final MedicationScheduleProvider medicationScheduleProvider =
         context.read<MedicationScheduleProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose a schedule'),
+        title: Text(localizations.chooseSchedule),
       ),
       body: SafeArea(
         child: medicationScheduleProvider.schedules.isEmpty
             ? Center(
-                child: Text('Add schedules first.'),
+                child: Text(localizations.addSchedulesFirst),
               )
             : ListView.builder(
                 padding: pagePadding,

@@ -66,7 +66,8 @@ class IntakesPage extends StatelessWidget {
   }
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Dialogs.confirmDialog(
-        context: context, title: "Delete this intake?");
+        context: context, title: localizations.deleteIntake);
   }
 }

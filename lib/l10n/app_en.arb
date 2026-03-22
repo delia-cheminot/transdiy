@@ -58,5 +58,14 @@
   "gel": "Gel",
   "implant": "Implant",
   "suppository": "Suppository",
-  "transdermal": "Transdermal spray"
+  "transdermal": "Transdermal spray",
+  "chooseSchedule": "Choose a schedule",
+  "addSchedulesFirst": "Add schedules first.",
+  "editIntake": "Edit intake",
+  "date": "Date",
+  "amount": "Amount",
+  "none": "None",
+  "supplyItem": "Supply item",
+  "injectionSide": "Injection side",
+  "deleteIntake": "Delete this intake?"
 }

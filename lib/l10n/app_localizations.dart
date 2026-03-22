@@ -454,6 +454,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transdermal spray'**
   String get transdermal;
+
+  /// No description provided for @chooseSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a schedule'**
+  String get chooseSchedule;
+
+  /// No description provided for @addSchedulesFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Add schedules first.'**
+  String get addSchedulesFirst;
+
+  /// No description provided for @editIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit intake'**
+  String get editIntake;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
+  /// No description provided for @supplyItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Supply item'**
+  String get supplyItem;
+
+  /// No description provided for @injectionSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Injection side'**
+  String get injectionSide;
+
+  /// No description provided for @deleteIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this intake?'**
+  String get deleteIntake;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

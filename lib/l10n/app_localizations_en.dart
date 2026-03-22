@@ -197,4 +197,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transdermal => 'Transdermal spray';
+
+  @override
+  String get chooseSchedule => 'Choose a schedule';
+
+  @override
+  String get addSchedulesFirst => 'Add schedules first.';
+
+  @override
+  String get editIntake => 'Edit intake';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get supplyItem => 'Supply item';
+
+  @override
+  String get injectionSide => 'Injection side';
+
+  @override
+  String get deleteIntake => 'Delete this intake?';
 }

@@ -6,6 +6,7 @@ import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/views/intakes/intakes_page.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
@@ -127,6 +128,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         final bool isLoading =
@@ -153,9 +156,9 @@ class _EditIntakePageState extends State<EditIntakePage> {
         );
 
         final supplyItemDropdownItems = [
-          const DropdownMenuItem<SupplyItem?>(
+          DropdownMenuItem<SupplyItem?>(
             value: null,
-            child: Text('None'),
+            child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
             (item) => DropdownMenuItem<SupplyItem?>(
@@ -166,9 +169,9 @@ class _EditIntakePageState extends State<EditIntakePage> {
         ];
 
         return ModelForm(
-          title: 'Edit intake',
+          title: localizations.editIntake,
           avatar: widget.intake.administrationRoute.icon,
-          submitButtonLabel: 'Save',
+          submitButtonLabel: localizations.save,
           isFormValid: _isFormValid,
           saveChanges: (!isLoading && _isFormValid)
               ? () => _editIntake(medicationIntakeProvider, supplyItemProvider,
@@ -182,14 +185,14 @@ class _EditIntakePageState extends State<EditIntakePage> {
           },
           fields: [
             FormDateField(
-              label: 'Date',
+              label: localizations.date,
               date: _takenDate,
               onChanged: _onTakenDateChanged,
             ),
             FormSpacer(),
             FormTextField(
               controller: _takenDoseController,
-              label: 'Amount',
+              label: localizations.amount,
               onChanged: _onTakenDoseChanged,
               inputType: TextInputType.number,
               suffixText: widget.intake.molecule.unit,
@@ -220,14 +223,14 @@ class _EditIntakePageState extends State<EditIntakePage> {
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,
               onChanged: _onSupplyItemChanged,
-              label: 'Supply item',
+              label: localizations.supplyItem,
             ),
             if (_isInjection)
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
                 items: InjectionSideDropdown.menuItems,
                 onChanged: _onInjectionSideChanged,
-                label: 'Injection side',
+                label: localizations.injectionSide,
               ),
           ],
         );
