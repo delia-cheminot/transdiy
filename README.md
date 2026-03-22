@@ -1,6 +1,4 @@
-# Mona
-
-<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD033 MD041 -->
 
 <p align="center">
     <img alt="GitPoint" title="GitPoint" src="https://raw.githubusercontent.com/delia-cheminot/mona-hrt/refs/heads/main/assets/readme/mona_banner.png" width="450">
