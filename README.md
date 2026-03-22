@@ -48,7 +48,7 @@
 </div>
 </p>
 
-## Table of Contents
+# Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
@@ -56,9 +56,7 @@
 - [Support](#support)
 - [Legal](#legal)
 
----
-
-## Introduction
+# Introduction
 
 Take control of your hormonal health with Mona, the fully local, open-source app designed to help you track, understand, and manage your hormone journey.
 
@@ -68,42 +66,36 @@ Take control of your hormonal health with Mona, the fully local, open-source app
     <img alt="Download on the App Store" title="App Store" src="https://i.imgur.com/zt5bNgg.png">
 </p>
 
----
+# Features
 
-## Features
-
-### Why Mona is different
+## Why Mona is different
 
 - Completely private: All your data stays on your device. Nothing is sent to servers.
 - Open source: The app is fully open source, allowing maximum transparency and contributions from the community.
 - Free for life: No subscriptions, no premium features. Mona is free for everyone.
 
-### Medication reminders
+## Medication reminders
 
 - Add your medication regimens
 - Get detailed info for each upcoming dose (quantity, date, side, missed doses)
 - Receive notifications so you never miss a dose
 
-### Manage your medication stock efficiently
+## Manage your medication stock efficiently
 
 - Keep track of each medication in stock
 - Quantities are automatically updated with each intake
 
-### Hormone levels graph
+## Hormone levels graph
 
 - For users on estradiol monotherapy, visualize simulated hormone levels over time
 
----
-
-## Contributing
+# Contributing
 
 We welcome pull requests from external contributors! The app is currently under development and any help is appreciated.
 
 Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
 
----
-
-## Support
+# Support
 
 <p align="center">
   <h3 align="center">Maintainers</h3>
@@ -126,7 +118,7 @@ Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructi
   <img alt="Inkscape badge" title="Inkscape" src="https://img.shields.io/badge/Inkscape-000?logo=inkscape&logoColor=fff&style=for-the-badge">
 </p>
 
-## Legal
+# Legal
 
 **Mona is software designed for informational and entertainment purposes only. Your use of any aspect of Mona is at your own risk. Mona's maintainers and contributors assume no liability for direct or indirect damages, either physical, psychological, or otherwise, resulting from the use of this software. Mona's maintainers and contributors are not providing any medical advice of any kind to you through Mona, and Mona's maintainers and contributors make no representations whatsoever in respect of Mona. Users are strongly advised to exercise caution and seek professional medical advice for health-related queries.**
 
