@@ -107,7 +107,7 @@ Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructi
 
 <p align="center">
   <h3 align="center">Maintainers</h3>
-  <h3 align="center"><a href="https://github.com/delia-cheminot/">@délia</a> and <a href="https://github.com/yakissa">@june</a></h3>
+  <h3 align="center"><a href="https://github.com/delia-cheminot/">@delia-cheminot</a> and <a href="https://github.com/yakissa">@yakissa</a></h3>
   <br>
 </p>
 
