@@ -127,7 +127,7 @@ class _EditItemPageState extends State<EditItemPage> {
   }
 
   Future<void> _confirmDelete() async {
-    final confirmed = await Dialogs.confirmDialog(
+    final confirmed = await Dialogs.confirmDeleteDialog(
         context: context, title: "Delete this item?");
 
     if (confirmed == true) {

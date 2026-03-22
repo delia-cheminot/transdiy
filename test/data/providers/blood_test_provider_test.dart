@@ -4,7 +4,7 @@ import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'generic_repository_mock.dart';
 
-void main(){
+void main() {
   late BloodTestProvider provider;
   late GenericRepositoryMock<BloodTest> repo;
 
@@ -37,7 +37,6 @@ void main(){
       expect(provider.bloodtests.length, repo.items.length);
     });
     test('add inserts a new item', () async {
-      
       // Arrange
       final newDate = DateTime(2025, 1, 1, 1, 1);
       final newEstradiolLevels = Decimal.parse('111.1');
@@ -52,8 +51,10 @@ void main(){
 
       // Assert
       expect(
-        provider.bloodtests
-            .any((i) => i.date == newDate && i.estradiolLevels == newEstradiolLevels && i.testosteroneLevels == newTestosteroneLevels),
+        provider.bloodtests.any((i) =>
+            i.date == newDate &&
+            i.estradiolLevels == newEstradiolLevels &&
+            i.testosteroneLevels == newTestosteroneLevels),
         true,
       );
     });
@@ -100,8 +101,7 @@ void main(){
         [provider.bloodtests.length, provider.bloodtests.first.id],
         [1, 2],
       );
-     } 
-    );
+    });
     test('takenIntakesSortedDesc returns taken intakes sorted descending',
         () async {
       await provider.fetchBloodTests();
@@ -132,7 +132,7 @@ void main(){
           final bloodtest = entry.value;
           if (i < sorted.length - 1) {
             final next = sorted[i + 1];
-            if (bloodtest.date!.isBefore(next.date!)) {
+            if (bloodtest.date.isBefore(next.date)) {
               return false;
             }
           }
@@ -145,8 +145,5 @@ void main(){
       provider.deleteBloodTestFromId(667);
       provider.deleteBloodTestFromId(668);
     });
-
   });
-
-
 }

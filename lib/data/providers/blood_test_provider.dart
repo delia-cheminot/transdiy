@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
-import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/services/repository.dart';
 import 'package:mona/util/date_helpers.dart';
 
