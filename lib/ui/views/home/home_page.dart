@@ -45,6 +45,7 @@ class HomePage extends StatelessWidget {
     bool showAllDoneMessage = false,
   }) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final scheduleManager = ScheduleManager(
       context.watch<MedicationScheduleProvider>(),
       context.watch<MedicationIntakeProvider>(),
@@ -74,8 +75,9 @@ class HomePage extends StatelessWidget {
                 color: theme.colorScheme.onTertiary,
               ),
             ),
-            title: Text("All done !", style: theme.textTheme.titleMedium),
-            subtitle: Text("No intakes due today"),
+            title:
+                Text(localizations.allDone, style: theme.textTheme.titleMedium),
+            subtitle: Text(localizations.noIntakesDue),
           ),
         ),
       );
@@ -92,22 +94,27 @@ class HomePage extends StatelessWidget {
     return widgets;
   }
 
-  List<Widget> _buildTodaySection(BuildContext context) =>
-      _buildScheduleSection(
-        context,
-        title: "Today - ${DateFormat.MMMMd().format(DateTime.now())}",
-        statuses: [
-          ScheduleStatus.overdue,
-          ScheduleStatus.todayOverdue,
-          ScheduleStatus.today
-        ],
-        showAllDoneMessage: true,
-      );
+  List<Widget> _buildTodaySection(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return _buildScheduleSection(
+      context,
+      title:
+          localizations.todaySection(DateFormat.MMMMd().format(DateTime.now())),
+      statuses: [
+        ScheduleStatus.overdue,
+        ScheduleStatus.todayOverdue,
+        ScheduleStatus.today
+      ],
+      showAllDoneMessage: true,
+    );
+  }
 
-  List<Widget> _buildUpcomingSection(BuildContext context) =>
-      _buildScheduleSection(
-        context,
-        title: "Upcoming",
-        statuses: [ScheduleStatus.upcoming],
-      );
+  List<Widget> _buildUpcomingSection(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return _buildScheduleSection(
+      context,
+      title: localizations.upcoming,
+      statuses: [ScheduleStatus.upcoming],
+    );
+  }
 }

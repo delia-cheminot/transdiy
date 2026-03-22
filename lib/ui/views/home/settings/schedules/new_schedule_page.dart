@@ -3,6 +3,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_notifications_page.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
@@ -144,15 +145,17 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return ModelForm(
-      title: 'New schedule',
-      submitButtonLabel: 'Next',
+      title: localizations.newSchedule,
+      submitButtonLabel: localizations.next,
       isFormValid: _isFormValid,
       saveChanges: _addSchedule,
       fields: <Widget>[
         FormTextField(
           controller: _nameController,
-          label: 'Name',
+          label: localizations.name,
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
@@ -161,25 +164,25 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
           value: _molecule,
           items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
-          label: 'Molecule',
+          label: localizations.molecule,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
           items: AdministrationRoute.menuItems,
           onChanged: _onAdministrationRouteChanged,
-          label: 'Administration route',
+          label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
             items: Ester.menuItems,
             onChanged: _onEsterChanged,
-            label: 'Ester',
+            label: localizations.ester,
           ),
         FormSpacer(),
         FormTextField(
           controller: _doseController,
-          label: 'Amount',
+          label: localizations.amount,
           suffixText: _molecule?.unit,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
@@ -187,15 +190,15 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         ),
         FormTextField(
           controller: _intervalDaysController,
-          label: 'Every',
-          suffixText: 'days',
+          label: localizations.every,
+          suffixText: localizations.days,
           onChanged: _refresh,
           inputType: TextInputType.number,
           regexFormatter: '[0-9]',
         ),
         FormDateField(
           date: _startDate,
-          label: 'Start date',
+          label: localizations.startDate,
           errorText: _startDateError,
           onChanged: (date) => setState(() {
             _startDate = date;

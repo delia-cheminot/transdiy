@@ -7,7 +7,10 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
@@ -131,6 +134,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
+        final localizations = AppLocalizations.of(context)!;
 
         if (!isLoading && !_hasInitializedSide && _isInjection) {
           _selectedSide = MedicationIntakeManager(
@@ -155,9 +159,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           widget.schedule.ester,
         );
         final supplyItemDropdownItems = [
-          const DropdownMenuItem<SupplyItem?>(
+          DropdownMenuItem<SupplyItem?>(
             value: null,
-            child: Text('None'),
+            child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
             (item) => DropdownMenuItem<SupplyItem?>(
@@ -168,23 +172,23 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
         ];
 
         return ModelForm(
-          title: 'Take ${widget.schedule.name}',
+          title: localizations.takeMedication(widget.schedule.name),
           avatar: widget.schedule.administrationRoute.icon,
-          submitButtonLabel: 'Take intake',
+          submitButtonLabel: localizations.takeIntake,
           isFormValid: _isFormValid,
           saveChanges: (!isLoading && _isFormValid)
               ? () => _takeIntake(medicationIntakeProvider, supplyItemProvider)
               : () {},
           fields: [
             FormDateField(
-              label: 'Date',
+              label: localizations.date,
               date: _takenDate,
               onChanged: _onTakenDateChanged,
             ),
             FormSpacer(),
             FormTextField(
               controller: _takenDoseController,
-              label: 'Amount',
+              label: localizations.amount,
               onChanged: _onTakenDoseChanged,
               inputType: TextInputType.numberWithOptions(decimal: true),
               suffixText: widget.schedule.molecule.unit,
@@ -215,21 +219,21 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,
               onChanged: _onSupplyItemChanged,
-              label: 'Supply item',
+              label: localizations.supplyItem,
             ),
             if (_isInjection) ...[
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
                 items: InjectionSideDropdown.menuItems,
                 onChanged: _onInjectionSideChanged,
-                label: 'Injection side',
+                label: localizations.injectionSide,
               ),
               FormTextField(
                 controller: _deadSpaceController,
-                label: 'Needle dead space',
+                label: localizations.needleDeadSpace,
                 onChanged: _onDeadSpaceChanged,
                 inputType: TextInputType.numberWithOptions(decimal: true),
-                suffixText: 'μL',
+                suffixText: localizations.microliters,
                 errorText: _deadSpaceError,
                 regexFormatter: r'[0-9.,]',
               ),

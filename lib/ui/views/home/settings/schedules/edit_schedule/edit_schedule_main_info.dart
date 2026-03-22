@@ -4,6 +4,7 @@ import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
@@ -119,8 +120,9 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
   }
 
   Future<void> _confirmDelete() async {
+    final localizations = AppLocalizations.of(context)!;
     final confirmed = await Dialogs.confirmDialog(
-        context: context, title: "Delete this schedule?");
+        context: context, title: localizations.deleteSchedule);
 
     if (confirmed == true && mounted) {
       _medicationScheduleProvider.deleteSchedule(widget.schedule);
@@ -156,16 +158,18 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return ModelForm(
-      title: 'Edit schedule',
-      submitButtonLabel: 'Save',
+      title: localizations.editSchedule,
+      submitButtonLabel: localizations.save,
       isFormValid: _isFormValid,
       saveChanges: _saveSchedule,
       onDelete: _confirmDelete,
       fields: [
         FormTextField(
           controller: _nameController,
-          label: 'Name',
+          label: localizations.name,
           onChanged: _refresh,
           inputType: TextInputType.text,
           errorText: _nameError,
@@ -175,25 +179,25 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
           value: _molecule,
           items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
-          label: 'Molecule',
+          label: localizations.molecule,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
           items: AdministrationRoute.menuItems,
           onChanged: _onAdministrationRouteChanged,
-          label: 'Administration route',
+          label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
             items: Ester.menuItems,
             onChanged: _onEsterChanged,
-            label: 'Ester',
+            label: localizations.ester,
           ),
         FormSpacer(),
         FormTextField(
           controller: _doseController,
-          label: 'Amount',
+          label: localizations.amount,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: _molecule.unit,
@@ -202,8 +206,8 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
         ),
         FormTextField(
           controller: _intervalDaysController,
-          label: 'Every',
-          suffixText: 'days',
+          label: localizations.every,
+          suffixText: localizations.days,
           onChanged: _refresh,
           inputType: TextInputType.number,
           errorText: _intervalDaysError,
@@ -211,7 +215,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
         ),
         FormDateField(
           date: _startDate,
-          label: 'Start date',
+          label: localizations.startDate,
           errorText: _startDateError,
           onChanged: (date) => setState(() {
             _startDate = date;

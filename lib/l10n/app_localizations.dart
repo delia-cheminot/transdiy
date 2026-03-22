@@ -508,6 +508,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete this intake?'**
   String get deleteIntake;
+
+  /// No description provided for @todaySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Today - {date}'**
+  String todaySection(Object date);
+
+  /// No description provided for @allDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done!'**
+  String get allDone;
+
+  /// No description provided for @noIntakesDue.
+  ///
+  /// In en, this message translates to:
+  /// **'No intakes due today'**
+  String get noIntakesDue;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcoming;
+
+  /// No description provided for @takeMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'Take {scheduleName}'**
+  String takeMedication(Object scheduleName);
+
+  /// No description provided for @takeIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Take intake'**
+  String get takeIntake;
+
+  /// No description provided for @needleDeadSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Needle dead space'**
+  String get needleDeadSpace;
+
+  /// No description provided for @microliters.
+  ///
+  /// In en, this message translates to:
+  /// **'μL'**
+  String get microliters;
+
+  /// No description provided for @addSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a schedule'**
+  String get addSchedule;
+
+  /// No description provided for @addScheduleToGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a schedule to get started.'**
+  String get addScheduleToGetStarted;
+
+  /// No description provided for @newSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'New schedule'**
+  String get newSchedule;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @every.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get every;
+
+  /// No description provided for @days.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get days;
+
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date'**
+  String get startDate;
+
+  /// No description provided for @editScheduleInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit schedule info'**
+  String get editScheduleInfo;
+
+  /// No description provided for @noNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications'**
+  String get noNotifications;
+
+  /// No description provided for @notificationsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} notifications'**
+  String notificationsCount(Object count);
+
+  /// No description provided for @editSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit schedule'**
+  String get editSchedule;
+
+  /// No description provided for @deleteSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this schedule?'**
+  String get deleteSchedule;
+
+  /// No description provided for @scheduleNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule notifications'**
+  String get scheduleNotifications;
+
+  /// No description provided for @addNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a notification'**
+  String get addNotification;
+
+  /// No description provided for @noNotificationsForSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications for {scheduleName}. You can add one using the Add button.'**
+  String noNotificationsForSchedule(Object scheduleName);
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @taken.
+  ///
+  /// In en, this message translates to:
+  /// **'taken'**
+  String get taken;
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'days ago'**
+  String get daysAgo;
+
+  /// No description provided for @inText.
+  ///
+  /// In en, this message translates to:
+  /// **'in'**
+  String get inText;
+
+  /// No description provided for @lastTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Last taken'**
+  String get lastTaken;
+
+  /// No description provided for @neverTakenYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Never taken yet'**
+  String get neverTakenYet;
+
+  /// No description provided for @side.
+  ///
+  /// In en, this message translates to:
+  /// **'side'**
+  String get side;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

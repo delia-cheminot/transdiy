@@ -224,4 +224,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteIntake => 'Delete this intake?';
+
+  @override
+  String todaySection(Object date) {
+    return 'Today - $date';
+  }
+
+  @override
+  String get allDone => 'All done!';
+
+  @override
+  String get noIntakesDue => 'No intakes due today';
+
+  @override
+  String get upcoming => 'Upcoming';
+
+  @override
+  String takeMedication(Object scheduleName) {
+    return 'Take $scheduleName';
+  }
+
+  @override
+  String get takeIntake => 'Take intake';
+
+  @override
+  String get needleDeadSpace => 'Needle dead space';
+
+  @override
+  String get microliters => 'μL';
+
+  @override
+  String get addSchedule => 'Add a schedule';
+
+  @override
+  String get addScheduleToGetStarted => 'Add a schedule to get started.';
+
+  @override
+  String get newSchedule => 'New schedule';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get every => 'Every';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String get startDate => 'Start date';
+
+  @override
+  String get editScheduleInfo => 'Edit schedule info';
+
+  @override
+  String get noNotifications => 'No notifications';
+
+  @override
+  String notificationsCount(Object count) {
+    return '$count notifications';
+  }
+
+  @override
+  String get editSchedule => 'Edit schedule';
+
+  @override
+  String get deleteSchedule => 'Delete this schedule?';
+
+  @override
+  String get scheduleNotifications => 'Schedule notifications';
+
+  @override
+  String get addNotification => 'Add a notification';
+
+  @override
+  String noNotificationsForSchedule(Object scheduleName) {
+    return 'No notifications for $scheduleName. You can add one using the Add button.';
+  }
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get taken => 'taken';
+
+  @override
+  String get daysAgo => 'days ago';
+
+  @override
+  String get inText => 'in';
+
+  @override
+  String get lastTaken => 'Last taken';
+
+  @override
+  String get neverTakenYet => 'Never taken yet';
+
+  @override
+  String get side => 'side';
 }

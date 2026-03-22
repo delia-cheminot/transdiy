@@ -7,6 +7,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:mona/util/date_helpers.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class IntakeTile extends StatelessWidget {
     final theme = Theme.of(context);
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final supplyItemProvider = context.watch<SupplyItemProvider>();
+    final localizations = AppLocalizations.of(context)!;
     final now = DateTime.now();
 
     final viewModel = IntakeTileViewModel(
@@ -35,6 +37,7 @@ class IntakeTile extends StatelessWidget {
       supplyProvider: supplyItemProvider,
       now: now,
       theme: Theme.of(context),
+      localizations: localizations,
     );
 
     final textColor =
@@ -110,7 +113,8 @@ class IntakeTileViewModel {
       required this.intakeProvider,
       required this.supplyProvider,
       required this.now,
-      required this.theme});
+      required this.theme,
+      required this.localizations});
 
   final MedicationSchedule schedule;
   final ScheduleStatus status;
@@ -118,6 +122,7 @@ class IntakeTileViewModel {
   final SupplyItemProvider supplyProvider;
   final DateTime now;
   final ThemeData theme;
+  final AppLocalizations localizations;
 
   DateTime get nextScheduled => schedule.getNextDate();
   DateTime? get lastScheduled => schedule.getLastDate();
@@ -142,25 +147,25 @@ class IntakeTileViewModel {
     return "${schedule.dose} mg • ${schedule.molecule.name} "
         "${schedule.ester != null ? "${schedule.ester!.name} " : ""}"
         "${schedule.administrationRoute.name}"
-        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.name} side" : ""}";
+        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.name} ${localizations.side}" : ""}";
   }
 
   String get scheduledText {
     switch (status) {
       case ScheduleStatus.today:
       case ScheduleStatus.todayOverdue:
-        return "Today";
+        return localizations.today;
 
       case ScheduleStatus.overdue:
         final formatted = DateFormat.MMMMd().format(lastScheduled!);
-        return "$formatted - $daysSinceLastScheduled days ago";
+        return "$formatted - $daysSinceLastScheduled ${localizations.daysAgo}";
 
       case ScheduleStatus.upcoming:
         final formatted = DateFormat.MMMMd().format(nextScheduled);
-        return "$formatted - in $daysUntilIntake days";
+        return "$formatted - ${localizations.inText} $daysUntilIntake ${localizations.days}";
 
       case ScheduleStatus.taken:
-        return "taken";
+        return localizations.taken;
     }
   }
 
@@ -171,7 +176,7 @@ class IntakeTileViewModel {
             lastScheduled != null &&
             !isSameDayAs(lastTaken!, lastScheduled!)) {
           final formatted = DateFormat.MMMd().format(lastTaken!);
-          return "Last taken $daysSinceLastTaken days ago ($formatted)";
+          return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
         }
         return null;
 
@@ -182,11 +187,11 @@ class IntakeTileViewModel {
       case ScheduleStatus.overdue:
       case ScheduleStatus.todayOverdue:
         if (lastTaken == null) {
-          return "Never taken yet";
+          return localizations.neverTakenYet;
         }
 
         final formatted = DateFormat.MMMd().format(lastTaken!);
-        return "Last taken $daysSinceLastTaken days ago ($formatted)";
+        return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
     }
   }
 

@@ -224,4 +224,102 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteIntake => 'Supprimer cette prise ?';
+
+  @override
+  String todaySection(Object date) {
+    return 'Aujourd\'hui - $date';
+  }
+
+  @override
+  String get allDone => 'Terminé !';
+
+  @override
+  String get noIntakesDue => 'Aucune prise prévue aujourd\'hui';
+
+  @override
+  String get upcoming => 'À venir';
+
+  @override
+  String takeMedication(Object scheduleName) {
+    return 'Prendre $scheduleName';
+  }
+
+  @override
+  String get takeIntake => 'Prendre la prise';
+
+  @override
+  String get needleDeadSpace => 'Espace mort de l\'aiguille';
+
+  @override
+  String get microliters => 'μL';
+
+  @override
+  String get addSchedule => 'Ajouter un planning';
+
+  @override
+  String get addScheduleToGetStarted => 'Ajoutez un planning pour commencer.';
+
+  @override
+  String get newSchedule => 'Nouveau planning';
+
+  @override
+  String get next => 'Suivant';
+
+  @override
+  String get every => 'Tous les';
+
+  @override
+  String get days => 'jours';
+
+  @override
+  String get startDate => 'Date de début';
+
+  @override
+  String get editScheduleInfo => 'Modifier les informations du planning';
+
+  @override
+  String get noNotifications => 'Aucune notification';
+
+  @override
+  String notificationsCount(Object count) {
+    return '$count notifications';
+  }
+
+  @override
+  String get editSchedule => 'Modifier le planning';
+
+  @override
+  String get deleteSchedule => 'Supprimer ce planning ?';
+
+  @override
+  String get scheduleNotifications => 'Notifications du planning';
+
+  @override
+  String get addNotification => 'Ajouter une notification';
+
+  @override
+  String noNotificationsForSchedule(Object scheduleName) {
+    return 'Aucune notification pour $scheduleName. Vous pouvez en ajouter une en utilisant le bouton Ajouter.';
+  }
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get taken => 'pris';
+
+  @override
+  String get daysAgo => 'jours auparavant';
+
+  @override
+  String get inText => 'dans';
+
+  @override
+  String get lastTaken => 'Dernière prise';
+
+  @override
+  String get neverTakenYet => 'Jamais pris encore';
+
+  @override
+  String get side => 'côté';
 }
