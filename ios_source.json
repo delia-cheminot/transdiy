@@ -4,6 +4,7 @@
   "identifier": "com.deliacheminot.mona",
   "description": "Take control of your hormonal health with Mona. We make apps for trans people's health.",
   "iconURL": "https://i.imgur.com/PeIdqwy.png",
+  "sourceURL": "https://raw.githubusercontent.com/delia-cheminot/mona-hrt/refs/heads/main/ios_source.json",
   "website": "https://discord.gg/qsHzkX89vJ",
   "tintColor": "#4d0473",
   "featuredApps": [
