@@ -365,6 +365,48 @@ abstract class AppLocalizations {
   /// **'Concentration'**
   String get concentration;
 
+  /// No description provided for @editItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get editItem;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @usedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Used amount'**
+  String get usedAmount;
+
+  /// No description provided for @ester.
+  ///
+  /// In en, this message translates to:
+  /// **'Ester'**
+  String get ester;
+
+  /// No description provided for @deleteItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this item?'**
+  String get deleteItem;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} {unit} remaining'**
+  String remaining(Object amount, Object unit);
+
   /// No description provided for @injection.
   ///
   /// In en, this message translates to:

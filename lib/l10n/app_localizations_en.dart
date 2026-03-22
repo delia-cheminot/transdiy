@@ -152,6 +152,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get concentration => 'Concentration';
 
   @override
+  String get editItem => 'Edit item';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get usedAmount => 'Used amount';
+
+  @override
+  String get ester => 'Ester';
+
+  @override
+  String get deleteItem => 'Delete this item?';
+
+  @override
+  String remaining(Object amount, Object unit) {
+    return '$amount $unit remaining';
+  }
+
+  @override
   String get injection => 'Injection';
 
   @override

@@ -4,6 +4,7 @@ import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -129,15 +130,17 @@ class _NewItemPageState extends State<NewItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return ModelForm(
-      title: 'New item',
-      submitButtonLabel: 'Add',
+      title: localizations.newItem,
+      submitButtonLabel: localizations.add,
       isFormValid: _isFormValid,
       saveChanges: _addItem,
       fields: [
         FormTextField(
           controller: _nameController,
-          label: 'Name',
+          label: localizations.name,
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
@@ -146,25 +149,25 @@ class _NewItemPageState extends State<NewItemPage> {
           value: _molecule,
           items: _preferencesService.moleculeDropdownItems,
           onChanged: _onMoleculeChanged,
-          label: 'Molecule',
+          label: localizations.molecule,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
           items: AdministrationRoute.menuItems,
           onChanged: _onAdministrationRouteChanged,
-          label: 'Administration route',
+          label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
             items: Ester.menuItems,
             onChanged: _onEsterChanged,
-            label: 'Ester',
+            label: localizations.ester,
           ),
         FormSpacer(),
         FormTextField(
           controller: _totalAmountController,
-          label: 'Total amount',
+          label: localizations.totalAmount,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: _administrationRoute?.unit,
@@ -172,7 +175,7 @@ class _NewItemPageState extends State<NewItemPage> {
         ),
         FormTextField(
           controller: _concentrationController,
-          label: 'Concentration',
+          label: localizations.concentration,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           suffixText: '${_molecule?.unit}/${_administrationRoute?.unit}',

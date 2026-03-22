@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/views/supplies/edit_item_page.dart';
 
 class SupplyItemCard extends StatelessWidget {
@@ -11,6 +12,8 @@ class SupplyItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Card.filled(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -63,7 +66,10 @@ class SupplyItemCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    '${(item.getAmount(item.remainingDose))} ${(item.administrationRoute.unit)} remaining',
+                    localizations.remaining(
+                      item.getAmount(item.remainingDose).toString(),
+                      item.administrationRoute.unit,
+                    ),
                     style: Theme.of(context).textTheme.bodyMedium,
                   )
                 ],
