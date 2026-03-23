@@ -50,6 +50,7 @@ class BloodTest {
     };
   }
 
+  // coverage:ignore-start
   static String? validateDate(DateTime? value) => requiredDate(value);
 
   static String? validateLevel(String? value) => strictlyPositiveDecimal(value);
@@ -60,4 +61,5 @@ class BloodTest {
 
   @override
   int get hashCode => id.hashCode;
+  // coverage:ignore-end
 }

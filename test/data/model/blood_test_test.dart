@@ -3,19 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/blood_test.dart';
 
 void main() {
-  group('BloodTest model', () {
+  group('BloodTest', () {
     test('toMap and fromMap should preserve values', () {
-      final labDate = DateTime(2025, 3, 14, 6, 7);
-
+      // Arrange
       final bloodtest = BloodTest(
-          id: 1,
-          date: labDate,
-          estradiolLevels: Decimal.parse('167.1'),
-          testosteroneLevels: Decimal.parse('1.67')); 
+        id: 1,
+        date: DateTime(2025, 3, 14, 6, 7),
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      );
 
+      // Act
       final map = bloodtest.toMap();
       final fromMap = BloodTest.fromMap(map);
 
+      // Assert
       expect(
         fromMap,
         isA<BloodTest>()
@@ -26,6 +28,47 @@ void main() {
             .having((i) => i.testosteroneLevels, 'testosteroneLevels',
                 bloodtest.testosteroneLevels),
       );
+    });
+
+    test('copyWith overrides only provided fields', () {
+      // Arrange
+      final original = BloodTest(
+        id: 1,
+        date: DateTime(2024, 1, 1),
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      );
+      final newDate = DateTime(2025, 1, 1);
+
+      // Act
+      final result = original.copyWith(date: newDate);
+
+      // Assert
+      expect(
+        result,
+        BloodTest(
+          id: original.id,
+          date: newDate,
+          estradiolLevels: original.estradiolLevels,
+          testosteroneLevels: original.testosteroneLevels,
+        ),
+      );
+    });
+
+    test('copyWith does not mutate original object', () {
+      // Arrange
+      final original = BloodTest(
+        id: 1,
+        date: DateTime(2024, 1, 1),
+        estradiolLevels: Decimal.parse('10'),
+        testosteroneLevels: Decimal.parse('20'),
+      );
+
+      // Act
+      original.copyWith(id: 2);
+
+      // Assert
+      expect(original.id, 1);
     });
   });
 }
