@@ -22,15 +22,7 @@ void main() {
   group('BloodTestProvider Tests', () {
     test('initialization loads bloodtests', () async {
       // Arrange
-      repo = GenericRepositoryMock<BloodTest>(
-        withId: (i, id) => BloodTest(
-          id: id,
-          date: i.date,
-          estradiolLevels: i.estradiolLevels,
-          testosteroneLevels: i.testosteroneLevels,
-        ),
-      );
-      repo.insert(BloodTest(
+      await repo.insert(BloodTest(
         id: 1,
         date: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
@@ -39,6 +31,13 @@ void main() {
 
       // Act
       provider = BloodTestProvider(repository: repo);
+      await Future.doWhile(() async {
+        if (provider.isLoading) {
+          await Future.delayed(Duration(milliseconds: 10));
+          return true;
+        }
+        return false;
+      });
 
       // Assert
       expect(provider.bloodtests.length, repo.items.length);
