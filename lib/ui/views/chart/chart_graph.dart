@@ -34,7 +34,7 @@ class MainGraph extends StatelessWidget {
         medicationIntakeProvider.getDaysAndIntakes();
 
     Map<int, double> daysAndBloodTests =
-        bloodTestProvider.getDaysAndBloodTests(true, firstDay);
+        bloodTestProvider.getDaysAndBloodTests(firstDay);
 
     if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
