@@ -101,6 +101,7 @@ void main() {
         'startDate': DateTime(2025, 9, 13).toIso8601String(),
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
+        'notificationTimes': '["12:30", "18:30"]',
       });
 
       final schedule = await db.query(
