@@ -353,6 +353,90 @@ abstract class AppLocalizations {
   /// **'Administration route'**
   String get adminRoute;
 
+  /// No description provided for @estradiol.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol'**
+  String get estradiol;
+
+  /// No description provided for @progesterone.
+  ///
+  /// In en, this message translates to:
+  /// **'Progesterone'**
+  String get progesterone;
+
+  /// No description provided for @testosterone.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone'**
+  String get testosterone;
+
+  /// No description provided for @nandrolone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nandrolone'**
+  String get nandrolone;
+
+  /// No description provided for @spironolactone.
+  ///
+  /// In en, this message translates to:
+  /// **'Spironolactone'**
+  String get spironolactone;
+
+  /// No description provided for @cyproteroneAcetate.
+  ///
+  /// In en, this message translates to:
+  /// **'Cyproterone acetate'**
+  String get cyproteroneAcetate;
+
+  /// No description provided for @leuprorelinAcetate.
+  ///
+  /// In en, this message translates to:
+  /// **'Leuprorelin acetate'**
+  String get leuprorelinAcetate;
+
+  /// No description provided for @bicalutamide.
+  ///
+  /// In en, this message translates to:
+  /// **'Bicalutamide'**
+  String get bicalutamide;
+
+  /// No description provided for @decapeptyl.
+  ///
+  /// In en, this message translates to:
+  /// **'Decapeptyl'**
+  String get decapeptyl;
+
+  /// No description provided for @raloxifene.
+  ///
+  /// In en, this message translates to:
+  /// **'Raloxifene'**
+  String get raloxifene;
+
+  /// No description provided for @tamoxifen.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamoxifen'**
+  String get tamoxifen;
+
+  /// No description provided for @finasteride.
+  ///
+  /// In en, this message translates to:
+  /// **'Finasteride'**
+  String get finasteride;
+
+  /// No description provided for @dutasteride.
+  ///
+  /// In en, this message translates to:
+  /// **'Dutasteride'**
+  String get dutasteride;
+
+  /// No description provided for @minoxidil.
+  ///
+  /// In en, this message translates to:
+  /// **'Minoxidil'**
+  String get minoxidil;
+
   /// No description provided for @totalAmount.
   ///
   /// In en, this message translates to:
@@ -688,6 +772,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'side'**
   String get side;
+
+  /// No description provided for @enanthate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enanthate'**
+  String get enanthate;
+
+  /// No description provided for @valerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Valerate'**
+  String get valerate;
+
+  /// No description provided for @cypionate.
+  ///
+  /// In en, this message translates to:
+  /// **'Cypionate'**
+  String get cypionate;
+
+  /// No description provided for @undecylate.
+  ///
+  /// In en, this message translates to:
+  /// **'Undecylate'**
+  String get undecylate;
+
+  /// No description provided for @benzoate.
+  ///
+  /// In en, this message translates to:
+  /// **'Benzoate'**
+  String get benzoate;
+
+  /// No description provided for @cypionateSuspension.
+  ///
+  /// In en, this message translates to:
+  /// **'Cypionate suspension'**
+  String get cypionateSuspension;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

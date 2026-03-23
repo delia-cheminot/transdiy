@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
+import 'package:mona/l10n/app_localizations.dart';
 
 class AdministrationRoute {
   final String name;
@@ -68,16 +69,39 @@ class AdministrationRoute {
     return all.firstWhere((route) => route.name == name);
   }
 
-  static List<DropdownMenuItem<AdministrationRoute>> get menuItems => all
-      .map(
-        (route) => DropdownMenuItem<AdministrationRoute>(
-          value: route,
-          child: Text(
-            route.name[0].toUpperCase() + route.name.substring(1),
-          ),
-        ),
-      )
-      .toList();
+  String localizedName(AppLocalizations localizations) {
+    switch (name) {
+      case 'injection':
+        return localizations.injection;
+      case 'oral':
+        return localizations.oral;
+      case 'sublingual':
+        return localizations.sublingual;
+      case 'patch':
+        return localizations.patch;
+      case 'gel':
+        return localizations.gel;
+      case 'implant':
+        return localizations.implant;
+      case 'suppository':
+        return localizations.suppository;
+      case 'transdermal spray':
+        return localizations.transdermal;
+      default:
+        return name[0].toUpperCase() + name.substring(1);
+    }
+  }
+
+  static List<DropdownMenuItem<AdministrationRoute>> menuItems(
+          AppLocalizations localizations) =>
+      all
+          .map(
+            (route) => DropdownMenuItem<AdministrationRoute>(
+              value: route,
+              child: Text(route.localizedName(localizations)),
+            ),
+          )
+          .toList();
 
   @override
   bool operator ==(Object other) =>

@@ -35,7 +35,8 @@ class EditSchedulePage extends StatelessWidget {
         children: [
           ListTile(
             title: Text(localizations.editScheduleInfo),
-            subtitle: Text(currentSchedule.toString()),
+            subtitle: Text(currentSchedule.localizedDescription(localizations,
+                context: context)),
             trailing: Icon(Icons.edit),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(

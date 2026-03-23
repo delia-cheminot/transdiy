@@ -45,9 +45,11 @@ class ChooseScheduleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    String subtitle = "${schedule.dose} mg • ${schedule.molecule.name} "
-        "${schedule.ester != null ? "${schedule.ester!.name} " : ""}"
-        "${schedule.administrationRoute.name}";
+    final localizations = AppLocalizations.of(context)!;
+    String subtitle =
+        "${schedule.dose} mg • ${schedule.molecule.localizedName(localizations)} "
+        "${schedule.ester != null ? "${schedule.ester!.localizedName(localizations)} " : ""}"
+        "${schedule.administrationRoute.localizedName(localizations)}";
 
     return Card.filled(
       clipBehavior: Clip.antiAlias,

@@ -146,6 +146,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminRoute => 'Administration route';
 
   @override
+  String get estradiol => 'Estradiol';
+
+  @override
+  String get progesterone => 'Progesterone';
+
+  @override
+  String get testosterone => 'Testosterone';
+
+  @override
+  String get nandrolone => 'Nandrolone';
+
+  @override
+  String get spironolactone => 'Spironolactone';
+
+  @override
+  String get cyproteroneAcetate => 'Cyproterone acetate';
+
+  @override
+  String get leuprorelinAcetate => 'Leuprorelin acetate';
+
+  @override
+  String get bicalutamide => 'Bicalutamide';
+
+  @override
+  String get decapeptyl => 'Decapeptyl';
+
+  @override
+  String get raloxifene => 'Raloxifene';
+
+  @override
+  String get tamoxifen => 'Tamoxifen';
+
+  @override
+  String get finasteride => 'Finasteride';
+
+  @override
+  String get dutasteride => 'Dutasteride';
+
+  @override
+  String get minoxidil => 'Minoxidil';
+
+  @override
   String get totalAmount => 'Total amount';
 
   @override
@@ -322,4 +364,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get side => 'side';
+
+  @override
+  String get enanthate => 'Enanthate';
+
+  @override
+  String get valerate => 'Valerate';
+
+  @override
+  String get cypionate => 'Cypionate';
+
+  @override
+  String get undecylate => 'Undecylate';
+
+  @override
+  String get benzoate => 'Benzoate';
+
+  @override
+  String get cypionateSuspension => 'Cypionate suspension';
 }

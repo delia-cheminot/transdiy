@@ -191,20 +191,20 @@ class _EditItemPageState extends State<EditItemPage> {
         FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
-          items: _preferencesService.moleculeDropdownItems,
+          items: _preferencesService.moleculeDropdownItems(localizations),
           onChanged: _onMoleculeChanged,
           label: localizations.molecule,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
-          items: AdministrationRoute.menuItems,
+          items: AdministrationRoute.menuItems(localizations),
           onChanged: _onAdministrationRouteChanged,
           label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: Ester.menuItems,
+            items: Ester.menuItems(localizations),
             onChanged: _onEsterChanged,
             label: localizations.ester,
           ),

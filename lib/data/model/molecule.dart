@@ -1,3 +1,5 @@
+import 'package:mona/l10n/app_localizations.dart';
+
 class Molecule {
   final String name;
   final String unit;
@@ -20,6 +22,41 @@ class Molecule {
         'name': name,
         'unit': unit,
       };
+
+  String localizedName(AppLocalizations localizations) {
+    switch (name.toLowerCase()) {
+      case 'estradiol':
+        return localizations.estradiol;
+      case 'progesterone':
+        return localizations.progesterone;
+      case 'testosterone':
+        return localizations.testosterone;
+      case 'nandrolone':
+        return localizations.nandrolone;
+      case 'spironolactone':
+        return localizations.spironolactone;
+      case 'cyproterone acetate':
+        return localizations.cyproteroneAcetate;
+      case 'leuprorelin acetate':
+        return localizations.leuprorelinAcetate;
+      case 'bicalutamide':
+        return localizations.bicalutamide;
+      case 'decapeptyl':
+        return localizations.decapeptyl;
+      case 'raloxifene':
+        return localizations.raloxifene;
+      case 'tamoxifen':
+        return localizations.tamoxifen;
+      case 'finasteride':
+        return localizations.finasteride;
+      case 'dutasteride':
+        return localizations.dutasteride;
+      case 'minoxidil':
+        return localizations.minoxidil;
+      default:
+        return name[0].toUpperCase() + name.substring(1);
+    }
+  }
 
   @override
   bool operator ==(Object other) =>
