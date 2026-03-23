@@ -10,6 +10,10 @@ class LanguagePage extends StatelessWidget {
   static const _languages = [
     ('en', 'English', 'English'),
     ('fr', 'French', 'Français'),
+    ('es', 'Spanish', 'Español'),
+    ('de', 'German', 'Deutsch'),
+    ('pt', 'Portuguese', 'Português'),
+    ('pt_BR', 'Brazilian Portuguese', 'Português do Brasil')
   ];
 
   @override
@@ -21,7 +25,12 @@ class LanguagePage extends StatelessWidget {
 
     void onLanguageChanged(String? value) {
       if (value != null) {
-        localeProvider.setLocale(Locale(value));
+        if (value.contains('_')) {
+          final parts = value.split('_');
+          localeProvider.setLocale(Locale(parts[0], parts[1]));
+        } else {
+          localeProvider.setLocale(Locale(value));
+        }
       }
     }
 
