@@ -1,0 +1,46 @@
+const String createSupplyItemsTable =
+'''
+    CREATE TABLE supply_items(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      totalDose TEXT NOT NULL,
+      usedDose TEXT NOT NULL,
+      concentration TEXT NOT NULL,
+      name TEXT NOT NULL,
+      quantity INTEGER NOT NULL,
+      moleculeJson TEXT NOT NULL,
+      administrationRouteName TEXT NOT NULL,
+      esterName TEXT
+    )
+    ''';
+
+const String createMedicationIntakesTable =
+'''
+    CREATE TABLE medication_intakes(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      scheduledDateTime TEXT NOT NULL,
+      takenDateTime TEXT,
+      dose TEXT NOT NULL,
+      scheduleId INTEGER,
+      side TEXT,
+      moleculeJson TEXT NOT NULL,
+      administrationRouteName TEXT NOT NULL,
+      esterName TEXT,
+      supplyItemId INTEGER,
+      FOREIGN KEY (supplyItemId) REFERENCES supply_items(id) ON DELETE SET NULL
+    )
+    ''';
+
+const String createMedicationSchedulesTable =
+'''
+    CREATE TABLE medication_schedules(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      dose TEXT NOT NULL,
+      intervalDays INTEGER NOT NULL,
+      startDate TEXT NOT NULL,
+      moleculeJson TEXT NOT NULL,
+      administrationRouteName TEXT NOT NULL,
+      esterName TEXT,
+      notificationTimes TEXT NOT NULL
+    )
+    ''';

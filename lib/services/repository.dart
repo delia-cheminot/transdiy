@@ -1,5 +1,5 @@
+import 'package:mona/services/db/app_database.dart';
 import 'package:sqflite/sqflite.dart';
-import 'app_database.dart';
 
 class Repository<T> {
   final Future<Database> _dbFuture;
