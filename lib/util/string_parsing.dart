@@ -8,6 +8,8 @@ extension EmptyString on String? {
 
 // TODO this can be done on String only as text controllers are never null
 extension DecimalParsing on String? {
+  bool get isDecimal => toDecimalOrNull != null;
+
   Decimal get toDecimalOrZero =>
       Decimal.tryParse(_trimmedString) ?? Decimal.zero;
 

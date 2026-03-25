@@ -14,7 +14,7 @@ String? strictlyPositiveDecimal(String? value) {
 String? positiveDecimal(String? value) {
   if (value.isEmpty) return null;
 
-  return value.toDecimalOrZero < Decimal.zero
+  return (!value.isDecimal || value.toDecimalOrZero < Decimal.zero)
       ? 'Must be a positive number'
       : null;
 }

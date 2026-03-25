@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -185,7 +186,8 @@ class NotificationService {
 
     return pendingNotifications.where((notification) {
       final payload = jsonDecode(notification.payload ?? '{}');
-      final scheduledTime = (payload['scheduledTime']).toDateTimeOrNull;
+      final scheduledTime =
+          (payload['scheduledTime'] as String).toDateTimeOrNull;
       if (scheduledTime == null) return false;
       return scheduledTime.isBefore(DateTime.now());
     }).toList();
