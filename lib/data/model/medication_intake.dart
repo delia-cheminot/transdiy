@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/optional.dart';
 import 'package:mona/util/validators.dart';
 
 enum InjectionSide {
@@ -35,6 +36,7 @@ class MedicationIntake {
   final Molecule molecule;
   final AdministrationRoute administrationRoute;
   final Ester? ester;
+  final int? supplyItemId;
 
   MedicationIntake({
     int? id,
@@ -46,6 +48,7 @@ class MedicationIntake {
     required this.molecule,
     required this.administrationRoute,
     this.ester,
+    this.supplyItemId
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
@@ -64,6 +67,7 @@ class MedicationIntake {
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),
       ester: Ester.fromName(map['esterName'] as String?),
+      supplyItemId: map['supplyItemId'] as int?,
     );
   }
 
@@ -78,6 +82,7 @@ class MedicationIntake {
       'moleculeJson': jsonEncode(molecule.toJson()),
       'administrationRouteName': administrationRoute.name,
       'esterName': ester?.name,
+      'supplyItemId': supplyItemId,
     };
   }
 
@@ -91,6 +96,7 @@ class MedicationIntake {
     Molecule? molecule,
     AdministrationRoute? administrationRoute,
     Ester? ester,
+    Optional<int>? supplyItemId,
   }) {
     return MedicationIntake(
       id: id ?? this.id,
@@ -102,6 +108,7 @@ class MedicationIntake {
       molecule: molecule ?? this.molecule,
       administrationRoute: administrationRoute ?? this.administrationRoute,
       ester: ester ?? this.ester,
+      supplyItemId: supplyItemId.orElseNullable(this.supplyItemId),
     );
   }
 

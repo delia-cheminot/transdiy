@@ -31,6 +31,7 @@ class MedicationIntakeManager {
       molecule: schedule.molecule,
       administrationRoute: schedule.administrationRoute,
       ester: schedule.ester,
+      supplyItemId: supplyItem?.id
     ));
 
     if (supplyItem != null) {
