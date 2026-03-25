@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/views/intakes/edit_intake_page.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -10,8 +12,8 @@ import 'package:provider/provider.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<MedicationIntakeProvider>(
-      builder: (context, medicationIntakeProvider, child) {
+    return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
+      builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
@@ -20,9 +22,9 @@ class IntakesPage extends StatelessWidget {
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
               MedicationIntake intake =
-                  medicationIntakeProvider.takenIntakesSortedDesc[index];
+              medicationIntakeProvider.takenIntakesSortedDesc[index];
               return _buildIntakeTile(
-                  context, intake, medicationIntakeProvider);
+                  context, intake, medicationIntakeProvider, supplyItemProvider);
             },
           ),
         );
@@ -31,7 +33,7 @@ class IntakesPage extends StatelessWidget {
   }
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
-      MedicationIntakeProvider medicationIntakeProvider) {
+      MedicationIntakeProvider medicationIntakeProvider, SupplyItemProvider supplyItemProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
 
     return ListTile(
@@ -47,8 +49,7 @@ class IntakesPage extends StatelessWidget {
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
-            // TODO track supply item id in intake to put the quantity back
-            medicationIntakeProvider.deleteIntake(intake);
+            MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider).deleteIntake(intake);
           }
         },
       ),
