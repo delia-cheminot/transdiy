@@ -12,6 +12,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
+  // TODO validate dead space
   String? get _deadSpaceError => positiveDecimal(_takenDoseController.text);
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
@@ -80,9 +82,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   }
 
   void _onTakenDoseChanged() {
-    final dose = Decimal.tryParse(
-      _takenDoseController.text.replaceAll(',', '.'),
-    );
+    final dose = _takenDoseController.text.toDecimalOrNull;
+
     if (dose != null) {
       setState(() {
         _takenDose = dose;
@@ -90,11 +91,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
-// TODO implement tryParseDecimal
   void _onDeadSpaceChanged() {
-    final deadSpace = Decimal.tryParse(
-      _deadSpaceController.text.replaceAll(',', '.'),
-    );
+    final deadSpace = _deadSpaceController.text.toDecimalOrNull;
+
     if (deadSpace != null) {
       setState(() {
         _deadSpace = deadSpace;

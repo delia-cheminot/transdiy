@@ -10,7 +10,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -96,8 +96,8 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
   void _addSchedule() {
     final name = _nameController.text;
-    final dose = parseDecimal(_doseController.text);
-    final intervalDays = int.parse(_intervalDaysController.text);
+    final dose = _doseController.text.toDecimal;
+    final intervalDays = _intervalDaysController.text.toInt;
 
     final schedule = MedicationSchedule(
       name: name,

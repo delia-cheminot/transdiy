@@ -10,7 +10,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditItemPage extends StatefulWidget {
@@ -107,9 +107,9 @@ class _EditItemPageState extends State<EditItemPage> {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    final concentration = parseDecimal(_concentrationController.text);
-    final totalDose = concentration * parseDecimal(_totalAmountController.text);
-    final usedDose = concentration * parseDecimal(_usedAmountController.text);
+    final concentration = _concentrationController.text.toDecimal;
+    final totalDose = concentration * _totalAmountController.text.toDecimal;
+    final usedDose = concentration * _usedAmountController.text.toDecimal;
 
     final updatedItem = widget.item.copyWith(
       name: _nameController.text,

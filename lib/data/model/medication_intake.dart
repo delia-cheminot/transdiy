@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 enum InjectionSide {
@@ -51,11 +52,9 @@ class MedicationIntake {
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
       id: map['id'] as int?,
-      scheduledDateTime: DateTime.parse(map['scheduledDateTime'] as String),
-      takenDateTime: map['takenDateTime'] == null
-          ? null
-          : DateTime.parse(map['takenDateTime'] as String),
-      dose: Decimal.parse(map['dose'] as String),
+      scheduledDateTime: (map['scheduledDateTime'] as String).toDateTime,
+      takenDateTime: (map['takenDateTime'] as String?).toDateTimeOrNull,
+      dose: (map['dose'] as String).toDecimal,
       scheduleId: map['scheduleId'] as int?,
       side: map['side'] == null
           ? null

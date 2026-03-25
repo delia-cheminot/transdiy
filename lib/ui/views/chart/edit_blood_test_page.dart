@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
@@ -7,7 +6,7 @@ import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditBloodTestPage extends StatefulWidget {
@@ -32,12 +31,6 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
 
   bool get _isFormValid => _testDateError == null;
 
-  Decimal? _parseOptionalDecimal(String decimalString) {
-    final decimal = decimalString.trim();
-    if (decimal.isEmpty) return null;
-    return parseDecimal(decimal);
-  }
-
   void _refresh() {
     setState(() {});
   }
@@ -57,9 +50,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
 
     final updatedBloodTest = widget.bloodtest.copyWith(
       date: _testDate,
-      estradiolLevels: _parseOptionalDecimal(_estradiolLevelsController.text),
-      testosteroneLevels:
-          _parseOptionalDecimal(_testosteroneLevelsController.text),
+      estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
+      testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
     );
     _bloodTestProvider.updateBloodTest(updatedBloodTest);
 

@@ -5,7 +5,7 @@ import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class NewBloodTestPage extends StatefulWidget {
@@ -34,10 +34,9 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
   }
 
   void _addBloodTest() {
-    final estradiolLevels =
-        parseOptionalDecimal(_estradiolLevelsController.text);
+    final estradiolLevels = _estradiolLevelsController.text.toDecimalOrNull;
     final testosteroneLevels =
-        parseOptionalDecimal(_testosteroneLevelsController.text);
+        _testosteroneLevelsController.text.toDecimalOrNull;
     final bloodTestProvider =
         Provider.of<BloodTestProvider>(context, listen: false);
 

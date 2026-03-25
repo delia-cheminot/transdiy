@@ -185,7 +185,7 @@ class NotificationService {
 
     return pendingNotifications.where((notification) {
       final payload = jsonDecode(notification.payload ?? '{}');
-      final scheduledTime = DateTime.tryParse(payload['scheduledTime'] ?? '');
+      final scheduledTime = (payload['scheduledTime']).toDateTimeOrNull;
       if (scheduledTime == null) return false;
       return scheduledTime.isBefore(DateTime.now());
     }).toList();

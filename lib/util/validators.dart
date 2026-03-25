@@ -1,36 +1,32 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/molecule.dart';
-
-bool isEmptyString(String? value) => value == null || value.trim().isEmpty;
+import 'package:mona/util/string_parsing.dart';
 
 String? strictlyPositiveDecimal(String? value) {
-  if (isEmptyString(value)) return null;
+  if (value.isEmpty) return null;
 
-  final parsed = Decimal.tryParse(value!.trim().replaceAll(',', '.'));
-  return parsed == null || parsed <= Decimal.zero
+  return value.toDecimalOrZero <= Decimal.zero
       ? 'Must be a positive number'
       : null;
 }
 
 String? positiveDecimal(String? value) {
-  if (isEmptyString(value)) return null;
+  if (value.isEmpty) return null;
 
-  final parsed = Decimal.tryParse(value!.trim().replaceAll(',', '.'));
-  return parsed == null || parsed < Decimal.zero
+  return value.toDecimalOrZero < Decimal.zero
       ? 'Must be a positive number'
       : null;
 }
 
 String? positiveInt(String? value) {
-  if (isEmptyString(value)) return null;
+  if (value.isEmpty) return null;
 
-  final parsed = int.tryParse(value!.trim());
-  return parsed == null || parsed <= 0 ? 'Must be a positive number' : null;
+  return value.intOrZero <= 0 ? 'Must be a positive number' : null;
 }
 
 String? requiredString(String? value) =>
-    isEmptyString(value) ? 'Required field' : null;
+    value.isEmpty ? 'Required field' : null;
 
 String? requiredDate(DateTime? value) =>
     value == null ? 'Required field' : null;

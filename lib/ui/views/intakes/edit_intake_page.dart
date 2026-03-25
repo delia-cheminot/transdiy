@@ -12,6 +12,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditIntakePage extends StatefulWidget {
@@ -94,9 +95,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
   }
 
   void _onTakenDoseChanged() {
-    final dose = Decimal.tryParse(
-      _takenDoseController.text.replaceAll(',', '.'),
-    );
+    final dose = _takenDoseController.text.toDecimalOrNull;
+
     if (dose != null) {
       setState(() {
         _takenDose = dose;

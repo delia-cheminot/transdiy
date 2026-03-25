@@ -6,6 +6,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/date_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 class MedicationSchedule {
@@ -36,9 +37,9 @@ class MedicationSchedule {
     return MedicationSchedule(
       id: map['id'] as int,
       name: map['name'] as String,
-      dose: Decimal.parse(map['dose'] as String),
+      dose: (map['dose'] as String).toDecimal,
       intervalDays: map['intervalDays'] as int,
-      startDate: DateTime.parse(map['startDate'] as String),
+      startDate: (map['startDate'] as String).toDateTime,
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),
@@ -237,8 +238,7 @@ class MedicationSchedule {
   String formatFrequency() {
     if (intervalDays == 1) {
       return "every day";
-    }
-    else {
+    } else {
       return "every $intervalDays days";
     }
   }

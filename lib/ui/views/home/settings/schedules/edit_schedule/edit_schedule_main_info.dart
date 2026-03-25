@@ -11,7 +11,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditScheduleMainInfoPage extends StatefulWidget {
@@ -105,8 +105,8 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
 
     final updatedSchedule = widget.schedule.copyWith(
       name: _nameController.text,
-      dose: parseDecimal(_doseController.text),
-      intervalDays: int.parse(_intervalDaysController.text),
+      dose: _doseController.text.toDecimal,
+      intervalDays: _intervalDaysController.text.toInt,
       startDate: _startDate,
       molecule: _molecule,
       administrationRoute: _administrationRoute,

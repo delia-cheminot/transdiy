@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 class BloodTest {
@@ -17,13 +18,10 @@ class BloodTest {
   factory BloodTest.fromMap(Map<String, Object?> map) {
     return BloodTest(
       id: map['id'] as int?,
-      date: DateTime.parse(map['date'] as String),
-      estradiolLevels: map['estradiolLevels'] == null
-          ? null
-          : Decimal.parse(map['estradiolLevels'] as String),
-      testosteroneLevels: map['testosteroneLevels'] == null
-          ? null
-          : Decimal.parse(map['testosteroneLevels'] as String),
+      date: (map['date'] as String).toDateTime,
+      estradiolLevels: (map['estradiolLevels'] as String?).toDecimalOrNull,
+      testosteroneLevels:
+          (map['testosteroneLevels'] as String?).toDecimalOrNull,
     );
   }
 
