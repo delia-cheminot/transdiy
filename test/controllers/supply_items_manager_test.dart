@@ -125,6 +125,7 @@ void main() {
     test('previousItem is null and nextItem is valid', () async {
       final SupplyItem? previousItem = null;
       final SupplyItem nextItem = SupplyItem(
+        id: 1,
         name: 'progesterone',
         totalDose: Decimal.parse('30'),
         usedDose: Decimal.parse('1'),
@@ -156,6 +157,7 @@ void main() {
 
     test('previousItem is valid and nextItem is null', () async {
       final SupplyItem previousItem = SupplyItem(
+        id: 0,
         name: 'progesterone',
         totalDose: Decimal.parse('30'),
         usedDose: Decimal.parse('1'),
@@ -188,6 +190,7 @@ void main() {
 
     test('previousItem and nextItem are the same', () async {
       final SupplyItem previousItem = SupplyItem(
+        id: 0,
         name: 'progesterone',
         totalDose: Decimal.parse('30'),
         usedDose: Decimal.parse('20'),
@@ -208,6 +211,47 @@ void main() {
       manager.switchDoses(previousItem, nextItem, Decimal.parse('6'), Decimal.parse('7'));
 
       expect(updatedItem.usedDose, Decimal.parse('21'));
+    });
+
+    test('previousItem and nextItem are different and both valid', () async {
+      final SupplyItem previousItem = SupplyItem(
+        id: 0,
+        name: 'progesterone',
+        totalDose: Decimal.parse('30'),
+        usedDose: Decimal.parse('20'),
+        concentration: Decimal.parse('1'),
+        molecule: KnownMolecules.progesterone,
+        administrationRoute: AdministrationRoute.oral,
+      );
+
+      final SupplyItem nextItem = SupplyItem(
+        id: 1,
+        name: 'progesterone',
+        totalDose: Decimal.parse('50'),
+        usedDose: Decimal.parse('15'),
+        concentration: Decimal.parse('10'),
+        molecule: KnownMolecules.progesterone,
+        administrationRoute: AdministrationRoute.oral,
+      );
+
+      late final SupplyItem updatedPreviousItem;
+      when(mockSupplyItemProvider.updateItem(previousItem))
+          .thenAnswer((invocation) async {
+        updatedPreviousItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
+
+      late final SupplyItem updatedNextItem;
+      when(mockSupplyItemProvider.updateItem(nextItem))
+          .thenAnswer((invocation) async {
+        updatedNextItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
+
+      manager.switchDoses(previousItem, nextItem, Decimal.parse('6'), Decimal.parse('7'));
+
+      expect(updatedPreviousItem.usedDose, Decimal.parse('14'));
+      expect(updatedNextItem.usedDose, Decimal.parse('22'));
     });
   });
 }
