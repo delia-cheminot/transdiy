@@ -119,6 +119,7 @@ void main() {
       manager.switchDoses(previousItem, nextItem, Decimal.ten, Decimal.zero);
 
       // Nothing should be updated because both items are null
+      verifyNever(mockSupplyItemProvider.updateItem(any));
       expect(updatedItem, null);
       });
 
@@ -142,17 +143,18 @@ void main() {
         return Future.value();
       });
 
-      late SupplyItem updatedItem;
+      late final SupplyItem updatedNextItem;
       when(mockSupplyItemProvider.updateItem(nextItem))
           .thenAnswer((invocation) async {
-        updatedItem = invocation.positionalArguments.first as SupplyItem;
+        updatedNextItem = invocation.positionalArguments.first as SupplyItem;
         return Future.value();
       });
 
       manager.switchDoses(previousItem, nextItem, Decimal.one, Decimal.parse('2'));
 
-      expect(updatedItem.usedDose, Decimal.parse('3'));
       expect(updatedPreviousItem, null);
+      expect(updatedNextItem.usedDose, Decimal.parse('3'));
+      verify(mockSupplyItemProvider.updateItem(any)).called(1);
     });
 
     test('previousItem is valid and nextItem is null', () async {
@@ -167,6 +169,13 @@ void main() {
       );
       final SupplyItem? nextItem = null;
 
+      late final SupplyItem updatedPreviousItem;
+      when(mockSupplyItemProvider.updateItem(previousItem))
+          .thenAnswer((invocation) async {
+        updatedPreviousItem = invocation.positionalArguments.first as SupplyItem;
+        return Future.value();
+      });
+
       // Because the next item is null, it should never be updated
       SupplyItem? updatedNextItem;
       when(mockSupplyItemProvider.updateItem(nextItem))
@@ -175,17 +184,11 @@ void main() {
         return Future.value();
       });
 
-      late SupplyItem updatedPreviousItem;
-      when(mockSupplyItemProvider.updateItem(previousItem))
-          .thenAnswer((invocation) async {
-        updatedPreviousItem = invocation.positionalArguments.first as SupplyItem;
-        return Future.value();
-      });
-
       manager.switchDoses(previousItem, nextItem, Decimal.one, Decimal.parse('2'));
 
       expect(updatedPreviousItem.usedDose, Decimal.zero);
       expect(updatedNextItem, null);
+      verify(mockSupplyItemProvider.updateItem(any)).called(1);
     });
 
     test('previousItem and nextItem are the same', () async {
@@ -201,7 +204,7 @@ void main() {
 
       final SupplyItem nextItem = previousItem;
       
-      late SupplyItem updatedItem;
+      late final SupplyItem updatedItem;
       when(mockSupplyItemProvider.updateItem(any))
           .thenAnswer((invocation) async {
         updatedItem = invocation.positionalArguments.first as SupplyItem;
@@ -211,6 +214,7 @@ void main() {
       manager.switchDoses(previousItem, nextItem, Decimal.parse('6'), Decimal.parse('7'));
 
       expect(updatedItem.usedDose, Decimal.parse('21'));
+      verify(mockSupplyItemProvider.updateItem(any)).called(1);
     });
 
     test('previousItem and nextItem are different and both valid', () async {
@@ -252,6 +256,7 @@ void main() {
 
       expect(updatedPreviousItem.usedDose, Decimal.parse('14'));
       expect(updatedNextItem.usedDose, Decimal.parse('22'));
+      verify(mockSupplyItemProvider.updateItem(any)).called(2);
     });
   });
 }
