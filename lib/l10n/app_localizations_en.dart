@@ -126,7 +126,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkForUpdates => 'Check for Updates';
 
   @override
-  String get checkForUpdatesDescription => 'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)';
+  String get checkForUpdatesDescription => 'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)';
 
   @override
   String appVersion(Object version) {

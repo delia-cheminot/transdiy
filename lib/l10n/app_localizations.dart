@@ -327,7 +327,7 @@ abstract class AppLocalizations {
   /// No description provided for @checkForUpdatesDescription.
   ///
   /// In en, this message translates to:
-  /// **'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)'**
+  /// **'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)'**
   String get checkForUpdatesDescription;
 
   /// No description provided for @appVersion.

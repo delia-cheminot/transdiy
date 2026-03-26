@@ -36,7 +36,7 @@
   "autoUpdate": "Auto-Update",
   "autoUpdateDescription": "Automatically check new updates when app is launched",
   "checkForUpdates": "Check for Updates",
-  "checkForUpdatesDescription": "Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent)",
+  "checkForUpdatesDescription": "Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)",
   "appVersion": "Mona version {version}",
   "notificationsUpdated": "Notifications have been updated!",
   "notificationsUpdatedDescription": "Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don't miss anything.",
