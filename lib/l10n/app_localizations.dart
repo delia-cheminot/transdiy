@@ -252,6 +252,30 @@ abstract class AppLocalizations {
   /// **'Français'**
   String get french;
 
+  /// No description provided for @german.
+  ///
+  /// In en, this message translates to:
+  /// **'Deutsch'**
+  String get german;
+
+  /// No description provided for @spanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get spanish;
+
+  /// No description provided for @portuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Português'**
+  String get portuguese;
+
+  /// No description provided for @brazilianPortuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Português do Brasil'**
+  String get brazilianPortuguese;
+
   /// No description provided for @enableNotifications.
   ///
   /// In en, this message translates to:

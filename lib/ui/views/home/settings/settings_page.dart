@@ -1,9 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/notification_service.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/language_page.dart';
@@ -26,6 +28,11 @@ class _SettingsPageState extends State<SettingsPage>
   bool _permissionGranted = true;
   bool _exactAlarmsGranted = true;
   late PreferencesService _preferencesService;
+
+  static final Map<String, String Function(AppLocalizations)>
+      _localizedLanguageNames = {
+    for (final (code, _, __, getter) in LanguagePage.languages) code: getter,
+  };
 
   @override
   void initState() {
@@ -86,6 +93,7 @@ class _SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final preferencesService = context.watch<PreferencesService>();
     final localeProvider = context.watch<LocaleProvider>();
     final localizations = AppLocalizations.of(context)!;
 
@@ -116,9 +124,9 @@ class _SettingsPageState extends State<SettingsPage>
           ),
           ListTile(
             title: Text(localizations.language),
-            subtitle: Text(localeProvider.locale.languageCode == 'en'
-                ? localizations.english
-                : localizations.french),
+            subtitle: Text(
+                _localizedLanguageNames[preferencesService.languageCode]!(
+                    localizations)),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(

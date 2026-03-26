@@ -7,13 +7,18 @@ import 'package:provider/provider.dart';
 class LanguagePage extends StatelessWidget {
   const LanguagePage({super.key});
 
-  static const _languages = [
-    ('en', 'English', 'English'),
-    ('fr', 'French', 'Français'),
-    ('es', 'Spanish', 'Español'),
-    ('de', 'German', 'Deutsch'),
-    ('pt', 'Portuguese', 'Português'),
-    ('pt_BR', 'Brazilian Portuguese', 'Português do Brasil')
+  static final languages = [
+    ('en', 'English', 'English', (AppLocalizations l) => l.english),
+    ('fr', 'French', 'Français', (AppLocalizations l) => l.french),
+    ('es', 'Spanish', 'Español', (AppLocalizations l) => l.spanish),
+    ('de', 'German', 'Deutsch', (AppLocalizations l) => l.german),
+    ('pt', 'Portuguese', 'Português', (AppLocalizations l) => l.portuguese),
+    (
+      'pt_BR',
+      'Brazilian Portuguese',
+      'Português do Brasil',
+      (AppLocalizations l) => l.brazilianPortuguese
+    ),
   ];
 
   @override
@@ -41,7 +46,7 @@ class LanguagePage extends StatelessWidget {
         onChanged: onLanguageChanged,
         child: ListView(
           children: [
-            for (final (code, englishName, nativeName) in _languages)
+            for (final (code, englishName, nativeName, _) in languages)
               RadioListTile<String>(
                 title: Text(nativeName),
                 subtitle: code != 'en' ? Text(englishName) : null,

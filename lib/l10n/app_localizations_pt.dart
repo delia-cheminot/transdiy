@@ -84,10 +84,22 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get english => 'Inglês';
+  String get english => 'English';
 
   @override
-  String get french => 'Francês';
+  String get french => 'Français';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get spanish => 'Español';
+
+  @override
+  String get portuguese => 'Português';
+
+  @override
+  String get brazilianPortuguese => 'Português do Brasil';
 
   @override
   String get enableNotifications => 'Ativar notificações';
@@ -464,10 +476,22 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   }
 
   @override
-  String get english => 'Inglês';
+  String get english => 'English';
 
   @override
-  String get french => 'Francês';
+  String get french => 'Français';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get spanish => 'Español';
+
+  @override
+  String get portuguese => 'Português';
+
+  @override
+  String get brazilianPortuguese => 'Português do Brasil';
 
   @override
   String get enableNotifications => 'Ativar notificações';

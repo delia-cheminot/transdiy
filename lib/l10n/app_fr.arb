@@ -1,4 +1,3 @@
-
 {
   "appTitle": "Mona",
   "profileTitle": "Paramètres",
@@ -23,8 +22,12 @@
   "selectLanguage": "Sélectionner la langue",
   "settingsTitle": "Paramètres",
   "schedulesCreated": "{count} créés",
-  "english": "Anglais",
+  "english": "English",
   "french": "Français",
+  "german": "Deutsch",
+  "spanish": "Español",
+  "portuguese": "Português",
+  "brazilianPortuguese": "Português do Brasil",
   "enableNotifications": "Activer les notifications",
   "notificationsDisabledTitle": "Les notifications sont désactivées",
   "clickToOpenSettings": "Cliquez pour ouvrir les paramètres",

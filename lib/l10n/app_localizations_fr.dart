@@ -84,10 +84,22 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get english => 'Anglais';
+  String get english => 'English';
 
   @override
   String get french => 'Français';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get spanish => 'Español';
+
+  @override
+  String get portuguese => 'Português';
+
+  @override
+  String get brazilianPortuguese => 'Português do Brasil';
 
   @override
   String get enableNotifications => 'Activer les notifications';
@@ -134,7 +146,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scheduleSettings => 'Paramètres des plannings';
 
   @override
-  String get newItem => 'Nouvel élément';
+  String get newItem => 'Nouvel article';
 
   @override
   String get name => 'Nom';
@@ -146,7 +158,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get adminRoute => 'Voie d\'administration';
 
   @override
-  String get estradiol => 'Estradiol';
+  String get estradiol => 'Œstradiol';
 
   @override
   String get progesterone => 'Progestérone';
@@ -161,10 +173,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spironolactone => 'Spironolactone';
 
   @override
-  String get cyproteroneAcetate => 'Cyprotérone acétate';
+  String get cyproteroneAcetate => 'Acétate de cyprotérone';
 
   @override
-  String get leuprorelinAcetate => 'Leuproréline acétate';
+  String get leuprorelinAcetate => 'Acétate de leuproréline';
 
   @override
   String get bicalutamide => 'Bicalutamide';
@@ -194,7 +206,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get concentration => 'Concentration';
 
   @override
-  String get editItem => 'Modifier l\'élément';
+  String get editItem => 'Modifier l\'article';
 
   @override
   String get add => 'Ajouter';
@@ -209,7 +221,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ester => 'Ester';
 
   @override
-  String get deleteItem => 'Supprimer cet élément ?';
+  String get deleteItem => 'Supprimer cet article ?';
 
   @override
   String remaining(Object amount, Object unit) {
@@ -360,7 +372,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lastTaken => 'Dernière prise';
 
   @override
-  String get neverTakenYet => 'Jamais pris encore';
+  String get neverTakenYet => 'Jamais pris auparavant';
 
   @override
   String get side => 'côté';
