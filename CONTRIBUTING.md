@@ -25,6 +25,12 @@ We have provided a script to automatically set up FVM, configure your shell, and
 chmod +x setup_dev.sh
 ./setup_dev.sh
 ```
+
+Windows users :
+```powershell
+./setup_dev.ps1
+```
+
 > [!NOTE]
 > After running the script, you may need to restart your terminal or run `source ~/.bashrc` (or `~/.zshrc`) to use the FVM commands.
 
@@ -50,7 +56,7 @@ fvm flutter run
 fvm flutter test
 ```
 > [!TIP]
-> If you use VS Code, the repository includes a `.vscode/settings.json` file that automatically points the IDE to the FVM SDK. If you use Android Studio, please set your Flutter SDK path to `[project_root]/.fvm/flutter_sdk`.
+> If you use VS Code, the repository includes a `.vscode/settings.json` file that automatically points the IDE to the FVM SDK. If you use Android Studio or IntelliJ IDEA, please set your Flutter SDK path to `[project_root]/.fvm/flutter_sdk` in `File > Settings > Languages & Frameworks > Flutter`.
 
 ## Dependency Rules
 
