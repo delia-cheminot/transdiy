@@ -40,10 +40,10 @@ class Optional<T> {
   T? get() => _obj;
 
   /// Get if object is present or return something else
-  T _orElse(T value) => isPresent() ? _obj! : value;
+  T _orElse(T fallback) => isPresent() ? _obj! : fallback;
 
   /// Get if object is set or return something else
-  T? _orElseNullable(T? value) => isSet() ? _obj : value;
+  T? _orElseNullable(T? fallback) => isSet() ? _obj : fallback;
 
   /// The constructor
   Optional._(this._obj, this._isSet);
@@ -90,7 +90,7 @@ extension OptionalExtension<T> on Optional<T>? {
     return self._orElseNullable(fallback);
   }
 
-  /// Get the value if Optional isn't null and the value is set
+  /// Get the value if Optional isn't null and the value is present
   /// otherwise return a default value
   T orElse(T fallback) {
     Optional<T>? self = this;
