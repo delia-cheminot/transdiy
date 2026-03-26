@@ -7,6 +7,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BackupService {
+  bool get isDesktop =>
+      Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+
+  static const _tables = [
+    'medication_intakes',
+    'medication_schedules',
+    'supply_items',
+  ];
+
   Future<String?> exportData() async {
     final db = await AppDatabase.getInstance().database;
 
@@ -14,9 +23,9 @@ class BackupService {
     final appVersion = packageInfo.version;
     final dbVersion = await db.getVersion();
 
-    final intakes = await db.query('medication_intakes');
-    final schedules = await db.query('medication_schedules');
-    final supplies = await db.query('supply_items');
+    final data = {
+      for (final table in _tables) table: await db.query(table),
+    };
 
     final backupData = {
       'metadata': {
@@ -24,9 +33,7 @@ class BackupService {
         'database_version': dbVersion,
         'export_date': DateTime.now().toIso8601String(),
       },
-      'medication_intakes': intakes,
-      'medication_schedules': schedules,
-      'supply_items': supplies,
+      'data': data
     };
 
     final jsonString = const JsonEncoder.withIndent('  ').convert(backupData);
@@ -42,7 +49,7 @@ class BackupService {
     );
 
     if (outputFile != null) {
-      if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+      if (isDesktop) {
         if (!outputFile.endsWith('.json')) {
           outputFile += '.json';
         }
@@ -55,6 +62,27 @@ class BackupService {
     return null;
   }
 
+  void _validateBackup(Map<String, dynamic> backupData) {
+    if (!backupData.containsKey('metadata')) {
+      throw const FormatException('Invalid backup: missing metadata');
+    }
+
+    if (!backupData.containsKey('data') || backupData['data'] is! Map) {
+      throw const FormatException(
+          'Invalid backup: missing or invalid data object');
+    }
+
+    final dataSection = backupData['data'] as Map<String, dynamic>;
+
+    for (final table in _tables) {
+      if (dataSection.containsKey(table) &&
+          dataSection[table] != null &&
+          dataSection[table] is! List) {
+        throw FormatException('Invalid backup: $table must be a list');
+      }
+    }
+  }
+
   Future<bool> importData() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -62,36 +90,35 @@ class BackupService {
     );
 
     if (result != null && result.files.single.path != null) {
-      final file = File(result.files.single.path!);
-      final jsonString = await file.readAsString();
-      final Map<String, dynamic> backupData = jsonDecode(jsonString);
+      try {
+        final file = File(result.files.single.path!);
+        final jsonString = await file.readAsString();
+        final Map<String, dynamic> backupData = jsonDecode(jsonString);
 
-      final db = await AppDatabase.getInstance().database;
+        _validateBackup(backupData);
 
-      await db.transaction((txn) async {
-        await txn.delete('medication_intakes');
-        await txn.delete('medication_schedules');
-        await txn.delete('supply_items');
+        final dataSection = backupData['data'] as Map<String, dynamic>;
 
-        if (backupData.containsKey('medication_intakes')) {
-          for (var item in backupData['medication_intakes']) {
-            await txn.insert(
-                'medication_intakes', Map<String, dynamic>.from(item));
+        final db = await AppDatabase.getInstance().database;
+
+        await db.transaction((txn) async {
+          for (final table in _tables) {
+            await txn.delete(table);
           }
-        }
-        if (backupData.containsKey('medication_schedules')) {
-          for (var item in backupData['medication_schedules']) {
-            await txn.insert(
-                'medication_schedules', Map<String, dynamic>.from(item));
+
+          for (final table in _tables) {
+            if (dataSection.containsKey(table) && dataSection[table] != null) {
+              for (final item in dataSection[table]) {
+                await txn.insert(table, Map<String, dynamic>.from(item));
+              }
+            }
           }
-        }
-        if (backupData.containsKey('supply_items')) {
-          for (var item in backupData['supply_items']) {
-            await txn.insert('supply_items', Map<String, dynamic>.from(item));
-          }
-        }
-      });
-      return true;
+        });
+        return true;
+      } catch (e) {
+        print('Backup import failed: $e');
+        return false;
+      }
     }
     return false;
   }
