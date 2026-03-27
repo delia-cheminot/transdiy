@@ -96,10 +96,11 @@ class HomePage extends StatelessWidget {
 
   List<Widget> _buildTodaySection(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
     return _buildScheduleSection(
       context,
-      title:
-          localizations.todaySection(DateFormat.MMMMd().format(DateTime.now())),
+      title: localizations
+          .todaySection(DateFormat.MMMMd(locale).format(DateTime.now())),
       statuses: [
         ScheduleStatus.overdue,
         ScheduleStatus.todayOverdue,
