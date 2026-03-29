@@ -16,9 +16,9 @@ class NewBloodTestPage extends StatefulWidget {
 class _NewBloodTestPageState extends State<NewBloodTestPage> {
   late TextEditingController _estradiolLevelsController;
   late TextEditingController _testosteroneLevelsController;
-  late DateTime _testDate;
+  late DateTime _testDateTime;
 
-  String? get _testDateError => BloodTest.validateDate(_testDate);
+  String? get _testDateError => BloodTest.validateDate(_testDateTime);
   String? get _estradiolError =>
       BloodTest.validateLevel(_estradiolLevelsController.text);
   String? get _testosteroneError =>
@@ -41,7 +41,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
         Provider.of<BloodTestProvider>(context, listen: false);
 
     final bloodtest = BloodTest(
-      dateTime: _testDate,
+      dateTime: _testDateTime,
       estradiolLevels: estradiolLevels,
       testosteroneLevels: testosteroneLevels,
     );
@@ -55,7 +55,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
     super.initState();
     _estradiolLevelsController = TextEditingController();
     _testosteroneLevelsController = TextEditingController();
-    _testDate = DateTime.now();
+    _testDateTime = DateTime.now();
   }
 
   @override
@@ -75,7 +75,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
       fields: <Widget>[
         FormTextField(
           controller: _estradiolLevelsController,
-          label: 'Estradiol levels',
+          label: 'Estradiol level',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
@@ -84,7 +84,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
         ),
         FormTextField(
           controller: _testosteroneLevelsController,
-          label: 'Testosterone levels',
+          label: 'Testosterone level',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
@@ -93,11 +93,11 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
         ),
         FormSpacer(),
         FormDateField(
-          date: _testDate,
+          date: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
           onChanged: (date) => setState(() {
-            _testDate = date;
+            _testDateTime = date;
           }), // TODO create a method onDateChanged
         ),
       ],
