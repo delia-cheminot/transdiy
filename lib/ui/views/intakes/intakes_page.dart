@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
-      builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
+    return Consumer<MedicationIntakeProvider>(
+      builder: (context, medicationIntakeProvider, child) {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
@@ -24,7 +24,7 @@ class IntakesPage extends StatelessWidget {
               MedicationIntake intake =
               medicationIntakeProvider.takenIntakesSortedDesc[index];
               return _buildIntakeTile(
-                  context, intake, medicationIntakeProvider, supplyItemProvider);
+                  context, intake, medicationIntakeProvider);
             },
           ),
         );
@@ -33,8 +33,10 @@ class IntakesPage extends StatelessWidget {
   }
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
-      MedicationIntakeProvider medicationIntakeProvider, SupplyItemProvider supplyItemProvider) {
+      MedicationIntakeProvider medicationIntakeProvider) {
     final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
+
+    final supplyItemProvider = context.read<SupplyItemProvider>();
 
     return ListTile(
       title: Text(dateText),
