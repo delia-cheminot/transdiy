@@ -45,14 +45,10 @@ class MedicationIntakeManager {
   }
 
   void deleteIntake(MedicationIntake intake) {
-    // If the intake has a supplyItem, we put the dose back
-    if(intake.supplyItemId != null) {
-      SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId!);
-      if (item != null) {
-        SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
-      }
-    }
-    _medicationIntakeProvider.deleteIntake(intake);
+      SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId);
+      if (item != null) SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
+
+      _medicationIntakeProvider.deleteIntake(intake);
   }
 
   InjectionSide getNextSide() {

@@ -46,12 +46,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
       MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider,
       MedicationIntake intake,
-        SupplyItem? newItem) async {
+      SupplyItem? newItem) async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    SupplyItem? previousItem = intake.supplyItemId != null ?
-      supplyItemProvider.getItemById(intake.supplyItemId!) : null;
+    SupplyItem? previousItem = supplyItemProvider.getItemById(intake.supplyItemId);
 
     SupplyItemManager(supplyItemProvider)
         .switchDoses(previousItem, newItem, intake.dose, _takenDose);
@@ -135,10 +134,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
         }
 
         if (!isLoading && !_hasInitializedSupplyItem) {
-          if(widget.intake.supplyItemId != null) {
               _selectedSupplyItem =
-                  supplyItemProvider.getItemById(widget.intake.supplyItemId!);
-          }
+                  supplyItemProvider.getItemById(widget.intake.supplyItemId);
           _hasInitializedSupplyItem = true;
         }
 
