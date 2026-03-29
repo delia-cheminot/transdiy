@@ -45,7 +45,10 @@ class BloodTestProvider extends ChangeNotifier {
     final startDate = normalizeDate(firstDay);
 
     return Map.fromEntries(
-      bloodtests.where((bloodtest) => bloodtest.estradiolLevels != null).map(
+      bloodtests
+          .where((bloodtest) => bloodtest.estradiolLevels != null)
+          .where((bloodtest) => !bloodtest.date.isBefore(startDate))
+          .map(
             (bloodtest) => MapEntry(
               normalizeDate(bloodtest.date).difference(startDate).inDays,
               bloodtest.estradiolLevels!.toDouble(),
