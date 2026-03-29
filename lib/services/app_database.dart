@@ -209,6 +209,7 @@ class AppDatabase {
     }
 
     if (oldVersion < 4) {
+      // add blood_tests
       await db.execute('''
       CREATE TABLE blood_tests(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -217,6 +218,23 @@ class AppDatabase {
         testosteroneLevels TEXT
       )
       ''');
+
+      // migrate startDate to UTC in medication_schedules
+      final schedules = await db.query('medication_schedules');
+      for (final row in schedules) {
+        final raw = row['startDate'] as String?;
+        if (raw == null || raw.endsWith('Z')) continue;
+
+        final local = DateTime.parse(raw);
+        final utc = DateTime.utc(local.year, local.month, local.day);
+
+        await db.update(
+          'medication_schedules',
+          {'startDate': utc.toIso8601String()},
+          where: 'id = ?',
+          whereArgs: [row['id']],
+        );
+      }
     }
   }
 

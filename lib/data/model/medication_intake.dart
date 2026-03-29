@@ -52,8 +52,10 @@ class MedicationIntake {
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
       id: map['id'] as int?,
-      scheduledDateTime: (map['scheduledDateTime'] as String).toDateTime,
-      takenDateTime: (map['takenDateTime'] as String?).toDateTimeOrNull,
+      scheduledDateTime:
+          (map['scheduledDateTime'] as String).toDateTime.toLocal(),
+      takenDateTime:
+          (map['takenDateTime'] as String?).toDateTimeOrNull?.toLocal(),
       dose: (map['dose'] as String).toDecimal,
       scheduleId: map['scheduleId'] as int?,
       side: map['side'] == null
@@ -69,8 +71,8 @@ class MedicationIntake {
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'scheduledDateTime': scheduledDateTime.toIso8601String(),
-      'takenDateTime': takenDateTime?.toIso8601String(),
+      'scheduledDateTime': scheduledDateTime.toUtc().toIso8601String(),
+      'takenDateTime': takenDateTime?.toUtc().toIso8601String(),
       'dose': dose.toString(),
       'scheduleId': scheduleId,
       'side': side?.name,

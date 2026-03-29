@@ -1,5 +1,5 @@
 DateTime normalizeDate(DateTime date) {
-  return DateTime(date.year, date.month, date.day);
+  return DateTime.utc(date.year, date.month, date.day);
 }
 
 DateTime normalizedToday() {

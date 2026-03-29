@@ -18,7 +18,7 @@ void main() {
       });
 
       test('returns same date for already normalized DateTime', () {
-        final date = DateTime(2026, 2, 8);
+        final date = DateTime.utc(2026, 2, 8);
         final normalized = normalizeDate(date);
 
         expect(normalized, equals(date));

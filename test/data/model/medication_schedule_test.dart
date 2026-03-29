@@ -208,7 +208,7 @@ void main() {
       });
     });
 
-    DateTime d(int y, int m, int day) => DateTime(y, m, day);
+    DateTime d(int y, int m, int day) => DateTime.utc(y, m, day);
 
     group('getNextDate', () {
       test('startDate > today -> returns startDate', () {
@@ -429,7 +429,7 @@ void main() {
     });
 
     group('getNextDates', () {
-      DateTime d(int y, int m, int day) => DateTime(y, m, day);
+      DateTime d(int y, int m, int day) => DateTime.utc(y, m, day);
 
       test('today is an intake date -> first returned date is today', () {
         final today = d(2025, 1, 8);
