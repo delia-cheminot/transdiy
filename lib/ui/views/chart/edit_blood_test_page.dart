@@ -20,10 +20,10 @@ class EditBloodTestPage extends StatefulWidget {
 class _EditBloodTestPageState extends State<EditBloodTestPage> {
   late TextEditingController _estradiolLevelsController;
   late TextEditingController _testosteroneLevelsController;
-  late DateTime _testDate;
+  late DateTime _testDateTime;
   late BloodTestProvider _bloodTestProvider;
 
-  String? get _testDateError => BloodTest.validateDate(_testDate);
+  String? get _testDateError => BloodTest.validateDate(_testDateTime);
   String? get _estradiolLevelsError =>
       BloodTest.validateLevel(_estradiolLevelsController.text);
   String? get _testosteroneLevelsError =>
@@ -49,7 +49,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
     if (!mounted) return;
 
     final updatedBloodTest = widget.bloodtest.copyWith(
-      dateTime: _testDate,
+      dateTime: _testDateTime,
       estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
       testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
     );
@@ -66,7 +66,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         text: widget.bloodtest.estradiolLevels?.toString());
     _testosteroneLevelsController = TextEditingController(
         text: widget.bloodtest.testosteroneLevels?.toString());
-    _testDate = widget.bloodtest.dateTime;
+    _testDateTime = widget.bloodtest.dateTime;
   }
 
   @override
@@ -87,7 +87,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
       fields: <Widget>[
         FormTextField(
           controller: _estradiolLevelsController,
-          label: 'Estradiol levels',
+          label: 'Estradiol level',
           errorText: _estradiolLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
@@ -96,7 +96,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         FormSpacer(),
         FormTextField(
           controller: _testosteroneLevelsController,
-          label: 'Testosterone levels',
+          label: 'Testosterone level',
           errorText: _testosteroneLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
@@ -104,11 +104,11 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         ),
         FormSpacer(),
         FormDateField(
-          date: _testDate,
+          date: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
           onChanged: (date) => setState(() {
-            _testDate = date;
+            _testDateTime = date;
           }),
         ),
       ],
