@@ -60,10 +60,8 @@ class MainGraph extends StatelessWidget {
       todaySpot = FlSpot(daysSinceStart, todayConcentration);
     }
 
-    final double maxY = [spots, bloodSpots]
-        .expand((l) => l)
-        .map((s) => s.y)
-        .fold(0.0, math.max);
+    final double maxY =
+        [...spots, ...bloodSpots].map((s) => s.y).fold(0.0, math.max);
     final double maxYWithPadding = maxY * _ChartConstants.maxYPadding;
 
     return SingleChildScrollView(
