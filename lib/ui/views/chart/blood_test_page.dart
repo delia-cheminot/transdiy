@@ -46,7 +46,7 @@ class BloodTestPage extends StatelessWidget {
 
   Widget _buildBloodTestTile(BuildContext context, BloodTest bloodtest,
       BloodTestProvider bloodTestProvider) {
-    final dateText = DateFormat.yMMMd().format(bloodtest.date);
+    final dateText = DateFormat.yMMMd().format(bloodtest.dateTime);
     return ListTile(
       title: Text(dateText),
       subtitle: Text(

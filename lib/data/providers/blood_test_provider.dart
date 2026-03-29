@@ -47,10 +47,11 @@ class BloodTestProvider extends ChangeNotifier {
     return Map.fromEntries(
       bloodtests
           .where((bloodtest) => bloodtest.estradiolLevels != null)
-          .where((bloodtest) => !bloodtest.date.isBefore(startDate))
+          .where((bloodtest) =>
+              !normalizeDate(bloodtest.dateTime).isBefore(startDate))
           .map(
             (bloodtest) => MapEntry(
-              normalizeDate(bloodtest.date).difference(startDate).inDays,
+              normalizeDate(bloodtest.dateTime).difference(startDate).inDays,
               bloodtest.estradiolLevels!.toDouble(),
             ),
           ),
@@ -78,6 +79,6 @@ class BloodTestProvider extends ChangeNotifier {
 
   void _updateSorted() {
     _bloodtestsSortedDesc = List<BloodTest>.from(_bloodtests)
-      ..sort((a, b) => b.date.compareTo(a.date));
+      ..sort((a, b) => b.dateTime.compareTo(a.dateTime));
   }
 }

@@ -97,7 +97,7 @@ class AppDatabase {
     await db.execute('''
     CREATE TABLE blood_tests(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      date TEXT NOT NULL,
+      dateTime TEXT NOT NULL,
       estradiolLevels TEXT,
       testosteroneLevels TEXT
     )
@@ -213,7 +213,7 @@ class AppDatabase {
       await db.execute('''
       CREATE TABLE blood_tests(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date TEXT NOT NULL,
+        dateTime TEXT NOT NULL,
         estradiolLevels TEXT,
         testosteroneLevels TEXT
       )

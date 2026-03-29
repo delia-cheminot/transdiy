@@ -41,7 +41,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
         Provider.of<BloodTestProvider>(context, listen: false);
 
     final bloodtest = BloodTest(
-      date: _testDate,
+      dateTime: _testDate,
       estradiolLevels: estradiolLevels,
       testosteroneLevels: testosteroneLevels,
     );

@@ -49,7 +49,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
     if (!mounted) return;
 
     final updatedBloodTest = widget.bloodtest.copyWith(
-      date: _testDate,
+      dateTime: _testDate,
       estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
       testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
     );
@@ -66,7 +66,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         text: widget.bloodtest.estradiolLevels?.toString());
     _testosteroneLevelsController = TextEditingController(
         text: widget.bloodtest.testosteroneLevels?.toString());
-    _testDate = widget.bloodtest.date;
+    _testDate = widget.bloodtest.dateTime;
   }
 
   @override

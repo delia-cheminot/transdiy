@@ -12,7 +12,7 @@ void main() {
     repo = GenericRepositoryMock<BloodTest>(
       withId: (i, id) => BloodTest(
         id: id,
-        date: i.date,
+        dateTime: i.dateTime,
         estradiolLevels: i.estradiolLevels,
         testosteroneLevels: i.testosteroneLevels,
       ),
@@ -24,7 +24,7 @@ void main() {
       // Arrange
       await repo.insert(BloodTest(
         id: 1,
-        date: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       ));
@@ -52,7 +52,7 @@ void main() {
 
       // Act
       await provider.add(BloodTest(
-        date: newDate,
+        dateTime: newDate,
         estradiolLevels: newEstradiolLevels,
         testosteroneLevels: newTestosteroneLevels,
       ));
@@ -60,7 +60,7 @@ void main() {
       // Assert
       expect(
         provider.bloodtests.any((i) =>
-            i.date == newDate &&
+            i.dateTime == newDate &&
             i.estradiolLevels == newEstradiolLevels &&
             i.testosteroneLevels == newTestosteroneLevels),
         true,
@@ -71,7 +71,7 @@ void main() {
       // Arrange
       repo.insert(BloodTest(
         id: 1,
-        date: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       ));
@@ -79,7 +79,7 @@ void main() {
       final bloodtestToUpdate = repo.items.first;
       final updatedBloodTest = BloodTest(
         id: bloodtestToUpdate.id,
-        date: DateTime(2025, 2, 2, 2, 2),
+        dateTime: DateTime(2025, 2, 2, 2, 2),
         estradiolLevels: bloodtestToUpdate.estradiolLevels,
         testosteroneLevels: bloodtestToUpdate.testosteroneLevels,
       );
@@ -90,14 +90,14 @@ void main() {
       // Assert
       final fetchedBloodTests =
           provider.bloodtests.firstWhere((i) => i.id == bloodtestToUpdate.id);
-      expect(fetchedBloodTests.date, DateTime(2025, 2, 2, 2, 2));
+      expect(fetchedBloodTests.dateTime, DateTime(2025, 2, 2, 2, 2));
     });
 
     test('deleteBloodTestFromId removes the test', () async {
       // Arrange
       repo.insert(BloodTest(
         id: 1,
-        date: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       ));
@@ -114,7 +114,7 @@ void main() {
       // Arrange
       final bloodtestToDelete = BloodTest(
         id: 1,
-        date: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       );
@@ -133,19 +133,19 @@ void main() {
       provider = BloodTestProvider(repository: repo);
       provider.add(BloodTest(
         id: 666,
-        date: DateTime(2025, 5, 4, 3, 0),
+        dateTime: DateTime(2025, 5, 4, 3, 0),
         estradiolLevels: Decimal.parse('234.5'),
         testosteroneLevels: Decimal.parse('2.34'),
       ));
       provider.add(BloodTest(
         id: 667, // ekip
-        date: DateTime(2025, 6, 7, 8, 9),
+        dateTime: DateTime(2025, 6, 7, 8, 9),
         estradiolLevels: Decimal.parse('292.9'),
         testosteroneLevels: Decimal.parse('2.43'),
       ));
       provider.add(BloodTest(
         id: 668,
-        date: DateTime(2025, 3, 2, 1, 0),
+        dateTime: DateTime(2025, 3, 2, 1, 0),
         estradiolLevels: Decimal.parse('261.2'),
         testosteroneLevels: Decimal.parse('3.3'),
       ));
@@ -158,7 +158,7 @@ void main() {
           final bloodtest = entry.value;
           if (i < sorted.length - 1) {
             final next = sorted[i + 1];
-            if (bloodtest.date.isBefore(next.date)) {
+            if (bloodtest.dateTime.isBefore(next.dateTime)) {
               return false;
             }
           }
@@ -185,13 +185,13 @@ void main() {
         provider = BloodTestProvider(repository: repo);
         await provider.add(BloodTest(
           id: 666,
-          date: DateTime(2025, 5, 4, 3, 0),
+          dateTime: DateTime(2025, 5, 4, 3, 0),
           estradiolLevels: Decimal.parse('234.5'),
           testosteroneLevels: Decimal.parse('2.34'),
         ));
         await provider.add(BloodTest(
           id: 667,
-          date: DateTime(2025, 5, 5),
+          dateTime: DateTime(2025, 5, 5),
           estradiolLevels: null,
           testosteroneLevels: Decimal.parse('5.0'),
         ));
@@ -208,7 +208,7 @@ void main() {
         provider = BloodTestProvider(repository: repo);
         await provider.add(BloodTest(
           id: 668,
-          date: DateTime(2025, 5, 6, 23, 59),
+          dateTime: DateTime(2025, 5, 6, 23, 59),
           estradiolLevels: Decimal.parse('12.3'),
           testosteroneLevels: null,
         ));

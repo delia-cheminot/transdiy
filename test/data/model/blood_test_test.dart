@@ -8,7 +8,7 @@ void main() {
       // Arrange
       final bloodtest = BloodTest(
         id: 1,
-        date: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime(2025, 3, 14, 6, 7),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       );
@@ -22,7 +22,7 @@ void main() {
         fromMap,
         isA<BloodTest>()
             .having((i) => i.id, 'id', bloodtest.id)
-            .having((i) => i.date, 'date', bloodtest.date)
+            .having((i) => i.dateTime, 'date', bloodtest.dateTime)
             .having((i) => i.estradiolLevels, 'estradiolLevels',
                 bloodtest.estradiolLevels)
             .having((i) => i.testosteroneLevels, 'testosteroneLevels',
@@ -34,21 +34,21 @@ void main() {
       // Arrange
       final original = BloodTest(
         id: 1,
-        date: DateTime(2024, 1, 1),
+        dateTime: DateTime(2024, 1, 1),
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       );
       final newDate = DateTime(2025, 1, 1);
 
       // Act
-      final result = original.copyWith(date: newDate);
+      final result = original.copyWith(dateTime: newDate);
 
       // Assert
       expect(
         result,
         BloodTest(
           id: original.id,
-          date: newDate,
+          dateTime: newDate,
           estradiolLevels: original.estradiolLevels,
           testosteroneLevels: original.testosteroneLevels,
         ),
@@ -59,7 +59,7 @@ void main() {
       // Arrange
       final original = BloodTest(
         id: 1,
-        date: DateTime(2024, 1, 1),
+        dateTime: DateTime(2024, 1, 1),
         estradiolLevels: Decimal.parse('10'),
         testosteroneLevels: Decimal.parse('20'),
       );

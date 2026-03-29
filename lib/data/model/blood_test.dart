@@ -1,26 +1,24 @@
 import 'package:decimal/decimal.dart';
-import 'package:mona/util/date_helpers.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 class BloodTest {
   final int id;
-  final DateTime date;
+  final DateTime dateTime;
   final Decimal? estradiolLevels;
   final Decimal? testosteroneLevels;
 
   BloodTest({
     int? id,
-    required date,
+    required this.dateTime,
     this.estradiolLevels,
     this.testosteroneLevels,
-  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        date = normalizeDate(date);
+  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
   factory BloodTest.fromMap(Map<String, Object?> map) {
     return BloodTest(
       id: map['id'] as int?,
-      date: (map['date'] as String).toDateTime,
+      dateTime: (map['dateTime'] as String).toDateTime.toLocal(),
       estradiolLevels: (map['estradiolLevels'] as String?).toDecimalOrNull,
       testosteroneLevels:
           (map['testosteroneLevels'] as String?).toDecimalOrNull,
@@ -29,13 +27,13 @@ class BloodTest {
 
   BloodTest copyWith({
     int? id,
-    DateTime? date,
+    DateTime? dateTime,
     Decimal? estradiolLevels,
     Decimal? testosteroneLevels,
   }) {
     return BloodTest(
       id: id ?? this.id,
-      date: date ?? this.date,
+      dateTime: dateTime ?? this.dateTime,
       estradiolLevels: estradiolLevels ?? this.estradiolLevels,
       testosteroneLevels: testosteroneLevels ?? this.testosteroneLevels,
     );
@@ -44,7 +42,7 @@ class BloodTest {
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'date': date.toIso8601String(),
+      'dateTime': dateTime.toUtc().toIso8601String(),
       'estradiolLevels': estradiolLevels.toString(),
       'testosteroneLevels': testosteroneLevels.toString(),
     };
