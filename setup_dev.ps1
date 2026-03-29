@@ -4,7 +4,7 @@ $dart = Get-Command dart -ErrorAction SilentlyContinue;
 
 if (!$dart) {
     Write-Host "Installing dart...`n" -ForegroundColor Magenta;
-    # We'll try to install dart, then if it doesn't work we throw an error
+
     $winget = Get-Command winget -ErrorAction SilentlyContinue;
     $chocolatey = Get-Command chocolatey -ErrorAction SilentlyContinue;
     $scoop = Get-Command scoop -ErrorAction SilentlyContinue;
@@ -21,7 +21,7 @@ if (!$dart) {
         Write-Host @"
 Error: Dart is not installed or not in your PATH
 FVM requires Dart to be installed initially.
- - Please install Flutter globally first.
+ - Please install Flutter or the Dart SDK globally first.
  - If Flutter is installed, check 'flutter doctor' for more information.
 "@ -ForegroundColor Red;
         exit 1;
@@ -37,9 +37,10 @@ FVM requires Dart to be installed initially.
         Write-Host "Dart installed successfully !" -ForegroundColor Green;
     } else {
         Write-Host @"
-Error: Dart is not installed or not in your PATH
+Error: Dart automatic installation failed.
+A manual installation of the Dart SDK or Flutter is required.
 FVM requires Dart to be installed initially.
- - Please install Flutter globally first.
+ - Please install Flutter or the Dart SDK globally first.
  - If Flutter is installed, check 'flutter doctor' for more information.
 "@ -ForegroundColor Red;
         exit 1;
