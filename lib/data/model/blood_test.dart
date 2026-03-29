@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/util/date_helpers.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
@@ -10,10 +11,11 @@ class BloodTest {
 
   BloodTest({
     int? id,
-    required this.date,
+    required date,
     this.estradiolLevels,
     this.testosteroneLevels,
-  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
+  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
+        date = normalizeDate(date);
 
   factory BloodTest.fromMap(Map<String, Object?> map) {
     return BloodTest(
