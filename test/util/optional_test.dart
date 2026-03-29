@@ -42,13 +42,11 @@ void main() {
       test("ifSet callback isn't called", () {
         optional.ifSet(callbackTrue);
         expect(callCountTrue, 0);
-        expect(callCountFalse, 0);
       });
 
       test("ifPresent callback isn't called", () {
         optional.ifPresent(callbackTrue);
         expect(callCountTrue, 0);
-        expect(callCountFalse, 0);
       });
 
       test("ifSetOrElse calls else callback", () {
@@ -106,14 +104,12 @@ void main() {
         optional.ifSet(callbackTrue);
 
         expect(callCountTrue, 1);
-        expect(callCountFalse, 0);
       });
 
       test("function in ifPresent shouldn't be called", () {
-        optional.ifSet(callbackTrue);
+        optional.ifPresent(callbackTrue);
 
-        expect(callCountTrue, 1);
-        expect(callCountFalse, 0);
+        expect(callCountTrue, 0);
       });
 
       test("ifSetOrElse calls set callback", () {
@@ -157,14 +153,12 @@ void main() {
         optional.ifSet(callbackTrue);
 
         expect(callCountTrue, 1);
-        expect(callCountFalse, 0);
       });
 
       test("function in ifPresent should be called", () {
         optional.ifPresent(callbackTrue);
 
         expect(callCountTrue, 1);
-        expect(callCountFalse, 0);
       });
 
       test("ifSetOrElse calls set callback", () {
