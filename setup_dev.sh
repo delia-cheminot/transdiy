@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# SPDX-FileCopyrightText: 2026 Mel "Melinokey"
+# SPDX-FileContributor: Sienna "suprstarrd" M. <business@suprstarrd.com>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 set -e
 
 echo -e "Preparing local repository for development...\n"

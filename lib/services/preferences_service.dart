@@ -1,3 +1,8 @@
+// SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+// SPDX-FileCopyrightText: 2026 Mel "Melinokey"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/molecule.dart';

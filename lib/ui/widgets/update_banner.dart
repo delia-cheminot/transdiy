@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Mel "Melinokey"
+//
+// SPDX-License-Identifier: AGPL-3.0-only
+
 import 'package:flutter/material.dart';
 import 'package:mona/ui/views/home/settings/settings_page.dart';
 

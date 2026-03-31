@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 #ifndef FLUTTER_MY_APPLICATION_H_
 #define FLUTTER_MY_APPLICATION_H_
 

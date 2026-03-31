@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Délia Cheminot <delia@cheminot.net>
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
 description: This file stores settings for Dart & Flutter DevTools.
 documentation: https://docs.flutter.dev/tools/devtools/extensions#configure-extension-enablement-states
 extensions:
