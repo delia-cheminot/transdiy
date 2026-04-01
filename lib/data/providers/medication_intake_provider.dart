@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/services/repository.dart';
-import 'package:mona/util/date_helpers.dart';
 
 class GraphIntake {
   final double dose;
@@ -86,36 +86,48 @@ class MedicationIntakeProvider extends ChangeNotifier {
 
   Map<int, GraphIntake> getDaysAndIntakes() {
     if (graphIntakes.isEmpty) return {};
-    final startDate = normalizeDate(getFirstIntakeDate()!);
+
+    final startDate = getFirstIntakeDate()!;
     return Map.fromEntries(
       graphIntakes.map(
         (intake) => MapEntry(
-          normalizeDate(intake.takenDateTime!).difference(startDate).inDays,
+          // TODO use local date
+          Date.fromDateTime(intake.takenDateTime!).differenceInDays(startDate),
           GraphIntake(intake.dose.toDouble(), intake.ester!),
         ),
       ),
     );
   }
 
-  DateTime? getFirstIntakeDate() {
+  Date? getFirstIntakeDate() {
     if (takenIntakes.isEmpty) return null;
-    return takenIntakes
+
+    final DateTime? firstIntakeDateTime = takenIntakes
         .reduce((a, b) => a.takenDateTime!.isBefore(b.takenDateTime!) ? a : b)
         .takenDateTime;
+    // TODO use local date
+    return firstIntakeDateTime != null
+        ? Date.fromDateTime(firstIntakeDateTime)
+        : null;
   }
 
-  DateTime? getLastIntakeDateFromList(List<MedicationIntake> intakes) {
+  Date? getLastIntakeDateFromList(List<MedicationIntake> intakes) {
     if (intakes.isEmpty) return null;
-    return intakes
+
+    final DateTime? lastIntakeDateTime = intakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b)
         .takenDateTime;
+    // TODO use local time
+    return lastIntakeDateTime != null
+        ? Date.fromDateTime(lastIntakeDateTime)
+        : null;
   }
 
-  DateTime? getLastIntakeDate() {
+  Date? getLastIntakeDate() {
     return getLastIntakeDateFromList(takenIntakes);
   }
 
-  DateTime? getLastIntakeDateForSchedule(int scheduleId) {
+  Date? getLastIntakeDateForSchedule(int scheduleId) {
     final scheduleIntakes = getTakenIntakesForSchedule(scheduleId);
     return getLastIntakeDateFromList(scheduleIntakes);
   }

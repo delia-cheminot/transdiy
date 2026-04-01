@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/graph_calculator.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
@@ -28,7 +29,7 @@ class MainGraph extends StatelessWidget {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
-    final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final Date firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
@@ -47,11 +48,11 @@ class MainGraph extends StatelessWidget {
 
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
-            .difference(firstDay)
-            .inDays +
+            .differenceInDays(firstDay) +
         1;
     final double daysSinceStart =
-        DateTime.now().difference(firstDay).inSeconds / 86400.0;
+        DateTime.now().difference(firstDay.toLocalDateTime()).inSeconds /
+            86400.0;
 
     FlSpot? todaySpot;
     if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {
@@ -180,7 +181,7 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  FlTitlesData _buildTitlesData(DateTime firstDay) {
+  FlTitlesData _buildTitlesData(Date firstDay) {
     return FlTitlesData(
       show: true,
       bottomTitles: AxisTitles(
@@ -213,7 +214,7 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  String _getDateLabel(double value, DateTime firstDay) {
+  String _getDateLabel(double value, Date firstDay) {
     final date = firstDay.add(Duration(days: value.toInt()));
     return "  ${date.day}/${date.month}  ";
   }

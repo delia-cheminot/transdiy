@@ -3,7 +3,7 @@ import 'package:timezone/timezone.dart';
 class Date {
   final DateTime value;
 
-  factory Date() => Date.today();
+  Date(this.value);
 
   Date.fromTZ(TZDateTime input) : value = _logicalDay(input);
 
@@ -13,12 +13,35 @@ class Date {
 
   Date.fromString(String input) : value = DateTime.parse(input);
 
+  int get year => value.year;
+  int get month => value.month;
+  int get day => value.day;
   bool get isToday => this == Date.today();
-
-  int get daysAwayFromToday => differenceInDays(Date.today());
+  bool get isBeforeToday => isBefore(Date.today());
+  bool get isAfterToday => isAfter(Date.today());
+  int get daysAwayFromToday => differenceInDays(Date.today()).abs();
 
   int differenceInDays(Date other) =>
       value.difference(other.value).inDays.abs();
+
+  bool isSameDayAs(Date other) =>
+      value.year == other.value.year &&
+      value.month == other.value.month &&
+      value.day == other.value.day;
+
+  bool isBefore(Date other) => value.isBefore(other.value);
+
+  bool isAfter(Date other) => value.isAfter(other.value);
+
+  Date add(Duration duration) => Date(value.add(duration));
+
+  Date subtract(Duration duration) {
+    return Date(value.subtract(duration));
+  }
+
+  DateTime toUtcDateTime() => value;
+
+  DateTime toLocalDateTime() => value.toLocal();
 
   @override
   String toString() {
@@ -28,7 +51,7 @@ class Date {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Date && value == other.value;
+    return other is Date && isSameDayAs(other);
   }
 
   @override

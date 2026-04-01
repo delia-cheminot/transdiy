@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
@@ -107,7 +108,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
       name: _nameController.text,
       dose: _doseController.text.toDecimal,
       intervalDays: _intervalDaysController.text.toInt,
-      startDate: _startDate,
+      startDate: Date.fromDateTime(_startDate),
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,
@@ -140,7 +141,8 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
         TextEditingController(text: widget.schedule.dose.toString());
     _intervalDaysController =
         TextEditingController(text: widget.schedule.intervalDays.toString());
-    _startDate = widget.schedule.startDate;
+    // TODO date picker returns date ?
+    _startDate = widget.schedule.startDate.toLocalDateTime();
     _molecule = widget.schedule.molecule;
     _administrationRoute = widget.schedule.administrationRoute;
     _ester = widget.schedule.ester;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/services/repository.dart';
-import 'package:mona/util/date_helpers.dart';
 
 class BloodTestProvider extends ChangeNotifier {
   List<BloodTest> _bloodtests = [];
@@ -39,19 +39,18 @@ class BloodTestProvider extends ChangeNotifier {
     await _fetchBloodTests();
   }
 
-  Map<int, double> getDaysAndBloodTests(DateTime firstDay) {
+  Map<int, double> getDaysAndBloodTests(Date startDate) {
     if (bloodtests.isEmpty) return {};
-
-    final startDate = normalizeDate(firstDay);
 
     return Map.fromEntries(
       bloodtests
           .where((bloodtest) => bloodtest.estradiolLevels != null)
-          .where((bloodtest) =>
-              !normalizeDate(bloodtest.dateTime).isBefore(startDate))
+          .where((bloodtest) => !Date.fromDateTime(bloodtest.dateTime)
+              .isBefore(startDate)) // TODO use local date
           .map(
             (bloodtest) => MapEntry(
-              normalizeDate(bloodtest.dateTime).difference(startDate).inDays,
+              Date.fromDateTime(bloodtest.dateTime) // TODO use local date
+                  .differenceInDays(startDate),
               bloodtest.estradiolLevels!.toDouble(),
             ),
           ),

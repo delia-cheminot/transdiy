@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
@@ -98,12 +99,13 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final name = _nameController.text;
     final dose = _doseController.text.toDecimal;
     final intervalDays = _intervalDaysController.text.toInt;
+    final startDate = Date.fromDateTime(_startDate);
 
     final schedule = MedicationSchedule(
       name: name,
       dose: dose,
       intervalDays: intervalDays,
-      startDate: _startDate,
+      startDate: startDate,
       molecule: _molecule!,
       administrationRoute: _administrationRoute!,
       ester: _ester,

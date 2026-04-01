@@ -16,7 +16,7 @@ class NotificationScheduler {
     final now = DateTime.now();
 
     for (final schedule in medicationScheduleProvider.schedules) {
-      final nextDates = schedule.getNextDates(count: 5);
+      final nextDates = schedule.getNextDates(5);
 
       for (final date in nextDates) {
         for (final time in schedule.notificationTimes) {

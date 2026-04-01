@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
@@ -225,7 +226,8 @@ void main() {
         );
 
         final result = provider.getLastIntakeDateFromList([intake]);
-        expect(result, intake.takenDateTime);
+        // TODO use local date
+        expect(result, Date.fromDateTime(intake.takenDateTime!));
       });
 
       test('returns the latest takenDateTime if list has multiple intakes', () {
@@ -261,7 +263,8 @@ void main() {
 
         final result =
             provider.getLastIntakeDateFromList([intake1, intake2, intake3]);
-        expect(result, intake3.takenDateTime);
+        // TODO use local date
+        expect(result, Date.fromDateTime(intake3.takenDateTime!));
       });
 
       test('handles intakes with same takenDateTime correctly', () {
@@ -287,7 +290,8 @@ void main() {
         );
 
         final result = provider.getLastIntakeDateFromList([intake1, intake2]);
-        expect(result, dt);
+        // TODO use local date
+        expect(result, Date.fromDateTime(dt));
       });
     });
   });

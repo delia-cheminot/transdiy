@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/blood_test.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'generic_repository_mock.dart';
 
@@ -174,7 +175,8 @@ void main() {
         provider = BloodTestProvider(repository: repo);
 
         // Act
-        final result = provider.getDaysAndBloodTests(DateTime(2025, 5, 4));
+        final result = provider
+            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
 
         // Assert
         expect(result, {});
@@ -197,13 +199,14 @@ void main() {
         ));
 
         // Act
-        final result = provider.getDaysAndBloodTests(DateTime(2025, 5, 4));
+        final result = provider
+            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
 
         // Assert
         expect(result, {0: 234.5});
       });
 
-      test('calculates correct days difference and normalizes time', () async {
+      test('calculates correct days difference', () async {
         // Arrange
         provider = BloodTestProvider(repository: repo);
         await provider.add(BloodTest(
@@ -214,8 +217,8 @@ void main() {
         ));
 
         // Act
-        final result =
-            provider.getDaysAndBloodTests(DateTime(2025, 5, 4, 0, 0));
+        final result = provider.getDaysAndBloodTests(
+            Date.fromDateTime(DateTime(2025, 5, 4, 21, 0)));
 
         // Assert
         expect(result, {2: 12.3});
