@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:mona/services/app_database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BackupService {
@@ -16,12 +17,9 @@ class BackupService {
     'supply_items',
   ];
 
-  Future<String?> exportData() async {
+  Future<String> _generateBackupJson() async {
     final db = await AppDatabase.getInstance().database;
-
     final packageInfo = await PackageInfo.fromPlatform();
-    final appVersion = packageInfo.version;
-    final dbVersion = await db.getVersion();
 
     final data = {
       for (final table in _tables) table: await db.query(table),
@@ -29,37 +27,47 @@ class BackupService {
 
     final backupData = {
       'metadata': {
-        'app_version': appVersion,
-        'database_version': dbVersion,
+        'app_version': packageInfo.version,
+        'database_version': await db.getVersion(),
         'export_date': DateTime.now().toIso8601String(),
       },
-      'data': data
+      'data': data,
     };
 
-    final jsonString = const JsonEncoder.withIndent('  ').convert(backupData);
+    return const JsonEncoder.withIndent('  ').convert(backupData);
+  }
 
-    final bytes = Uint8List.fromList(utf8.encode(jsonString));
+  Future<void> _processImport(Map<String, dynamic> backupData) async {
+    final db = await AppDatabase.getInstance().database;
+    final dataSection = backupData['data'] as Map<String, dynamic>;
 
-    String? outputFile = await FilePicker.platform.saveFile(
-      dialogTitle: 'Save Mona Backup',
-      fileName: 'mona_backup.json',
-      type: FileType.custom,
-      allowedExtensions: ['json'],
-      bytes: bytes,
-    );
-
-    if (outputFile != null) {
-      if (isDesktop) {
-        if (!outputFile.endsWith('.json')) {
-          outputFile += '.json';
-        }
-        final file = File(outputFile);
-        await file.writeAsString(jsonString);
+    await db.transaction((txn) async {
+      for (final table in _tables) {
+        await txn.delete(table);
       }
-      return outputFile;
-    }
+      for (final table in _tables) {
+        if (dataSection.containsKey(table) && dataSection[table] != null) {
+          for (final item in dataSection[table]) {
+            await txn.insert(table, Map<String, dynamic>.from(item));
+          }
+        }
+      }
+    });
+  }
 
-    return null;
+  Future<bool> _createSafetyBackup() async {
+    try {
+      final jsonString = await _generateBackupJson();
+      final tempDir = await getTemporaryDirectory();
+
+      // Save silently to the app's hidden cache
+      final file = File('${tempDir.path}/mona_safety_backup.json');
+      await file.writeAsString(jsonString);
+      return true;
+    } catch (e) {
+      print('Safety backup failed: $e');
+      return false;
+    }
   }
 
   void _validateBackup(Map<String, dynamic> backupData) {
@@ -83,6 +91,51 @@ class BackupService {
     }
   }
 
+  Future<bool> restoreSafetyBackup() async {
+    try {
+      final tempDir = await getTemporaryDirectory();
+      final file = File('${tempDir.path}/mona_safety_backup.json');
+
+      if (!await file.exists()) return false;
+
+      final jsonString = await file.readAsString();
+      final Map<String, dynamic> backupData = jsonDecode(jsonString);
+
+      _validateBackup(backupData);
+      await _processImport(backupData);
+
+      await file.delete();
+      return true;
+    } catch (e) {
+      print('Restore failed: $e');
+      return false;
+    }
+  }
+
+  Future<String?> exportData() async {
+    final jsonString = await _generateBackupJson();
+    final bytes = Uint8List.fromList(utf8.encode(jsonString));
+
+    String? outputFile = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save Mona Backup',
+      fileName: 'mona_backup.json',
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+      bytes: bytes,
+    );
+
+    if (outputFile != null) {
+      if (isDesktop && !outputFile.endsWith('.json')) {
+        outputFile += '.json';
+      }
+      if (isDesktop) {
+        await File(outputFile).writeAsString(jsonString);
+      }
+      return outputFile;
+    }
+    return null;
+  }
+
   Future<bool> importData() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -97,23 +150,10 @@ class BackupService {
 
         _validateBackup(backupData);
 
-        final dataSection = backupData['data'] as Map<String, dynamic>;
+        await _createSafetyBackup();
 
-        final db = await AppDatabase.getInstance().database;
+        await _processImport(backupData);
 
-        await db.transaction((txn) async {
-          for (final table in _tables) {
-            await txn.delete(table);
-          }
-
-          for (final table in _tables) {
-            if (dataSection.containsKey(table) && dataSection[table] != null) {
-              for (final item in dataSection[table]) {
-                await txn.insert(table, Map<String, dynamic>.from(item));
-              }
-            }
-          }
-        });
         return true;
       } catch (e) {
         print('Backup import failed: $e');
