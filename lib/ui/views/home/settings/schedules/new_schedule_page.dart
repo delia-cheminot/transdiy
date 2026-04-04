@@ -99,7 +99,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final name = _nameController.text;
     final dose = _doseController.text.toDecimal;
     final intervalDays = _intervalDaysController.text.toInt;
-    final startDate = Date.fromDateTime(_startDate);
+    final startDate = Date.fromDateTime(_startDate); // TODO use pure date
 
     final schedule = MedicationSchedule(
       name: name,

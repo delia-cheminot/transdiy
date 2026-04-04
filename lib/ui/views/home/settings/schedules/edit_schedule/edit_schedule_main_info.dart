@@ -108,7 +108,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
       name: _nameController.text,
       dose: _doseController.text.toDecimal,
       intervalDays: _intervalDaysController.text.toInt,
-      startDate: Date.fromDateTime(_startDate),
+      startDate: Date.fromDateTime(_startDate), // TODO use pure date
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,

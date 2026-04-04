@@ -1,6 +1,5 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
@@ -61,13 +60,11 @@ void main() {
           return Future.value();
         });
 
-        final timezone = await FlutterTimezone.getLocalTimezone();
-
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: date,
           takenDateTime: date,
-          takenTimeZone: timezone.toString(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: side,
@@ -116,13 +113,11 @@ void main() {
           return Future.value();
         });
 
-        final timezone = await FlutterTimezone.getLocalTimezone();
-
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate,
-          takenTimeZone: timezone.toString(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: null,
@@ -167,13 +162,11 @@ void main() {
           return Future.value();
         });
 
-        final timezone = await FlutterTimezone.getLocalTimezone();
-
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate,
-          takenTimeZone: timezone.toString(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: null,

@@ -1,15 +1,24 @@
+bool _isUtcMidnight(DateTime dt) =>
+    dt.isUtc &&
+    dt.hour == 0 &&
+    dt.minute == 0 &&
+    dt.second == 0 &&
+    dt.millisecond == 0 &&
+    dt.microsecond == 0;
+
 class Date {
   final DateTime value;
 
-  Date(this.value) : assert(value.isUtc, 'Date value must be UTC');
+  Date(this.value)
+      : assert(_isUtcMidnight(value), 'Date value must be UTC midnight');
 
   Date.fromDateTime(DateTime input) : value = _logicalDay(input);
 
   Date.today() : value = _logicalDay(DateTime.now());
 
   Date.fromString(String input)
-      : assert(DateTime.parse(input).isUtc,
-            'Date string must be UTC (e.g. "2024-01-01T00:00:00Z")'),
+      : assert(_isUtcMidnight(DateTime.parse(input)),
+            'Date string must be UTC midnight (e.g. "2024-01-01T00:00:00Z")'),
         value = DateTime.parse(input);
 
   int get year => value.year;
