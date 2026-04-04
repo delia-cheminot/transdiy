@@ -1,15 +1,19 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
-import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'generic_repository_mock.dart';
 
 void main() {
   late MedicationIntakeProvider provider;
   late GenericRepositoryMock<MedicationIntake> repo;
+
+  setUpAll(() {
+    tz.initializeTimeZones();
+  });
 
   setUp(() {
     repo = GenericRepositoryMock<MedicationIntake>(
@@ -220,14 +224,14 @@ void main() {
           scheduleId: 1,
           scheduledDateTime: DateTime(2025, 9, 12, 8, 0),
           dose: Decimal.parse('10.5'),
-          takenDateTime: DateTime(2025, 9, 12, 8, 15),
+          takenDateTime: DateTime.utc(2025, 9, 12, 8, 15),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
 
         final result = provider.getLastIntakeDateFromList([intake]);
-        // TODO use local date
-        expect(result, Date.fromDateTime(intake.takenDateTime!));
+        expect(result, intake.takenLocalDate);
       });
 
       test('returns the latest takenDateTime if list has multiple intakes', () {
@@ -236,7 +240,8 @@ void main() {
           scheduleId: 1,
           scheduledDateTime: DateTime(2025, 9, 12, 8, 0),
           dose: Decimal.parse('10.5'),
-          takenDateTime: DateTime(2025, 9, 12, 8, 15),
+          takenDateTime: DateTime.utc(2025, 9, 12, 8, 15),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
@@ -246,7 +251,8 @@ void main() {
           scheduleId: 1,
           scheduledDateTime: DateTime(2025, 9, 12, 20, 0),
           dose: Decimal.parse('5.0'),
-          takenDateTime: DateTime(2025, 9, 12, 20, 10),
+          takenDateTime: DateTime.utc(2025, 9, 12, 20, 10),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
@@ -256,25 +262,26 @@ void main() {
           scheduleId: 1,
           scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
           dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 13, 8, 5),
+          takenDateTime: DateTime.utc(2025, 9, 13, 8, 5),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
 
         final result =
             provider.getLastIntakeDateFromList([intake1, intake2, intake3]);
-        // TODO use local date
-        expect(result, Date.fromDateTime(intake3.takenDateTime!));
+        expect(result, intake3.takenLocalDate);
       });
 
       test('handles intakes with same takenDateTime correctly', () {
-        final dt = DateTime(2025, 9, 12, 8, 0);
+        final dt = DateTime.utc(2025, 9, 12, 8, 0);
         final intake1 = MedicationIntake(
           id: 1,
           scheduleId: 1,
           scheduledDateTime: dt,
           dose: Decimal.parse('10.5'),
           takenDateTime: dt,
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
@@ -285,13 +292,13 @@ void main() {
           scheduledDateTime: dt,
           dose: Decimal.parse('5.0'),
           takenDateTime: dt,
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         );
 
         final result = provider.getLastIntakeDateFromList([intake1, intake2]);
-        // TODO use local date
-        expect(result, Date.fromDateTime(dt));
+        expect(result, intake1.takenLocalDate);
       });
     });
   });

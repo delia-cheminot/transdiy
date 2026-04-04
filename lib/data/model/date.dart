@@ -1,11 +1,7 @@
-import 'package:timezone/timezone.dart';
-
 class Date {
   final DateTime value;
 
   Date(this.value) : assert(value.isUtc, 'Date value must be UTC');
-
-  Date.fromTZ(TZDateTime input) : value = _logicalDay(input);
 
   Date.fromDateTime(DateTime input) : value = _logicalDay(input);
 

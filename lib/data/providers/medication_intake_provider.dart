@@ -91,8 +91,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
     return Map.fromEntries(
       graphIntakes.map(
         (intake) => MapEntry(
-          // TODO use local date
-          Date.fromDateTime(intake.takenDateTime!).differenceInDays(startDate),
+          intake.takenLocalDate!.differenceInDays(startDate),
           GraphIntake(intake.dose.toDouble(), intake.ester!),
         ),
       ),
@@ -102,25 +101,17 @@ class MedicationIntakeProvider extends ChangeNotifier {
   Date? getFirstIntakeDate() {
     if (takenIntakes.isEmpty) return null;
 
-    final DateTime? firstIntakeDateTime = takenIntakes
+    return takenIntakes
         .reduce((a, b) => a.takenDateTime!.isBefore(b.takenDateTime!) ? a : b)
-        .takenDateTime;
-    // TODO use local date
-    return firstIntakeDateTime != null
-        ? Date.fromDateTime(firstIntakeDateTime)
-        : null;
+        .takenLocalDate;
   }
 
   Date? getLastIntakeDateFromList(List<MedicationIntake> intakes) {
     if (intakes.isEmpty) return null;
 
-    final DateTime? lastIntakeDateTime = intakes
+    return intakes
         .reduce((a, b) => a.takenDateTime!.isAfter(b.takenDateTime!) ? a : b)
-        .takenDateTime;
-    // TODO use local time
-    return lastIntakeDateTime != null
-        ? Date.fromDateTime(lastIntakeDateTime)
-        : null;
+        .takenLocalDate;
   }
 
   Date? getLastIntakeDate() {

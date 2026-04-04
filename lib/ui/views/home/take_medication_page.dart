@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -50,14 +51,20 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider) {
+    late String tzName;
+    FlutterTimezone.getLocalTimezone().then((timezone) {
+      tzName = timezone.toString();
+    });
+
     if (!_isFormValid) return;
     if (!mounted) return;
 
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
-      scheduledDate: widget.scheduledDate,
-      takenDate: _takenDate,
+      scheduledDateTime: widget.scheduledDate,
+      takenDateTime: _takenDate.toUtc(),
+      takenTimeZone: tzName,
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,

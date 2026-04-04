@@ -78,39 +78,6 @@ void main() {
       });
     });
 
-    group('Date.fromTZ', () {
-      test('3:59am Paris summer time (UTC+2) belongs to the previous day', () {
-        // Arrange
-        final paris = getLocation('Europe/Paris');
-        final input = TZDateTime(paris, 2026, 7, 15, 3, 59);
-
-        // Act
-        final date = Date.fromTZ(input);
-
-        // Assert
-        expect(date.value, DateTime.utc(2026, 7, 14));
-      });
-
-      test(
-          'same UTC timestamp in different timezones can yield different logical days',
-          () {
-        // Arrange
-        final utc = DateTime.utc(2026, 3, 30, 2, 30);
-        final tokyo = getLocation(
-            'Asia/Tokyo'); // In Tokyo (UTC+9) that's 11:30am → logical day is March 30
-        final newYork = getLocation(
-            'America/New_York'); // In New York (UTC-5) that's 9:30pm March 29 → logical day is March 29
-
-        // Act
-        final dateTokyo = Date.fromTZ(TZDateTime.from(utc, tokyo));
-        final dateNewYork = Date.fromTZ(TZDateTime.from(utc, newYork));
-
-        // Assert
-        expect(dateTokyo.value, DateTime.utc(2026, 3, 30));
-        expect(dateNewYork.value, DateTime.utc(2026, 3, 29));
-      });
-    });
-
     group('Date.fromString / toString round-trip', () {
       test('round-trip preserves the date', () {
         // Arrange
@@ -169,8 +136,8 @@ void main() {
       test('difference across a DST change is still 1', () {
         // Arrange — France switches to summer time on March 29 2026 at 2am
         final paris = getLocation('Europe/Paris');
-        final before = Date.fromTZ(TZDateTime(paris, 2026, 3, 28, 12, 0));
-        final after = Date.fromTZ(TZDateTime(paris, 2026, 3, 29, 12, 0));
+        final before = Date.fromDateTime(TZDateTime(paris, 2026, 3, 28, 12, 0));
+        final after = Date.fromDateTime(TZDateTime(paris, 2026, 3, 29, 12, 0));
 
         // Act
         final diff = after.differenceInDays(before);

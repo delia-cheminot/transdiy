@@ -15,8 +15,9 @@ class MedicationIntakeManager {
 
   Future<void> takeMedication({
     required Decimal dose,
-    required DateTime scheduledDate,
-    required DateTime takenDate,
+    required DateTime scheduledDateTime,
+    required DateTime takenDateTime,
+    required String takenTimeZone,
     SupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
@@ -24,8 +25,9 @@ class MedicationIntakeManager {
   }) async {
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
-      scheduledDateTime: scheduledDate,
-      takenDateTime: takenDate,
+      scheduledDateTime: scheduledDateTime,
+      takenDateTime: takenDateTime,
+      takenTimeZone: takenTimeZone,
       side: side,
       scheduleId: schedule.id,
       molecule: schedule.molecule,

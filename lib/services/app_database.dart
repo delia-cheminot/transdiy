@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -72,6 +73,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
+      takenTimeZone TEXT,
       dose TEXT NOT NULL,
       scheduleId INTEGER,
       side TEXT,
@@ -235,6 +237,35 @@ class AppDatabase {
           whereArgs: [row['id']],
         );
       }
+
+      // use utc for takenDateTime
+      final intakes = await db.query('medication_intakes');
+      late String tzName;
+      FlutterTimezone.getLocalTimezone().then((timezone) {
+        tzName = timezone.toString();
+      });
+
+      for (final row in intakes) {
+        final id = row['id'] as int;
+        final takenDateTimeRaw = row['takenDateTime'] as String?;
+
+        if (takenDateTimeRaw != null) {
+          final local = DateTime.parse(takenDateTimeRaw);
+          final utc = DateTime.utc(local.year, local.month, local.day, 12,
+              0); // set to noon to avoid going into prev day
+
+          await db.update(
+            'medication_intakes',
+            {'takenDateTime': utc.toIso8601String(), 'takenTimeZone': tzName},
+            where: 'id = ?',
+            whereArgs: [id],
+          );
+        }
+      }
+
+      // add takenTimeZone to medication_intakes
+      await db.execute(
+          'ALTER TABLE medication_intakes ADD COLUMN takenTimeZone TEXT');
     }
   }
 

@@ -9,7 +9,6 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
-import 'package:mona/util/date_helpers.dart';
 import 'package:provider/provider.dart';
 
 class IntakeTile extends StatelessWidget {
@@ -50,7 +49,7 @@ class IntakeTile extends StatelessWidget {
             MaterialPageRoute<void>(
               fullscreenDialog: true,
               builder: (context) =>
-                  TakeMedicationPage(schedule, normalizedToday()),
+                  TakeMedicationPage(schedule, DateTime.now()),
             ),
           );
         },
