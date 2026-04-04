@@ -3,7 +3,7 @@ import 'package:timezone/timezone.dart';
 class Date {
   final DateTime value;
 
-  Date(this.value);
+  Date(this.value) : assert(value.isUtc, 'Date value must be UTC');
 
   Date.fromTZ(TZDateTime input) : value = _logicalDay(input);
 
@@ -11,7 +11,10 @@ class Date {
 
   Date.today() : value = _logicalDay(DateTime.now());
 
-  Date.fromString(String input) : value = DateTime.parse(input);
+  Date.fromString(String input)
+      : assert(DateTime.parse(input).isUtc,
+            'Date string must be UTC (e.g. "2024-01-01T00:00:00Z")'),
+        value = DateTime.parse(input);
 
   int get year => value.year;
   int get month => value.month;

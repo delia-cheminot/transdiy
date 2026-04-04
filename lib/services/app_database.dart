@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -219,18 +220,17 @@ class AppDatabase {
       )
       ''');
 
-      // migrate startDate to UTC in medication_schedules
+      // migrate startDate to date
       final schedules = await db.query('medication_schedules');
       for (final row in schedules) {
-        final raw = row['startDate'] as String?;
-        if (raw == null || raw.endsWith('Z')) continue;
+        final raw = row['startDate'] as String;
 
         final local = DateTime.parse(raw);
-        final utc = DateTime.utc(local.year, local.month, local.day);
+        final date = Date(DateTime.utc(local.year, local.month, local.day));
 
         await db.update(
           'medication_schedules',
-          {'startDate': utc.toIso8601String()},
+          {'startDate': date.toString()},
           where: 'id = ?',
           whereArgs: [row['id']],
         );
