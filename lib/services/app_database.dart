@@ -238,12 +238,14 @@ class AppDatabase {
         );
       }
 
-      // use utc for takenDateTime
+      // add takenTimeZone to medication_intakes
+      await db.execute(
+          'ALTER TABLE medication_intakes ADD COLUMN takenTimeZone TEXT');
+
+      // use utc for takenDateTime and add takenTimeZone
       final intakes = await db.query('medication_intakes');
-      late String tzName;
-      FlutterTimezone.getLocalTimezone().then((timezone) {
-        tzName = timezone.toString();
-      });
+      final TimezoneInfo currentTimeZone =
+          await FlutterTimezone.getLocalTimezone();
 
       for (final row in intakes) {
         final id = row['id'] as int;
@@ -256,16 +258,15 @@ class AppDatabase {
 
           await db.update(
             'medication_intakes',
-            {'takenDateTime': utc.toIso8601String(), 'takenTimeZone': tzName},
+            {
+              'takenDateTime': utc.toIso8601String(),
+              'takenTimeZone': currentTimeZone.toString()
+            },
             where: 'id = ?',
             whereArgs: [id],
           );
         }
       }
-
-      // add takenTimeZone to medication_intakes
-      await db.execute(
-          'ALTER TABLE medication_intakes ADD COLUMN takenTimeZone TEXT');
     }
   }
 
