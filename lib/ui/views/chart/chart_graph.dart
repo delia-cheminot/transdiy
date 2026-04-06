@@ -51,8 +51,7 @@ class MainGraph extends StatelessWidget {
             .differenceInDays(firstDay) +
         1;
     final double daysSinceStart =
-        DateTime.now().difference(firstDay.toLocalDateTime()).inSeconds /
-            86400.0;
+        DateTime.now().difference(firstDay.toDateTime()).inSeconds / 86400.0;
 
     FlSpot? todaySpot;
     if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {

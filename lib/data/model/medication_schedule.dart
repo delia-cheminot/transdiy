@@ -171,7 +171,7 @@ class MedicationSchedule {
   static String? validateIntervalDays(String? value) =>
       requiredPositiveInt(value);
 
-  static String? validateStartDate(DateTime? value) => requiredDate(value);
+  static String? validateStartDate(Date? value) => requiredDate(value);
 
   static String? validateMolecule(Molecule? value) => requiredMolecule(value);
 

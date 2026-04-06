@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/ui/widgets/forms/base_form_field.dart';
 
 class FormDateTimeField extends BaseFormField {
   final DateTime datetime;
   final DateTime? selectedDatetime;
-  final ValueChanged<DateTime> onDateTimeChanged;
+  final ValueChanged<DateTime> onChanged;
 
-// TODO stop requiering onChanged
+// TODO stop requiring onChanged
 
   FormDateTimeField({
     required this.datetime,
-    required this.onDateTimeChanged,
+    required this.onChanged,
     this.selectedDatetime,
     required super.label,
     super.errorText,
-    super.regexFormatter,
   });
 
   @override
@@ -27,12 +25,6 @@ class FormDateTimeField extends BaseFormField {
           child: TextField(
             controller: TextEditingController(
                 text: datetime.toString().split(' ').first),
-            keyboardType: TextInputType.datetime,
-            inputFormatters: regexFormatter != null
-                ? <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
-                  ]
-                : null,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: label,
@@ -50,11 +42,6 @@ class FormDateTimeField extends BaseFormField {
           child: TextField(
             controller: TextEditingController(
                 text: DateFormat('HH:mm').format(datetime)),
-            inputFormatters: regexFormatter != null
-                ? <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
-                  ]
-                : null,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               errorText: errorText,
@@ -79,8 +66,9 @@ class FormDateTimeField extends BaseFormField {
     );
 
     if (picked != null) {
-      picked = DateTime(picked.year, picked.month, picked.day, datetime.hour, datetime.minute);
-      onDateTimeChanged(picked);
+      picked = DateTime(picked.year, picked.month, picked.day, datetime.hour,
+          datetime.minute);
+      onChanged(picked);
     }
   }
 
@@ -90,7 +78,8 @@ class FormDateTimeField extends BaseFormField {
         initialTime: TimeOfDay(hour: datetime.hour, minute: datetime.minute));
 
     if (picked != null) {
-      onDateTimeChanged(DateTime(datetime.year,datetime.month, datetime.day, picked.hour, picked.minute));
+      onChanged(DateTime(datetime.year, datetime.month, datetime.day,
+          picked.hour, picked.minute));
     }
   }
 }

@@ -32,7 +32,7 @@ void main() {
 
       // Act
       final results =
-          cases.map((c) => requiredDate(c['value'] as DateTime?)).toList();
+          cases.map((c) => requiredDateTime(c['value'] as DateTime?)).toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert

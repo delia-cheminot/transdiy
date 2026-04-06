@@ -49,7 +49,7 @@ class Date {
 
   DateTime toUtcDateTime() => value;
 
-  DateTime toLocalDateTime() => value.toLocal();
+  DateTime toDateTime() => DateTime(year, month, day);
 
   @override
   String toString() {

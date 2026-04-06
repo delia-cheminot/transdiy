@@ -67,7 +67,7 @@ class BloodTest {
   }
 
   // coverage:ignore-start
-  static String? validateDate(DateTime? value) => requiredDate(value);
+  static String? validateDate(DateTime? value) => requiredDateTime(value);
 
   static String? validateLevel(String? value) => strictlyPositiveDecimal(value);
 

@@ -3,7 +3,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
-import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
@@ -110,8 +110,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           regexFormatter: '[0-9.,]',
         ),
         FormSpacer(),
-        FormDateField(
-          date: _testDateTime,
+        FormDateTimeField(
+          datetime: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
           onChanged: (date) => setState(() {

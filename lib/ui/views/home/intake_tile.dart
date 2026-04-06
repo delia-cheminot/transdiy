@@ -152,12 +152,11 @@ class IntakeTileViewModel {
 
       case ScheduleStatus.overdue:
         final formatted =
-            DateFormat.MMMMd().format(previousScheduled!.toLocalDateTime());
+            DateFormat.MMMMd().format(previousScheduled!.toDateTime());
         return "$formatted - $daysSinceLastScheduled days ago";
 
       case ScheduleStatus.upcoming:
-        final formatted =
-            DateFormat.MMMMd().format(nextScheduled.toLocalDateTime());
+        final formatted = DateFormat.MMMMd().format(nextScheduled.toDateTime());
         return "$formatted - in $daysUntilIntake days";
 
       case ScheduleStatus.taken:
@@ -171,8 +170,7 @@ class IntakeTileViewModel {
         if (lastTaken != null &&
             previousScheduled != null &&
             !lastTaken!.isSameDayAs(previousScheduled!)) {
-          final formatted =
-              DateFormat.MMMd().format(lastTaken!.toLocalDateTime());
+          final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
           return "Last taken $daysSinceLastTaken days ago ($formatted)";
         }
         return null;
@@ -187,8 +185,7 @@ class IntakeTileViewModel {
           return "Never taken yet";
         }
 
-        final formatted =
-            DateFormat.MMMd().format(lastTaken!.toLocalDateTime());
+        final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
         return "Last taken $daysSinceLastTaken days ago ($formatted)";
     }
   }

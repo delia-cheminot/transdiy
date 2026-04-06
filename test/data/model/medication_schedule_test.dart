@@ -108,13 +108,13 @@ void main() {
         // Arrange
         final cases = [
           {'value': null, 'expected': isNotNull},
-          {'value': DateTime.now(), 'expected': isNull},
+          {'value': Date.today(), 'expected': isNull},
         ];
 
         // Act
         final results = cases
             .map((c) =>
-                MedicationSchedule.validateStartDate(c['value'] as DateTime?))
+                MedicationSchedule.validateStartDate(c['value'] as Date?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 

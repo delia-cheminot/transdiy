@@ -23,7 +23,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
-  late DateTime _startDate;
+  late Date _startDate;
   Molecule? _molecule;
   AdministrationRoute? _administrationRoute;
   Ester? _ester;
@@ -99,7 +99,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     final name = _nameController.text;
     final dose = _doseController.text.toDecimal;
     final intervalDays = _intervalDaysController.text.toInt;
-    final startDate = Date.fromDateTime(_startDate); // TODO use pure date
+    final startDate = _startDate;
 
     final schedule = MedicationSchedule(
       name: name,
@@ -133,7 +133,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     _nameController = TextEditingController();
     _doseController = TextEditingController();
     _intervalDaysController = TextEditingController();
-    _startDate = DateTime.now();
+    _startDate = Date.today();
   }
 
   @override

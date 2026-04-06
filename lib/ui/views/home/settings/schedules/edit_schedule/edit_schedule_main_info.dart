@@ -29,7 +29,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
-  late DateTime _startDate;
+  late Date _startDate;
   late Molecule _molecule;
   late AdministrationRoute _administrationRoute;
   late Ester? _ester;
@@ -108,7 +108,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
       name: _nameController.text,
       dose: _doseController.text.toDecimal,
       intervalDays: _intervalDaysController.text.toInt,
-      startDate: Date.fromDateTime(_startDate), // TODO use pure date
+      startDate: _startDate,
       molecule: _molecule,
       administrationRoute: _administrationRoute,
       ester: _ester,
@@ -141,8 +141,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
         TextEditingController(text: widget.schedule.dose.toString());
     _intervalDaysController =
         TextEditingController(text: widget.schedule.intervalDays.toString());
-    // TODO date picker returns date ?
-    _startDate = widget.schedule.startDate.toLocalDateTime();
+    _startDate = widget.schedule.startDate;
     _molecule = widget.schedule.molecule;
     _administrationRoute = widget.schedule.administrationRoute;
     _ester = widget.schedule.ester;

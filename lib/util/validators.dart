@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/string_parsing.dart';
 
@@ -28,8 +29,10 @@ String? positiveInt(String? value) {
 String? requiredString(String? value) =>
     value.isEmpty ? 'Required field' : null;
 
-String? requiredDate(DateTime? value) =>
+String? requiredDateTime(DateTime? value) =>
     value == null ? 'Required field' : null;
+
+String? requiredDate(Date? value) => value == null ? 'Required field' : null;
 
 String? requiredStrictlyPositiveDecimal(String? value) =>
     requiredString(value) ?? strictlyPositiveDecimal(value);

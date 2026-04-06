@@ -101,10 +101,10 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           datetime: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
-          onDateTimeChanged: (date) => setState(() {
+          onChanged: (date) => setState(() {
             _testDateTime = date;
           }),
-            // TODO create a method onDateChanged
+          // TODO create a method onDateChanged
         ),
       ],
     );
