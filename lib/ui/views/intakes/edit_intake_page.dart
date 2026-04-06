@@ -69,6 +69,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
     );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
+
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 

@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class BloodTest {
   final int id;
@@ -28,6 +30,11 @@ class BloodTest {
           (map['testosteroneLevels'] as String?).toDecimalOrNull,
     );
   }
+
+  DateTime get localDateTime =>
+      tz.TZDateTime.from(dateTime, tz.getLocation(timeZone));
+
+  Date get localDate => Date.fromDateTime(localDateTime);
 
   BloodTest copyWith({
     int? id,

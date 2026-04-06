@@ -43,12 +43,10 @@ class BloodTestProvider extends ChangeNotifier {
     return Map.fromEntries(
       bloodtestsSortedDesc
           .where((bloodtest) => bloodtest.estradiolLevels != null)
-          .where((bloodtest) => !Date.fromDateTime(bloodtest.dateTime)
-              .isBefore(startDate)) // TODO use local date
+          .where((bloodtest) => !bloodtest.localDate.isBefore(startDate))
           .map(
             (bloodtest) => MapEntry(
-              Date.fromDateTime(bloodtest.dateTime) // TODO use local date
-                  .differenceInDays(startDate),
+              bloodtest.localDate.differenceInDays(startDate),
               bloodtest.estradiolLevels!.toDouble(),
             ),
           ),
