@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart';
@@ -409,6 +410,30 @@ void main() {
 
         // Assert
         expect(string, '2024-06-15T00:00:00.000Z');
+      });
+    });
+
+    group('format', () {
+      test('formats date with yMMMd', () {
+        // Arrange
+        final date = Date(DateTime.utc(2024, 6, 15));
+
+        // Act
+        final formatted = date.format(DateFormat.yMMMd());
+
+        // Assert
+        expect(formatted, DateFormat.yMMMd().format(DateTime.utc(2024, 6, 15)));
+      });
+
+      test('formats date with a custom pattern', () {
+        // Arrange
+        final date = Date(DateTime.utc(2024, 6, 15));
+
+        // Act
+        final formatted = date.format(DateFormat('dd/MM/yyyy'));
+
+        // Assert
+        expect(formatted, '15/06/2024');
       });
     });
   });

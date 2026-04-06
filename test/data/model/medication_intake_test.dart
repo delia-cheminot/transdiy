@@ -6,7 +6,36 @@ import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
 
 void main() {
-  group('MedicationIntake model', () {
+  group('MedicationIntake', () {
+    test('constructor should throw if takenDateTime is not UTC', () {
+      expect(
+        () => MedicationIntake(
+          scheduledDateTime: DateTime.now(),
+          dose: Decimal.one,
+          takenDateTime: DateTime.now(),
+          takenTimeZone: 'Etc/UTC',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        ),
+        throwsArgumentError,
+      );
+    });
+
+    test(
+        'constructor should throw if takenDateTime is provided without takenTimeZone',
+        () {
+      expect(
+        () => MedicationIntake(
+          scheduledDateTime: DateTime.now(),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2025, 9, 14, 12, 0),
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        ),
+        throwsArgumentError,
+      );
+    });
+
     test('toMap and fromMap should preserve values', () {
       final scheduled = DateTime.utc(2025, 9, 14, 10, 30);
       final taken = DateTime.utc(2025, 9, 14, 12, 0);

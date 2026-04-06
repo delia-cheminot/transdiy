@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 bool _isUtcMidnight(DateTime dt) =>
     dt.isUtc &&
     dt.hour == 0 &&
@@ -56,6 +58,8 @@ class Date {
   DateTime toUtcDateTime() => value;
 
   DateTime toDateTime() => DateTime(year, month, day);
+
+  String format(DateFormat formatter) => formatter.format(value);
 
   @override
   String toString() {
