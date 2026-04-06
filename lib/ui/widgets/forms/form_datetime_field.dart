@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mona/ui/widgets/forms/base_form_field.dart';
 
 class FormDateTimeField extends BaseFormField {
   final DateTime datetime;
   final DateTime? selectedDatetime;
-  final ValueChanged<DateTime> onDateChanged;
-  final ValueChanged<TimeOfDay> onTimeChanged;
+  final ValueChanged<DateTime> onDateTimeChanged;
 
 // TODO stop requiering onChanged
 
   FormDateTimeField({
     required this.datetime,
-    required this.onDateChanged,
-    required this.onTimeChanged,
+    required this.onDateTimeChanged,
     this.selectedDatetime,
     required super.label,
-    super.suffixText,
     super.errorText,
     super.regexFormatter,
   });
@@ -25,54 +23,55 @@ class FormDateTimeField extends BaseFormField {
   Widget buildField(BuildContext context) {
     return Row(
       children: <Widget>[
-        TextField(
-          controller:
-              TextEditingController(text: datetime.toString().split(' ').first),
-          keyboardType: TextInputType.datetime,
-          inputFormatters: regexFormatter != null
-              ? <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
-                ]
-              : null,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: label,
-            suffixText: suffixText,
-            errorText: errorText,
-            suffixIcon: errorText != null
-                ? Icon(Icons.error)
-                : Icon(Icons.calendar_today),
+        Expanded(
+          child: TextField(
+            controller: TextEditingController(
+                text: datetime.toString().split(' ').first),
+            keyboardType: TextInputType.datetime,
+            inputFormatters: regexFormatter != null
+                ? <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
+                  ]
+                : null,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: label,
+              errorText: errorText,
+              suffixIcon: errorText != null
+                  ? Icon(Icons.error)
+                  : Icon(Icons.calendar_today),
+            ),
+            readOnly: true,
+            onTap: () => _selectDate(context),
           ),
-          readOnly: true,
-          onTap: () => _selectDate(context),
         ),
-        TextField(
-          controller:
-              TextEditingController(text: datetime.toString().split(' ').first),
-          keyboardType: TextInputType.datetime,
-          inputFormatters: regexFormatter != null
-              ? <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
-                ]
-              : null,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: label,
-            suffixText: suffixText,
-            errorText: errorText,
-            suffixIcon: errorText != null
-                ? Icon(Icons.error)
-                : Icon(Icons.calendar_today),
+        SizedBox(width: 8),
+        IntrinsicWidth(
+          child: TextField(
+            controller: TextEditingController(
+                text: DateFormat('HH:mm').format(datetime)),
+            inputFormatters: regexFormatter != null
+                ? <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(regexFormatter!)),
+                  ]
+                : null,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              errorText: errorText,
+              suffixIcon: errorText != null
+                  ? Icon(Icons.error)
+                  : Icon(Icons.calendar_today),
+            ),
+            readOnly: true,
+            onTap: () => _selectTime(context),
           ),
-          readOnly: true,
-          onTap: () => _selectTime(context),
-        )
+        ),
       ],
     );
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDatetime ?? DateTime.now(),
       firstDate: DateTime(2000),
@@ -80,7 +79,8 @@ class FormDateTimeField extends BaseFormField {
     );
 
     if (picked != null) {
-      onDateChanged(picked);
+      picked = DateTime(picked.year, picked.month, picked.day, datetime.hour, datetime.minute);
+      onDateTimeChanged(picked);
     }
   }
 
@@ -90,7 +90,7 @@ class FormDateTimeField extends BaseFormField {
         initialTime: TimeOfDay(hour: datetime.hour, minute: datetime.minute));
 
     if (picked != null) {
-      onTimeChanged(picked);
+      onDateTimeChanged(DateTime(datetime.year,datetime.month, datetime.day, picked.hour, picked.minute));
     }
   }
 }
