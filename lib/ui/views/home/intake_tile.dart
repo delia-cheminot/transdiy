@@ -151,12 +151,11 @@ class IntakeTileViewModel {
         return "Today";
 
       case ScheduleStatus.overdue:
-        final formatted =
-            DateFormat.MMMMd().format(previousScheduled!.toDateTime());
+        final formatted = previousScheduled!.format(DateFormat.MMMMd());
         return "$formatted - $daysSinceLastScheduled days ago";
 
       case ScheduleStatus.upcoming:
-        final formatted = DateFormat.MMMMd().format(nextScheduled.toDateTime());
+        final formatted = nextScheduled.format(DateFormat.MMMMd());
         return "$formatted - in $daysUntilIntake days";
 
       case ScheduleStatus.taken:
