@@ -87,7 +87,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
   Map<int, GraphIntake> getDaysAndIntakes() {
     if (graphIntakes.isEmpty) return {};
 
-    final startDate = getFirstIntakeDate()!;
+    final startDate = getFirstIntakeLocalDate()!;
     return Map.fromEntries(
       graphIntakes.map(
         (intake) => MapEntry(
@@ -98,7 +98,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
     );
   }
 
-  Date? getFirstIntakeDate() {
+  Date? getFirstIntakeLocalDate() {
     if (takenIntakes.isEmpty) return null;
 
     return takenIntakes

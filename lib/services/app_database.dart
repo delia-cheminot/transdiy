@@ -101,6 +101,7 @@ class AppDatabase {
     CREATE TABLE blood_tests(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       dateTime TEXT NOT NULL,
+      TimeZone TEXT NOT NULL,
       estradiolLevels TEXT,
       testosteroneLevels TEXT
     )
@@ -217,6 +218,7 @@ class AppDatabase {
       CREATE TABLE blood_tests(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         dateTime TEXT NOT NULL,
+        TimeZone TEXT NOT NULL,
         estradiolLevels TEXT,
         testosteroneLevels TEXT
       )

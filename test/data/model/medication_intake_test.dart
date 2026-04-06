@@ -8,14 +8,15 @@ import 'package:mona/data/model/molecule.dart';
 void main() {
   group('MedicationIntake model', () {
     test('toMap and fromMap should preserve values', () {
-      final scheduled = DateTime(2025, 9, 14, 10, 30);
-      final taken = DateTime(2025, 9, 14, 12, 0);
+      final scheduled = DateTime.utc(2025, 9, 14, 10, 30);
+      final taken = DateTime.utc(2025, 9, 14, 12, 0);
 
       final intake = MedicationIntake(
           id: 1,
           scheduledDateTime: scheduled,
           dose: Decimal.parse('2.5'),
           takenDateTime: taken,
+          takenTimeZone: 'Etc/UTC',
           scheduleId: 42,
           side: InjectionSide.left,
           molecule: KnownMolecules.estradiol,
@@ -33,6 +34,8 @@ void main() {
                 intake.scheduledDateTime)
             .having(
                 (i) => i.takenDateTime, 'takenDateTime', intake.takenDateTime)
+            .having(
+                (i) => i.takenTimeZone, 'takenTimeZone', intake.takenTimeZone)
             .having((i) => i.dose, 'dose', intake.dose)
             .having((i) => i.scheduleId, 'scheduleId', intake.scheduleId)
             .having((i) => i.side, 'side', intake.side)
@@ -49,7 +52,8 @@ void main() {
       final intakeTaken = MedicationIntake(
         scheduledDateTime: scheduled,
         dose: Decimal.one,
-        takenDateTime: DateTime(2025, 9, 14, 11, 0),
+        takenDateTime: DateTime.utc(2025, 9, 14, 11, 0),
+        takenTimeZone: 'Etc/UTC',
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.gel,
       );

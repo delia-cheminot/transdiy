@@ -8,7 +8,8 @@ void main() {
       // Arrange
       final bloodtest = BloodTest(
         id: 1,
-        dateTime: DateTime(2025, 3, 14, 6, 7),
+        dateTime: DateTime.utc(2025, 3, 14, 6, 7),
+        timeZone: 'Etc/UTC',
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       );
@@ -23,6 +24,7 @@ void main() {
         isA<BloodTest>()
             .having((i) => i.id, 'id', bloodtest.id)
             .having((i) => i.dateTime, 'date', bloodtest.dateTime)
+            .having((i) => i.timeZone, 'timeZone', bloodtest.timeZone)
             .having((i) => i.estradiolLevels, 'estradiolLevels',
                 bloodtest.estradiolLevels)
             .having((i) => i.testosteroneLevels, 'testosteroneLevels',
@@ -34,11 +36,12 @@ void main() {
       // Arrange
       final original = BloodTest(
         id: 1,
-        dateTime: DateTime(2024, 1, 1),
+        dateTime: DateTime.utc(2024, 1, 1),
+        timeZone: 'Etc/UTC',
         estradiolLevels: Decimal.parse('167.1'),
         testosteroneLevels: Decimal.parse('1.67'),
       );
-      final newDate = DateTime(2025, 1, 1);
+      final newDate = DateTime.utc(2025, 1, 1);
 
       // Act
       final result = original.copyWith(dateTime: newDate);
@@ -49,6 +52,7 @@ void main() {
         BloodTest(
           id: original.id,
           dateTime: newDate,
+          timeZone: 'Etc/UTC',
           estradiolLevels: original.estradiolLevels,
           testosteroneLevels: original.testosteroneLevels,
         ),
@@ -59,7 +63,8 @@ void main() {
       // Arrange
       final original = BloodTest(
         id: 1,
-        dateTime: DateTime(2024, 1, 1),
+        dateTime: DateTime.utc(2024, 1, 1),
+        timeZone: 'Etc/UTC',
         estradiolLevels: Decimal.parse('10'),
         testosteroneLevels: Decimal.parse('20'),
       );

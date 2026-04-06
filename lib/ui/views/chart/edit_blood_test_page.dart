@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
@@ -22,6 +23,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   late TextEditingController _testosteroneLevelsController;
   late DateTime _testDateTime;
   late BloodTestProvider _bloodTestProvider;
+  bool _dateTimeChanged = false;
 
   String? get _testDateError => BloodTest.validateDate(_testDateTime);
   String? get _estradiolLevelsError =>
@@ -44,17 +46,22 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
     }
   }
 
-  void _saveBloodTest() {
+  void _saveBloodTest() async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
+    final timezone =
+        _dateTimeChanged ? await FlutterTimezone.getLocalTimezone() : null;
+
     final updatedBloodTest = widget.bloodtest.copyWith(
       dateTime: _testDateTime,
+      timeZone: timezone?.identifier,
       estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
       testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
     );
-    _bloodTestProvider.updateBloodTest(updatedBloodTest);
+    await _bloodTestProvider.updateBloodTest(updatedBloodTest);
 
+    if (!mounted) return;
     Navigator.pop(context, updatedBloodTest);
   }
 
@@ -109,6 +116,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           errorText: _testDateError,
           onChanged: (date) => setState(() {
             _testDateTime = date;
+            _dateTimeChanged = true;
           }),
         ),
       ],

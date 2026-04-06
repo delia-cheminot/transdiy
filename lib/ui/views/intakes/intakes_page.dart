@@ -32,7 +32,7 @@ class IntakesPage extends StatelessWidget {
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
-    final dateText = DateFormat.yMMMd().format(intake.takenDateTime!.toLocal());
+    final dateText = DateFormat.yMMMd().format(intake.takenLocalDateTime!);
 
     return ListTile(
       title: Text(dateText),

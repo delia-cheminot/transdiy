@@ -53,15 +53,15 @@ class MedicationIntake {
     this.ester,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
         assert(takenDateTime == null || takenDateTime.isUtc,
-            'takenDateTime must be UTC');
+            'takenDateTime must be UTC'),
+        assert(takenDateTime == null || takenTimeZone != null,
+            'takenTimeZone must be provided');
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
       id: map['id'] as int?,
-      scheduledDateTime:
-          (map['scheduledDateTime'] as String).toDateTime.toLocal(),
-      takenDateTime:
-          (map['takenDateTime'] as String?).toDateTimeOrNull?.toLocal(),
+      scheduledDateTime: (map['scheduledDateTime'] as String).toDateTime,
+      takenDateTime: (map['takenDateTime'] as String?).toDateTimeOrNull,
       takenTimeZone: map['takenTimeZone'] as String?,
       dose: (map['dose'] as String).toDecimal,
       scheduleId: map['scheduleId'] as int?,
@@ -103,7 +103,7 @@ class MedicationIntake {
     Ester? ester,
   }) {
     if (takenDateTime != null && !takenDateTime.isUtc) {
-      throw ArgumentError("takenDateTime must be in UTC");
+      throw ArgumentError("takenDateTime must be UTC");
     }
 
     return MedicationIntake(

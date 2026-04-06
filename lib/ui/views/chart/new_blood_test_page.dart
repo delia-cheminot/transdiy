@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
@@ -33,20 +34,24 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
     setState(() {});
   }
 
-  void _addBloodTest() {
+  void _addBloodTest() async {
+    final bloodTestProvider =
+        Provider.of<BloodTestProvider>(context, listen: false);
     final estradiolLevels = _estradiolLevelsController.text.toDecimalOrNull;
     final testosteroneLevels =
         _testosteroneLevelsController.text.toDecimalOrNull;
-    final bloodTestProvider =
-        Provider.of<BloodTestProvider>(context, listen: false);
+    final timezone = await FlutterTimezone.getLocalTimezone();
+    final tzName = timezone.identifier;
 
     final bloodtest = BloodTest(
-      dateTime: _testDateTime,
+      dateTime: _testDateTime.toUtc(),
+      timeZone: tzName,
       estradiolLevels: estradiolLevels,
       testosteroneLevels: testosteroneLevels,
     );
-    bloodTestProvider.add(bloodtest);
+    await bloodTestProvider.add(bloodtest);
 
+    if (!mounted) return;
     Navigator.pop(context);
   }
 

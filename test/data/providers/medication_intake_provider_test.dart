@@ -22,6 +22,7 @@ void main() {
           scheduledDateTime: i.scheduledDateTime,
           dose: i.dose,
           takenDateTime: i.takenDateTime,
+          takenTimeZone: i.takenTimeZone,
           scheduleId: i.scheduleId,
           molecule: i.molecule,
           administrationRoute: i.administrationRoute,
@@ -32,7 +33,8 @@ void main() {
       id: 1,
       scheduledDateTime: DateTime(2025, 9, 12, 8, 0),
       dose: Decimal.parse('10.5'),
-      takenDateTime: DateTime(2025, 9, 12, 8, 15),
+      takenDateTime: DateTime.utc(2025, 9, 12, 8, 15),
+      takenTimeZone: 'Etc/UTC',
       molecule: KnownMolecules.estradiol,
       administrationRoute: AdministrationRoute.gel,
     ));
@@ -60,7 +62,8 @@ void main() {
       await provider.add(MedicationIntake(
         scheduledDateTime: newDate,
         dose: newDose,
-        takenDateTime: DateTime(2025, 9, 13, 8, 10),
+        takenDateTime: DateTime.utc(2025, 9, 13, 8, 10),
+        takenTimeZone: 'Etc/UTC',
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.gel,
       ));
@@ -81,6 +84,7 @@ void main() {
         scheduledDateTime: intakeToUpdate.scheduledDateTime,
         dose: Decimal.parse('99.9'),
         takenDateTime: intakeToUpdate.takenDateTime,
+        takenTimeZone: 'Etc/UTC',
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.gel,
       );
@@ -137,7 +141,8 @@ void main() {
         id: 100,
         scheduledDateTime: DateTime(2025, 9, 14, 8, 0),
         dose: Decimal.parse('1.0'),
-        takenDateTime: DateTime(2025, 9, 14, 8, 10),
+        takenDateTime: DateTime.utc(2025, 9, 14, 8, 10),
+        takenTimeZone: 'Etc/UTC',
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.gel,
       ));
@@ -152,7 +157,8 @@ void main() {
         id: 102,
         scheduledDateTime: DateTime(2025, 9, 16, 8, 0),
         dose: Decimal.parse('1.0'),
-        takenDateTime: DateTime(2025, 9, 16, 8, 10),
+        takenDateTime: DateTime.utc(2025, 9, 16, 8, 10),
+        takenTimeZone: 'Etc/UTC',
         molecule: KnownMolecules.estradiol,
         administrationRoute: AdministrationRoute.gel,
       ));
@@ -187,7 +193,8 @@ void main() {
           scheduleId: 100,
           scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
           dose: Decimal.parse('10.0'),
-          takenDateTime: DateTime(2025, 9, 13, 8, 15),
+          takenDateTime: DateTime.utc(2025, 9, 13, 8, 15),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         ));
@@ -196,7 +203,8 @@ void main() {
           scheduleId: 200,
           scheduledDateTime: DateTime(2025, 9, 13, 8, 0),
           dose: Decimal.parse('10.0'),
-          takenDateTime: DateTime(2025, 9, 13, 8, 15),
+          takenDateTime: DateTime.utc(2025, 9, 13, 8, 15),
+          takenTimeZone: 'Etc/UTC',
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.gel,
         ));

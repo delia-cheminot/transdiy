@@ -29,7 +29,7 @@ class MainGraph extends StatelessWidget {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
-    final Date firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final Date firstDay = medicationIntakeProvider.getFirstIntakeLocalDate()!;
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
