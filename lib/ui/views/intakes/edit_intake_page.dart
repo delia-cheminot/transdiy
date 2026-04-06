@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -26,6 +27,7 @@ class EditIntakePage extends StatefulWidget {
 
 class _EditIntakePageState extends State<EditIntakePage> {
   late DateTime _takenDate;
+  bool _takenDateChanged = false;
   late TextEditingController _takenDoseController;
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
@@ -56,8 +58,15 @@ class _EditIntakePageState extends State<EditIntakePage> {
           .useDose(supplyItem, -doseDifference);
     }
 
+    final timezone =
+        _takenDateChanged ? await FlutterTimezone.getLocalTimezone() : null;
+
     MedicationIntake updatedIntake = intake.copyWith(
-        takenDateTime: _takenDate, dose: _takenDose, side: _selectedSide);
+      takenDateTime: _takenDate.toUtc(),
+      takenTimeZone: timezone?.toString(),
+      dose: _takenDose,
+      side: _selectedSide,
+    );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
     Navigator.of(context).pop();
@@ -91,6 +100,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   void _onTakenDateChanged(DateTime date) {
     setState(() {
       _takenDate = date;
+      _takenDateChanged = true;
     });
   }
 
@@ -113,7 +123,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   @override
   void initState() {
     super.initState();
-    _takenDate = widget.intake.takenDateTime ?? DateTime.now();
+    _takenDate = widget.intake.takenDateTime?.toLocal() ?? DateTime.now();
     _takenDose = widget.intake.dose;
     _takenDoseController =
         TextEditingController(text: widget.intake.dose.toString());
