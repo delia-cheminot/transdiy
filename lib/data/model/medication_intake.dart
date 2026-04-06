@@ -100,6 +100,10 @@ class MedicationIntake {
     AdministrationRoute? administrationRoute,
     Ester? ester,
   }) {
+    if (takenDateTime != null && !takenDateTime.isUtc) {
+      throw ArgumentError("takenDateTime must be in UTC");
+    }
+
     return MedicationIntake(
       id: id ?? this.id,
       scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,

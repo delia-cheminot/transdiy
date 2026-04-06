@@ -23,6 +23,10 @@ class MedicationIntakeManager {
     InjectionSide? side,
     Decimal? deadSpace, //in μL
   }) async {
+    if (!takenDateTime.isUtc) {
+      throw ArgumentError('takenDateTime must be in UTC');
+    }
+
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
       scheduledDateTime: scheduledDateTime,
@@ -35,14 +39,14 @@ class MedicationIntakeManager {
       ester: schedule.ester,
     ));
 
-    if (supplyItem != null) {
-      if (deadSpace != null && deadSpace > Decimal.zero) {
-        final deadSpaceMl = deadSpace * Decimal.parse('0.001');
-        dose += supplyItem.getDose(deadSpaceMl);
-      }
+    if (supplyItem == null) return;
 
-      await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+    if (deadSpace != null && deadSpace > Decimal.zero) {
+      final deadSpaceMl = deadSpace * Decimal.parse('0.001');
+      dose += supplyItem.getDose(deadSpaceMl);
     }
+
+    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
   }
 
   InjectionSide getNextSide() {

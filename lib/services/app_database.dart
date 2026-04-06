@@ -260,7 +260,7 @@ class AppDatabase {
             'medication_intakes',
             {
               'takenDateTime': utc.toIso8601String(),
-              'takenTimeZone': currentTimeZone.toString()
+              'takenTimeZone': currentTimeZone.identifier
             },
             where: 'id = ?',
             whereArgs: [id],

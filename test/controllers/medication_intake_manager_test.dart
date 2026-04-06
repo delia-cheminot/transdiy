@@ -63,7 +63,7 @@ void main() {
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: date,
-          takenDateTime: date,
+          takenDateTime: date.toUtc(),
           takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
@@ -75,7 +75,7 @@ void main() {
           predicate((MedicationIntake i) =>
               i.dose == dose &&
               i.scheduledDateTime == date &&
-              i.takenDateTime == date &&
+              i.takenDateTime == date.toUtc() &&
               i.side == side &&
               i.scheduleId == schedule.id),
         );
@@ -116,7 +116,7 @@ void main() {
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: scheduledDate,
-          takenDateTime: takenDate,
+          takenDateTime: takenDate.toUtc(),
           takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
@@ -165,7 +165,7 @@ void main() {
         await manager.takeMedication(
           dose: dose,
           scheduledDateTime: scheduledDate,
-          takenDateTime: takenDate,
+          takenDateTime: takenDate.toUtc(),
           takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,

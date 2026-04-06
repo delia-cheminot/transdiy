@@ -50,16 +50,15 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       widget.schedule.administrationRoute == AdministrationRoute.injection;
 
   void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
-      SupplyItemProvider supplyItemProvider) {
-    late String tzName;
-    FlutterTimezone.getLocalTimezone().then((timezone) {
-      tzName = timezone.toString();
-    });
-
+      SupplyItemProvider supplyItemProvider) async {
     if (!_isFormValid) return;
+
+    final timezone = await FlutterTimezone.getLocalTimezone();
+    final tzName = timezone.identifier;
+
     if (!mounted) return;
 
-    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+    await MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
       scheduledDateTime: widget.scheduledDate,
@@ -70,6 +69,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       side: _selectedSide,
       deadSpace: _deadSpace,
     );
+
+    if (!mounted) return;
 
     Navigator.of(context).pop();
   }
