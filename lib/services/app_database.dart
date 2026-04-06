@@ -255,8 +255,9 @@ class AppDatabase {
 
         if (takenDateTimeRaw != null) {
           final local = DateTime.parse(takenDateTimeRaw);
-          final utc = DateTime.utc(local.year, local.month, local.day, 12,
-              0); // set to noon to avoid going into prev day
+          final localAtNoon =
+              DateTime(local.year, local.month, local.day, 12, 0);
+          final utc = localAtNoon.toUtc();
 
           await db.update(
             'medication_intakes',
