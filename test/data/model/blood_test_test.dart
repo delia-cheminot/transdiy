@@ -75,5 +75,20 @@ void main() {
       // Assert
       expect(original.id, 1);
     });
+
+    test('constructor throws if dateTime is not UTC', () {
+      // Arrange
+      final localDateTime = DateTime(2024, 1, 1);
+
+      // Act & Assert
+      expect(
+        () => BloodTest(
+          id: 1,
+          dateTime: localDateTime,
+          timeZone: 'Etc/UTC',
+        ),
+        throwsArgumentError,
+      );
+    });
   });
 }

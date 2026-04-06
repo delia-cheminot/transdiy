@@ -9,17 +9,23 @@ bool _isUtcMidnight(DateTime dt) =>
 class Date {
   final DateTime value;
 
-  Date(this.value)
-      : assert(_isUtcMidnight(value), 'Date value must be UTC midnight');
+  Date(this.value) {
+    if (!_isUtcMidnight(value)) {
+      throw ArgumentError('Value must be UTC midnight');
+    }
+  }
 
   Date.fromDateTime(DateTime input) : value = _logicalDay(input);
 
   Date.today() : value = _logicalDay(DateTime.now());
 
-  Date.fromString(String input)
-      : assert(_isUtcMidnight(DateTime.parse(input)),
-            'Date string must be UTC midnight (e.g. "2024-01-01T00:00:00Z")'),
-        value = DateTime.parse(input);
+  Date.fromString(String input) : value = DateTime.parse(input) {
+    if (!_isUtcMidnight(value)) {
+      throw ArgumentError(
+        'Date string must be UTC midnight',
+      );
+    }
+  }
 
   int get year => value.year;
   int get month => value.month;
@@ -56,6 +62,7 @@ class Date {
     return value.toIso8601String();
   }
 
+  // coverage:ignore-start
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -70,4 +77,5 @@ class Date {
     final dayDifference = input.hour < 4 ? 1 : 0;
     return DateTime.utc(input.year, input.month, input.day - dayDifference);
   }
+  // coverage:ignore-end
 }

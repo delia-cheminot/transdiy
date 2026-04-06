@@ -17,8 +17,11 @@ class BloodTest {
     required this.timeZone,
     this.estradiolLevels,
     this.testosteroneLevels,
-  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        assert(dateTime.isUtc, 'dateTime must be UTC');
+  }) : id = id ?? DateTime.now().millisecondsSinceEpoch {
+    if (!dateTime.isUtc) {
+      throw ArgumentError('dateTime must be UTC');
+    }
+  }
 
   factory BloodTest.fromMap(Map<String, Object?> map) {
     return BloodTest(
@@ -43,10 +46,6 @@ class BloodTest {
     Decimal? estradiolLevels,
     Decimal? testosteroneLevels,
   }) {
-    if (dateTime != null && !dateTime.isUtc) {
-      throw ArgumentError('dateTime must be UTC');
-    }
-
     return BloodTest(
       id: id ?? this.id,
       dateTime: dateTime ?? this.dateTime,
