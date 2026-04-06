@@ -51,11 +51,14 @@ class MedicationIntake {
     required this.molecule,
     required this.administrationRoute,
     this.ester,
-  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        assert(takenDateTime == null || takenDateTime.isUtc,
-            'takenDateTime must be UTC'),
-        assert(takenDateTime == null || takenTimeZone != null,
-            'takenTimeZone must be provided');
+  }) : id = id ?? DateTime.now().millisecondsSinceEpoch {
+    if (takenDateTime != null && !takenDateTime!.isUtc) {
+      throw ArgumentError('takenDateTime must be UTC');
+    }
+    if (takenDateTime != null && takenTimeZone == null) {
+      throw ArgumentError('takenTimeZone must be provided');
+    }
+  }
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
@@ -102,10 +105,6 @@ class MedicationIntake {
     AdministrationRoute? administrationRoute,
     Ester? ester,
   }) {
-    if (takenDateTime != null && !takenDateTime.isUtc) {
-      throw ArgumentError("takenDateTime must be UTC");
-    }
-
     return MedicationIntake(
       id: id ?? this.id,
       scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,
