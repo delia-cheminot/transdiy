@@ -22,7 +22,8 @@ class BloodTestPage extends StatelessWidget {
         return MainPageWrapper(
             isLoading: bloodTestProvider.isLoading,
             isEmpty: bloodtests.isEmpty,
-            emptyMessage: 'Taken blood tests will appear here',
+            emptyMessage:
+                'Taken blood tests will appear here. Start by using the Add button!',
             child: ListView.builder(
               itemCount: bloodtests.length,
               itemBuilder: (context, index) {
