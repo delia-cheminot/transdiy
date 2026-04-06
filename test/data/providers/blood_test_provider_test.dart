@@ -41,7 +41,7 @@ void main() {
       });
 
       // Assert
-      expect(provider.bloodtests.length, repo.items.length);
+      expect(provider.bloodtestsSortedDesc.length, repo.items.length);
     });
 
     test('add inserts a new test', () async {
@@ -60,7 +60,7 @@ void main() {
 
       // Assert
       expect(
-        provider.bloodtests.any((i) =>
+        provider.bloodtestsSortedDesc.any((i) =>
             i.dateTime == newDate &&
             i.estradiolLevels == newEstradiolLevels &&
             i.testosteroneLevels == newTestosteroneLevels),
@@ -89,8 +89,8 @@ void main() {
       await provider.updateBloodTest(updatedBloodTest);
 
       // Assert
-      final fetchedBloodTests =
-          provider.bloodtests.firstWhere((i) => i.id == bloodtestToUpdate.id);
+      final fetchedBloodTests = provider.bloodtestsSortedDesc
+          .firstWhere((i) => i.id == bloodtestToUpdate.id);
       expect(fetchedBloodTests.dateTime, DateTime(2025, 2, 2, 2, 2));
     });
 
@@ -108,7 +108,7 @@ void main() {
       await provider.deleteBloodTestFromId(1);
 
       // Assert
-      expect(provider.bloodtests.length, 0);
+      expect(provider.bloodtestsSortedDesc.length, 0);
     });
 
     test('deleteBloodTest removes the test by object', () async {
@@ -127,7 +127,7 @@ void main() {
       await provider.deleteBloodTest(bloodtestToDelete);
 
       // Assert
-      expect(provider.bloodtests.length, 0);
+      expect(provider.bloodtestsSortedDesc.length, 0);
     });
 
     test('bloodtestsSortedDesc returns test sorted descending', () async {

@@ -4,7 +4,6 @@ import 'package:mona/data/model/date.dart';
 import 'package:mona/services/repository.dart';
 
 class BloodTestProvider extends ChangeNotifier {
-  List<BloodTest> _bloodtests = [];
   List<BloodTest> _bloodtestsSortedDesc = [];
   bool _isLoading = true;
 
@@ -16,7 +15,6 @@ class BloodTestProvider extends ChangeNotifier {
   }
 
   bool get isLoading => _isLoading;
-  List<BloodTest> get bloodtests => _bloodtests;
   List<BloodTest> get bloodtestsSortedDesc => _bloodtestsSortedDesc;
 
   Future<void> deleteBloodTestFromId(int id) async {
@@ -40,10 +38,10 @@ class BloodTestProvider extends ChangeNotifier {
   }
 
   Map<int, double> getDaysAndBloodTests(Date startDate) {
-    if (bloodtests.isEmpty) return {};
+    if (bloodtestsSortedDesc.isEmpty) return {};
 
     return Map.fromEntries(
-      bloodtests
+      bloodtestsSortedDesc
           .where((bloodtest) => bloodtest.estradiolLevels != null)
           .where((bloodtest) => !Date.fromDateTime(bloodtest.dateTime)
               .isBefore(startDate)) // TODO use local date
@@ -64,20 +62,15 @@ class BloodTestProvider extends ChangeNotifier {
   );
 
   Future<void> _fetchBloodTests() async {
-    _bloodtests = await repository.getAll();
-    _updateSorted();
+    _bloodtestsSortedDesc = (await repository.getAll())
+      ..sort((a, b) => b.dateTime.compareTo(a.dateTime));
     notifyListeners();
   }
 
   Future<void> _init() async {
-    _bloodtests = await repository.getAll();
-    _updateSorted();
+    _bloodtestsSortedDesc = (await repository.getAll())
+      ..sort((a, b) => b.dateTime.compareTo(a.dateTime));
     _isLoading = false;
     notifyListeners();
-  }
-
-  void _updateSorted() {
-    _bloodtestsSortedDesc = List<BloodTest>.from(_bloodtests)
-      ..sort((a, b) => b.dateTime.compareTo(a.dateTime));
   }
 }
