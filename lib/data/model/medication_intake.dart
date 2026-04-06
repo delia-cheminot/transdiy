@@ -51,7 +51,9 @@ class MedicationIntake {
     required this.molecule,
     required this.administrationRoute,
     this.ester,
-  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
+  })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
+        assert(takenDateTime == null || takenDateTime.isUtc,
+            'takenDateTime must be UTC');
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
