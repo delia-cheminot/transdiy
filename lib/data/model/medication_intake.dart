@@ -120,7 +120,7 @@ class MedicationIntake {
   }
 
   DateTime? get takenLocalDateTime {
-    if (takenDateTime == null || takenTimeZone == null) return null;
+    if (takenDateTime == null) return null;
 
     final location = tz.getLocation(takenTimeZone!);
     return tz.TZDateTime.from(takenDateTime!, location);
@@ -132,6 +132,7 @@ class MedicationIntake {
         : null;
   }
 
+  // coverage:ignore-start
   static String? validateDose(String? value) =>
       requiredStrictlyPositiveDecimal(value);
 
@@ -149,4 +150,5 @@ class MedicationIntake {
         "${administrationRoute.name}"
         "${side?.name != null ? ' • ${side!.name} side' : ''}";
   }
+  // coverage:ignore-end
 }

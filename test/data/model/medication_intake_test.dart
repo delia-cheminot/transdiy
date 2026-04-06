@@ -1,11 +1,16 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() {
+  setUpAll(() {
+    tz.initializeTimeZones();
+  });
   group('MedicationIntake', () {
     test('constructor should throw if takenDateTime is not UTC', () {
       expect(
@@ -104,6 +109,142 @@ void main() {
           false,
         ],
       );
+    });
+
+    group('takenLocalDateTime and takenLocalDate', () {
+      test('takenLocalDateTime returns null when takenDateTime is null', () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: null,
+          takenTimeZone: 'Europe/Paris',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDateTime;
+
+        // Assert
+        expect(result, isNull);
+      });
+
+      test(
+          'takenLocalDateTime converts UTC to Europe/Paris summer time (UTC+2)',
+          () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 8, 0),
+          takenTimeZone: 'Europe/Paris',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final takenLocalDateTime = intake.takenLocalDateTime;
+
+        // Assert
+        expect(takenLocalDateTime?.hour, 10);
+      });
+
+      test(
+          'takenLocalDateTime handles day rollback when crossing midnight behind UTC',
+          () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 1, 0),
+          takenTimeZone: 'America/New_York',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDateTime;
+
+        // Assert
+        expect(result?.day, 14);
+      });
+
+      test('takenLocalDate returns null when takenDateTime is null', () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: null,
+          takenTimeZone: 'Europe/Paris',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDate;
+
+        // Assert
+        expect(result, isNull);
+      });
+
+      test('takenLocalDate returns correct date in Europe/Paris timezone', () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          takenTimeZone: 'Europe/Paris',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDate;
+
+        // Assert
+        expect(result, Date(DateTime.utc(2024, 6, 15)));
+      });
+
+      test(
+          'takenLocalDate returns previous calendar date when local time crosses midnight behind UTC',
+          () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 1, 0),
+          takenTimeZone: 'America/New_York',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDate;
+
+        // Assert
+        expect(result, Date(DateTime.utc(2024, 6, 14)));
+      });
+
+      test(
+          'takenLocalDate returns previous date if taken is before 4am local time',
+          () {
+        // Arrange
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 2, 0),
+          takenTimeZone: 'Etc/UTC',
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        // Act
+        final result = intake.takenLocalDate;
+
+        // Assert
+        expect(result, Date(DateTime.utc(2024, 6, 14)));
+      });
     });
   });
 }
