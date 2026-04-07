@@ -4,11 +4,11 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
-import 'package:mona/util/date_helpers.dart';
 import 'package:provider/provider.dart';
 
 class IntakeTile extends StatelessWidget {
@@ -49,7 +49,7 @@ class IntakeTile extends StatelessWidget {
             MaterialPageRoute<void>(
               fullscreenDialog: true,
               builder: (context) =>
-                  TakeMedicationPage(schedule, normalizedToday()),
+                  TakeMedicationPage(schedule, DateTime.now()),
             ),
           );
         },
@@ -119,19 +119,18 @@ class IntakeTileViewModel {
   final DateTime now;
   final ThemeData theme;
 
-  DateTime get nextScheduled => schedule.getNextDate();
-  DateTime? get lastScheduled => schedule.getLastDate();
-  DateTime? get lastTaken =>
+  Date get nextScheduled => schedule.nextDate;
+
+  Date? get previousScheduled => schedule.previousDate;
+
+  Date? get lastTaken =>
       intakeProvider.getLastIntakeDateForSchedule(schedule.id);
 
-  int get daysUntilIntake => daysBetweenDate(nextScheduled, origin: now);
+  int get daysUntilIntake => nextScheduled.daysAwayFromToday;
 
-  int? get daysSinceLastTaken =>
-      lastTaken != null ? daysBetweenDate(lastTaken!, origin: now) : null;
+  int? get daysSinceLastTaken => lastTaken?.daysAwayFromToday;
 
-  int? get daysSinceLastScheduled => lastScheduled != null
-      ? daysBetweenDate(lastScheduled!, origin: now)
-      : null;
+  int? get daysSinceLastScheduled => previousScheduled?.daysAwayFromToday;
 
   String get intakeInfo {
     final nextSide = MedicationIntakeManager(
@@ -152,11 +151,11 @@ class IntakeTileViewModel {
         return "Today";
 
       case ScheduleStatus.overdue:
-        final formatted = DateFormat.MMMMd().format(lastScheduled!);
+        final formatted = previousScheduled!.format(DateFormat.MMMMd());
         return "$formatted - $daysSinceLastScheduled days ago";
 
       case ScheduleStatus.upcoming:
-        final formatted = DateFormat.MMMMd().format(nextScheduled);
+        final formatted = nextScheduled.format(DateFormat.MMMMd());
         return "$formatted - in $daysUntilIntake days";
 
       case ScheduleStatus.taken:
@@ -168,9 +167,9 @@ class IntakeTileViewModel {
     switch (status) {
       case ScheduleStatus.today:
         if (lastTaken != null &&
-            lastScheduled != null &&
-            !isSameDayAs(lastTaken!, lastScheduled!)) {
-          final formatted = DateFormat.MMMd().format(lastTaken!);
+            previousScheduled != null &&
+            !lastTaken!.isSameDayAs(previousScheduled!)) {
+          final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
           return "Last taken $daysSinceLastTaken days ago ($formatted)";
         }
         return null;
@@ -185,7 +184,7 @@ class IntakeTileViewModel {
           return "Never taken yet";
         }
 
-        final formatted = DateFormat.MMMd().format(lastTaken!);
+        final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
         return "Last taken $daysSinceLastTaken days ago ($formatted)";
     }
   }

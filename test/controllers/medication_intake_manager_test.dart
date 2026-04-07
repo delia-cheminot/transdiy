@@ -62,8 +62,9 @@ void main() {
 
         await manager.takeMedication(
           dose: dose,
-          scheduledDate: date,
-          takenDate: date,
+          scheduledDateTime: date,
+          takenDateTime: date.toUtc(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: side,
@@ -74,7 +75,7 @@ void main() {
           predicate((MedicationIntake i) =>
               i.dose == dose &&
               i.scheduledDateTime == date &&
-              i.takenDateTime == date &&
+              i.takenDateTime == date.toUtc() &&
               i.side == side &&
               i.scheduleId == schedule.id),
         );
@@ -114,8 +115,9 @@ void main() {
 
         await manager.takeMedication(
           dose: dose,
-          scheduledDate: scheduledDate,
-          takenDate: takenDate,
+          scheduledDateTime: scheduledDate,
+          takenDateTime: takenDate.toUtc(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: null,
@@ -162,8 +164,9 @@ void main() {
 
         await manager.takeMedication(
           dose: dose,
-          scheduledDate: scheduledDate,
-          takenDate: takenDate,
+          scheduledDateTime: scheduledDate,
+          takenDateTime: takenDate.toUtc(),
+          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: null,
@@ -183,7 +186,8 @@ void main() {
           id: 1,
           scheduledDateTime: DateTime(2025, 9, 14, 10, 30),
           dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 14, 12, 0),
+          takenDateTime: DateTime.utc(2025, 9, 14, 12, 0),
+          takenTimeZone: 'Etc/UTC',
           scheduleId: 42,
           side: InjectionSide.left,
           molecule: KnownMolecules.estradiol,
@@ -206,7 +210,8 @@ void main() {
           id: 2,
           scheduledDateTime: DateTime(2025, 9, 15, 10, 30),
           dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 15, 12, 0),
+          takenDateTime: DateTime.utc(2025, 9, 15, 12, 0),
+          takenTimeZone: 'Etc/UTC',
           scheduleId: 42,
           side: InjectionSide.right,
           molecule: KnownMolecules.estradiol,
@@ -237,7 +242,8 @@ void main() {
           id: 3,
           scheduledDateTime: DateTime(2025, 9, 16, 10, 30),
           dose: Decimal.parse('2.5'),
-          takenDateTime: DateTime(2025, 9, 16, 12, 0),
+          takenDateTime: DateTime.utc(2025, 9, 16, 12, 0),
+          takenTimeZone: 'Etc/UTC',
           scheduleId: 42,
           side: null,
           molecule: KnownMolecules.estradiol,

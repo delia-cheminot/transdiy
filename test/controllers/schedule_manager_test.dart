@@ -4,11 +4,11 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/util/date_helpers.dart';
 
 @GenerateNiceMocks([
   MockSpec<MedicationScheduleProvider>(),
@@ -39,7 +39,7 @@ void main() {
     late MedicationSchedule upcomingSchedule;
 
     setUp(() {
-      final today = normalizedToday();
+      final today = Date.today();
 
       todaySchedule = MedicationSchedule(
         id: 1,
@@ -65,7 +65,7 @@ void main() {
         notificationTimes: List.empty(),
       );
       when(mockIntakeProvider.getLastIntakeDateForSchedule(5))
-          .thenReturn(normalizedToday());
+          .thenReturn(Date.today());
 
       todayOverdueSchedule = MedicationSchedule(
         id: 4,
@@ -115,7 +115,7 @@ void main() {
     });
 
     test('today returns schedules due today, not late and not taken', () {
-      final today = normalizedToday();
+      final today = Date.today();
 
       todaySchedule = MedicationSchedule(
         id: 1,

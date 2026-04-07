@@ -15,6 +15,7 @@ class BackupService {
     'medication_intakes',
     'medication_schedules',
     'supply_items',
+    'blood_tests',
   ];
 
   Future<String> _generateBackupJson() async {

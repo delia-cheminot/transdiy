@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -45,7 +47,7 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
     );
@@ -71,6 +73,7 @@ class AppDatabase {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
+      takenTimeZone TEXT,
       dose TEXT NOT NULL,
       scheduleId INTEGER,
       side TEXT,
@@ -91,6 +94,16 @@ class AppDatabase {
       administrationRouteName TEXT NOT NULL,
       esterName TEXT,
       notificationTimes TEXT NOT NULL
+    )
+    ''');
+
+    await db.execute('''
+    CREATE TABLE blood_tests(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      dateTime TEXT NOT NULL,
+      timeZone TEXT NOT NULL,
+      estradiolLevels TEXT,
+      testosteroneLevels TEXT
     )
     ''');
   }
@@ -197,6 +210,66 @@ class AppDatabase {
     if (oldVersion < 3) {
       await db.execute(
           "ALTER TABLE medication_schedules ADD COLUMN notificationTimes TEXT NOT NULL DEFAULT '[]'");
+    }
+
+    if (oldVersion < 4) {
+      // add blood_tests
+      await db.execute('''
+      CREATE TABLE blood_tests(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        dateTime TEXT NOT NULL,
+        timeZone TEXT NOT NULL,
+        estradiolLevels TEXT,
+        testosteroneLevels TEXT
+      )
+      ''');
+
+      // migrate startDate to date
+      final schedules = await db.query('medication_schedules');
+      for (final row in schedules) {
+        final raw = row['startDate'] as String;
+
+        final local = DateTime.parse(raw);
+        final date = Date(DateTime.utc(local.year, local.month, local.day));
+
+        await db.update(
+          'medication_schedules',
+          {'startDate': date.toString()},
+          where: 'id = ?',
+          whereArgs: [row['id']],
+        );
+      }
+
+      // add takenTimeZone to medication_intakes
+      await db.execute(
+          'ALTER TABLE medication_intakes ADD COLUMN takenTimeZone TEXT');
+
+      // use utc for takenDateTime and add takenTimeZone
+      final intakes = await db.query('medication_intakes');
+      final TimezoneInfo currentTimeZone =
+          await FlutterTimezone.getLocalTimezone();
+
+      for (final row in intakes) {
+        final id = row['id'] as int;
+        final takenDateTimeRaw = row['takenDateTime'] as String?;
+
+        if (takenDateTimeRaw != null) {
+          final local = DateTime.parse(takenDateTimeRaw);
+          final localAtNoon =
+              DateTime(local.year, local.month, local.day, 12, 0);
+          final utc = localAtNoon.toUtc();
+
+          await db.update(
+            'medication_intakes',
+            {
+              'takenDateTime': utc.toIso8601String(),
+              'takenTimeZone': currentTimeZone.identifier
+            },
+            where: 'id = ?',
+            whereArgs: [id],
+          );
+        }
+      }
     }
   }
 

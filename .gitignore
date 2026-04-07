@@ -49,3 +49,6 @@ android/.kotlin/
 # FVM Version Cache
 .fvm/
 android/build/
+
+# Code coverage
+coverage/

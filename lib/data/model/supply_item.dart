@@ -4,7 +4,7 @@ import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 class SupplyItem {
@@ -36,9 +36,9 @@ class SupplyItem {
     return SupplyItem(
       id: map['id'] as int?,
       name: map['name'] as String,
-      totalDose: Decimal.parse(map['totalDose'] as String),
-      usedDose: Decimal.parse(map['usedDose'] as String),
-      concentration: Decimal.parse(map['concentration'] as String),
+      totalDose: (map['totalDose'] as String).toDecimal,
+      usedDose: (map['usedDose'] as String).toDecimal,
+      concentration: (map['concentration'] as String).toDecimal,
       quantity: map['quantity'] as int,
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
@@ -84,7 +84,8 @@ class SupplyItem {
   }
 
   Decimal getAmount(Decimal dose) =>
-      (dose.toRational() / concentration.toRational()).toDecimal();
+      (dose.toRational() / concentration.toRational())
+          .toDecimal(scaleOnInfinitePrecision: 3);
 
   Decimal getDose(Decimal amount) => amount * concentration;
 
@@ -127,8 +128,7 @@ class SupplyItem {
           (validateTotalAmount(totalAmount) != null
               ? 'Invalid total amount'
               : null) ??
-          (Decimal.tryParse(value!.replaceAll(',', '.'))! >
-                  parseDecimal(totalAmount)
+          (value.toDecimalOrZero > totalAmount.toDecimal
               ? 'Cannot exceed total capacity'
               : null);
     };

@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/util/date_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
 class MedicationSchedule {
@@ -13,7 +14,7 @@ class MedicationSchedule {
   final String name;
   final Decimal dose;
   final int intervalDays;
-  final DateTime startDate;
+  final Date startDate;
   final Molecule molecule;
   final AdministrationRoute administrationRoute;
   final Ester? ester;
@@ -24,21 +25,21 @@ class MedicationSchedule {
     required this.name,
     required this.dose,
     required this.intervalDays,
-    DateTime? startDate,
+    Date? startDate,
     required this.molecule,
     required this.administrationRoute,
     this.ester,
     required this.notificationTimes,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch,
-        startDate = normalizeDate(startDate ?? DateTime.now());
+        startDate = startDate ?? Date.today();
 
   factory MedicationSchedule.fromMap(Map<String, Object?> map) {
     return MedicationSchedule(
       id: map['id'] as int,
       name: map['name'] as String,
-      dose: Decimal.parse(map['dose'] as String),
+      dose: (map['dose'] as String).toDecimal,
       intervalDays: map['intervalDays'] as int,
-      startDate: DateTime.parse(map['startDate'] as String),
+      startDate: Date.fromString(map['startDate'] as String),
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),
@@ -52,23 +53,19 @@ class MedicationSchedule {
   /// - If the [startDate] is in the future or today, returns [startDate].
   /// - If today falls exactly on a scheduled injection date, returns today.
   /// - Otherwise, returns the next scheduled date after today.
-  DateTime getNextDate({DateTime? referenceDate}) {
-    final today = normalizeDate(referenceDate ?? DateTime.now());
-
-    if (!startDate.isBefore(today)) {
+  Date get nextDate {
+    if (!startDate.isBeforeToday) {
       return startDate;
     }
 
-    final daysSinceStart = today.difference(startDate).inDays;
+    final daysSinceStart = startDate.daysAwayFromToday;
 
     if (daysSinceStart % intervalDays == 0) {
-      return today;
+      return Date.today();
     }
 
-    final intervalsPassed = (daysSinceStart / intervalDays).ceil();
-    return startDate.add(
-      Duration(days: intervalsPassed * intervalDays),
-    );
+    return Date.today()
+        .add(Duration(days: intervalDays - (daysSinceStart % intervalDays)));
   }
 
   /// Returns the last scheduled injection date relative to [referenceDate] (or today if null).
@@ -76,28 +73,21 @@ class MedicationSchedule {
   /// - If the [startDate] is in the future or today, returns null.
   /// - If today falls exactly on a scheduled injection date, returns the scheduled date before today.
   /// - Otherwise, returns the last scheduled date before today.
-  DateTime? getLastDate({DateTime? referenceDate}) {
-    final today = normalizeDate(referenceDate ?? DateTime.now());
-
-    if (!startDate.isBefore(today)) {
+  Date? get previousDate {
+    if (!startDate.isBeforeToday) {
       return null;
     }
 
-    final daysSinceStart = today.difference(startDate).inDays;
+    final daysSinceStart = startDate.daysAwayFromToday;
 
     if (daysSinceStart % intervalDays == 0) {
-      return startDate.add(
-        Duration(days: (daysSinceStart - intervalDays)),
-      );
+      return Date.today().subtract(Duration(days: intervalDays));
     }
 
-    final intervalsPassed = (daysSinceStart / intervalDays).floor();
-    return startDate.add(
-      Duration(days: intervalsPassed * intervalDays),
-    );
+    return Date.today().subtract(Duration(days: daysSinceStart % intervalDays));
   }
 
-  List<DateTime> getNextDates({int count = 1, DateTime? referenceDate}) {
+  List<Date> getNextDates(int count) {
     if (count < 0) {
       throw ArgumentError('Count must be a positive integer');
     }
@@ -106,8 +96,8 @@ class MedicationSchedule {
       return [];
     }
 
-    final dates = <DateTime>[];
-    DateTime nextDate = getNextDate(referenceDate: referenceDate);
+    final dates = <Date>[];
+    Date nextDate = this.nextDate;
 
     for (int i = 0; i < count; i++) {
       dates.add(nextDate);
@@ -117,24 +107,21 @@ class MedicationSchedule {
   }
 
   bool isScheduledForToday() {
-    return getNextDate() == normalizedToday();
+    return nextDate.isToday;
   }
 
-  bool isLate(DateTime? lastTakenDate) {
-    final lastDate = getLastDate();
+  bool isLate(Date? lastTakenDate) {
+    if (previousDate == null) {
+      return false;
+    }
 
-    if (lastDate == null || !lastDate.isBefore(normalizedToday())) return false;
-
-    return lastTakenDate == null || lastTakenDate.isBefore(lastDate);
+    return lastTakenDate == null || lastTakenDate.isBefore(previousDate!);
   }
 
-  bool isTakenTodayOrLater(DateTime? lastTakenDate) {
+  bool isTakenTodayOrLater(Date? lastTakenDate) {
     if (lastTakenDate == null) return false;
 
-    final date = normalizeDate(lastTakenDate);
-    final today = normalizedToday();
-
-    return date.isAtSameMomentAs(today) || date.isAfter(today);
+    return lastTakenDate.isToday || lastTakenDate.isAfterToday;
   }
 
   Map<String, Object?> toMap() {
@@ -143,7 +130,7 @@ class MedicationSchedule {
       'name': name,
       'dose': dose.toString(),
       'intervalDays': intervalDays,
-      'startDate': startDate.toIso8601String(),
+      'startDate': startDate.toString(),
       'moleculeJson': jsonEncode(molecule.toJson()),
       'administrationRouteName': administrationRoute.name,
       'esterName': ester?.name,
@@ -156,7 +143,7 @@ class MedicationSchedule {
     String? name,
     Decimal? dose,
     int? intervalDays,
-    DateTime? startDate,
+    Date? startDate,
     Molecule? molecule,
     AdministrationRoute? administrationRoute,
     Ester? ester,
@@ -184,7 +171,7 @@ class MedicationSchedule {
   static String? validateIntervalDays(String? value) =>
       requiredPositiveInt(value);
 
-  static String? validateStartDate(DateTime? value) => requiredDate(value);
+  static String? validateStartDate(Date? value) => requiredDate(value);
 
   static String? validateMolecule(Molecule? value) => requiredMolecule(value);
 
@@ -237,8 +224,7 @@ class MedicationSchedule {
   String formatFrequency() {
     if (intervalDays == 1) {
       return "every day";
-    }
-    else {
+    } else {
       return "every $intervalDays days";
     }
   }
