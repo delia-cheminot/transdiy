@@ -60,6 +60,7 @@ class KnownMolecules {
   static const finasteride = Molecule(name: 'finasteride', unit: 'mg');
   static const dutasteride = Molecule(name: 'dutasteride', unit: 'mg');
   static const minoxidil = Molecule(name: 'minoxidil', unit: 'mg');
+  static const pioglitazone = Molecule(name: 'pioglitazone', unit: 'mg');
 
   static const all = [
     estradiol,
@@ -76,5 +77,6 @@ class KnownMolecules {
     finasteride,
     dutasteride,
     minoxidil,
+    pioglitazone,
   ];
 }
