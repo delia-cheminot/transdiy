@@ -51,7 +51,13 @@ class BloodTestPage extends StatelessWidget {
     return ListTile(
       title: Text(dateText),
       subtitle: Text(
-          'Estradiol : ${bloodtest.estradiolLevels} pg/mL, Testosterone : ${bloodtest.testosteroneLevels} ng/dL'),
+        [
+          if (bloodtest.estradiolLevels != null)
+            'Estradiol : ${bloodtest.estradiolLevels} pg/mL',
+          if (bloodtest.testosteroneLevels != null)
+            'Testosterone : ${bloodtest.testosteroneLevels} ng/dL',
+        ].join('\n'),
+      ),
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute<void>(
           fullscreenDialog: true,

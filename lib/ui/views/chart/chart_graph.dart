@@ -95,7 +95,7 @@ class MainGraph extends StatelessWidget {
                     _buildLineBarData(spots, theme),
                     _buildBloodTestData(bloodSpots, theme),
                   ],
-                  lineTouchData: _buildLineTouchData(theme),
+                  lineTouchData: _buildLineTouchData(theme, firstDay),
                   extraLinesData:
                       _buildTodayVerticalLine(theme, todaySpot, daysSinceStart),
                 ),
@@ -154,20 +154,22 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  LineTouchData _buildLineTouchData(ThemeData theme) {
+  LineTouchData _buildLineTouchData(ThemeData theme, Date firstDay) {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
         tooltipBorderRadius:
             BorderRadius.circular(_ChartConstants.tooltipRadius),
         tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
+        maxContentWidth: 200,
         getTooltipItems: (touchedSpots) {
           return touchedSpots.map((t) {
             String text;
             if (t.barIndex == 0) {
               text = t.y.toStringAsFixed(1);
             } else {
-              text = 'Estradiol: ${t.y.toStringAsFixed(1)} pg/ml';
+              text =
+                  '${_getDateLabel(t.x, firstDay)}: ${t.y.toStringAsFixed(1)} pg/mL';
             }
             return LineTooltipItem(
                 text,
@@ -190,7 +192,7 @@ class MainGraph extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Padding(
               padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
-              child: Text(_getDateLabel(value, firstDay),
+              child: Text("  ${_getDateLabel(value, firstDay)}",
                   style:
                       const TextStyle(fontSize: _ChartConstants.labelFontSize)),
             );
@@ -215,6 +217,6 @@ class MainGraph extends StatelessWidget {
 
   String _getDateLabel(double value, Date firstDay) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return "  ${date.day}/${date.month}  ";
+    return "${date.day}/${date.month}";
   }
 }
