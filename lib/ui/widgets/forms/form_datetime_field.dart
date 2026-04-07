@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/base_form_field.dart';
 
 class FormDateTimeField extends BaseFormField {
@@ -37,7 +38,7 @@ class FormDateTimeField extends BaseFormField {
             onTap: () => _selectDate(context),
           ),
         ),
-        SizedBox(width: 8),
+        SizedBox(width: borderPadding),
         IntrinsicWidth(
           child: TextField(
             controller: TextEditingController(
