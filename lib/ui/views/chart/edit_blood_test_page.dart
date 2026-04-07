@@ -54,7 +54,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         _dateTimeChanged ? await FlutterTimezone.getLocalTimezone() : null;
 
     final updatedBloodTest = widget.bloodtest.copyWith(
-      dateTime: _testDateTime,
+      dateTime: _testDateTime.toUtc(),
       timeZone: timezone?.identifier,
       estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
       testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
@@ -99,8 +99,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
+          suffixText: 'pg/ml',
         ),
-        FormSpacer(),
         FormTextField(
           controller: _testosteroneLevelsController,
           label: 'Testosterone level',
@@ -108,6 +108,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
+          suffixText: 'ng/dL',
         ),
         FormSpacer(),
         FormDateTimeField(
