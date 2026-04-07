@@ -10,6 +10,7 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_info_text.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
@@ -199,24 +200,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               regexFormatter: r'[0-9.,]',
             ),
             if (_selectedSupplyItem != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      const WidgetSpan(
-                        child: Icon(
-                          Icons.info_outline,
-                          size: 16,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
-                      ),
-                    ],
-                  ),
-                ),
+              FormInfoText(
+                infoText:
+                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
               ),
             FormSpacer(),
             FormDropdownField<SupplyItem?>(
