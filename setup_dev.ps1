@@ -3,13 +3,48 @@ Write-Host "Preparing local repository for development...`n" -ForegroundColor Ma
 $dart = Get-Command dart -ErrorAction SilentlyContinue;
 
 if (!$dart) {
-    Write-Host @"
+    Write-Host "Installing dart...`n" -ForegroundColor Magenta;
+
+    $winget = Get-Command winget -ErrorAction SilentlyContinue;
+    $chocolatey = Get-Command chocolatey -ErrorAction SilentlyContinue;
+    $scoop = Get-Command scoop -ErrorAction SilentlyContinue;
+
+    if($winget) {
+        & winget install -e --id Google.DartSDK
+    } elseIf ($scoop){
+        & scoop bucket rm main
+        & scoop bucket add main
+        & scoop install main/dart
+    } elseIf ($chocolatey) {
+        & Start-Process powershell -Verb RunAs -ArgumentList "-Command choco install dart-sdk -y"
+    } else {
+        Write-Host @"
 Error: Dart is not installed or not in your PATH
 FVM requires Dart to be installed initially.
- - Please install Flutter globally first.
+ - Please install Flutter or the Dart SDK globally first.
  - If Flutter is installed, check 'flutter doctor' for more information.
 "@ -ForegroundColor Red;
-    exit 1;
+        exit 1;
+    }
+
+    # Refresh path for dart to work
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" +
+            [System.Environment]::GetEnvironmentVariable("Path","User");
+
+    $dartPostInstall = Get-Command dart -ErrorAction SilentlyContinue;
+
+    if($dartPostInstall) {
+        Write-Host "Dart installed successfully !" -ForegroundColor Green;
+    } else {
+        Write-Host @"
+Error: Dart automatic installation failed.
+A manual installation of the Dart SDK or Flutter is required.
+FVM requires Dart to be installed initially.
+ - Please install Flutter or the Dart SDK globally first.
+ - If Flutter is installed, check 'flutter doctor' for more information.
+"@ -ForegroundColor Red;
+        exit 1;
+    }
 }
 
 $fvm = Get-Command fvm -ErrorAction SilentlyContinue;
