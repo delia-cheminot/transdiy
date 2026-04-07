@@ -93,7 +93,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
-          errorText: _testDateError,
+          errorText: _testosteroneError,
           suffixText: 'ng/dL', // TODO check si units
         ),
         FormSpacer(),
