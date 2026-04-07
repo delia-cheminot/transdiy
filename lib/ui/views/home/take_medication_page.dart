@@ -200,7 +200,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
             ),
             if (_selectedSupplyItem != null)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Text.rich(
                   TextSpan(
                     children: [
@@ -218,6 +218,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                   ),
                 ),
               ),
+            FormSpacer(),
             FormDropdownField<SupplyItem?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,

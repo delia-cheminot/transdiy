@@ -84,7 +84,8 @@ class SupplyItem {
   }
 
   Decimal getAmount(Decimal dose) =>
-      (dose.toRational() / concentration.toRational()).toDecimal();
+      (dose.toRational() / concentration.toRational())
+          .toDecimal(scaleOnInfinitePrecision: 3);
 
   Decimal getDose(Decimal amount) => amount * concentration;
 
