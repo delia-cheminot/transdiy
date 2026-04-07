@@ -175,7 +175,10 @@ class _NewItemPageState extends State<NewItemPage> {
           label: 'Concentration',
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: '${_molecule?.unit}/${_administrationRoute?.unit}',
+          suffixText:
+              _molecule?.unit != null && _administrationRoute?.unit != null
+                  ? '${_molecule?.unit}/${_administrationRoute?.unit}'
+                  : null,
           regexFormatter: r'[0-9.,]',
         ),
       ],
