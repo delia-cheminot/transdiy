@@ -11,19 +11,12 @@ extension DecimalParsing on String? {
   bool get isDecimal => toDecimalOrNull != null;
 
   Decimal get toDecimalOrZero {
-    try {
-      return Decimal.tryParse(_sanitize(this)) ?? Decimal.zero;
-    } catch (_) {
-      return Decimal.zero;
-    }
+    return Decimal.tryParse(_sanitize(this)) ?? Decimal.zero;
   }
 
   Decimal? get toDecimalOrNull {
-    try {
-      return Decimal.tryParse(_sanitize(this));
-    } catch (_) {
-      return null;
-    }
+    if (_sanitize(this).isEmpty) return null;
+    return Decimal.tryParse(_sanitize(this));
   }
 
   // TODO test
