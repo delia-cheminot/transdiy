@@ -7,6 +7,7 @@ import 'dart:async' as _i5;
 import 'dart:ui' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mona/data/model/date.dart' as _i9;
 import 'package:mona/data/model/medication_intake.dart' as _i8;
 import 'package:mona/data/model/medication_schedule.dart' as _i4;
 import 'package:mona/data/providers/medication_intake_provider.dart' as _i7;
@@ -316,24 +317,24 @@ class MockMedicationIntakeProvider extends _i1.Mock
       ) as Map<int, _i7.GraphIntake>);
 
   @override
-  DateTime? getLastIntakeDateFromList(List<_i8.MedicationIntake>? intakes) =>
+  _i9.Date? getLastIntakeDateFromList(List<_i8.MedicationIntake>? intakes) =>
       (super.noSuchMethod(
         Invocation.method(
           #getLastIntakeDateFromList,
           [intakes],
         ),
         returnValueForMissingStub: null,
-      ) as DateTime?);
+      ) as _i9.Date?);
 
   @override
-  DateTime? getLastIntakeDateForSchedule(int? scheduleId) =>
+  _i9.Date? getLastIntakeDateForSchedule(int? scheduleId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getLastIntakeDateForSchedule,
           [scheduleId],
         ),
         returnValueForMissingStub: null,
-      ) as DateTime?);
+      ) as _i9.Date?);
 
   @override
   void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(

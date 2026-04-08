@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -7,11 +8,13 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/ui/views/intakes/intakes_page.dart';
-import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_info_text.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditIntakePage extends StatefulWidget {
@@ -25,6 +28,7 @@ class EditIntakePage extends StatefulWidget {
 
 class _EditIntakePageState extends State<EditIntakePage> {
   late DateTime _takenDate;
+  bool _takenDateChanged = false;
   late TextEditingController _takenDoseController;
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
@@ -55,10 +59,19 @@ class _EditIntakePageState extends State<EditIntakePage> {
           .useDose(supplyItem, -doseDifference);
     }
 
+    final timezone =
+        _takenDateChanged ? await FlutterTimezone.getLocalTimezone() : null;
+
     MedicationIntake updatedIntake = intake.copyWith(
-        takenDateTime: _takenDate, dose: _takenDose, side: _selectedSide);
+      takenDateTime: _takenDate.toUtc(),
+      takenTimeZone: timezone?.identifier,
+      dose: _takenDose,
+      side: _selectedSide,
+    );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
+
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
@@ -90,13 +103,13 @@ class _EditIntakePageState extends State<EditIntakePage> {
   void _onTakenDateChanged(DateTime date) {
     setState(() {
       _takenDate = date;
+      _takenDateChanged = true;
     });
   }
 
   void _onTakenDoseChanged() {
-    final dose = Decimal.tryParse(
-      _takenDoseController.text.replaceAll(',', '.'),
-    );
+    final dose = _takenDoseController.text.toDecimalOrNull;
+
     if (dose != null) {
       setState(() {
         _takenDose = dose;
@@ -113,7 +126,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   @override
   void initState() {
     super.initState();
-    _takenDate = widget.intake.takenDateTime ?? DateTime.now();
+    _takenDate = widget.intake.takenDateTime?.toLocal() ?? DateTime.now();
     _takenDose = widget.intake.dose;
     _takenDoseController =
         TextEditingController(text: widget.intake.dose.toString());
@@ -181,9 +194,9 @@ class _EditIntakePageState extends State<EditIntakePage> {
                 widget.intake, _selectedSupplyItem);
           },
           fields: [
-            FormDateField(
+            FormDateTimeField(
               label: 'Date',
-              date: _takenDate,
+              datetime: _takenDate,
               onChanged: _onTakenDateChanged,
             ),
             FormSpacer(),
@@ -197,25 +210,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
               regexFormatter: r'[0-9.,]',
             ),
             if (_selectedSupplyItem != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      const WidgetSpan(
-                        child: Icon(
-                          Icons.info_outline,
-                          size: 16,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
-                      ),
-                    ],
-                  ),
-                ),
+              FormInfoText(
+                infoText:
+                    ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
               ),
+            FormSpacer(),
             FormDropdownField<SupplyItem?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,

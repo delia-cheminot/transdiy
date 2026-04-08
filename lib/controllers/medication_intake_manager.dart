@@ -15,17 +15,23 @@ class MedicationIntakeManager {
 
   Future<void> takeMedication({
     required Decimal dose,
-    required DateTime scheduledDate,
-    required DateTime takenDate,
+    required DateTime scheduledDateTime,
+    required DateTime takenDateTime,
+    required String takenTimeZone,
     SupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
     Decimal? deadSpace, //in μL
   }) async {
+    if (!takenDateTime.isUtc) {
+      throw ArgumentError('takenDateTime must be in UTC');
+    }
+
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
-      scheduledDateTime: scheduledDate,
-      takenDateTime: takenDate,
+      scheduledDateTime: scheduledDateTime,
+      takenDateTime: takenDateTime,
+      takenTimeZone: takenTimeZone,
       side: side,
       scheduleId: schedule.id,
       molecule: schedule.molecule,
@@ -33,14 +39,14 @@ class MedicationIntakeManager {
       ester: schedule.ester,
     ));
 
-    if (supplyItem != null) {
-      if (deadSpace != null && deadSpace > Decimal.zero) {
-        final deadSpaceMl = deadSpace * Decimal.parse('0.001');
-        dose += supplyItem.getDose(deadSpaceMl);
-      }
+    if (supplyItem == null) return;
 
-      await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+    if (deadSpace != null && deadSpace > Decimal.zero) {
+      final deadSpaceMl = deadSpace * Decimal.parse('0.001');
+      dose += supplyItem.getDose(deadSpaceMl);
     }
+
+    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
   }
 
   InjectionSide getNextSide() {

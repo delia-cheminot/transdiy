@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  // TODO refactor this, it's a confirm delete dialog.
-  // we should just pass the name of the element or smth
-  static Future<bool?> confirmDialog(
+  // TODO we should just pass the name of the element or smth
+  static Future<bool?> confirmDeleteDialog(
       {required BuildContext context,
       String title = "Delete this element?",
       String content = "This action can't be undone.",
@@ -23,7 +22,8 @@ class Dialogs {
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text(confirm, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              child: Text(confirm,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ),
           ],
         );

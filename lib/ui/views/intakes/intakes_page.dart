@@ -32,7 +32,7 @@ class IntakesPage extends StatelessWidget {
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
-    final dateText = DateFormat.yMMMd().format(intake.takenDateTime!);
+    final dateText = DateFormat.yMMMd().format(intake.takenLocalDateTime!);
 
     return ListTile(
       title: Text(dateText),
@@ -43,7 +43,7 @@ class IntakesPage extends StatelessWidget {
         ),
       ),
       trailing: IconButton(
-        icon: const Icon(Icons.delete),
+        icon: const Icon(Icons.delete_outline),
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
@@ -64,7 +64,7 @@ class IntakesPage extends StatelessWidget {
   }
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
-    return Dialogs.confirmDialog(
+    return Dialogs.confirmDeleteDialog(
         context: context, title: "Delete this intake?");
   }
 }

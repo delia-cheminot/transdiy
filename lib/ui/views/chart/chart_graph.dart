@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/graph_calculator.dart';
+import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,24 +27,31 @@ class MainGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
+    final Date firstDay = medicationIntakeProvider.getFirstIntakeLocalDate()!;
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
+
+    Map<int, double> daysAndBloodTests =
+        bloodTestProvider.getDaysAndBloodTests(firstDay);
 
     if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     final List<FlSpot> spots =
         GraphCalculator().generateFlSpots(daysAndIntakes);
 
-    final DateTime firstDay = medicationIntakeProvider.getFirstIntakeDate()!;
+    final List<FlSpot> bloodSpots = daysAndBloodTests.entries
+        .map((e) => FlSpot(e.key.toDouble(), e.value))
+        .toList();
+
     final int totalDays = medicationIntakeProvider
             .getLastIntakeDate()!
-            .difference(firstDay)
-            .inDays +
+            .differenceInDays(firstDay) +
         1;
     final double daysSinceStart =
-        DateTime.now().difference(firstDay).inSeconds / 86400.0;
+        DateTime.now().difference(firstDay.toDateTime()).inSeconds / 86400.0;
 
     FlSpot? todaySpot;
     if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {
@@ -51,8 +60,9 @@ class MainGraph extends StatelessWidget {
       todaySpot = FlSpot(daysSinceStart, todayConcentration);
     }
 
-    final double maxYWithPadding =
-        spots.map((s) => s.y).fold(0.0, math.max) * _ChartConstants.maxYPadding;
+    final double maxY =
+        [...spots, ...bloodSpots].map((s) => s.y).fold(0.0, math.max);
+    final double maxYWithPadding = maxY * _ChartConstants.maxYPadding;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -83,8 +93,9 @@ class MainGraph extends StatelessWidget {
                   borderData: FlBorderData(show: true),
                   lineBarsData: [
                     _buildLineBarData(spots, theme),
+                    _buildBloodTestData(bloodSpots, theme),
                   ],
-                  lineTouchData: _buildLineTouchData(theme),
+                  lineTouchData: _buildLineTouchData(theme, firstDay),
                   extraLinesData:
                       _buildTodayVerticalLine(theme, todaySpot, daysSinceStart),
                 ),
@@ -132,27 +143,46 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  LineTouchData _buildLineTouchData(ThemeData theme) {
+  LineChartBarData _buildBloodTestData(
+      List<FlSpot> bloodSpots, ThemeData theme) {
+    return LineChartBarData(
+      spots: bloodSpots,
+      isCurved: false,
+      color: theme.colorScheme.tertiary,
+      barWidth: 0,
+      dotData: FlDotData(show: true),
+    );
+  }
+
+  LineTouchData _buildLineTouchData(ThemeData theme, Date firstDay) {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
         tooltipBorderRadius:
             BorderRadius.circular(_ChartConstants.tooltipRadius),
         tooltipPadding: const EdgeInsets.all(_ChartConstants.tooltipPadding),
+        maxContentWidth: 200,
         getTooltipItems: (touchedSpots) {
-          return touchedSpots
-              .map((t) => LineTooltipItem(
-                  t.y.toStringAsFixed(1),
-                  theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onTertiaryContainer) ??
-                      const TextStyle()))
-              .toList();
+          return touchedSpots.map((t) {
+            String text;
+            if (t.barIndex == 0) {
+              text = t.y.toStringAsFixed(1);
+            } else {
+              text =
+                  '${_getDateLabel(t.x, firstDay)}: ${t.y.toStringAsFixed(1)} pg/mL';
+            }
+            return LineTooltipItem(
+                text,
+                theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onTertiaryContainer) ??
+                    const TextStyle());
+          }).toList();
         },
       ),
     );
   }
 
-  FlTitlesData _buildTitlesData(DateTime firstDay) {
+  FlTitlesData _buildTitlesData(Date firstDay) {
     return FlTitlesData(
       show: true,
       bottomTitles: AxisTitles(
@@ -162,7 +192,7 @@ class MainGraph extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Padding(
               padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
-              child: Text(_getDateLabel(value, firstDay),
+              child: Text("  ${_getDateLabel(value, firstDay)}",
                   style:
                       const TextStyle(fontSize: _ChartConstants.labelFontSize)),
             );
@@ -185,8 +215,8 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  String _getDateLabel(double value, DateTime firstDay) {
+  String _getDateLabel(double value, Date firstDay) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return "  ${date.day}/${date.month}  ";
+    return "${date.day}/${date.month}";
   }
 }

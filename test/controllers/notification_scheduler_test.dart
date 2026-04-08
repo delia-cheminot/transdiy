@@ -231,8 +231,6 @@ void main() {
         NotificationService.isPlatformSupported = () => true;
         NotificationService.createPlugin = () => mockPlugin;
 
-        final futureHour = (DateTime.now().hour + 1) % 24;
-
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -241,7 +239,9 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [TimeOfDay(hour: futureHour, minute: 0)],
+            notificationTimes: [
+              TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 1)))
+            ],
           )
         ]);
 
@@ -278,8 +278,6 @@ void main() {
         NotificationService.isPlatformSupported = () => true;
         NotificationService.createPlugin = () => mockPlugin;
 
-        final pastHour = (DateTime.now().hour - 1 + 24) % 24;
-
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -288,7 +286,10 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [TimeOfDay(hour: pastHour, minute: 0)],
+            notificationTimes: [
+              TimeOfDay.fromDateTime(
+                  DateTime.now().subtract(Duration(minutes: 1)))
+            ],
           )
         ]);
 
@@ -337,7 +338,7 @@ void main() {
         // So we have to count the ignored times for the test to pass.
 
         int ignored = 0;
-        for(final time in times) {
+        for (final time in times) {
           final dateTime = DateTime(
             now.year,
             now.month,
@@ -345,7 +346,7 @@ void main() {
             time.hour,
             time.minute,
           );
-          if(now.isAfter(dateTime)) ignored++;
+          if (now.isAfter(dateTime)) ignored++;
         }
 
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
