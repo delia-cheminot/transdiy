@@ -60,8 +60,8 @@ class BloodTest {
       'id': id,
       'dateTime': dateTime.toIso8601String(),
       'timeZone': timeZone,
-      'estradiolLevels': estradiolLevels.toString(),
-      'testosteroneLevels': testosteroneLevels.toString(),
+      'estradiolLevels': estradiolLevels?.toString(),
+      'testosteroneLevels': testosteroneLevels?.toString(),
     };
   }
 
