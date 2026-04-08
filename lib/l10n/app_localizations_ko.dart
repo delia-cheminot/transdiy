@@ -4,9 +4,9 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for English (`en`).
-class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+/// The translations for Korean (`ko`).
+class AppLocalizationsKo extends AppLocalizations {
+  AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
   String get appTitle => 'Mona';
@@ -15,13 +15,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nav_home => 'Mona';
 
   @override
-  String get nav_intakes => 'Intakes';
+  String get nav_intakes => '투여 기록';
 
   @override
-  String get nav_levels => 'Levels';
+  String get nav_levels => '농도';
 
   @override
-  String get nav_supplies => 'Supplies';
+  String get nav_supplies => '보유량';
 
   @override
   String get takeAnIntake => 'Take an intake';
@@ -30,22 +30,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addAnItem => 'Add an item';
 
   @override
-  String get empty_home => 'Start by adding a schedule in Settings';
+  String get empty_home => '설정에서 일정을 추가하여 시작하세요';
 
   @override
-  String get allDone => 'All done!';
+  String get allDone => '모두 완료!';
 
   @override
-  String get noIntakesDue => 'No intakes due today';
+  String get noIntakesDue => '오늘 투여할 약이 없습니다';
 
   @override
-  String get upcoming => 'Upcoming';
+  String get upcoming => '예정';
 
   @override
-  String get today => 'Today';
+  String get today => '오늘';
 
   @override
-  String get taken => 'taken';
+  String get taken => '투여함';
 
   @override
   String daysAgoCount(int count) {
@@ -70,10 +70,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get lastTaken => 'Last taken';
+  String get lastTaken => '마지막 투여';
 
   @override
-  String get neverTakenYet => 'Never taken yet';
+  String get neverTakenYet => '아직 투여한 적 없음';
 
   @override
   String get scheduleFrequencyDaily => 'Every day';
@@ -90,10 +90,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goToSettings => 'Go to Settings';
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => '설정';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => '알림';
 
   @override
   String get schedulesAndNotifications => 'Schedules & notifications';
@@ -102,58 +102,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get general => 'General';
 
   @override
-  String get schedules => 'Schedules';
+  String get schedules => '일정';
 
   @override
-  String get noSchedules => 'No schedules';
+  String get noSchedules => '일정 없음';
 
   @override
   String schedulesCreated(Object count) {
-    return '$count created';
+    return '$count개 생성됨';
   }
 
   @override
-  String get language => 'Language';
+  String get language => '언어';
 
   @override
   String get languageFollowDevice => 'Follow device language';
 
   @override
-  String get selectLanguage => 'Select Language';
+  String get selectLanguage => '언어 선택';
 
   @override
-  String get enableNotifications => 'Enable notifications';
+  String get enableNotifications => '알림 활성화';
 
   @override
   String get enableNotificationsDescription => 'Send reminders for schedules';
 
   @override
-  String get notificationsDisabledTitle => 'Notifications are disabled';
+  String get notificationsDisabledTitle => '알림이 비활성화되어 있습니다';
 
   @override
-  String get clickToOpenSettings => 'Click to open settings';
+  String get clickToOpenSettings => '설정을 열려면 탭하세요';
 
   @override
-  String get exactRemindersDisabled => 'Exact reminder times are disabled';
+  String get exactRemindersDisabled => '정시 알림이 비활성화되어 있습니다';
 
   @override
-  String get remindersDelayed => 'Reminders may be slightly delayed. Tap to open settings.';
+  String get remindersDelayed => '알림이 약간 지연될 수 있습니다. 설정을 열려면 탭하세요.';
 
   @override
-  String get autoUpdate => 'Auto-Update';
+  String get autoUpdate => '자동 업데이트';
 
   @override
-  String get autoUpdateDescription => 'Automatically check new updates when app is launched';
+  String get autoUpdateDescription => '앱 실행 시 자동으로 새 업데이트를 확인합니다';
 
   @override
-  String get checkForUpdates => 'Check for Updates';
+  String get checkForUpdates => '업데이트 확인';
 
   @override
-  String get checkForUpdatesDescription => 'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)';
+  String get checkForUpdatesDescription => '최신 버전을 수동으로 확인합니다\n인터넷에 연결됩니다\n(데이터는 전송되지 않습니다)';
 
   @override
   String appVersion(Object version) {
-    return 'Mona version $version';
+    return 'Mona 버전 $version';
   }
 
   @override
@@ -249,111 +249,111 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get addSchedule => 'Add a schedule';
+  String get addSchedule => '일정 추가';
 
   @override
-  String get addScheduleToGetStarted => 'Add a schedule to get started.';
+  String get addScheduleToGetStarted => '시작하려면 일정을 추가하세요.';
 
   @override
-  String get newSchedule => 'New schedule';
+  String get newSchedule => '새 일정';
 
   @override
-  String get every => 'Every';
+  String get every => '매';
 
   @override
-  String get days => 'days';
+  String get days => '일';
 
   @override
-  String get startDate => 'Start date';
+  String get startDate => '시작일';
 
   @override
-  String get editScheduleInfo => 'Edit schedule info';
+  String get editScheduleInfo => '일정 정보 편집';
 
   @override
-  String get noNotifications => 'No notifications';
+  String get noNotifications => '알림 없음';
 
   @override
   String notificationsCount(Object count) {
-    return '$count notifications';
+    return '알림 $count개';
   }
 
   @override
-  String get editSchedule => 'Edit schedule';
+  String get editSchedule => '일정 편집';
 
   @override
   String deleteSchedule(Object name) {
-    return 'Delete $name?';
+    return '이 일정을 삭제하시겠습니까?';
   }
 
   @override
-  String get scheduleNotifications => 'Schedule notifications';
+  String get scheduleNotifications => '일정 알림';
 
   @override
-  String get addNotification => 'Add a notification';
+  String get addNotification => '알림 추가';
 
   @override
   String noNotificationsForSchedule(Object scheduleName) {
-    return 'No notifications for $scheduleName. You can add one using the Add button.';
+    return '$scheduleName에 대한 알림이 없습니다. 추가 버튼을 사용하여 알림을 추가할 수 있습니다.';
   }
 
   @override
-  String get notificationsUpdated => 'Notifications have been updated!';
+  String get notificationsUpdated => '알림이 업데이트되었습니다!';
 
   @override
-  String get notificationsUpdatedDescription => 'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
+  String get notificationsUpdatedDescription => '이제 각 일정마다 개별 알림이 설정됩니다.\n\n일정에 대한 알림을 설정하여 놓치지 않도록 하세요.';
 
   @override
-  String get dontShowAgain => 'Don\'t show again';
+  String get dontShowAgain => '다시 표시하지 않기';
 
   @override
-  String get scheduleSettings => 'Schedule settings';
+  String get scheduleSettings => '일정 설정';
 
   @override
-  String get empty_intakes => 'Taken instakes will appear here';
+  String get empty_intakes => '투여 기록이 여기에 표시됩니다';
 
   @override
-  String get chooseSchedule => 'Choose a schedule';
+  String get chooseSchedule => '일정 선택';
 
   @override
-  String get addSchedulesFirst => 'Add schedules first.';
+  String get addSchedulesFirst => '먼저 일정을 추가하세요.';
 
   @override
-  String get editIntake => 'Edit intake';
+  String get editIntake => '투여 기록 편집';
 
   @override
-  String get date => 'Date';
+  String get date => '날짜';
 
   @override
-  String get amount => 'Amount';
+  String get amount => '용량';
 
   @override
-  String get none => 'None';
+  String get none => '없음';
 
   @override
-  String get supplyItem => 'Supply item';
+  String get supplyItem => '보유 항목';
 
   @override
-  String get injectionSide => 'Injection side';
+  String get injectionSide => '주사 부위';
 
   @override
-  String get deleteIntake => 'Delete this intake?';
+  String get deleteIntake => '이 투여 기록을 삭제하시겠습니까?';
 
   @override
   String takeMedication(Object scheduleName) {
-    return 'Take $scheduleName';
+    return '$scheduleName 투여';
   }
 
   @override
-  String get takeIntake => 'Take intake';
+  String get takeIntake => '투여 기록';
 
   @override
-  String get needleDeadSpace => 'Needle dead space';
+  String get needleDeadSpace => '주사바늘 잔여 공간(사강)';
 
   @override
   String get microliters => 'μL';
 
   @override
-  String get empty_levels => 'Estradiol injections will display in this tab';
+  String get empty_levels => '혈중 에스트라디올 예상 농도가 이 탭에 표시됩니다';
 
   @override
   String get bloodTestsTitle => 'Blood Tests';
@@ -393,47 +393,47 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get empty_supplies => 'No supplies. Add an item to get started.';
+  String get empty_supplies => '보유 중인 약품이 없습니다. 항목을 추가하여 시작하세요.';
 
   @override
-  String get newItem => 'New item';
+  String get newItem => '새 항목';
 
   @override
-  String get adminRoute => 'Administration route';
+  String get adminRoute => '투여 경로';
 
   @override
-  String get totalAmount => 'Total amount';
+  String get totalAmount => '총 용량';
 
   @override
-  String get concentration => 'Concentration';
+  String get concentration => '농도';
 
   @override
-  String get editItem => 'Edit item';
+  String get editItem => '항목 편집';
 
   @override
-  String get usedAmount => 'Used amount';
+  String get usedAmount => '사용량';
 
   @override
   String deleteItem(Object name) {
-    return 'Delete $name?';
+    return '이 항목을 삭제하시겠습니까?';
   }
 
   @override
   String remaining(Object amount, Object unit) {
-    return '$amount $unit remaining';
+    return '$amount $unit 남음';
   }
 
   @override
-  String get add => 'Add';
+  String get add => '추가';
 
   @override
-  String get save => 'Save';
+  String get save => '저장';
 
   @override
   String get cancel => 'Cancel';
 
   @override
-  String get next => 'Next';
+  String get next => '다음';
 
   @override
   String get delete => 'Delete';
@@ -445,76 +445,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String get irreversibleAction => 'This action can\'t be undone.';
 
   @override
-  String get name => 'Name';
+  String get name => '이름';
 
   @override
-  String get molecule => 'Molecule';
+  String get molecule => '성분';
 
   @override
-  String get ester => 'Ester';
+  String get ester => '약효 특성(Ester)';
 
   @override
-  String get estradiol => 'Estradiol';
+  String get estradiol => '에스트라디올';
 
   @override
-  String get progesterone => 'Progesterone';
+  String get progesterone => '프로게스테론';
 
   @override
-  String get testosterone => 'Testosterone';
+  String get testosterone => '테스토스테론';
 
   @override
-  String get nandrolone => 'Nandrolone';
+  String get nandrolone => '난드롤론';
 
   @override
-  String get spironolactone => 'Spironolactone';
+  String get spironolactone => '스피로노락톤';
 
   @override
-  String get cyproteroneAcetate => 'Cyproterone acetate';
+  String get cyproteroneAcetate => '시프로테론 아세테이트';
 
   @override
-  String get leuprorelinAcetate => 'Leuprorelin acetate';
+  String get leuprorelinAcetate => '류프로렐린 아세테이트';
 
   @override
-  String get bicalutamide => 'Bicalutamide';
+  String get bicalutamide => '비칼루타미드';
 
   @override
-  String get decapeptyl => 'Decapeptyl';
+  String get decapeptyl => '데카펩틸';
 
   @override
-  String get raloxifene => 'Raloxifene';
+  String get raloxifene => '라록시펜';
 
   @override
-  String get tamoxifen => 'Tamoxifen';
+  String get tamoxifen => '타목시펜';
 
   @override
-  String get finasteride => 'Finasteride';
+  String get finasteride => '피나스테리드';
 
   @override
-  String get dutasteride => 'Dutasteride';
+  String get dutasteride => '두타스테리드';
 
   @override
-  String get minoxidil => 'Minoxidil';
+  String get minoxidil => '미녹시딜';
 
   @override
   String get pioglitazone => 'Pioglitazone';
 
   @override
-  String get enanthate => 'Enanthate';
+  String get enanthate => '에난테이트';
 
   @override
-  String get valerate => 'Valerate';
+  String get valerate => '발레레이트';
 
   @override
-  String get cypionate => 'Cypionate';
+  String get cypionate => '시피오네이트';
 
   @override
-  String get undecylate => 'Undecylate';
+  String get undecylate => '운데실레이트';
 
   @override
-  String get benzoate => 'Benzoate';
+  String get benzoate => '벤조에이트';
 
   @override
-  String get cypionateSuspension => 'Cypionate suspension';
+  String get cypionateSuspension => '시피오네이트 현탁액';
 
   @override
   String get medicationEstradiolEnanthate => 'Estradiol enanthate';
@@ -553,28 +553,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get medicationTestosteroneCypionateSuspension => 'Testosterone cypionate suspension';
 
   @override
-  String get injection => 'Injection';
+  String get injection => '주사';
 
   @override
-  String get oral => 'Oral';
+  String get oral => '먹는 약(경구)';
 
   @override
-  String get sublingual => 'Sublingual';
+  String get sublingual => '혀 밑에 녹이는 약(설하)';
 
   @override
-  String get patch => 'Patch';
+  String get patch => '붙이는 패치';
 
   @override
-  String get gel => 'Gel';
+  String get gel => '바르는 겔';
 
   @override
-  String get implant => 'Implant';
+  String get implant => '체내 이식(임플란트)';
 
   @override
-  String get suppository => 'Suppository';
+  String get suppository => '좌약';
 
   @override
-  String get transdermal => 'Transdermal spray';
+  String get transdermal => '피부 흡수형(스프레이)';
 
   @override
   String administrationRouteUnitMl(num count) {
