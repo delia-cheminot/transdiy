@@ -15,7 +15,6 @@ extension DecimalParsing on String? {
   }
 
   Decimal? get toDecimalOrNull {
-    if (_sanitize(this).isEmpty) return null;
     return Decimal.tryParse(_sanitize(this));
   }
 
