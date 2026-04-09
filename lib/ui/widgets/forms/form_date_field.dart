@@ -42,7 +42,7 @@ class FormDateField extends BaseFormField {
     );
 
     if (picked != null) {
-      onChanged(Date(picked.toUtc()));
+      onChanged(Date(DateTime.utc(picked.year, picked.month, picked.day)));
     }
   }
 }
