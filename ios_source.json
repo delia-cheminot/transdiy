@@ -33,10 +33,19 @@
       ],
       "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.5.0/mona.ipa",
       "size": 10700000,
-      "version": "1.5.0",
-      "versionDate": "2026-04-08T22:50:00Z",
+      "version": "1.5.1",
+      "versionDate": "2026-04-09T16:45:00Z",
       "versionDescription": "- You can now export and import your data from settings. Back up your history, move to a new device, or edit multiple entries at once.\n- Blood tests are here! Log your results and see them plotted directly on your levels graph (currently for estradiol monotherapy).\n- Bug fix: reminders and intake logs now show the right day, even around daylight saving time changes.",
       "versions": [
+        {
+          "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/tag/v1.5.1",
+          "size": 10700000,
+          "version": "1.5.1",
+          "buildVersion": "1",
+          "date": "2026-04-09T16:41:00+02:00",
+          "localizedDescription": "Bug fix: date picker now opens on the correct date. A quick fix for an issue where the date picker would snap back to today instead of staying on the selected date.",
+          "minOSVersion": "13.0"
+        },
         {
           "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.5.0/mona-1.5.0.ipa",
           "size": 10700000,
