@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/util/string_parsing.dart';
+import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -34,8 +35,10 @@ class BloodTest {
     );
   }
 
-  DateTime get localDateTime =>
-      tz.TZDateTime.from(dateTime, tz.getLocation(timeZone));
+  DateTime get localDateTime {
+    final location = timeZoneLocation(timeZone);
+    return tz.TZDateTime.from(dateTime, location);
+  }
 
   Date get localDate => Date.fromDateTime(localDateTime);
 

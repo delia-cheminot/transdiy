@@ -17,10 +17,12 @@ import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tzdata.initializeTimeZones();
 
   final preferencesService = await PreferencesService.init();
 

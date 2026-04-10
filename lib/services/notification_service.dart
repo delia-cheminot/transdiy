@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/util/string_parsing.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
@@ -36,7 +36,7 @@ class NotificationService {
   Future<void> initialize() async {
     if (_initialized) return;
 
-    tz.initializeTimeZones();
+    tzdata.initializeTimeZones();
     final TimezoneInfo currentTimeZone =
         await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(currentTimeZone.identifier));
