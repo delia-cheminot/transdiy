@@ -5,7 +5,6 @@ import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
 import 'ui/views/main_page.dart';
 
 class MonaApp extends StatefulWidget {
@@ -39,7 +38,6 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     _lastTimeZone = DateTime.now().timeZoneOffset.toString();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      tz.initializeTimeZones();
       await NotificationService().initialize();
       if (!mounted) return;
       _medicationScheduleProvider = context.read<MedicationScheduleProvider>();
