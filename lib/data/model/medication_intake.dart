@@ -7,6 +7,7 @@ import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/util/string_parsing.dart';
+import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -122,7 +123,7 @@ class MedicationIntake {
   DateTime? get takenLocalDateTime {
     if (takenDateTime == null) return null;
 
-    final location = tz.getLocation(takenTimeZone!);
+    final location = timeZoneLocation(takenTimeZone!);
     return tz.TZDateTime.from(takenDateTime!, location);
   }
 
