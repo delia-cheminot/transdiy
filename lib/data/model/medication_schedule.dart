@@ -39,7 +39,7 @@ class MedicationSchedule {
       name: map['name'] as String,
       dose: (map['dose'] as String).toDecimal,
       intervalDays: map['intervalDays'] as int,
-      startDate: Date.fromString(map['startDate'] as String),
+      startDate: (map['startDate'] as String).toDate,
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),

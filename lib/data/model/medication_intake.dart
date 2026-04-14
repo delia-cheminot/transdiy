@@ -128,9 +128,7 @@ class MedicationIntake {
   }
 
   Date? get takenLocalDate {
-    return takenLocalDateTime != null
-        ? Date.fromDateTime(takenLocalDateTime!)
-        : null;
+    return takenLocalDateTime?.toDate;
   }
 
   // coverage:ignore-start
