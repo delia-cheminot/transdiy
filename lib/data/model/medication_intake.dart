@@ -135,6 +135,8 @@ class MedicationIntake {
   static String? validateDose(String? value) =>
       requiredStrictlyPositiveDecimal(value);
 
+  static String? validateDeadSpace(String? value) => positiveDecimal(value);
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) || other is MedicationIntake && id == other.id;
