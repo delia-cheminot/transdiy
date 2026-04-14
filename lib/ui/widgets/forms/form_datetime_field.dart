@@ -8,8 +8,6 @@ class FormDateTimeField extends BaseFormField {
   final DateTime? selectedDatetime;
   final ValueChanged<DateTime> onChanged;
 
-// TODO stop requiring onChanged
-
   FormDateTimeField({
     required this.datetime,
     required this.onChanged,

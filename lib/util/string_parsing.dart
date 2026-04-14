@@ -6,7 +6,6 @@ extension EmptyString on String? {
   bool get isEmpty => _sanitize(this).isEmpty;
 }
 
-// TODO this can be done on String only as text controllers are never null
 extension DecimalParsing on String? {
   bool get isDecimal => toDecimalOrNull != null;
 

@@ -34,6 +34,12 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
     setState(() {});
   }
 
+  void _onDateTimeChanged(DateTime dateTime) {
+    setState(() {
+      _testDateTime = dateTime;
+    });
+  }
+
   void _addBloodTest() async {
     final bloodTestProvider =
         Provider.of<BloodTestProvider>(context, listen: false);
@@ -101,10 +107,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           datetime: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
-          onChanged: (date) => setState(() {
-            _testDateTime = date;
-          }),
-          // TODO create a method onDateChanged
+          onChanged: _onDateTimeChanged,
         ),
       ],
     );
