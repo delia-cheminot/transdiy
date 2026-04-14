@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
@@ -11,7 +12,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class NewSchedulePage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
-  late DateTime _startDate;
+  late Date _startDate;
   Molecule? _molecule;
   AdministrationRoute? _administrationRoute;
   Ester? _ester;
@@ -97,14 +98,15 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
 
   void _addSchedule() {
     final name = _nameController.text;
-    final dose = parseDecimal(_doseController.text);
-    final intervalDays = int.parse(_intervalDaysController.text);
+    final dose = _doseController.text.toDecimal;
+    final intervalDays = _intervalDaysController.text.toInt;
+    final startDate = _startDate;
 
     final schedule = MedicationSchedule(
       name: name,
       dose: dose,
       intervalDays: intervalDays,
-      startDate: _startDate,
+      startDate: startDate,
       molecule: _molecule!,
       administrationRoute: _administrationRoute!,
       ester: _ester,
@@ -132,7 +134,7 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
     _nameController = TextEditingController();
     _doseController = TextEditingController();
     _intervalDaysController = TextEditingController();
-    _startDate = DateTime.now();
+    _startDate = Date.today();
   }
 
   @override

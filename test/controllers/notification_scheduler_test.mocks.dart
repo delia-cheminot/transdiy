@@ -194,6 +194,13 @@ class MockMedicationScheduleProvider extends _i1.Mock
 class MockPreferencesService extends _i1.Mock
     implements _i7.PreferencesService {
   @override
+  bool get autoCheckUpdatesEnabled => (super.noSuchMethod(
+        Invocation.getter(#autoCheckUpdatesEnabled),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
   bool get notificationsEnabled => (super.noSuchMethod(
         Invocation.getter(#notificationsEnabled),
         returnValue: false,
@@ -223,11 +230,29 @@ class MockPreferencesService extends _i1.Mock
       ) as List<_i9.DropdownMenuItem<_i8.Molecule>>);
 
   @override
+  bool get shouldShowScheduleDialog => (super.noSuchMethod(
+        Invocation.getter(#shouldShowScheduleDialog),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
+  @override
+  _i5.Future<void> setAutoCheckUpdatesEnabled(bool? isEnabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setAutoCheckUpdatesEnabled,
+          [isEnabled],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
   _i5.Future<void> setNotificationsEnabled(bool? isEnabled) =>
@@ -256,6 +281,16 @@ class MockPreferencesService extends _i1.Mock
         Invocation.method(
           #removeCustomMolecule,
           [name],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> setShowScheduleDialog(bool? value) => (super.noSuchMethod(
+        Invocation.method(
+          #setShowScheduleDialog,
+          [value],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),

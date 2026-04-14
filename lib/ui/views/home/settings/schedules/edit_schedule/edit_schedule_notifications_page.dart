@@ -123,7 +123,7 @@ class _EditScheduleNotificationsPageState
                     title: Text(time.format(context)),
                     leading: Icon(Icons.alarm),
                     trailing: IconButton(
-                      icon: const Icon(Icons.delete),
+                      icon: const Icon(Icons.delete_outline),
                       onPressed: () {
                         setState(() {
                           _notificationTimes.removeAt(index);

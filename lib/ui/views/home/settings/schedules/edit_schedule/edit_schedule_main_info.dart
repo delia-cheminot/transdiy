@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
@@ -12,7 +13,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditScheduleMainInfoPage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
   late TextEditingController _nameController;
   late TextEditingController _doseController;
   late TextEditingController _intervalDaysController;
-  late DateTime _startDate;
+  late Date _startDate;
   late Molecule _molecule;
   late AdministrationRoute _administrationRoute;
   late Ester? _ester;
@@ -106,8 +107,8 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
 
     final updatedSchedule = widget.schedule.copyWith(
       name: _nameController.text,
-      dose: parseDecimal(_doseController.text),
-      intervalDays: int.parse(_intervalDaysController.text),
+      dose: _doseController.text.toDecimal,
+      intervalDays: _intervalDaysController.text.toInt,
       startDate: _startDate,
       molecule: _molecule,
       administrationRoute: _administrationRoute,

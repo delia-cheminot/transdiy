@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -9,12 +10,15 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
+import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
+import 'package:mona/ui/widgets/forms/form_info_text.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +46,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
+  // TODO validate dead space
   String? get _deadSpaceError => positiveDecimal(_takenDoseController.text);
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
@@ -50,20 +55,27 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       widget.schedule.administrationRoute == AdministrationRoute.injection;
 
   void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
-      SupplyItemProvider supplyItemProvider) {
+      SupplyItemProvider supplyItemProvider) async {
     if (!_isFormValid) return;
+
+    final timezone = await FlutterTimezone.getLocalTimezone();
+    final tzName = timezone.identifier;
+
     if (!mounted) return;
 
-    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+    await MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
-      scheduledDate: widget.scheduledDate,
-      takenDate: _takenDate,
+      scheduledDateTime: widget.scheduledDate,
+      takenDateTime: _takenDate.toUtc(),
+      takenTimeZone: tzName,
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
       deadSpace: _deadSpace,
     );
+
+    if (!mounted) return;
 
     Navigator.of(context).pop();
   }
@@ -83,9 +95,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   }
 
   void _onTakenDoseChanged() {
-    final dose = Decimal.tryParse(
-      _takenDoseController.text.replaceAll(',', '.'),
-    );
+    final dose = _takenDoseController.text.toDecimalOrNull;
+
     if (dose != null) {
       setState(() {
         _takenDose = dose;
@@ -93,11 +104,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
-// TODO implement tryParseDecimal
   void _onDeadSpaceChanged() {
-    final deadSpace = Decimal.tryParse(
-      _deadSpaceController.text.replaceAll(',', '.'),
-    );
+    final deadSpace = _deadSpaceController.text.toDecimalOrNull;
+
     if (deadSpace != null) {
       setState(() {
         _deadSpace = deadSpace;
@@ -180,9 +189,15 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               ? () => _takeIntake(medicationIntakeProvider, supplyItemProvider)
               : () {},
           fields: [
+<<<<<<< l10n
             FormDateField(
               label: localizations.date,
               date: _takenDate,
+=======
+            FormDateTimeField(
+              label: 'Date',
+              datetime: _takenDate,
+>>>>>>> dev
               onChanged: _onTakenDateChanged,
             ),
             FormSpacer(),
@@ -196,25 +211,11 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               regexFormatter: r'[0-9.,]',
             ),
             if (_selectedSupplyItem != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      const WidgetSpan(
-                        child: Icon(
-                          Icons.info_outline,
-                          size: 16,
-                        ),
-                      ),
-                      TextSpan(
-                        text:
-                            ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
-                      ),
-                    ],
-                  ),
-                ),
+              FormInfoText(
+                infoText:
+                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.unit}',
               ),
+            FormSpacer(),
             FormDropdownField<SupplyItem?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,

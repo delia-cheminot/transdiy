@@ -46,7 +46,7 @@ class IntakesPage extends StatelessWidget {
         ),
       ),
       trailing: IconButton(
-        icon: const Icon(Icons.delete),
+        icon: const Icon(Icons.delete_outline),
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {

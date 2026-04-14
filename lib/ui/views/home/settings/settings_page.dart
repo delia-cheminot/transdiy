@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/services/backup_service.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/preferences_service.dart';
@@ -89,6 +91,80 @@ class _SettingsPageState extends State<SettingsPage>
     });
   }
 
+  Future<void> _exportData() async {
+    try {
+      final savedPath = await BackupService().exportData();
+
+      if (savedPath != null && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Backup saved to: $savedPath'),
+            duration: const Duration(seconds: 4),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to export: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _importData() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Import Data'),
+        content: const Text(
+            'This will overwrite all your current data with the backup. '
+            'This action cannot be undone. Do you want to continue?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.error),
+            child: const Text('Import'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      try {
+        final success = await BackupService().importData();
+        if (success && mounted) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('Import Successful'),
+              content: const Text(
+                  'Please restart the app to apply the restored data.'),
+              actions: [
+                TextButton(
+                  onPressed: () => exit(0),
+                  child: const Text('Close App'),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to import: $e')),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
@@ -108,7 +184,13 @@ class _SettingsPageState extends State<SettingsPage>
       appBar: AppBar(title: Text(localizations.settingsTitle)),
       body: ListView(
         children: [
-          // Tile for medication schedules
+          const Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            child: Text(
+              'Notifications',
+            ),
+          ),
           ListTile(
             title: Text(localizations.schedules),
             subtitle: Text(medicationScheduleProvider.schedules.isEmpty
@@ -136,6 +218,8 @@ class _SettingsPageState extends State<SettingsPage>
           ),
           SwitchListTile(
             title: Text(localizations.enableNotifications),
+            // TODO: Add locale
+            subtitle: const Text('Send reminders for schedules'),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
@@ -163,6 +247,13 @@ class _SettingsPageState extends State<SettingsPage>
             ),
           if (Platform.isAndroid) ...[
             const Divider(),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: borderPadding, vertical: 8.0),
+              child: Text(
+                'Updates',
+              ),
+            ),
             SwitchListTile(
               title: Text(localizations.autoUpdate),
               subtitle: Text(localizations.autoUpdateDescription),
@@ -172,12 +263,31 @@ class _SettingsPageState extends State<SettingsPage>
             ListTile(
               title: Text(localizations.checkForUpdates),
               subtitle: Text(localizations.checkForUpdatesDescription),
-              trailing: const Icon(Icons.system_update),
+              trailing: const Icon(Symbols.update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),
           ],
+          const Divider(),
+          const Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            child: Text(
+              'Data Management',
+            ),
+          ),
+          ListTile(
+            title: const Text('Export Data'),
+            subtitle: const Text('Save your data to a JSON file'),
+            trailing: const Icon(Symbols.download),
+            onTap: _exportData,
+          ),
+          ListTile(
+            title: const Text('Import Data'),
+            subtitle: const Text('Restore data from a JSON backup'),
+            trailing: const Icon(Symbols.upload),
+            onTap: _importData,
+          ),
           const SizedBox(height: 32),
-
           FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
             builder: (context, snapshot) {

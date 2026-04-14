@@ -52,6 +52,16 @@ List<MainTabConfig> getMainTabs(BuildContext context) {
       page: ChartPage(),
       icon: Icons.trending_up_outlined,
       selectedIcon: Icons.trending_up_rounded,
+      buildActions: (context) => [
+        IconButton(
+          icon: const Icon(Icons.bloodtype_outlined),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => BloodTestPage()),
+            );
+          },
+        ),
+      ],
     ),
     MainTabConfig(
       title: localizations.nav_supplies,

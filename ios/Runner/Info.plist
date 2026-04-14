@@ -64,5 +64,8 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to import and export app data files.</string>
 </dict>
 </plist>

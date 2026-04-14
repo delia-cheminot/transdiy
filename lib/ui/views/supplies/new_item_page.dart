@@ -10,7 +10,7 @@ import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class NewItemPage extends StatefulWidget {
@@ -90,8 +90,8 @@ class _NewItemPageState extends State<NewItemPage> {
   }
 
   void _addItem() async {
-    final totalAmount = parseDecimal(_totalAmountController.text);
-    final concentration = parseDecimal(_concentrationController.text);
+    final totalAmount = _totalAmountController.text.toDecimal;
+    final concentration = _concentrationController.text.toDecimal;
     final totalDose = concentration * totalAmount;
     final name = _nameController.text;
     final supplyItemProvider =
@@ -178,7 +178,10 @@ class _NewItemPageState extends State<NewItemPage> {
           label: localizations.concentration,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: '${_molecule?.unit}/${_administrationRoute?.unit}',
+          suffixText:
+              _molecule?.unit != null && _administrationRoute?.unit != null
+                  ? '${_molecule?.unit}/${_administrationRoute?.unit}'
+                  : null,
           regexFormatter: r'[0-9.,]',
         ),
       ],

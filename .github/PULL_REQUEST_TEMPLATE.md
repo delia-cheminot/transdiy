@@ -7,11 +7,11 @@
 Related to issue(s): # (issue)
 
 ### Type of change
-<!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
-- [ ] This change requires a documentation update
-- [ ] Maintenance
+<!--- What types of changes does your code introduce? Keep all the lines that apply: -->
+- Bug fix (non-breaking change which fixes an issue)
+- New feature (non-breaking change which adds functionality)
+- Breaking change (fix or feature that would cause existing functionality to change)
+- This change requires a documentation update
+- Maintenance
 
 ### Screenshots (if appropriate):
