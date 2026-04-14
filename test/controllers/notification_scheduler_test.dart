@@ -6,8 +6,10 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
@@ -16,6 +18,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 @GenerateNiceMocks([
   MockSpec<MedicationScheduleProvider>(),
+  MockSpec<MedicationIntakeProvider>(),
   MockSpec<PreferencesService>(),
   MockSpec<FlutterLocalNotificationsPlugin>(),
 ])
@@ -23,6 +26,7 @@ import 'notification_scheduler_test.mocks.dart';
 
 void main() {
   late MockMedicationScheduleProvider mockMedicationScheduleProvider;
+  late MockMedicationIntakeProvider mockMedicationIntakeProvider;
   late MockPreferencesService mockPreferencesService;
   late MockFlutterLocalNotificationsPlugin mockPlugin;
 
@@ -33,6 +37,7 @@ void main() {
 
   setUp(() {
     mockMedicationScheduleProvider = MockMedicationScheduleProvider();
+    mockMedicationIntakeProvider = MockMedicationIntakeProvider();
     mockPreferencesService = MockPreferencesService();
     mockPlugin = MockFlutterLocalNotificationsPlugin();
   });
@@ -66,6 +71,7 @@ void main() {
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -107,6 +113,7 @@ void main() {
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -155,6 +162,7 @@ void main() {
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -186,9 +194,11 @@ void main() {
         NotificationService.isPlatformSupported = () => true;
         NotificationService.createPlugin = () => mockPlugin;
 
+        const scheduleId = 1001;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
+            id: scheduleId,
             name: 'Empty Schedule',
             dose: Decimal.fromInt(10),
             intervalDays: 1,
@@ -197,9 +207,12 @@ void main() {
             notificationTimes: [],
           )
         ]);
+        when(mockMedicationIntakeProvider.getLastIntakeDateForSchedule(scheduleId))
+            .thenReturn(null);
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -231,9 +244,11 @@ void main() {
         NotificationService.isPlatformSupported = () => true;
         NotificationService.createPlugin = () => mockPlugin;
 
+        const scheduleId = 1002;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
+            id: scheduleId,
             name: 'Future Schedule',
             dose: Decimal.fromInt(10),
             intervalDays: 1,
@@ -244,9 +259,12 @@ void main() {
             ],
           )
         ]);
+        when(mockMedicationIntakeProvider.getLastIntakeDateForSchedule(scheduleId))
+            .thenReturn(null);
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -278,9 +296,11 @@ void main() {
         NotificationService.isPlatformSupported = () => true;
         NotificationService.createPlugin = () => mockPlugin;
 
+        const scheduleId = 1003;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
+            id: scheduleId,
             name: 'Past Schedule',
             dose: Decimal.fromInt(10),
             intervalDays: 1,
@@ -292,9 +312,12 @@ void main() {
             ],
           )
         ]);
+        when(mockMedicationIntakeProvider.getLastIntakeDateForSchedule(scheduleId))
+            .thenReturn(null);
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -349,9 +372,11 @@ void main() {
           if (now.isAfter(dateTime)) ignored++;
         }
 
+        const scheduleId = 1004;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
+            id: scheduleId,
             name: 'MultiTime Schedule',
             dose: Decimal.fromInt(10),
             intervalDays: 1,
@@ -360,9 +385,12 @@ void main() {
             notificationTimes: times,
           )
         ]);
+        when(mockMedicationIntakeProvider.getLastIntakeDateForSchedule(scheduleId))
+            .thenReturn(null);
 
         final scheduler = NotificationScheduler(
           mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
           mockPreferencesService,
         );
 
@@ -379,6 +407,67 @@ void main() {
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
         )).called(10 - ignored);
+
+        // Cleanup
+        NotificationService.createPlugin = origCreate;
+        NotificationService.isPlatformSupported = origPlatformCheck;
+      });
+
+      test(
+          'Skips future notification times today when intake already taken today',
+          () async {
+        // Arrange
+        const scheduleId = 4242;
+        final origPlatformCheck = NotificationService.isPlatformSupported;
+        final origCreate = NotificationService.createPlugin;
+        NotificationService.isPlatformSupported = () => true;
+        NotificationService.createPlugin = () => mockPlugin;
+
+        when(mockPreferencesService.notificationsEnabled).thenReturn(true);
+        when(mockMedicationIntakeProvider.getLastIntakeDateForSchedule(scheduleId))
+            .thenReturn(Date.today());
+        when(mockMedicationScheduleProvider.schedules).thenReturn([
+          MedicationSchedule(
+            id: scheduleId,
+            name: 'Taken Today Schedule',
+            dose: Decimal.fromInt(10),
+            intervalDays: 1,
+            molecule: KnownMolecules.estradiol,
+            administrationRoute: AdministrationRoute.oral,
+            notificationTimes: [
+              TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 1)))
+            ],
+          )
+        ]);
+        when(mockPlugin.zonedSchedule(
+                id: anyNamed('id'),
+                title: anyNamed('title'),
+                body: anyNamed('body'),
+                scheduledDate: anyNamed('scheduledDate'),
+                notificationDetails: anyNamed('notificationDetails'),
+                androidScheduleMode: anyNamed('androidScheduleMode'),
+                payload: anyNamed('payload')))
+            .thenAnswer((_) async {});
+
+        final scheduler = NotificationScheduler(
+          mockMedicationScheduleProvider,
+          mockMedicationIntakeProvider,
+          mockPreferencesService,
+        );
+
+        // Act
+        await scheduler.regenerateAll();
+
+        // Assert
+        verify(mockPlugin.zonedSchedule(
+          id: anyNamed('id'),
+          title: anyNamed('title'),
+          body: anyNamed('body'),
+          scheduledDate: anyNamed('scheduledDate'),
+          notificationDetails: anyNamed('notificationDetails'),
+          androidScheduleMode: anyNamed('androidScheduleMode'),
+          payload: anyNamed('payload'),
+        )).called(4);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
