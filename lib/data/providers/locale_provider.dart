@@ -19,13 +19,13 @@ class LocaleProvider extends ChangeNotifier {
     if (locale == newLocale) return;
 
     _locale = newLocale;
-    _prefs.setLanguageCode(newLocale.toLanguageTag());
+    _prefs.setLanguageTag(newLocale.toLanguageTag());
     notifyListeners();
   }
 
   void _loadLocale() {
-    final saved = _prefs.languageCode;
-    final parsed = intl.Locale.tryParse(saved);
+    final savedTag = _prefs.languageTag;
+    final parsed = intl.Locale.tryParse(savedTag);
     if (parsed == null) return;
 
     _locale = Locale.fromSubtags(

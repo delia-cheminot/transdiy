@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/backup_service.dart';
 import 'package:mona/services/notification_service.dart';
-import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/constants/dimensions.dart';
@@ -17,6 +14,13 @@ import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
+String? _nativeLanguageNameForStoredTag(String tag) {
+  for (final (code, _, nativeName) in LanguagePage.languages) {
+    if (code == tag) return nativeName;
+  }
+  return null;
+}
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -32,11 +36,6 @@ class _SettingsPageState extends State<SettingsPage>
   bool _permissionGranted = true;
   bool _exactAlarmsGranted = true;
   late PreferencesService _preferencesService;
-
-  static final Map<String, String Function(AppLocalizations)>
-      _localizedLanguageNames = {
-    for (final (code, _, __, getter) in LanguagePage.languages) code: getter,
-  };
 
   @override
   void initState() {
@@ -208,8 +207,9 @@ class _SettingsPageState extends State<SettingsPage>
           ListTile(
             title: Text(localizations.language),
             subtitle: Text(
-                _localizedLanguageNames[preferencesService.languageCode]!(
-                    localizations)),
+              _nativeLanguageNameForStoredTag(preferencesService.languageTag) ??
+                  preferencesService.languageTag,
+            ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(

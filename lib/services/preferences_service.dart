@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PreferencesService extends ChangeNotifier {
   static const _notificationsEnabledKey = 'notifications_enabled';
   static const _customMoleculesKey = 'custom_molecules';
-  static const _languageCodeKey = 'language_code';
+  static const _languageTagKey = 'language_tag';
 
   static const bool defaultNotificationsEnabled = false;
   static const String defaultLanguageCode = 'en';
@@ -30,16 +30,16 @@ class PreferencesService extends ChangeNotifier {
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
-  String get languageCode =>
-      _prefs.getString(_languageCodeKey) ?? defaultLanguageCode;
+  String get languageTag =>
+      _prefs.getString(_languageTagKey) ?? defaultLanguageCode;
 
   Future<void> setNotificationsEnabled(bool isEnabled) async {
     await _prefs.setBool(_notificationsEnabledKey, isEnabled);
     notifyListeners();
   }
 
-  Future<void> setLanguageCode(String code) async {
-    await _prefs.setString(_languageCodeKey, code);
+  Future<void> setLanguageTag(String code) async {
+    await _prefs.setString(_languageTagKey, code);
     notifyListeners();
   }
 
