@@ -171,7 +171,6 @@ class _SettingsPageState extends State<SettingsPage>
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final preferencesService = context.watch<PreferencesService>();
-    final localeProvider = context.watch<LocaleProvider>();
     final localizations = context.l10n;
 
     if (medicationScheduleProvider.isLoading) {

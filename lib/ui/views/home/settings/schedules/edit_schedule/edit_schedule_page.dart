@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_main_info.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_notifications_page.dart';
