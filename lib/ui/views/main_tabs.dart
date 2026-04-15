@@ -1,7 +1,7 @@
 // main_tabs.dart
 import 'package:flutter/material.dart';
-import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/ui/views/chart/blood_test_page.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
 import 'home/settings/settings_page.dart';

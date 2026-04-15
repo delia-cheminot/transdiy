@@ -127,7 +127,7 @@ class IntakeTileViewModel {
 
   Date get nextScheduled => schedule.nextDate;
 
-  Date? get previousScheduled => schedule.previousDate;
+  Date? get lastScheduled => schedule.previousDate;
 
   Date? get lastTaken =>
       intakeProvider.getLastIntakeDateForSchedule(schedule.id);
@@ -136,7 +136,7 @@ class IntakeTileViewModel {
 
   int? get daysSinceLastTaken => lastTaken?.daysAwayFromToday;
 
-  int? get daysSinceLastScheduled => previousScheduled?.daysAwayFromToday;
+  int? get daysSinceLastScheduled => lastScheduled?.daysAwayFromToday;
 
   String get intakeInfo {
     final nextSide = MedicationIntakeManager(
@@ -157,11 +157,11 @@ class IntakeTileViewModel {
         return localizations.today;
 
       case ScheduleStatus.overdue:
-        final formatted = DateFormat.MMMMd().format(lastScheduled!);
+        final formatted = DateFormat.MMMMd().format(lastScheduled!.value);
         return "$formatted - $daysSinceLastScheduled ${localizations.daysAgo}";
 
       case ScheduleStatus.upcoming:
-        final formatted = DateFormat.MMMMd().format(nextScheduled);
+        final formatted = DateFormat.MMMMd().format(nextScheduled.value);
         return "$formatted - ${localizations.inText} $daysUntilIntake ${localizations.days}";
 
       case ScheduleStatus.taken:
@@ -174,8 +174,8 @@ class IntakeTileViewModel {
       case ScheduleStatus.today:
         if (lastTaken != null &&
             lastScheduled != null &&
-            !isSameDayAs(lastTaken!, lastScheduled!)) {
-          final formatted = DateFormat.MMMd().format(lastTaken!);
+            !lastTaken!.isSameDayAs(lastScheduled!)) {
+          final formatted = DateFormat.MMMd().format(lastTaken!.value);
           return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
         }
         return null;
@@ -190,7 +190,7 @@ class IntakeTileViewModel {
           return localizations.neverTakenYet;
         }
 
-        final formatted = DateFormat.MMMd().format(lastTaken!);
+        final formatted = DateFormat.MMMd().format(lastTaken!.value);
         return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
     }
   }

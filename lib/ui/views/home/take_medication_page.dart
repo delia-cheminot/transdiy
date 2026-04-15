@@ -186,15 +186,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               ? () => _takeIntake(medicationIntakeProvider, supplyItemProvider)
               : () {},
           fields: [
-<<<<<<< l10n
-            FormDateField(
-              label: localizations.date,
-              date: _takenDate,
-=======
             FormDateTimeField(
-              label: 'Date',
+              label: localizations.date,
               datetime: _takenDate,
->>>>>>> dev
               onChanged: _onTakenDateChanged,
             ),
             FormSpacer(),

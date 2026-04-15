@@ -129,7 +129,7 @@ class _EditItemPageState extends State<EditItemPage> {
 
   Future<void> _confirmDelete() async {
     final localizations = context.l10n;
-    final confirmed = await Dialogs.confirmDialog(
+    final confirmed = await Dialogs.confirmDeleteDialog(
         context: context, title: localizations.deleteItem);
 
     if (confirmed == true) {

@@ -20,6 +20,7 @@ import 'package:flutter_local_notifications_platform_interface/flutter_local_not
     as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mona/data/model/medication_schedule.dart' as _i4;
+import 'package:mona/l10n/app_localizations.dart' as _i17;
 import 'package:mona/data/model/molecule.dart' as _i8;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i3;
 import 'package:mona/services/preferences_service.dart' as _i7;
@@ -222,9 +223,13 @@ class MockPreferencesService extends _i1.Mock
       ) as List<_i8.Molecule>);
 
   @override
-  List<_i9.DropdownMenuItem<_i8.Molecule>> get moleculeDropdownItems =>
+  List<_i9.DropdownMenuItem<_i8.Molecule>> moleculeDropdownItems(
+          _i17.AppLocalizations? localizations) =>
       (super.noSuchMethod(
-        Invocation.getter(#moleculeDropdownItems),
+        Invocation.method(
+          #moleculeDropdownItems,
+          [localizations],
+        ),
         returnValue: <_i9.DropdownMenuItem<_i8.Molecule>>[],
         returnValueForMissingStub: <_i9.DropdownMenuItem<_i8.Molecule>>[],
       ) as List<_i9.DropdownMenuItem<_i8.Molecule>>);

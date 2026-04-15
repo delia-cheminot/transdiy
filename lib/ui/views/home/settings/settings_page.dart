@@ -11,6 +11,7 @@ import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/settings/language_page.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
