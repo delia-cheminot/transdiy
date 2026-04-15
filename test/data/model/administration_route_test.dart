@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/l10n/app_localizations_en.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
 
 void main() {
   group('AdministrationRoute', () {
@@ -16,10 +17,11 @@ void main() {
       });
     });
 
-    group('menuItems', () {
+    group('administrationRouteDropdownMenuItems', () {
       test('contains all items', () {
         // Act
-        final items = AdministrationRoute.menuItems(AppLocalizationsEn());
+        final items =
+            administrationRouteDropdownMenuItems(AppLocalizationsEn());
 
         // Assert
         expect(items.length, AdministrationRoute.all.length);
@@ -27,7 +29,8 @@ void main() {
 
       test('menu items labels are capitalized', () {
         // Act
-        final items = AdministrationRoute.menuItems(AppLocalizationsEn());
+        final items =
+            administrationRouteDropdownMenuItems(AppLocalizationsEn());
         final firstLabel = (items.first.child as Text).data;
 
         // Assert

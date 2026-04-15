@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
-import 'package:mona/l10n/app_localizations.dart';
 
 class AdministrationRoute {
   final String name;
@@ -69,20 +68,6 @@ class AdministrationRoute {
     return all.firstWhere((route) => route.name == name);
   }
 
-  String localizedName(AppLocalizations localizations) =>
-      _AdministrationRouteLocalization.localize(this, localizations);
-
-  static List<DropdownMenuItem<AdministrationRoute>> menuItems(
-          AppLocalizations localizations) =>
-      all
-          .map(
-            (route) => DropdownMenuItem<AdministrationRoute>(
-              value: route,
-              child: Text(route.localizedName(localizations)),
-            ),
-          )
-          .toList();
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -90,24 +75,4 @@ class AdministrationRoute {
 
   @override
   int get hashCode => name.hashCode;
-}
-
-
-abstract final class _AdministrationRouteLocalization {
-  static final _strategies = {
-    AdministrationRoute.injection.name: (l) => l.injection,
-    AdministrationRoute.oral.name: (l) => l.oral,
-    AdministrationRoute.sublingual.name: (l) => l.sublingual,
-    AdministrationRoute.patch.name: (l) => l.patch,
-    AdministrationRoute.gel.name: (l) => l.gel,
-    AdministrationRoute.implant.name: (l) => l.implant,
-    AdministrationRoute.suppository.name: (l) => l.suppository,
-    AdministrationRoute.transdermal.name: (l) => l.transdermal,
-  };
-
-  static String localize(AdministrationRoute route, AppLocalizations l10n) {
-    final strategy = _strategies[route.name];
-    if (strategy != null) return strategy(l10n);
-    return route.name[0].toUpperCase() + route.name.substring(1);
-  }
 }

@@ -1,5 +1,3 @@
-import 'package:mona/l10n/app_localizations.dart';
-
 class Molecule {
   final String name;
   final String unit;
@@ -22,9 +20,6 @@ class Molecule {
         'name': name,
         'unit': unit,
       };
-
-  String localizedName(AppLocalizations localizations) =>
-      _MoleculeLocalization.localize(this, localizations);
 
   @override
   bool operator ==(Object other) =>
@@ -84,33 +79,4 @@ class KnownMolecules {
     minoxidil,
     pioglitazone,
   ];
-}
-
-abstract final class _MoleculeLocalization {
-  static final _strategies = {
-    KnownMolecules.estradiol.normalizedName: (l) => l.estradiol,
-    KnownMolecules.progesterone.normalizedName: (l) => l.progesterone,
-    KnownMolecules.testosterone.normalizedName: (l) => l.testosterone,
-    KnownMolecules.nandrolone.normalizedName: (l) => l.nandrolone,
-    KnownMolecules.spironolactone.normalizedName: (l) => l.spironolactone,
-    KnownMolecules.cyproteroneAcetate.normalizedName: (l) =>
-        l.cyproteroneAcetate,
-    KnownMolecules.leuprorelinAcetate.normalizedName: (l) =>
-        l.leuprorelinAcetate,
-    KnownMolecules.bicalutamide.normalizedName: (l) => l.bicalutamide,
-    KnownMolecules.decapeptyl.normalizedName: (l) => l.decapeptyl,
-    KnownMolecules.raloxifene.normalizedName: (l) => l.raloxifene,
-    KnownMolecules.tamoxifen.normalizedName: (l) => l.tamoxifen,
-    KnownMolecules.finasteride.normalizedName: (l) => l.finasteride,
-    KnownMolecules.dutasteride.normalizedName: (l) => l.dutasteride,
-    KnownMolecules.minoxidil.normalizedName: (l) => l.minoxidil,
-    KnownMolecules.pioglitazone.normalizedName: (l) => l.pioglitazone,
-  };
-
-  static String localize(Molecule molecule, AppLocalizations l10n) {
-    final strategy = _strategies[molecule.normalizedName];
-    if (strategy != null) return strategy(l10n);
-    final n = molecule.name;
-    return n[0].toUpperCase() + n.substring(1);
-  }
 }

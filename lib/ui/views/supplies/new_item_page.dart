@@ -5,6 +5,8 @@ import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/ester_l10n.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -153,14 +155,14 @@ class _NewItemPageState extends State<NewItemPage> {
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
-          items: AdministrationRoute.menuItems(localizations),
+          items: administrationRouteDropdownMenuItems(localizations),
           onChanged: _onAdministrationRouteChanged,
           label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: Ester.menuItems(localizations),
+            items: esterDropdownMenuItems(localizations),
             onChanged: _onEsterChanged,
             label: localizations.ester,
           ),
