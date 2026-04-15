@@ -11,13 +11,12 @@ import 'package:provider/provider.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localizations = context.l10n;
     return Consumer<MedicationIntakeProvider>(
       builder: (context, medicationIntakeProvider, child) {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
-          emptyMessage: localizations.empty_intakes,
+          emptyMessage: context.l10n.empty_intakes,
           child: ListView.builder(
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
@@ -35,7 +34,7 @@ class IntakesPage extends StatelessWidget {
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
     final locale = context.locale.toString();
-    final dateText = DateFormat.yMMMd(locale).format(intake.takenDateTime!);
+    final dateText = DateFormat.yMMMd(locale).format(intake.takenLocalDateTime!);
 
     return ListTile(
       title: Text(dateText),
@@ -67,8 +66,7 @@ class IntakesPage extends StatelessWidget {
   }
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
-    final localizations = context.l10n;
     return Dialogs.confirmDeleteDialog(
-        context: context, title: localizations.deleteIntake);
+        context: context, title: context.l10n.deleteIntake);
   }
 }
