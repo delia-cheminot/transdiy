@@ -24,7 +24,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliesTitle => 'Fournitures';
 
   @override
-  String get empty_home => 'Commencez par ajouter un planning dans les paramètres';
+  String get empty_home => 'Commencez par ajouter un traitement dans les paramètres';
 
   @override
   String get empty_intakes => 'Les prises enregistrées apparaîtront ici';
@@ -33,7 +33,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get empty_levels => 'Les injections d’estradiol s’afficheront dans cet onglet';
 
   @override
-  String get empty_supplies => 'Aucune fourniture. Ajoutez un élément pour commencer.';
+  String get empty_supplies => 'Aucun consommable. Ajoutez un élément pour commencer.';
 
   @override
   String get nav_home => 'Mona';
@@ -45,13 +45,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nav_levels => 'Niveaux';
 
   @override
-  String get nav_supplies => 'Fournitures';
+  String get nav_supplies => 'Pharmacie';
 
   @override
-  String get schedules => 'Plannings';
+  String get schedules => 'Traitements';
 
   @override
-  String get noSchedules => 'Aucun planning';
+  String get noSchedules => 'Aucun traitement';
 
   @override
   String schedulesCount(Object count) {
@@ -119,13 +119,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notificationsUpdated => 'Les notifications ont été mises à jour !';
 
   @override
-  String get notificationsUpdatedDescription => 'Chaque planning a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos plannings pour vous assurer de ne rien manquer.';
+  String get notificationsUpdatedDescription => 'Chaque traitement a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos traitements pour vous assurer de ne rien manquer.';
 
   @override
   String get dontShowAgain => 'Ne plus afficher';
 
   @override
-  String get scheduleSettings => 'Paramètres des plannings';
+  String get scheduleSettings => 'Paramètres des traitements';
 
   @override
   String get newItem => 'Nouvel article';
@@ -238,10 +238,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transdermal => 'Spray transdermique';
 
   @override
-  String get chooseSchedule => 'Choisir un planning';
+  String get chooseSchedule => 'Choisir un traitement';
 
   @override
-  String get addSchedulesFirst => 'Ajoutez d\'abord des plannings.';
+  String get addSchedulesFirst => 'Ajoutez d\'abord des traitements.';
 
   @override
   String get editIntake => 'Modifier la prise';
@@ -293,13 +293,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get microliters => 'μL';
 
   @override
-  String get addSchedule => 'Ajouter un planning';
+  String get addSchedule => 'Ajouter un traitement';
 
   @override
-  String get addScheduleToGetStarted => 'Ajoutez un planning pour commencer.';
+  String get addScheduleToGetStarted => 'Ajoutez un traitement pour commencer.';
 
   @override
-  String get newSchedule => 'Nouveau planning';
+  String get newSchedule => 'Nouveau traitement';
 
   @override
   String get next => 'Suivant';
@@ -314,7 +314,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get startDate => 'Date de début';
 
   @override
-  String get editScheduleInfo => 'Modifier les informations du planning';
+  String get editScheduleInfo => 'Modifier les informations du traitement';
 
   @override
   String get noNotifications => 'Aucune notification';
@@ -325,13 +325,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get editSchedule => 'Modifier le planning';
+  String get editSchedule => 'Modifier le traitement';
 
   @override
-  String get deleteSchedule => 'Supprimer ce planning ?';
+  String get deleteSchedule => 'Supprimer ce traitement ?';
 
   @override
-  String get scheduleNotifications => 'Notifications du planning';
+  String get scheduleNotifications => 'Notifications du traitement';
 
   @override
   String get addNotification => 'Ajouter une notification';
@@ -379,4 +379,48 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cypionateSuspension => 'Suspension de cypionate';
+
+  @override
+  String get medicationEstradiolEnanthate => 'Énanthate d\'œstradiol';
+
+  @override
+  String get medicationEstradiolValerate => 'Valérate d\'œstradiol';
+
+  @override
+  String get medicationEstradiolCypionate => 'Cypionate d\'œstradiol';
+
+  @override
+  String get medicationEstradiolUndecylate => 'Undécylate d\'œstradiol';
+
+  @override
+  String get medicationEstradiolBenzoate => 'Benzoate d\'œstradiol';
+
+  @override
+  String get medicationEstradiolCypionateSuspension => 'Suspension de cypionate d\'œstradiol';
+
+  @override
+  String get medicationTestosteroneEnanthate => 'Énanthate de testostérone';
+
+  @override
+  String get medicationTestosteroneValerate => 'Valérate de testostérone';
+
+  @override
+  String get medicationTestosteroneCypionate => 'Cypionate de testostérone';
+
+  @override
+  String get medicationTestosteroneUndecylate => 'Undécylate de testostérone';
+
+  @override
+  String get medicationTestosteroneBenzoate => 'Benzoate de testostérone';
+
+  @override
+  String get medicationTestosteroneCypionateSuspension => 'Suspension de cypionate de testostérone';
+
+  @override
+  String get scheduleFrequencyDaily => 'Tous les jours';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'Tous les $days jours';
+  }
 }

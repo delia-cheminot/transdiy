@@ -379,6 +379,50 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cypionateSuspension => 'Suspensão de cipionato';
+
+  @override
+  String get medicationEstradiolEnanthate => 'Enantato de estradiol';
+
+  @override
+  String get medicationEstradiolValerate => 'Valerato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionate => 'Cipionato de estradiol';
+
+  @override
+  String get medicationEstradiolUndecylate => 'Undecilato de estradiol';
+
+  @override
+  String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
+
+  @override
+  String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
+
+  @override
+  String get medicationTestosteroneValerate => 'Valerato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionate => 'Cipionato de testosterona';
+
+  @override
+  String get medicationTestosteroneUndecylate => 'Undecilato de testosterona';
+
+  @override
+  String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
+
+  @override
+  String get scheduleFrequencyDaily => 'Todos os dias';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'A cada $days dias';
+  }
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -756,4 +800,48 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get cypionateSuspension => 'Suspensão de cipionato';
+
+  @override
+  String get medicationEstradiolEnanthate => 'Enantato de estradiol';
+
+  @override
+  String get medicationEstradiolValerate => 'Valerato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionate => 'Cipionato de estradiol';
+
+  @override
+  String get medicationEstradiolUndecylate => 'Undecilato de estradiol';
+
+  @override
+  String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
+
+  @override
+  String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
+
+  @override
+  String get medicationTestosteroneValerate => 'Valerato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionate => 'Cipionato de testosterona';
+
+  @override
+  String get medicationTestosteroneUndecylate => 'Undecilato de testosterona';
+
+  @override
+  String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
+
+  @override
+  String get scheduleFrequencyDaily => 'Todos os dias';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'A cada $days dias';
+  }
 }

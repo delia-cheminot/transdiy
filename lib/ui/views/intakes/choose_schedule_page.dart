@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/localized_medication_name.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:provider/provider.dart';
@@ -46,8 +47,7 @@ class ChooseScheduleTile extends StatelessWidget {
 
     final localizations = context.l10n;
     String subtitle =
-        "${schedule.dose} mg • ${schedule.molecule.localizedName(localizations)} "
-        "${schedule.ester != null ? "${schedule.ester!.localizedName(localizations)} " : ""}"
+        "${schedule.dose} ${schedule.molecule.unit} • ${localizedMolecule(schedule.molecule, schedule.ester, localizations)} • "
         "${schedule.administrationRoute.localizedName(localizations)}";
 
     return Card.filled(

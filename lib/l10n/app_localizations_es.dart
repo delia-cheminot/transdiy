@@ -379,4 +379,48 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cypionateSuspension => 'Suspensión de cipionato';
+
+  @override
+  String get medicationEstradiolEnanthate => 'Enantato de estradiol';
+
+  @override
+  String get medicationEstradiolValerate => 'Valerato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionate => 'Cipionato de estradiol';
+
+  @override
+  String get medicationEstradiolUndecylate => 'Undecilato de estradiol';
+
+  @override
+  String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
+
+  @override
+  String get medicationEstradiolCypionateSuspension => 'Suspensión de cipionato de estradiol';
+
+  @override
+  String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
+
+  @override
+  String get medicationTestosteroneValerate => 'Valerato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionate => 'Cipionato de testosterona';
+
+  @override
+  String get medicationTestosteroneUndecylate => 'Undecilato de testosterona';
+
+  @override
+  String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
+
+  @override
+  String get medicationTestosteroneCypionateSuspension => 'Suspensión de cipionato de testosterona';
+
+  @override
+  String get scheduleFrequencyDaily => 'Cada día';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'Cada $days días';
+  }
 }

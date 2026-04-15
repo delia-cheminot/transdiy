@@ -116,5 +116,19 @@
     "cypionate": "Cypionat",
     "undecylate": "Undecylat",
     "benzoate": "Benzoat",
-    "cypionateSuspension": "Cypionat-Suspension"
+    "cypionateSuspension": "Cypionat-Suspension",
+    "medicationEstradiolEnanthate": "Estradiolenantat",
+    "medicationEstradiolValerate": "Estradiolvalerat",
+    "medicationEstradiolCypionate": "Estradiolcypionat",
+    "medicationEstradiolUndecylate": "Estradiolundecylat",
+    "medicationEstradiolBenzoate": "Estradiolbenzoat",
+    "medicationEstradiolCypionateSuspension": "Estradiolcypionat-Suspension",
+    "medicationTestosteroneEnanthate": "Testosteronenantat",
+    "medicationTestosteroneValerate": "Testosteronvalerat",
+    "medicationTestosteroneCypionate": "Testosteroncypionat",
+    "medicationTestosteroneUndecylate": "Testosteronundecylat",
+    "medicationTestosteroneBenzoate": "Testosteronbenzoat",
+    "medicationTestosteroneCypionateSuspension": "Testosteroncypionat-Suspension",
+    "scheduleFrequencyDaily": "Täglich",
+    "scheduleFrequencyEveryNDays": "Alle {days} Tage"
 }

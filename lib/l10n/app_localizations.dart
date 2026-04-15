@@ -809,6 +809,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cypionate suspension'**
   String get cypionateSuspension;
+
+  /// No description provided for @medicationEstradiolEnanthate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol enanthate'**
+  String get medicationEstradiolEnanthate;
+
+  /// No description provided for @medicationEstradiolValerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol valerate'**
+  String get medicationEstradiolValerate;
+
+  /// No description provided for @medicationEstradiolCypionate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol cypionate'**
+  String get medicationEstradiolCypionate;
+
+  /// No description provided for @medicationEstradiolUndecylate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol undecylate'**
+  String get medicationEstradiolUndecylate;
+
+  /// No description provided for @medicationEstradiolBenzoate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol benzoate'**
+  String get medicationEstradiolBenzoate;
+
+  /// No description provided for @medicationEstradiolCypionateSuspension.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol cypionate suspension'**
+  String get medicationEstradiolCypionateSuspension;
+
+  /// No description provided for @medicationTestosteroneEnanthate.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone enanthate'**
+  String get medicationTestosteroneEnanthate;
+
+  /// No description provided for @medicationTestosteroneValerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone valerate'**
+  String get medicationTestosteroneValerate;
+
+  /// No description provided for @medicationTestosteroneCypionate.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone cypionate'**
+  String get medicationTestosteroneCypionate;
+
+  /// No description provided for @medicationTestosteroneUndecylate.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone undecylate'**
+  String get medicationTestosteroneUndecylate;
+
+  /// No description provided for @medicationTestosteroneBenzoate.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone benzoate'**
+  String get medicationTestosteroneBenzoate;
+
+  /// No description provided for @medicationTestosteroneCypionateSuspension.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone cypionate suspension'**
+  String get medicationTestosteroneCypionateSuspension;
+
+  /// No description provided for @scheduleFrequencyDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get scheduleFrequencyDaily;
+
+  /// No description provided for @scheduleFrequencyEveryNDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {days} days'**
+  String scheduleFrequencyEveryNDays(Object days);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
