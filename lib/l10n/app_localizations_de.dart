@@ -84,24 +84,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get english => 'English';
-
-  @override
-  String get french => 'Français';
-
-  @override
-  String get german => 'Deutsch';
-
-  @override
-  String get spanish => 'Español';
-
-  @override
-  String get portuguese => 'Português';
-
-  @override
-  String get brazilianPortuguese => 'Português do Brasil';
-
-  @override
   String get enableNotifications => 'Benachrichtigungen aktivieren';
 
   @override
