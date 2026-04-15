@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/locale.dart' as intl;
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/preferences_service.dart';
 
 class LocaleProvider extends ChangeNotifier {
-  Locale _locale = const Locale('en'); // Default to English
+  Locale _locale = const Locale('en');
   final PreferencesService _prefs;
 
   LocaleProvider(this._prefs) {
@@ -12,26 +13,25 @@ class LocaleProvider extends ChangeNotifier {
 
   Locale get locale => _locale;
 
-  void _loadLocale() {
-    final savedLang = _prefs.languageCode;
-    if (savedLang.contains('_')) {
-      final parts = savedLang.split('_');
-      _locale = Locale(parts[0], parts[1]);
-    } else {
-      _locale = Locale(savedLang);
-    }
-  }
+  List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
 
   void setLocale(Locale newLocale) {
-    if (_locale != newLocale) {
-      _locale = newLocale;
-      final code = newLocale.countryCode != null
-          ? '${newLocale.languageCode}_${newLocale.countryCode}'
-          : newLocale.languageCode;
-      _prefs.setLanguageCode(code);
-      notifyListeners();
-    }
+    if (locale == newLocale) return;
+
+    _locale = newLocale;
+    _prefs.setLanguageCode(newLocale.toLanguageTag());
+    notifyListeners();
   }
 
-  List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
+  void _loadLocale() {
+    final saved = _prefs.languageCode;
+    final parsed = intl.Locale.tryParse(saved);
+    if (parsed == null) return;
+
+    _locale = Locale.fromSubtags(
+      languageCode: parsed.languageCode,
+      scriptCode: parsed.scriptCode,
+      countryCode: parsed.countryCode,
+    );
+  }
 }
