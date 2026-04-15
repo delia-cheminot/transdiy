@@ -11,13 +11,12 @@ import 'package:provider/provider.dart';
 class PharmacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localizations = context.l10n;
     return Consumer<SupplyItemProvider>(
       builder: (context, supplyItemProvider, child) {
         return MainPageWrapper(
           isLoading: supplyItemProvider.isLoading,
           isEmpty: supplyItemProvider.items.isEmpty,
-          emptyMessage: localizations.empty_supplies,
+          emptyMessage: context.l10n.empty_supplies,
           child: MasonryGridView.builder(
             padding: pagePadding,
             gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(

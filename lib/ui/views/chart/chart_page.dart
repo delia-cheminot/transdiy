@@ -16,13 +16,12 @@ class _ChartPageState extends State<ChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.l10n;
     return Consumer<MedicationIntakeProvider>(
         builder: (context, medicationIntakeProvider, child) {
       return MainPageWrapper(
         isLoading: medicationIntakeProvider.isLoading,
         isEmpty: medicationIntakeProvider.graphIntakes.isEmpty,
-        emptyMessage: localizations.empty_levels,
+        emptyMessage: context.l10n.empty_levels,
         child: Column(
           children: [
             ChartSlider(

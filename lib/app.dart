@@ -8,7 +8,6 @@ import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
-
 import 'ui/views/main_page.dart';
 
 class MonaApp extends StatefulWidget {

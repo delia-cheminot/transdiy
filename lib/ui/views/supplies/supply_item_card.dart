@@ -12,8 +12,6 @@ class SupplyItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = context.l10n;
-
     return Card.filled(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -66,7 +64,7 @@ class SupplyItemCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    localizations.remaining(
+                    context.l10n.remaining(
                       item.getAmount(item.remainingDose).toString(),
                       item.administrationRoute.unit,
                     ),
