@@ -24,16 +24,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suppliesTitle => 'Suministros';
 
   @override
-  String get empty_home => 'Comienza agregando un horario en Configuración';
+  String get empty_home => 'Comienza añadiendo un horario en Configuración';
 
   @override
-  String get empty_intakes => 'Las tomas registradas aparecerán aquí';
+  String get empty_intakes => 'Las dosis tomadas aparecerán aquí';
 
   @override
   String get empty_levels => 'Las inyecciones de estradiol se mostrarán en esta pestaña';
 
   @override
-  String get empty_supplies => 'Sin suministros. Agrega un elemento para comenzar.';
+  String get empty_supplies => 'Sin suministros. Añade un elemento para comenzar.';
 
   @override
   String get nav_home => 'Mona';
@@ -111,7 +111,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get clickToOpenSettings => 'Haz clic para abrir la configuración';
 
   @override
-  String get exactRemindersDisabled => 'Los recordatorios exactos están desactivados';
+  String get exactRemindersDisabled => 'Hora exacta de los recordatorios desactivada';
 
   @override
   String get remindersDelayed => 'Los recordatorios pueden retrasarse ligeramente. Toca para abrir la configuración.';
@@ -137,7 +137,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notificationsUpdated => '¡Las notificaciones han sido actualizadas!';
 
   @override
-  String get notificationsUpdatedDescription => 'Cada horario ahora tiene sus propias notificaciones.\n\nConfigura las notificaciones para tus horarios para asegurarte de no perder nada.';
+  String get notificationsUpdatedDescription => 'Cada horario ahora tiene sus propias notificaciones.\n\nConfigura las notificaciones de tus horarios para no perderte nada.';
 
   @override
   String get dontShowAgain => 'No mostrar de nuevo';
@@ -200,6 +200,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get minoxidil => 'Minoxidil';
 
   @override
+  String get pioglitazone => 'Pioglitazona';
+
+  @override
   String get totalAmount => 'Cantidad total';
 
   @override
@@ -209,7 +212,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editItem => 'Editar elemento';
 
   @override
-  String get add => 'Agregar';
+  String get add => 'Añadir';
 
   @override
   String get save => 'Guardar';
@@ -256,7 +259,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chooseSchedule => 'Elegir un horario';
 
   @override
-  String get addSchedulesFirst => 'Agrega horarios primero.';
+  String get addSchedulesFirst => 'Añade algún horario primero.';
 
   @override
   String get editIntake => 'Editar toma';
@@ -353,7 +356,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String noNotificationsForSchedule(Object scheduleName) {
-    return 'No hay notificaciones para $scheduleName. Puedes agregar una usando el botón Agregar.';
+    return 'No hay notificaciones para $scheduleName. Puedes añadir una usando el botón Añadir.';
   }
 
   @override

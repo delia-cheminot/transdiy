@@ -200,6 +200,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get minoxidil => 'Minoxidil';
 
   @override
+  String get pioglitazone => 'Pioglitazon';
+
+  @override
   String get totalAmount => 'Gesamtmenge';
 
   @override

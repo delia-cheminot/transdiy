@@ -468,6 +468,12 @@ abstract class AppLocalizations {
   /// **'Minoxidil'**
   String get minoxidil;
 
+  /// No description provided for @pioglitazone.
+  ///
+  /// In en, this message translates to:
+  /// **'Pioglitazone'**
+  String get pioglitazone;
+
   /// No description provided for @totalAmount.
   ///
   /// In en, this message translates to:

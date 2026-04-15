@@ -23,40 +23,8 @@ class Molecule {
         'unit': unit,
       };
 
-  String localizedName(AppLocalizations localizations) {
-    switch (name.toLowerCase()) {
-      case 'estradiol':
-        return localizations.estradiol;
-      case 'progesterone':
-        return localizations.progesterone;
-      case 'testosterone':
-        return localizations.testosterone;
-      case 'nandrolone':
-        return localizations.nandrolone;
-      case 'spironolactone':
-        return localizations.spironolactone;
-      case 'cyproterone acetate':
-        return localizations.cyproteroneAcetate;
-      case 'leuprorelin acetate':
-        return localizations.leuprorelinAcetate;
-      case 'bicalutamide':
-        return localizations.bicalutamide;
-      case 'decapeptyl':
-        return localizations.decapeptyl;
-      case 'raloxifene':
-        return localizations.raloxifene;
-      case 'tamoxifen':
-        return localizations.tamoxifen;
-      case 'finasteride':
-        return localizations.finasteride;
-      case 'dutasteride':
-        return localizations.dutasteride;
-      case 'minoxidil':
-        return localizations.minoxidil;
-      default:
-        return name[0].toUpperCase() + name.substring(1);
-    }
-  }
+  String localizedName(AppLocalizations localizations) =>
+      _MoleculeLocalization.localize(this, localizations);
 
   @override
   bool operator ==(Object other) =>
@@ -116,4 +84,33 @@ class KnownMolecules {
     minoxidil,
     pioglitazone,
   ];
+}
+
+abstract final class _MoleculeLocalization {
+  static final _strategies = {
+    KnownMolecules.estradiol.normalizedName: (l) => l.estradiol,
+    KnownMolecules.progesterone.normalizedName: (l) => l.progesterone,
+    KnownMolecules.testosterone.normalizedName: (l) => l.testosterone,
+    KnownMolecules.nandrolone.normalizedName: (l) => l.nandrolone,
+    KnownMolecules.spironolactone.normalizedName: (l) => l.spironolactone,
+    KnownMolecules.cyproteroneAcetate.normalizedName: (l) =>
+        l.cyproteroneAcetate,
+    KnownMolecules.leuprorelinAcetate.normalizedName: (l) =>
+        l.leuprorelinAcetate,
+    KnownMolecules.bicalutamide.normalizedName: (l) => l.bicalutamide,
+    KnownMolecules.decapeptyl.normalizedName: (l) => l.decapeptyl,
+    KnownMolecules.raloxifene.normalizedName: (l) => l.raloxifene,
+    KnownMolecules.tamoxifen.normalizedName: (l) => l.tamoxifen,
+    KnownMolecules.finasteride.normalizedName: (l) => l.finasteride,
+    KnownMolecules.dutasteride.normalizedName: (l) => l.dutasteride,
+    KnownMolecules.minoxidil.normalizedName: (l) => l.minoxidil,
+    KnownMolecules.pioglitazone.normalizedName: (l) => l.pioglitazone,
+  };
+
+  static String localize(Molecule molecule, AppLocalizations l10n) {
+    final strategy = _strategies[molecule.normalizedName];
+    if (strategy != null) return strategy(l10n);
+    final n = molecule.name;
+    return n[0].toUpperCase() + n.substring(1);
+  }
 }

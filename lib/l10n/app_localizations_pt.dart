@@ -200,6 +200,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get minoxidil => 'Minoxidil';
 
   @override
+  String get pioglitazone => 'Pioglitazona';
+
+  @override
   String get totalAmount => 'Quantidade total';
 
   @override
@@ -590,6 +593,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get minoxidil => 'Minoxidil';
+
+  @override
+  String get pioglitazone => 'Pioglitazona';
 
   @override
   String get totalAmount => 'Quantidade total';
