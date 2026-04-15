@@ -69,28 +69,8 @@ class AdministrationRoute {
     return all.firstWhere((route) => route.name == name);
   }
 
-  String localizedName(AppLocalizations localizations) {
-    switch (name) {
-      case 'injection':
-        return localizations.injection;
-      case 'oral':
-        return localizations.oral;
-      case 'sublingual':
-        return localizations.sublingual;
-      case 'patch':
-        return localizations.patch;
-      case 'gel':
-        return localizations.gel;
-      case 'implant':
-        return localizations.implant;
-      case 'suppository':
-        return localizations.suppository;
-      case 'transdermal spray':
-        return localizations.transdermal;
-      default:
-        return name[0].toUpperCase() + name.substring(1);
-    }
-  }
+  String localizedName(AppLocalizations localizations) =>
+      _AdministrationRouteLocalization.localize(this, localizations);
 
   static List<DropdownMenuItem<AdministrationRoute>> menuItems(
           AppLocalizations localizations) =>
@@ -110,4 +90,24 @@ class AdministrationRoute {
 
   @override
   int get hashCode => name.hashCode;
+}
+
+
+abstract final class _AdministrationRouteLocalization {
+  static final _strategies = {
+    AdministrationRoute.injection.name: (l) => l.injection,
+    AdministrationRoute.oral.name: (l) => l.oral,
+    AdministrationRoute.sublingual.name: (l) => l.sublingual,
+    AdministrationRoute.patch.name: (l) => l.patch,
+    AdministrationRoute.gel.name: (l) => l.gel,
+    AdministrationRoute.implant.name: (l) => l.implant,
+    AdministrationRoute.suppository.name: (l) => l.suppository,
+    AdministrationRoute.transdermal.name: (l) => l.transdermal,
+  };
+
+  static String localize(AdministrationRoute route, AppLocalizations l10n) {
+    final strategy = _strategies[route.name];
+    if (strategy != null) return strategy(l10n);
+    return route.name[0].toUpperCase() + route.name.substring(1);
+  }
 }
