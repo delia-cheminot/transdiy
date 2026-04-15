@@ -29,24 +29,8 @@ class Ester {
     return all.firstWhere((ester) => ester.name == name);
   }
 
-  String localizedName(AppLocalizations localizations) {
-    switch (name) {
-      case 'enanthate':
-        return localizations.enanthate;
-      case 'valerate':
-        return localizations.valerate;
-      case 'cypionate':
-        return localizations.cypionate;
-      case 'undecylate':
-        return localizations.undecylate;
-      case 'benzoate':
-        return localizations.benzoate;
-      case 'cypionate suspension':
-        return localizations.cypionateSuspension;
-      default:
-        return name[0].toUpperCase() + name.substring(1);
-    }
-  }
+  String localizedName(AppLocalizations localizations) =>
+      _EsterLocalization.localize(this, localizations);
 
   static List<DropdownMenuItem<Ester>> menuItems(
           AppLocalizations localizations) =>
@@ -65,4 +49,21 @@ class Ester {
 
   @override
   int get hashCode => name.hashCode;
+}
+
+abstract final class _EsterLocalization {
+  static final _strategies = {
+    Ester.enanthate.name: (l) => l.enanthate,
+    Ester.valerate.name: (l) => l.valerate,
+    Ester.cypionate.name: (l) => l.cypionate,
+    Ester.undecylate.name: (l) => l.undecylate,
+    Ester.benzoate.name: (l) => l.benzoate,
+    Ester.cypionateSuspension.name: (l) => l.cypionateSuspension,
+  };
+
+  static String localize(Ester ester, AppLocalizations l10n) {
+    final strategy = _strategies[ester.name];
+    if (strategy != null) return strategy(l10n);
+    return ester.name[0].toUpperCase() + ester.name.substring(1);
+  }
 }
