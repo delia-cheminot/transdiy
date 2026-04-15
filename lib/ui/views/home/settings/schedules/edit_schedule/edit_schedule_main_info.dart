@@ -6,6 +6,7 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
@@ -121,7 +122,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
   }
 
   Future<void> _confirmDelete() async {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     final confirmed = await Dialogs.confirmDialog(
         context: context, title: localizations.deleteSchedule);
 
@@ -159,7 +160,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
 
     return ModelForm(
       title: localizations.editSchedule,

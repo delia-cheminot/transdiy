@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/views/chart/chart_graph.dart';
 import 'package:mona/ui/views/chart/chart_slider.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -16,7 +17,7 @@ class _ChartPageState extends State<ChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     return Consumer<MedicationIntakeProvider>(
         builder: (context, medicationIntakeProvider, child) {
       return MainPageWrapper(

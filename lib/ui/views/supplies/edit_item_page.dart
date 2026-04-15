@@ -5,6 +5,7 @@ import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
@@ -128,7 +129,7 @@ class _EditItemPageState extends State<EditItemPage> {
   }
 
   Future<void> _confirmDelete() async {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     final confirmed = await Dialogs.confirmDialog(
         context: context, title: localizations.deleteItem);
 
@@ -171,7 +172,7 @@ class _EditItemPageState extends State<EditItemPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
 
     return ModelForm(
       title: localizations.editItem,

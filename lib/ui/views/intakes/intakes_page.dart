@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
-import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/views/intakes/edit_intake_page.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class IntakesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     return Consumer<MedicationIntakeProvider>(
       builder: (context, medicationIntakeProvider, child) {
         return MainPageWrapper(
@@ -34,7 +34,7 @@ class IntakesPage extends StatelessWidget {
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
-    final locale = Localizations.localeOf(context).toString();
+    final locale = context.locale.toString();
     final dateText = DateFormat.yMMMd(locale).format(intake.takenDateTime!);
 
     return ListTile(
@@ -67,8 +67,8 @@ class IntakesPage extends StatelessWidget {
   }
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    return Dialogs.confirmDialog(
+    final localizations = context.l10n;
+    return Dialogs.confirmDeleteDialog(
         context: context, title: localizations.deleteIntake);
   }
 }

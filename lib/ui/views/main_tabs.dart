@@ -1,6 +1,7 @@
 // main_tabs.dart
 import 'package:flutter/material.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'chart/chart_page.dart';
 import 'home/home_page.dart';
 import 'home/settings/settings_page.dart';
@@ -11,7 +12,7 @@ import 'supplies/new_item_page.dart';
 import 'supplies/pharmacy_page.dart';
 
 List<MainTabConfig> getMainTabs(BuildContext context) {
-  final localizations = AppLocalizations.of(context)!;
+  final localizations = context.l10n;
 
   return [
     MainTabConfig(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _showUpdateDialog() {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
 
     showDialog(
       context: context,

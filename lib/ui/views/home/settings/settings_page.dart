@@ -5,6 +5,7 @@ import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/backup_service.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
@@ -171,7 +172,7 @@ class _SettingsPageState extends State<SettingsPage>
         context.watch<MedicationScheduleProvider>();
     final preferencesService = context.watch<PreferencesService>();
     final localeProvider = context.watch<LocaleProvider>();
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(

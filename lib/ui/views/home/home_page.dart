@@ -4,7 +4,7 @@ import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
-import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
 
     return MainPageWrapper(
       isLoading: (medicationScheduleProvider.isLoading ||
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
     bool showAllDoneMessage = false,
   }) {
     final theme = Theme.of(context);
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     final scheduleManager = ScheduleManager(
       context.watch<MedicationScheduleProvider>(),
       context.watch<MedicationIntakeProvider>(),
@@ -95,8 +95,8 @@ class HomePage extends StatelessWidget {
   }
 
   List<Widget> _buildTodaySection(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final locale = Localizations.localeOf(context).toString();
+    final localizations = context.l10n;
+    final locale = context.locale.toString();
     return _buildScheduleSection(
       context,
       title: localizations
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
   }
 
   List<Widget> _buildUpcomingSection(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
+    final localizations = context.l10n;
     return _buildScheduleSection(
       context,
       title: localizations.upcoming,
