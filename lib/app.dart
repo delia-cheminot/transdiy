@@ -21,7 +21,6 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
   String? _lastTimeZone;
   late MedicationScheduleProvider _medicationScheduleProvider;
   late PreferencesService _preferencesService;
-  late LocaleProvider _localeProvider;
 
   ColorScheme _getLightColorScheme(ColorScheme? lightDynamic) {
     return lightDynamic ?? ColorScheme.fromSeed(seedColor: Colors.deepPurple);
@@ -49,10 +48,6 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
       _medicationScheduleProvider.addListener(_regenerateNotifications);
       _preferencesService.addListener(_regenerateNotifications);
       _regenerateNotifications();
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _localeProvider = context.read<LocaleProvider>();
     });
   }
 
