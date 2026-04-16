@@ -15,6 +15,7 @@ import 'package:mona/ui/widgets/forms/form_info_text.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
@@ -228,7 +229,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
             if (_isInjection)
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
-                items: InjectionSideDropdown.menuItems,
+                items: injectionSideDropdownMenuItems,
                 onChanged: _onInjectionSideChanged,
                 label: localizations.injectionSide,
               ),

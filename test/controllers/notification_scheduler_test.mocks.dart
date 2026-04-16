@@ -6,7 +6,6 @@
 import 'dart:async' as _i5;
 import 'dart:ui' as _i6;
 
-import 'package:flutter/material.dart' as _i9;
 import 'package:flutter_local_notifications/src/flutter_local_notifications_plugin.dart'
     as _i10;
 import 'package:flutter_local_notifications/src/initialization_settings.dart'
@@ -20,7 +19,6 @@ import 'package:flutter_local_notifications_platform_interface/flutter_local_not
     as _i12;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mona/data/model/medication_schedule.dart' as _i4;
-import 'package:mona/l10n/app_localizations.dart' as _i17;
 import 'package:mona/data/model/molecule.dart' as _i8;
 import 'package:mona/data/providers/medication_schedule_provider.dart' as _i3;
 import 'package:mona/services/preferences_service.dart' as _i7;
@@ -221,18 +219,6 @@ class MockPreferencesService extends _i1.Mock
         returnValue: <_i8.Molecule>[],
         returnValueForMissingStub: <_i8.Molecule>[],
       ) as List<_i8.Molecule>);
-
-  @override
-  List<_i9.DropdownMenuItem<_i8.Molecule>> moleculeDropdownItems(
-          _i17.AppLocalizations? localizations) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #moleculeDropdownItems,
-          [localizations],
-        ),
-        returnValue: <_i9.DropdownMenuItem<_i8.Molecule>>[],
-        returnValueForMissingStub: <_i9.DropdownMenuItem<_i8.Molecule>>[],
-      ) as List<_i9.DropdownMenuItem<_i8.Molecule>>);
 
   @override
   bool get shouldShowScheduleDialog => (super.noSuchMethod(

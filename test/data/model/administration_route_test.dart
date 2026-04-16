@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/l10n/app_localizations_en.dart';
-import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/ui/widgets/dropdowns/administration_route_dropdown.dart';
 
 void main() {
   group('AdministrationRoute', () {

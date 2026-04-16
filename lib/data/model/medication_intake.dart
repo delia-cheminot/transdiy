@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
@@ -14,18 +13,6 @@ import 'package:timezone/timezone.dart' as tz;
 enum InjectionSide {
   left,
   right,
-}
-
-extension InjectionSideDropdown on InjectionSide {
-  static List<DropdownMenuItem<InjectionSide>> get menuItems =>
-      InjectionSide.values
-          .map(
-            (side) => DropdownMenuItem<InjectionSide>(
-              value: side,
-              child: Text(side.name[0].toUpperCase() + side.name.substring(1)),
-            ),
-          )
-          .toList();
 }
 
 class MedicationIntake {

@@ -5,15 +5,16 @@ import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
-import 'package:mona/l10n/helpers/administration_route_l10n.dart';
 import 'package:mona/l10n/helpers/ester_l10n.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_notifications_page.dart';
+import 'package:mona/ui/widgets/dropdowns/administration_route_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_date_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/ui/widgets/dropdowns/molecule_dropdown.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
@@ -166,7 +167,10 @@ class _NewSchedulePageState extends State<NewSchedulePage> {
         FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
-          items: _preferencesService.moleculeDropdownItems(localizations),
+          items: moleculeDropdownMenuItems(
+            _preferencesService.allMolecules,
+            localizations,
+          ),
           onChanged: _onMoleculeChanged,
           label: localizations.molecule,
         ),
