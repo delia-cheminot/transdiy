@@ -302,6 +302,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get empty_levels => 'Estradiol injections will display in this tab';
 
   @override
+  String get bloodTestsTitle => 'Blood Tests';
+
+  @override
+  String get empty_blood_tests => 'Taken blood tests will appear here. Start by using the Add button!';
+
+  @override
+  String get addBloodTest => 'Add a blood test';
+
+  @override
+  String get editBloodTest => 'Edit blood test';
+
+  @override
+  String get newBloodTest => 'New blood test';
+
+  @override
+  String get estradiolLevelLabel => 'Estradiol level';
+
+  @override
+  String get testosteroneLevelLabel => 'Testosterone level';
+
+  @override
+  String get bloodTestDateLabel => 'Test date';
+
+  @override
   String get empty_supplies => 'No supplies. Add an item to get started.';
 
   @override

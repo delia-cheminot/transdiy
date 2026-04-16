@@ -95,6 +95,14 @@
     "microliters": "μL",
 
     "empty_levels": "Estradiol-Injektionen werden in diesem Tab angezeigt",
+    "bloodTestsTitle": "Bluttests",
+    "empty_blood_tests": "Erfasste Bluttests werden hier angezeigt. Starte mit der Schaltfläche „Hinzufügen“!",
+    "addBloodTest": "Bluttest hinzufügen",
+    "editBloodTest": "Bluttest bearbeiten",
+    "newBloodTest": "Neuer Bluttest",
+    "estradiolLevelLabel": "Östradiolspiegel",
+    "testosteroneLevelLabel": "Testosteronspiegel",
+    "bloodTestDateLabel": "Testdatum",
 
     "empty_supplies": "Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.",
     "newItem": "Neuer Eintrag",

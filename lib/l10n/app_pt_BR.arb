@@ -95,6 +95,14 @@
     "microliters": "μL",
 
     "empty_levels": "As injeções de estradiol aparecerão nesta aba",
+    "bloodTestsTitle": "Exames de sangue",
+    "empty_blood_tests": "Os exames de sangue registrados aparecem aqui. Comece pelo botão Adicionar!",
+    "addBloodTest": "Adicionar exame de sangue",
+    "editBloodTest": "Editar exame de sangue",
+    "newBloodTest": "Novo exame de sangue",
+    "estradiolLevelLabel": "Nível de estradiol",
+    "testosteroneLevelLabel": "Nível de testosterona",
+    "bloodTestDateLabel": "Data do exame",
 
     "empty_supplies": "Sem suprimentos. Adicione um item para começar.",
     "newItem": "Novo item",

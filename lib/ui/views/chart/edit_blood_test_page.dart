@@ -86,25 +86,26 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return ModelForm(
-      title: 'Edit blood test',
-      submitButtonLabel: context.l10n.save,
+      title: l10n.editBloodTest,
+      submitButtonLabel: l10n.save,
       isFormValid: _isFormValid,
       saveChanges: _saveBloodTest,
       onDelete: _confirmDelete,
       fields: <Widget>[
         FormTextField(
           controller: _estradiolLevelsController,
-          label: 'Estradiol level',
+          label: l10n.estradiolLevelLabel,
           errorText: _estradiolLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
-          suffixText: 'pg/ml',
+          suffixText: 'pg/mL',
         ),
         FormTextField(
           controller: _testosteroneLevelsController,
-          label: 'Testosterone level',
+          label: l10n.testosteroneLevelLabel,
           errorText: _testosteroneLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
@@ -114,7 +115,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         FormSpacer(),
         FormDateTimeField(
           datetime: _testDateTime,
-          label: 'Test date',
+          label: l10n.bloodTestDateLabel,
           errorText: _testDateError,
           onChanged: (date) => setState(() {
             _testDateTime = date;

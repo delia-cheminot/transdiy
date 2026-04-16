@@ -302,6 +302,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get empty_levels => 'Las inyecciones de estradiol se mostrarán en esta pestaña';
 
   @override
+  String get bloodTestsTitle => 'Análisis de sangre';
+
+  @override
+  String get empty_blood_tests => 'Los análisis de sangre registrados aparecerán aquí. ¡Empieza con el botón Añadir!';
+
+  @override
+  String get addBloodTest => 'Añadir un análisis de sangre';
+
+  @override
+  String get editBloodTest => 'Editar análisis de sangre';
+
+  @override
+  String get newBloodTest => 'Nuevo análisis de sangre';
+
+  @override
+  String get estradiolLevelLabel => 'Nivel de estradiol';
+
+  @override
+  String get testosteroneLevelLabel => 'Nivel de testosterona';
+
+  @override
+  String get bloodTestDateLabel => 'Fecha del análisis';
+
+  @override
   String get empty_supplies => 'Sin suministros. Añade un elemento para comenzar.';
 
   @override

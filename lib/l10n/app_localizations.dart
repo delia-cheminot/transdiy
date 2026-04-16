@@ -648,6 +648,54 @@ abstract class AppLocalizations {
   /// **'Estradiol injections will display in this tab'**
   String get empty_levels;
 
+  /// No description provided for @bloodTestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blood Tests'**
+  String get bloodTestsTitle;
+
+  /// No description provided for @empty_blood_tests.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken blood tests will appear here. Start by using the Add button!'**
+  String get empty_blood_tests;
+
+  /// No description provided for @addBloodTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a blood test'**
+  String get addBloodTest;
+
+  /// No description provided for @editBloodTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit blood test'**
+  String get editBloodTest;
+
+  /// No description provided for @newBloodTest.
+  ///
+  /// In en, this message translates to:
+  /// **'New blood test'**
+  String get newBloodTest;
+
+  /// No description provided for @estradiolLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol level'**
+  String get estradiolLevelLabel;
+
+  /// No description provided for @testosteroneLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone level'**
+  String get testosteroneLevelLabel;
+
+  /// No description provided for @bloodTestDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Test date'**
+  String get bloodTestDateLabel;
+
   /// No description provided for @empty_supplies.
   ///
   /// In en, this message translates to:

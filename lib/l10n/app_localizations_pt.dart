@@ -302,6 +302,30 @@ class AppLocalizationsPt extends AppLocalizations {
   String get empty_levels => 'As injeções de estradiol aparecerão nesta aba';
 
   @override
+  String get bloodTestsTitle => 'Exames de sangue';
+
+  @override
+  String get empty_blood_tests => 'Os exames de sangue registados aparecem aqui. Comece pelo botão Adicionar!';
+
+  @override
+  String get addBloodTest => 'Adicionar exame de sangue';
+
+  @override
+  String get editBloodTest => 'Editar exame de sangue';
+
+  @override
+  String get newBloodTest => 'Novo exame de sangue';
+
+  @override
+  String get estradiolLevelLabel => 'Nível de estradiol';
+
+  @override
+  String get testosteroneLevelLabel => 'Nível de testosterona';
+
+  @override
+  String get bloodTestDateLabel => 'Data do exame';
+
+  @override
   String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
@@ -777,6 +801,30 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get empty_levels => 'As injeções de estradiol aparecerão nesta aba';
+
+  @override
+  String get bloodTestsTitle => 'Exames de sangue';
+
+  @override
+  String get empty_blood_tests => 'Os exames de sangue registrados aparecem aqui. Comece pelo botão Adicionar!';
+
+  @override
+  String get addBloodTest => 'Adicionar exame de sangue';
+
+  @override
+  String get editBloodTest => 'Editar exame de sangue';
+
+  @override
+  String get newBloodTest => 'Novo exame de sangue';
+
+  @override
+  String get estradiolLevelLabel => 'Nível de estradiol';
+
+  @override
+  String get testosteroneLevelLabel => 'Nível de testosterona';
+
+  @override
+  String get bloodTestDateLabel => 'Data do exame';
 
   @override
   String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';

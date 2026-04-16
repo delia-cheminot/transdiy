@@ -95,6 +95,14 @@
   "microliters": "μL",
 
   "empty_levels": "Estradiol injections will display in this tab",
+  "bloodTestsTitle": "Blood Tests",
+  "empty_blood_tests": "Taken blood tests will appear here. Start by using the Add button!",
+  "addBloodTest": "Add a blood test",
+  "editBloodTest": "Edit blood test",
+  "newBloodTest": "New blood test",
+  "estradiolLevelLabel": "Estradiol level",
+  "testosteroneLevelLabel": "Testosterone level",
+  "bloodTestDateLabel": "Test date",
 
   "empty_supplies": "No supplies. Add an item to get started.",
   "newItem": "New item",

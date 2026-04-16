@@ -95,6 +95,14 @@
   "microliters": "μL",
 
   "empty_levels": "Les injections d’estradiol s’afficheront dans cet onglet",
+  "bloodTestsTitle": "Prises de sang",
+  "empty_blood_tests": "Les prises de sang enregistrées s’afficheront ici. Commencez avec le bouton Ajouter !",
+  "addBloodTest": "Ajouter une analyse de sang",
+  "editBloodTest": "Modifier la prise de sang",
+  "newBloodTest": "Nouvelle prise de sang",
+  "estradiolLevelLabel": "Taux d'estradiol",
+  "testosteroneLevelLabel": "Taux de testostérone",
+  "bloodTestDateLabel": "Date",
 
   "empty_supplies": "Aucun consommable. Ajoutez un élément pour commencer.",
   "newItem": "Nouvel élément",

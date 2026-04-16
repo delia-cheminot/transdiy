@@ -302,6 +302,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get empty_levels => 'Estradiol-Injektionen werden in diesem Tab angezeigt';
 
   @override
+  String get bloodTestsTitle => 'Bluttests';
+
+  @override
+  String get empty_blood_tests => 'Erfasste Bluttests werden hier angezeigt. Starte mit der Schaltfläche „Hinzufügen“!';
+
+  @override
+  String get addBloodTest => 'Bluttest hinzufügen';
+
+  @override
+  String get editBloodTest => 'Bluttest bearbeiten';
+
+  @override
+  String get newBloodTest => 'Neuer Bluttest';
+
+  @override
+  String get estradiolLevelLabel => 'Östradiolspiegel';
+
+  @override
+  String get testosteroneLevelLabel => 'Testosteronspiegel';
+
+  @override
+  String get bloodTestDateLabel => 'Testdatum';
+
+  @override
   String get empty_supplies => 'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
 
   @override

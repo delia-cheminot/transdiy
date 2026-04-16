@@ -73,39 +73,39 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return ModelForm(
-      title: 'New blood test',
-      submitButtonLabel: context.l10n.add,
+      title: l10n.newBloodTest,
+      submitButtonLabel: l10n.add,
       isFormValid: _isFormValid,
       saveChanges: _addBloodTest,
       fields: <Widget>[
         FormTextField(
           controller: _estradiolLevelsController,
-          label: 'Estradiol level',
+          label: l10n.estradiolLevelLabel,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
           errorText: _estradiolError,
-          suffixText: 'pg/ml',
+          suffixText: 'pg/mL',
         ),
         FormTextField(
           controller: _testosteroneLevelsController,
-          label: 'Testosterone level',
+          label: l10n.testosteroneLevelLabel,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
           errorText: _testosteroneError,
-          suffixText: 'ng/dL', // TODO check si units
+          suffixText: 'ng/dL',
         ),
         FormSpacer(),
         FormDateTimeField(
           datetime: _testDateTime,
-          label: 'Test date',
+          label: l10n.bloodTestDateLabel,
           errorText: _testDateError,
           onChanged: (date) => setState(() {
             _testDateTime = date;
           }),
-          // TODO create a method onDateChanged
         ),
       ],
     );
