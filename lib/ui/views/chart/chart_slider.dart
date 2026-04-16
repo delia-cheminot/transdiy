@@ -11,8 +11,8 @@ class ChartSlider extends StatefulWidget {
 
 class _ChartSliderState extends State<ChartSlider> {
   late double _currentSliderValue;
-  
-  @override 
+
+  @override
   void initState() {
     super.initState();
     _currentSliderValue = widget.value;
@@ -26,7 +26,7 @@ class _ChartSliderState extends State<ChartSlider> {
       min: 0,
       divisions: 20,
       onChanged: (double value) {
-        setState(() =>  _currentSliderValue = value);
+        setState(() => _currentSliderValue = value);
         widget.onChanged(value);
       },
       activeColor: Theme.of(context).colorScheme.secondary,
