@@ -6,7 +6,6 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
@@ -178,27 +177,6 @@ class MedicationSchedule {
 
   static String? validateAdministrationRoute(AdministrationRoute? value) =>
       requiredAdministrationRoute(value);
-
-  String localizedDescription(AppLocalizations localizations,
-      {BuildContext? context}) {
-    if (notificationTimes.isEmpty) {
-      return localizations.noNotifications;
-    }
-
-    if (notificationTimes.length > 4) {
-      return localizations.notificationsCount(notificationTimes.length);
-    }
-
-    final formattedTimes = notificationTimes.map((time) {
-      if (context != null) {
-        return time.format(context);
-      }
-      final twoDigits = (int value) => value.toString().padLeft(2, '0');
-      return '${twoDigits(time.hour)}:${twoDigits(time.minute)}';
-    }).join(', ');
-
-    return formattedTimes;
-  }
 
   static String? Function(Ester?) esterValidator(
       Molecule? molecule, AdministrationRoute? administrationRoute) {
