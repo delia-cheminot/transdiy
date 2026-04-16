@@ -12,18 +12,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get profileTitle => 'Configurações';
-
-  @override
-  String get intakesTitle => 'Doses';
-
-  @override
-  String get levelsTitle => 'Níveis';
-
-  @override
-  String get suppliesTitle => 'Suprimentos';
-
-  @override
   String get empty_home => 'Comece adicionando um cronograma em Configurações';
 
   @override
@@ -440,18 +428,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get appTitle => 'Mona';
-
-  @override
-  String get profileTitle => 'Configurações';
-
-  @override
-  String get intakesTitle => 'Doses';
-
-  @override
-  String get levelsTitle => 'Níveis';
-
-  @override
-  String get suppliesTitle => 'Suprimentos';
 
   @override
   String get empty_home => 'Comece adicionando um cronograma em Configurações';

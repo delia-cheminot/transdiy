@@ -1,9 +1,5 @@
 {
   "appTitle": "Mona",
-  "profileTitle": "Settings",
-  "intakesTitle": "Intakes",
-  "levelsTitle": "Levels",
-  "suppliesTitle": "Supplies",
   "empty_home": "Start by adding a schedule in Settings",
   "empty_intakes": "Taken instakes will appear here",
   "empty_levels": "Estradiol injections will display in this tab",

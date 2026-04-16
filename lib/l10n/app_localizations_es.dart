@@ -12,18 +12,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get profileTitle => 'Configuración';
-
-  @override
-  String get intakesTitle => 'Tomas';
-
-  @override
-  String get levelsTitle => 'Niveles';
-
-  @override
-  String get suppliesTitle => 'Suministros';
-
-  @override
   String get empty_home => 'Comienza añadiendo un horario en Configuración';
 
   @override

@@ -1,9 +1,5 @@
 {
     "appTitle": "Mona",
-    "profileTitle": "Configuración",
-    "intakesTitle": "Tomas",
-    "levelsTitle": "Niveles",
-    "suppliesTitle": "Suministros",
     "empty_home": "Comienza añadiendo un horario en Configuración",
     "empty_intakes": "Las dosis tomadas aparecerán aquí",
     "empty_levels": "Las inyecciones de estradiol se mostrarán en esta pestaña",

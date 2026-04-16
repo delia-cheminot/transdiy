@@ -12,18 +12,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get profileTitle => 'Einstellungen';
-
-  @override
-  String get intakesTitle => 'Einnahmen';
-
-  @override
-  String get levelsTitle => 'Werte';
-
-  @override
-  String get suppliesTitle => 'Vorräte';
-
-  @override
   String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
 
   @override

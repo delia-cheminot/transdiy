@@ -1,9 +1,5 @@
 {
     "appTitle": "Mona",
-    "profileTitle": "Einstellungen",
-    "intakesTitle": "Einnahmen",
-    "levelsTitle": "Werte",
-    "suppliesTitle": "Vorräte",
     "empty_home": "Beginne, indem du einen Zeitplan in den Einstellungen erstellst",
     "empty_intakes": "Erfasste Einnahmen werden hier angezeigt",
     "empty_levels": "Estradiol-Injektionen werden in diesem Tab angezeigt",

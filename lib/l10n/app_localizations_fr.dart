@@ -12,18 +12,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get profileTitle => 'Paramètres';
-
-  @override
-  String get intakesTitle => 'Prises';
-
-  @override
-  String get levelsTitle => 'Niveaux';
-
-  @override
-  String get suppliesTitle => 'Fournitures';
-
-  @override
   String get empty_home => 'Commencez par ajouter un traitement dans les paramètres';
 
   @override

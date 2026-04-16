@@ -1,9 +1,5 @@
 {
     "appTitle": "Mona",
-    "profileTitle": "Configurações",
-    "intakesTitle": "Doses",
-    "levelsTitle": "Níveis",
-    "suppliesTitle": "Suprimentos",
     "empty_home": "Comece adicionando um cronograma em Configurações",
     "empty_intakes": "As doses registradas aparecerão aqui",
     "empty_levels": "As injeções de estradiol aparecerão nesta aba",

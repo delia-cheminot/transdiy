@@ -1,9 +1,5 @@
 {
   "appTitle": "Mona",
-  "profileTitle": "Paramètres",
-  "intakesTitle": "Prises",
-  "levelsTitle": "Niveaux",
-  "suppliesTitle": "Fournitures",
   "empty_home": "Commencez par ajouter un traitement dans les paramètres",
   "empty_intakes": "Les prises enregistrées apparaîtront ici",
   "empty_levels": "Les injections d’estradiol s’afficheront dans cet onglet",

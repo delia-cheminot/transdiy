@@ -108,30 +108,6 @@ abstract class AppLocalizations {
   /// **'Mona'**
   String get appTitle;
 
-  /// No description provided for @profileTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get profileTitle;
-
-  /// No description provided for @intakesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Intakes'**
-  String get intakesTitle;
-
-  /// No description provided for @levelsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Levels'**
-  String get levelsTitle;
-
-  /// No description provided for @suppliesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Supplies'**
-  String get suppliesTitle;
-
   /// No description provided for @empty_home.
   ///
   /// In en, this message translates to:

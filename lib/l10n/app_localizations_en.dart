@@ -12,18 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get profileTitle => 'Settings';
-
-  @override
-  String get intakesTitle => 'Intakes';
-
-  @override
-  String get levelsTitle => 'Levels';
-
-  @override
-  String get suppliesTitle => 'Supplies';
-
-  @override
   String get empty_home => 'Start by adding a schedule in Settings';
 
   @override
