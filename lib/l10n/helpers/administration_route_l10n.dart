@@ -7,6 +7,7 @@ extension AdministrationRouteL10n on AdministrationRoute {
       _AdministrationRouteDisplayNames.resolve(this, localizations);
 }
 
+// TODO move ui stuff to a better place
 List<DropdownMenuItem<AdministrationRoute>>
     administrationRouteDropdownMenuItems(
   AppLocalizations localizations,
