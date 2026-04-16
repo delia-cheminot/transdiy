@@ -14,8 +14,7 @@ extension MoleculeL10n on Molecule {
     if (ester == null) {
       return localizedName(localizations);
     }
-    final compound =
-        _compoundMedicationDisplayName(this, ester, localizations);
+    final compound = _compoundMedicationDisplayName(this, ester, localizations);
     return compound ??
         '${localizedName(localizations)} ${ester.localizedName(localizations)}';
   }

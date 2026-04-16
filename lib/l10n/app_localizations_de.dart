@@ -24,16 +24,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliesTitle => 'Vorräte';
 
   @override
-  String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
+  String get empty_home =>
+      'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
 
   @override
   String get empty_intakes => 'Erfasste Einnahmen werden hier angezeigt';
 
   @override
-  String get empty_levels => 'Estradiol-Injektionen werden in diesem Tab angezeigt';
+  String get empty_levels =>
+      'Estradiol-Injektionen werden in diesem Tab angezeigt';
 
   @override
-  String get empty_supplies => 'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
+  String get empty_supplies =>
+      'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
 
   @override
   String get nav_home => 'Mona';
@@ -87,28 +90,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enableNotifications => 'Benachrichtigungen aktivieren';
 
   @override
-  String get notificationsDisabledTitle => 'Benachrichtigungen sind deaktiviert';
+  String get notificationsDisabledTitle =>
+      'Benachrichtigungen sind deaktiviert';
 
   @override
   String get clickToOpenSettings => 'Tippe, um die Einstellungen zu öffnen';
 
   @override
-  String get exactRemindersDisabled => 'Exakte Erinnerungszeiten sind deaktiviert';
+  String get exactRemindersDisabled =>
+      'Exakte Erinnerungszeiten sind deaktiviert';
 
   @override
-  String get remindersDelayed => 'Erinnerungen können sich leicht verzögern. Tippe, um die Einstellungen zu öffnen.';
+  String get remindersDelayed =>
+      'Erinnerungen können sich leicht verzögern. Tippe, um die Einstellungen zu öffnen.';
 
   @override
   String get autoUpdate => 'Automatische Updates';
 
   @override
-  String get autoUpdateDescription => 'Beim Start der App automatisch nach Updates suchen';
+  String get autoUpdateDescription =>
+      'Beim Start der App automatisch nach Updates suchen';
 
   @override
   String get checkForUpdates => 'Nach Updates suchen';
 
   @override
-  String get checkForUpdatesDescription => 'Manuell nach der neuesten Version suchen\nDies stellt eine Internetverbindung her\n(Es werden keine Daten gesendet)';
+  String get checkForUpdatesDescription =>
+      'Manuell nach der neuesten Version suchen\nDies stellt eine Internetverbindung her\n(Es werden keine Daten gesendet)';
 
   @override
   String appVersion(Object version) {
@@ -119,7 +127,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notificationsUpdated => 'Benachrichtigungen wurden aktualisiert!';
 
   @override
-  String get notificationsUpdatedDescription => 'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
+  String get notificationsUpdatedDescription =>
+      'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
 
   @override
   String get dontShowAgain => 'Nicht mehr anzeigen';
@@ -296,7 +305,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addSchedule => 'Zeitplan hinzufügen';
 
   @override
-  String get addScheduleToGetStarted => 'Füge einen Zeitplan hinzu, um zu beginnen.';
+  String get addScheduleToGetStarted =>
+      'Füge einen Zeitplan hinzu, um zu beginnen.';
 
   @override
   String get newSchedule => 'Neuer Zeitplan';
@@ -396,7 +406,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Estradiolbenzoat';
 
   @override
-  String get medicationEstradiolCypionateSuspension => 'Estradiolcypionat-Suspension';
+  String get medicationEstradiolCypionateSuspension =>
+      'Estradiolcypionat-Suspension';
 
   @override
   String get medicationTestosteroneEnanthate => 'Testosteronenantat';
@@ -414,7 +425,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Testosteronbenzoat';
 
   @override
-  String get medicationTestosteroneCypionateSuspension => 'Testosteroncypionat-Suspension';
+  String get medicationTestosteroneCypionateSuspension =>
+      'Testosteroncypionat-Suspension';
 
   @override
   String get scheduleFrequencyDaily => 'Täglich';

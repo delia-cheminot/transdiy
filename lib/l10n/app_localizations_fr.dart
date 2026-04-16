@@ -24,16 +24,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliesTitle => 'Fournitures';
 
   @override
-  String get empty_home => 'Commencez par ajouter un traitement dans les paramètres';
+  String get empty_home =>
+      'Commencez par ajouter un traitement dans les paramètres';
 
   @override
   String get empty_intakes => 'Les prises enregistrées apparaîtront ici';
 
   @override
-  String get empty_levels => 'Les injections d’estradiol s’afficheront dans cet onglet';
+  String get empty_levels =>
+      'Les injections d’estradiol s’afficheront dans cet onglet';
 
   @override
-  String get empty_supplies => 'Aucun consommable. Ajoutez un élément pour commencer.';
+  String get empty_supplies =>
+      'Aucun consommable. Ajoutez un élément pour commencer.';
 
   @override
   String get nav_home => 'Mona';
@@ -93,22 +96,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get clickToOpenSettings => 'Cliquez pour ouvrir les paramètres';
 
   @override
-  String get exactRemindersDisabled => 'Les heures de rappel exactes sont désactivées';
+  String get exactRemindersDisabled =>
+      'Les heures de rappel exactes sont désactivées';
 
   @override
-  String get remindersDelayed => 'Les rappels peuvent être légèrement retardés. Appuyez pour ouvrir les paramètres.';
+  String get remindersDelayed =>
+      'Les rappels peuvent être légèrement retardés. Appuyez pour ouvrir les paramètres.';
 
   @override
   String get autoUpdate => 'Mise à jour automatique';
 
   @override
-  String get autoUpdateDescription => 'Vérifier automatiquement les nouvelles mises à jour au lancement de l\'application';
+  String get autoUpdateDescription =>
+      'Vérifier automatiquement les nouvelles mises à jour au lancement de l\'application';
 
   @override
   String get checkForUpdates => 'Vérifier les mises à jour';
 
   @override
-  String get checkForUpdatesDescription => 'Vérifier manuellement la dernière version\nCela vous connectera à Internet\n(Aucune donnée ne sera envoyée)';
+  String get checkForUpdatesDescription =>
+      'Vérifier manuellement la dernière version\nCela vous connectera à Internet\n(Aucune donnée ne sera envoyée)';
 
   @override
   String appVersion(Object version) {
@@ -119,7 +126,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notificationsUpdated => 'Les notifications ont été mises à jour !';
 
   @override
-  String get notificationsUpdatedDescription => 'Chaque traitement a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos traitements pour vous assurer de ne rien manquer.';
+  String get notificationsUpdatedDescription =>
+      'Chaque traitement a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos traitements pour vous assurer de ne rien manquer.';
 
   @override
   String get dontShowAgain => 'Ne plus afficher';
@@ -396,7 +404,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Benzoate d\'œstradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension => 'Suspension de cypionate d\'œstradiol';
+  String get medicationEstradiolCypionateSuspension =>
+      'Suspension de cypionate d\'œstradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Énanthate de testostérone';
@@ -414,7 +423,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Benzoate de testostérone';
 
   @override
-  String get medicationTestosteroneCypionateSuspension => 'Suspension de cypionate de testostérone';
+  String get medicationTestosteroneCypionateSuspension =>
+      'Suspension de cypionate de testostérone';
 
   @override
   String get scheduleFrequencyDaily => 'Tous les jours';
