@@ -76,6 +76,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notifications => 'Notificaciones';
 
   @override
+  String get schedulesAndNotifications => 'Horarios y notificaciones';
+
+  @override
+  String get general => 'General';
+
+  @override
   String get schedules => 'Horarios';
 
   @override

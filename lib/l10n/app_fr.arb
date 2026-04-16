@@ -22,6 +22,8 @@
 
   "settingsTitle": "Paramètres",
   "notifications": "Notifications",
+  "schedulesAndNotifications": "Traitements et notifications",
+  "general": "Général",
   "schedules": "Traitements",
   "noSchedules": "Aucun traitement",
   "schedulesCreated": "{count} créés",

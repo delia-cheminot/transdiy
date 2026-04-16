@@ -76,6 +76,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notifications => 'Notificações';
 
   @override
+  String get schedulesAndNotifications => 'Cronogramas e notificações';
+
+  @override
+  String get general => 'Geral';
+
+  @override
   String get schedules => 'Cronogramas';
 
   @override
@@ -530,6 +536,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get notifications => 'Notificações';
+
+  @override
+  String get schedulesAndNotifications => 'Cronogramas e notificações';
+
+  @override
+  String get general => 'Geral';
 
   @override
   String get schedules => 'Cronogramas';

@@ -228,6 +228,18 @@ abstract class AppLocalizations {
   /// **'Notifications'**
   String get notifications;
 
+  /// No description provided for @schedulesAndNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedules & notifications'**
+  String get schedulesAndNotifications;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
   /// No description provided for @schedules.
   ///
   /// In en, this message translates to:

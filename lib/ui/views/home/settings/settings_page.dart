@@ -187,7 +187,7 @@ class _SettingsPageState extends State<SettingsPage>
             padding:
                 const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
             child: Text(
-              localizations.notifications,
+              localizations.schedulesAndNotifications,
             ),
           ),
           ListTile(
@@ -201,19 +201,6 @@ class _SettingsPageState extends State<SettingsPage>
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (context) => SchedulesPage(),
               ));
-            },
-          ),
-          ListTile(
-            title: Text(localizations.language),
-            subtitle: Text(
-              _nativeLanguageNameForStoredTag(preferencesService.languageTag) ??
-                  preferencesService.languageTag,
-            ),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(builder: (context) => LanguagePage()),
-              );
             },
           ),
           SwitchListTile(
@@ -244,6 +231,27 @@ class _SettingsPageState extends State<SettingsPage>
                 await openAppSettings();
               },
             ),
+          const Divider(),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            child: Text(
+              localizations.general,
+            ),
+          ),
+          ListTile(
+            title: Text(localizations.language),
+            subtitle: Text(
+              _nativeLanguageNameForStoredTag(preferencesService.languageTag) ??
+                  preferencesService.languageTag,
+            ),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (context) => LanguagePage()),
+              );
+            },
+          ),
           if (Platform.isAndroid) ...[
             const Divider(),
             Padding(

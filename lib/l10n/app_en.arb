@@ -22,6 +22,8 @@
 
   "settingsTitle": "Settings",
   "notifications": "Notifications",
+  "schedulesAndNotifications": "Schedules & notifications",
+  "general": "General",
   "schedules": "Schedules",
   "noSchedules": "No schedules",
   "schedulesCreated": "{count} created",

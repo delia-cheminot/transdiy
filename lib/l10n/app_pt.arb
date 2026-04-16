@@ -22,6 +22,8 @@
 
     "settingsTitle": "Configurações",
     "notifications": "Notificações",
+    "schedulesAndNotifications": "Cronogramas e notificações",
+    "general": "Geral",
     "schedules": "Cronogramas",
     "noSchedules": "Sem cronogramas",
     "schedulesCreated": "{count} criados",

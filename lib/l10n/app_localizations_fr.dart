@@ -76,6 +76,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notifications => 'Notifications';
 
   @override
+  String get schedulesAndNotifications => 'Traitements et notifications';
+
+  @override
+  String get general => 'Général';
+
+  @override
   String get schedules => 'Traitements';
 
   @override
