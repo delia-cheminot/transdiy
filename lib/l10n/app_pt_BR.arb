@@ -23,6 +23,7 @@
     "settingsTitle": "Configurações",
     "schedulesCreated": "{count} criados",
     "enableNotifications": "Ativar notificações",
+    "enableNotificationsDescription": "Enviar lembretes dos cronogramas",
     "notificationsDisabledTitle": "As notificações estão desativadas",
     "clickToOpenSettings": "Toque para abrir as configurações",
     "exactRemindersDisabled": "Os horários exatos de lembrete estão desativados",

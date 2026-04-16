@@ -23,6 +23,7 @@
   "settingsTitle": "Paramètres",
   "schedulesCreated": "{count} créés",
   "enableNotifications": "Activer les notifications",
+  "enableNotificationsDescription": "Envoyer des rappels pour vos traitements",
   "notificationsDisabledTitle": "Les notifications sont désactivées",
   "clickToOpenSettings": "Cliquez pour ouvrir les paramètres",
   "exactRemindersDisabled": "Les heures de rappel exactes sont désactivées",

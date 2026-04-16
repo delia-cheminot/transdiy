@@ -23,6 +23,7 @@
   "settingsTitle": "Settings",
   "schedulesCreated": "{count} created",
   "enableNotifications": "Enable notifications",
+  "enableNotificationsDescription": "Send reminders for schedules",
   "notificationsDisabledTitle": "Notifications are disabled",
   "clickToOpenSettings": "Click to open settings",
   "exactRemindersDisabled": "Exact reminder times are disabled",

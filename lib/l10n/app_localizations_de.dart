@@ -87,6 +87,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enableNotifications => 'Benachrichtigungen aktivieren';
 
   @override
+  String get enableNotificationsDescription => 'Erinnerungen für Zeitpläne senden';
+
+  @override
   String get notificationsDisabledTitle => 'Benachrichtigungen sind deaktiviert';
 
   @override

@@ -219,8 +219,7 @@ class _SettingsPageState extends State<SettingsPage>
           ),
           SwitchListTile(
             title: Text(localizations.enableNotifications),
-            // TODO: Add locale
-            subtitle: const Text('Send reminders for schedules'),
+            subtitle: Text(localizations.enableNotificationsDescription),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),

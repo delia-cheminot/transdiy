@@ -87,6 +87,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableNotifications => 'Enable notifications';
 
   @override
+  String get enableNotificationsDescription => 'Send reminders for schedules';
+
+  @override
   String get notificationsDisabledTitle => 'Notifications are disabled';
 
   @override

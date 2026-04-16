@@ -87,6 +87,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enableNotifications => 'Ativar notificações';
 
   @override
+  String get enableNotificationsDescription => 'Enviar lembretes dos cronogramas';
+
+  @override
   String get notificationsDisabledTitle => 'As notificações estão desativadas';
 
   @override
@@ -512,6 +515,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get enableNotifications => 'Ativar notificações';
+
+  @override
+  String get enableNotificationsDescription => 'Enviar lembretes dos cronogramas';
 
   @override
   String get notificationsDisabledTitle => 'As notificações estão desativadas';

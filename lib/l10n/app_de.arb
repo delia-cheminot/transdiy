@@ -23,6 +23,7 @@
     "settingsTitle": "Einstellungen",
     "schedulesCreated": "{count} erstellt",
     "enableNotifications": "Benachrichtigungen aktivieren",
+    "enableNotificationsDescription": "Erinnerungen für Zeitpläne senden",
     "notificationsDisabledTitle": "Benachrichtigungen sind deaktiviert",
     "clickToOpenSettings": "Tippe, um die Einstellungen zu öffnen",
     "exactRemindersDisabled": "Exakte Erinnerungszeiten sind deaktiviert",

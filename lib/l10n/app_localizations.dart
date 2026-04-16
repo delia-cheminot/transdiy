@@ -246,6 +246,12 @@ abstract class AppLocalizations {
   /// **'Enable notifications'**
   String get enableNotifications;
 
+  /// No description provided for @enableNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Send reminders for schedules'**
+  String get enableNotificationsDescription;
+
   /// No description provided for @notificationsDisabledTitle.
   ///
   /// In en, this message translates to:

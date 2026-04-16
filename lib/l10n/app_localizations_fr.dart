@@ -87,6 +87,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enableNotifications => 'Activer les notifications';
 
   @override
+  String get enableNotificationsDescription => 'Envoyer des rappels pour vos traitements';
+
+  @override
   String get notificationsDisabledTitle => 'Les notifications sont désactivées';
 
   @override
