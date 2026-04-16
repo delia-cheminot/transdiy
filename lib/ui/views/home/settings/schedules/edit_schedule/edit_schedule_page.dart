@@ -37,10 +37,7 @@ class EditSchedulePage extends StatelessWidget {
           ListTile(
             title: Text(localizations.editScheduleInfo),
             subtitle: Text(
-              localizedMedicationScheduleSummary(
-                currentSchedule,
-                localizations,
-              ),
+              currentSchedule.localizedSummary(localizations),
             ),
             trailing: Icon(Icons.edit),
             onTap: () {
