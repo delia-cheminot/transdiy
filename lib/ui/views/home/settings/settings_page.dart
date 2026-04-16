@@ -184,8 +184,8 @@ class _SettingsPageState extends State<SettingsPage>
       body: ListView(
         children: [
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
             child: Text(
               localizations.schedulesAndNotifications,
             ),
@@ -233,8 +233,8 @@ class _SettingsPageState extends State<SettingsPage>
             ),
           const Divider(),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
             child: Text(
               localizations.general,
             ),
@@ -276,8 +276,8 @@ class _SettingsPageState extends State<SettingsPage>
           ],
           const Divider(),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
             child: Text(
               localizations.dataManagement,
             ),

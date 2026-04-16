@@ -7,11 +7,11 @@ List<DropdownMenuItem<AdministrationRoute>>
     administrationRouteDropdownMenuItems(
   AppLocalizations localizations,
 ) =>
-    AdministrationRoute.all
-        .map(
-          (route) => DropdownMenuItem<AdministrationRoute>(
-            value: route,
-            child: Text(route.localizedName(localizations)),
-          ),
-        )
-        .toList();
+        AdministrationRoute.all
+            .map(
+              (route) => DropdownMenuItem<AdministrationRoute>(
+                value: route,
+                child: Text(route.localizedName(localizations)),
+              ),
+            )
+            .toList();

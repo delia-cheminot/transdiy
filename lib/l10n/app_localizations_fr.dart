@@ -30,7 +30,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addAnItem => 'Ajouter un élément';
 
   @override
-  String get empty_home => 'Commencez par ajouter un traitement dans les paramètres';
+  String get empty_home =>
+      'Commencez par ajouter un traitement dans les paramètres';
 
   @override
   String todaySection(Object date) {
@@ -114,7 +115,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enableNotifications => 'Activer les notifications';
 
   @override
-  String get enableNotificationsDescription => 'Envoyer des rappels pour vos traitements';
+  String get enableNotificationsDescription =>
+      'Envoyer des rappels pour vos traitements';
 
   @override
   String get notificationsDisabledTitle => 'Les notifications sont désactivées';
@@ -123,22 +125,26 @@ class AppLocalizationsFr extends AppLocalizations {
   String get clickToOpenSettings => 'Cliquez pour ouvrir les paramètres';
 
   @override
-  String get exactRemindersDisabled => 'Les heures de rappel exactes sont désactivées';
+  String get exactRemindersDisabled =>
+      'Les heures de rappel exactes sont désactivées';
 
   @override
-  String get remindersDelayed => 'Les rappels peuvent être légèrement retardés. Appuyez pour ouvrir les paramètres.';
+  String get remindersDelayed =>
+      'Les rappels peuvent être légèrement retardés. Appuyez pour ouvrir les paramètres.';
 
   @override
   String get autoUpdate => 'Mise à jour automatique';
 
   @override
-  String get autoUpdateDescription => 'Vérifier automatiquement les nouvelles mises à jour au lancement de l\'application';
+  String get autoUpdateDescription =>
+      'Vérifier automatiquement les nouvelles mises à jour au lancement de l\'application';
 
   @override
   String get checkForUpdates => 'Vérifier les mises à jour';
 
   @override
-  String get checkForUpdatesDescription => 'Vérifier manuellement la dernière version\nCela vous connectera à Internet\n(Aucune donnée ne sera envoyée)';
+  String get checkForUpdatesDescription =>
+      'Vérifier manuellement la dernière version\nCela vous connectera à Internet\n(Aucune donnée ne sera envoyée)';
 
   @override
   String appVersion(Object version) {
@@ -159,10 +165,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importDataTitle => 'Importer des données';
 
   @override
-  String get importDataSubtitle => 'Restaurer les données depuis une sauvegarde JSON';
+  String get importDataSubtitle =>
+      'Restaurer les données depuis une sauvegarde JSON';
 
   @override
-  String get importDataOverwriteWarning => 'Cela remplacera toutes vos données actuelles par la sauvegarde. Cette action est irréversible. Voulez-vous continuer ?';
+  String get importDataOverwriteWarning =>
+      'Cela remplacera toutes vos données actuelles par la sauvegarde. Cette action est irréversible. Voulez-vous continuer ?';
 
   @override
   String get cancel => 'Annuler';
@@ -174,7 +182,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importSuccessfulTitle => 'Import réussi';
 
   @override
-  String get importRestartRequired => 'Veuillez redémarrer l\'application pour appliquer les données restaurées.';
+  String get importRestartRequired =>
+      'Veuillez redémarrer l\'application pour appliquer les données restaurées.';
 
   @override
   String get closeApp => 'Fermer l\'application';
@@ -194,7 +203,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get exportDataTitle => 'Exporter les données';
 
   @override
-  String get exportDataSubtitle => 'Enregistrer vos données dans un fichier JSON';
+  String get exportDataSubtitle =>
+      'Enregistrer vos données dans un fichier JSON';
 
   @override
   String get addSchedule => 'Ajouter un traitement';
@@ -246,7 +256,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notificationsUpdated => 'Les notifications ont été mises à jour !';
 
   @override
-  String get notificationsUpdatedDescription => 'Chaque traitement a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos traitements pour vous assurer de ne rien manquer.';
+  String get notificationsUpdatedDescription =>
+      'Chaque traitement a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos traitements pour vous assurer de ne rien manquer.';
 
   @override
   String get dontShowAgain => 'Ne plus afficher';
@@ -299,13 +310,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get microliters => 'μL';
 
   @override
-  String get empty_levels => 'Les injections d’estradiol s’afficheront dans cet onglet';
+  String get empty_levels =>
+      'Les injections d’estradiol s’afficheront dans cet onglet';
 
   @override
   String get bloodTestsTitle => 'Prises de sang';
 
   @override
-  String get empty_blood_tests => 'Les prises de sang enregistrées s’afficheront ici. Commencez avec le bouton Ajouter !';
+  String get empty_blood_tests =>
+      'Les prises de sang enregistrées s’afficheront ici. Commencez avec le bouton Ajouter !';
 
   @override
   String get addBloodTest => 'Ajouter une analyse de sang';
@@ -326,7 +339,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bloodTestDateLabel => 'Date';
 
   @override
-  String get empty_supplies => 'Aucun consommable. Ajoutez un élément pour commencer.';
+  String get empty_supplies =>
+      'Aucun consommable. Ajoutez un élément pour commencer.';
 
   @override
   String get newItem => 'Nouvel élément';
@@ -454,7 +468,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Benzoate d\'œstradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension => 'Suspension de cypionate d\'œstradiol';
+  String get medicationEstradiolCypionateSuspension =>
+      'Suspension de cypionate d\'œstradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Énanthate de testostérone';
@@ -472,7 +487,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Benzoate de testostérone';
 
   @override
-  String get medicationTestosteroneCypionateSuspension => 'Suspension de cypionate de testostérone';
+  String get medicationTestosteroneCypionateSuspension =>
+      'Suspension de cypionate de testostérone';
 
   @override
   String get injection => 'Injection';
