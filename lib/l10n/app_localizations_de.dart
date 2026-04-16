@@ -12,18 +12,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
-
-  @override
-  String get empty_intakes => 'Erfasste Einnahmen werden hier angezeigt';
-
-  @override
-  String get empty_levels => 'Estradiol-Injektionen werden in diesem Tab angezeigt';
-
-  @override
-  String get empty_supplies => 'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
-
-  @override
   String get nav_home => 'Mona';
 
   @override
@@ -34,6 +22,55 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nav_supplies => 'Vorräte';
+
+  @override
+  String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
+
+  @override
+  String todaySection(Object date) {
+    return 'Heute – $date';
+  }
+
+  @override
+  String get allDone => 'Alles erledigt!';
+
+  @override
+  String get noIntakesDue => 'Heute sind keine Einnahmen fällig';
+
+  @override
+  String get upcoming => 'Bevorstehend';
+
+  @override
+  String get today => 'Heute';
+
+  @override
+  String get taken => 'genommen';
+
+  @override
+  String get daysAgo => 'Tage her';
+
+  @override
+  String get inText => 'in';
+
+  @override
+  String get lastTaken => 'Zuletzt genommen';
+
+  @override
+  String get neverTakenYet => 'Noch nie genommen';
+
+  @override
+  String get side => 'Seite';
+
+  @override
+  String get scheduleFrequencyDaily => 'Täglich';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'Alle $days Tage';
+  }
+
+  @override
+  String get settingsTitle => 'Einstellungen';
 
   @override
   String get schedules => 'Zeitpläne';
@@ -62,9 +99,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Sprache auswählen';
-
-  @override
-  String get settingsTitle => 'Einstellungen';
 
   @override
   String schedulesCreated(Object count) {
@@ -105,189 +139,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String appVersion(Object version) {
     return 'Mona Version $version';
   }
-
-  @override
-  String get notificationsUpdated => 'Benachrichtigungen wurden aktualisiert!';
-
-  @override
-  String get notificationsUpdatedDescription => 'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
-
-  @override
-  String get dontShowAgain => 'Nicht mehr anzeigen';
-
-  @override
-  String get scheduleSettings => 'Zeitplan-Einstellungen';
-
-  @override
-  String get newItem => 'Neuer Eintrag';
-
-  @override
-  String get name => 'Name';
-
-  @override
-  String get molecule => 'Wirkstoff';
-
-  @override
-  String get adminRoute => 'Anwendungsart';
-
-  @override
-  String get estradiol => 'Estradiol';
-
-  @override
-  String get progesterone => 'Progesteron';
-
-  @override
-  String get testosterone => 'Testosteron';
-
-  @override
-  String get nandrolone => 'Nandrolon';
-
-  @override
-  String get spironolactone => 'Spironolacton';
-
-  @override
-  String get cyproteroneAcetate => 'Cyproteronacetat';
-
-  @override
-  String get leuprorelinAcetate => 'Leuprorelinacetat';
-
-  @override
-  String get bicalutamide => 'Bicalutamid';
-
-  @override
-  String get decapeptyl => 'Decapeptyl';
-
-  @override
-  String get raloxifene => 'Raloxifen';
-
-  @override
-  String get tamoxifen => 'Tamoxifen';
-
-  @override
-  String get finasteride => 'Finasterid';
-
-  @override
-  String get dutasteride => 'Dutasterid';
-
-  @override
-  String get minoxidil => 'Minoxidil';
-
-  @override
-  String get pioglitazone => 'Pioglitazon';
-
-  @override
-  String get totalAmount => 'Gesamtmenge';
-
-  @override
-  String get concentration => 'Konzentration';
-
-  @override
-  String get editItem => 'Eintrag bearbeiten';
-
-  @override
-  String get add => 'Hinzufügen';
-
-  @override
-  String get save => 'Speichern';
-
-  @override
-  String get usedAmount => 'Verwendete Menge';
-
-  @override
-  String get ester => 'Ester';
-
-  @override
-  String get deleteItem => 'Diesen Eintrag löschen?';
-
-  @override
-  String remaining(Object amount, Object unit) {
-    return '$amount $unit verbleibend';
-  }
-
-  @override
-  String get injection => 'Injektion';
-
-  @override
-  String get oral => 'Oral';
-
-  @override
-  String get sublingual => 'Sublingual';
-
-  @override
-  String get patch => 'Pflaster';
-
-  @override
-  String get gel => 'Gel';
-
-  @override
-  String get implant => 'Implantat';
-
-  @override
-  String get suppository => 'Zäpfchen';
-
-  @override
-  String get transdermal => 'Transdermales Spray';
-
-  @override
-  String get chooseSchedule => 'Zeitplan auswählen';
-
-  @override
-  String get addSchedulesFirst => 'Erstelle zuerst Zeitpläne.';
-
-  @override
-  String get editIntake => 'Einnahme bearbeiten';
-
-  @override
-  String get date => 'Datum';
-
-  @override
-  String get amount => 'Menge';
-
-  @override
-  String get none => 'Keine';
-
-  @override
-  String get supplyItem => 'Vorratselement';
-
-  @override
-  String get injectionSide => 'Injektionsseite';
-
-  @override
-  String get injectionSideLeft => 'Links';
-
-  @override
-  String get injectionSideRight => 'Rechts';
-
-  @override
-  String get deleteIntake => 'Diese Einnahme löschen?';
-
-  @override
-  String todaySection(Object date) {
-    return 'Heute – $date';
-  }
-
-  @override
-  String get allDone => 'Alles erledigt!';
-
-  @override
-  String get noIntakesDue => 'Heute sind keine Einnahmen fällig';
-
-  @override
-  String get upcoming => 'Bevorstehend';
-
-  @override
-  String takeMedication(Object scheduleName) {
-    return '$scheduleName einnehmen';
-  }
-
-  @override
-  String get takeIntake => 'Einnahme erfassen';
-
-  @override
-  String get needleDeadSpace => 'Totraum der Nadel';
-
-  @override
-  String get microliters => 'μL';
 
   @override
   String get addSchedule => 'Zeitplan hinzufügen';
@@ -339,25 +190,152 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get today => 'Heute';
+  String get notificationsUpdated => 'Benachrichtigungen wurden aktualisiert!';
 
   @override
-  String get taken => 'genommen';
+  String get notificationsUpdatedDescription => 'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
 
   @override
-  String get daysAgo => 'Tage her';
+  String get dontShowAgain => 'Nicht mehr anzeigen';
 
   @override
-  String get inText => 'in';
+  String get scheduleSettings => 'Zeitplan-Einstellungen';
 
   @override
-  String get lastTaken => 'Zuletzt genommen';
+  String get empty_intakes => 'Erfasste Einnahmen werden hier angezeigt';
 
   @override
-  String get neverTakenYet => 'Noch nie genommen';
+  String get chooseSchedule => 'Zeitplan auswählen';
 
   @override
-  String get side => 'Seite';
+  String get addSchedulesFirst => 'Erstelle zuerst Zeitpläne.';
+
+  @override
+  String get editIntake => 'Einnahme bearbeiten';
+
+  @override
+  String get date => 'Datum';
+
+  @override
+  String get amount => 'Menge';
+
+  @override
+  String get none => 'Keine';
+
+  @override
+  String get supplyItem => 'Vorratselement';
+
+  @override
+  String get injectionSide => 'Injektionsseite';
+
+  @override
+  String get deleteIntake => 'Diese Einnahme löschen?';
+
+  @override
+  String takeMedication(Object scheduleName) {
+    return '$scheduleName einnehmen';
+  }
+
+  @override
+  String get takeIntake => 'Einnahme erfassen';
+
+  @override
+  String get needleDeadSpace => 'Totraum der Nadel';
+
+  @override
+  String get microliters => 'μL';
+
+  @override
+  String get empty_levels => 'Estradiol-Injektionen werden in diesem Tab angezeigt';
+
+  @override
+  String get empty_supplies => 'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
+
+  @override
+  String get newItem => 'Neuer Eintrag';
+
+  @override
+  String get adminRoute => 'Anwendungsart';
+
+  @override
+  String get totalAmount => 'Gesamtmenge';
+
+  @override
+  String get concentration => 'Konzentration';
+
+  @override
+  String get editItem => 'Eintrag bearbeiten';
+
+  @override
+  String get usedAmount => 'Verwendete Menge';
+
+  @override
+  String get deleteItem => 'Diesen Eintrag löschen?';
+
+  @override
+  String remaining(Object amount, Object unit) {
+    return '$amount $unit verbleibend';
+  }
+
+  @override
+  String get add => 'Hinzufügen';
+
+  @override
+  String get save => 'Speichern';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get molecule => 'Wirkstoff';
+
+  @override
+  String get ester => 'Ester';
+
+  @override
+  String get estradiol => 'Estradiol';
+
+  @override
+  String get progesterone => 'Progesteron';
+
+  @override
+  String get testosterone => 'Testosteron';
+
+  @override
+  String get nandrolone => 'Nandrolon';
+
+  @override
+  String get spironolactone => 'Spironolacton';
+
+  @override
+  String get cyproteroneAcetate => 'Cyproteronacetat';
+
+  @override
+  String get leuprorelinAcetate => 'Leuprorelinacetat';
+
+  @override
+  String get bicalutamide => 'Bicalutamid';
+
+  @override
+  String get decapeptyl => 'Decapeptyl';
+
+  @override
+  String get raloxifene => 'Raloxifen';
+
+  @override
+  String get tamoxifen => 'Tamoxifen';
+
+  @override
+  String get finasteride => 'Finasterid';
+
+  @override
+  String get dutasteride => 'Dutasterid';
+
+  @override
+  String get minoxidil => 'Minoxidil';
+
+  @override
+  String get pioglitazone => 'Pioglitazon';
 
   @override
   String get enanthate => 'Enanthat';
@@ -414,10 +392,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get medicationTestosteroneCypionateSuspension => 'Testosteroncypionat-Suspension';
 
   @override
-  String get scheduleFrequencyDaily => 'Täglich';
+  String get injection => 'Injektion';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
-    return 'Alle $days Tage';
-  }
+  String get oral => 'Oral';
+
+  @override
+  String get sublingual => 'Sublingual';
+
+  @override
+  String get patch => 'Pflaster';
+
+  @override
+  String get gel => 'Gel';
+
+  @override
+  String get implant => 'Implantat';
+
+  @override
+  String get suppository => 'Zäpfchen';
+
+  @override
+  String get transdermal => 'Transdermales Spray';
+
+  @override
+  String get injectionSideLeft => 'Links';
+
+  @override
+  String get injectionSideRight => 'Rechts';
 }

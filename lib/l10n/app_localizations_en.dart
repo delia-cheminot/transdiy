@@ -12,18 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Mona';
 
   @override
-  String get empty_home => 'Start by adding a schedule in Settings';
-
-  @override
-  String get empty_intakes => 'Taken instakes will appear here';
-
-  @override
-  String get empty_levels => 'Estradiol injections will display in this tab';
-
-  @override
-  String get empty_supplies => 'No supplies. Add an item to get started.';
-
-  @override
   String get nav_home => 'Mona';
 
   @override
@@ -34,6 +22,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nav_supplies => 'Supplies';
+
+  @override
+  String get empty_home => 'Start by adding a schedule in Settings';
+
+  @override
+  String todaySection(Object date) {
+    return 'Today - $date';
+  }
+
+  @override
+  String get allDone => 'All done!';
+
+  @override
+  String get noIntakesDue => 'No intakes due today';
+
+  @override
+  String get upcoming => 'Upcoming';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get taken => 'taken';
+
+  @override
+  String get daysAgo => 'days ago';
+
+  @override
+  String get inText => 'in';
+
+  @override
+  String get lastTaken => 'Last taken';
+
+  @override
+  String get neverTakenYet => 'Never taken yet';
+
+  @override
+  String get side => 'side';
+
+  @override
+  String get scheduleFrequencyDaily => 'Every day';
+
+  @override
+  String scheduleFrequencyEveryNDays(Object days) {
+    return 'Every $days days';
+  }
+
+  @override
+  String get settingsTitle => 'Settings';
 
   @override
   String get schedules => 'Schedules';
@@ -62,9 +99,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectLanguage => 'Select Language';
-
-  @override
-  String get settingsTitle => 'Settings';
 
   @override
   String schedulesCreated(Object count) {
@@ -105,189 +139,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String appVersion(Object version) {
     return 'Mona version $version';
   }
-
-  @override
-  String get notificationsUpdated => 'Notifications have been updated!';
-
-  @override
-  String get notificationsUpdatedDescription => 'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
-
-  @override
-  String get dontShowAgain => 'Don\'t show again';
-
-  @override
-  String get scheduleSettings => 'Schedule settings';
-
-  @override
-  String get newItem => 'New item';
-
-  @override
-  String get name => 'Name';
-
-  @override
-  String get molecule => 'Molecule';
-
-  @override
-  String get adminRoute => 'Administration route';
-
-  @override
-  String get estradiol => 'Estradiol';
-
-  @override
-  String get progesterone => 'Progesterone';
-
-  @override
-  String get testosterone => 'Testosterone';
-
-  @override
-  String get nandrolone => 'Nandrolone';
-
-  @override
-  String get spironolactone => 'Spironolactone';
-
-  @override
-  String get cyproteroneAcetate => 'Cyproterone acetate';
-
-  @override
-  String get leuprorelinAcetate => 'Leuprorelin acetate';
-
-  @override
-  String get bicalutamide => 'Bicalutamide';
-
-  @override
-  String get decapeptyl => 'Decapeptyl';
-
-  @override
-  String get raloxifene => 'Raloxifene';
-
-  @override
-  String get tamoxifen => 'Tamoxifen';
-
-  @override
-  String get finasteride => 'Finasteride';
-
-  @override
-  String get dutasteride => 'Dutasteride';
-
-  @override
-  String get minoxidil => 'Minoxidil';
-
-  @override
-  String get pioglitazone => 'Pioglitazone';
-
-  @override
-  String get totalAmount => 'Total amount';
-
-  @override
-  String get concentration => 'Concentration';
-
-  @override
-  String get editItem => 'Edit item';
-
-  @override
-  String get add => 'Add';
-
-  @override
-  String get save => 'Save';
-
-  @override
-  String get usedAmount => 'Used amount';
-
-  @override
-  String get ester => 'Ester';
-
-  @override
-  String get deleteItem => 'Delete this item?';
-
-  @override
-  String remaining(Object amount, Object unit) {
-    return '$amount $unit remaining';
-  }
-
-  @override
-  String get injection => 'Injection';
-
-  @override
-  String get oral => 'Oral';
-
-  @override
-  String get sublingual => 'Sublingual';
-
-  @override
-  String get patch => 'Patch';
-
-  @override
-  String get gel => 'Gel';
-
-  @override
-  String get implant => 'Implant';
-
-  @override
-  String get suppository => 'Suppository';
-
-  @override
-  String get transdermal => 'Transdermal spray';
-
-  @override
-  String get chooseSchedule => 'Choose a schedule';
-
-  @override
-  String get addSchedulesFirst => 'Add schedules first.';
-
-  @override
-  String get editIntake => 'Edit intake';
-
-  @override
-  String get date => 'Date';
-
-  @override
-  String get amount => 'Amount';
-
-  @override
-  String get none => 'None';
-
-  @override
-  String get supplyItem => 'Supply item';
-
-  @override
-  String get injectionSide => 'Injection side';
-
-  @override
-  String get injectionSideLeft => 'Left';
-
-  @override
-  String get injectionSideRight => 'Right';
-
-  @override
-  String get deleteIntake => 'Delete this intake?';
-
-  @override
-  String todaySection(Object date) {
-    return 'Today - $date';
-  }
-
-  @override
-  String get allDone => 'All done!';
-
-  @override
-  String get noIntakesDue => 'No intakes due today';
-
-  @override
-  String get upcoming => 'Upcoming';
-
-  @override
-  String takeMedication(Object scheduleName) {
-    return 'Take $scheduleName';
-  }
-
-  @override
-  String get takeIntake => 'Take intake';
-
-  @override
-  String get needleDeadSpace => 'Needle dead space';
-
-  @override
-  String get microliters => 'μL';
 
   @override
   String get addSchedule => 'Add a schedule';
@@ -339,25 +190,152 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get today => 'Today';
+  String get notificationsUpdated => 'Notifications have been updated!';
 
   @override
-  String get taken => 'taken';
+  String get notificationsUpdatedDescription => 'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
 
   @override
-  String get daysAgo => 'days ago';
+  String get dontShowAgain => 'Don\'t show again';
 
   @override
-  String get inText => 'in';
+  String get scheduleSettings => 'Schedule settings';
 
   @override
-  String get lastTaken => 'Last taken';
+  String get empty_intakes => 'Taken instakes will appear here';
 
   @override
-  String get neverTakenYet => 'Never taken yet';
+  String get chooseSchedule => 'Choose a schedule';
 
   @override
-  String get side => 'side';
+  String get addSchedulesFirst => 'Add schedules first.';
+
+  @override
+  String get editIntake => 'Edit intake';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get supplyItem => 'Supply item';
+
+  @override
+  String get injectionSide => 'Injection side';
+
+  @override
+  String get deleteIntake => 'Delete this intake?';
+
+  @override
+  String takeMedication(Object scheduleName) {
+    return 'Take $scheduleName';
+  }
+
+  @override
+  String get takeIntake => 'Take intake';
+
+  @override
+  String get needleDeadSpace => 'Needle dead space';
+
+  @override
+  String get microliters => 'μL';
+
+  @override
+  String get empty_levels => 'Estradiol injections will display in this tab';
+
+  @override
+  String get empty_supplies => 'No supplies. Add an item to get started.';
+
+  @override
+  String get newItem => 'New item';
+
+  @override
+  String get adminRoute => 'Administration route';
+
+  @override
+  String get totalAmount => 'Total amount';
+
+  @override
+  String get concentration => 'Concentration';
+
+  @override
+  String get editItem => 'Edit item';
+
+  @override
+  String get usedAmount => 'Used amount';
+
+  @override
+  String get deleteItem => 'Delete this item?';
+
+  @override
+  String remaining(Object amount, Object unit) {
+    return '$amount $unit remaining';
+  }
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get molecule => 'Molecule';
+
+  @override
+  String get ester => 'Ester';
+
+  @override
+  String get estradiol => 'Estradiol';
+
+  @override
+  String get progesterone => 'Progesterone';
+
+  @override
+  String get testosterone => 'Testosterone';
+
+  @override
+  String get nandrolone => 'Nandrolone';
+
+  @override
+  String get spironolactone => 'Spironolactone';
+
+  @override
+  String get cyproteroneAcetate => 'Cyproterone acetate';
+
+  @override
+  String get leuprorelinAcetate => 'Leuprorelin acetate';
+
+  @override
+  String get bicalutamide => 'Bicalutamide';
+
+  @override
+  String get decapeptyl => 'Decapeptyl';
+
+  @override
+  String get raloxifene => 'Raloxifene';
+
+  @override
+  String get tamoxifen => 'Tamoxifen';
+
+  @override
+  String get finasteride => 'Finasteride';
+
+  @override
+  String get dutasteride => 'Dutasteride';
+
+  @override
+  String get minoxidil => 'Minoxidil';
+
+  @override
+  String get pioglitazone => 'Pioglitazone';
 
   @override
   String get enanthate => 'Enanthate';
@@ -414,10 +392,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get medicationTestosteroneCypionateSuspension => 'Testosterone cypionate suspension';
 
   @override
-  String get scheduleFrequencyDaily => 'Every day';
+  String get injection => 'Injection';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
-    return 'Every $days days';
-  }
+  String get oral => 'Oral';
+
+  @override
+  String get sublingual => 'Sublingual';
+
+  @override
+  String get patch => 'Patch';
+
+  @override
+  String get gel => 'Gel';
+
+  @override
+  String get implant => 'Implant';
+
+  @override
+  String get suppository => 'Suppository';
+
+  @override
+  String get transdermal => 'Transdermal spray';
+
+  @override
+  String get injectionSideLeft => 'Left';
+
+  @override
+  String get injectionSideRight => 'Right';
 }

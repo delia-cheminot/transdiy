@@ -108,30 +108,6 @@ abstract class AppLocalizations {
   /// **'Mona'**
   String get appTitle;
 
-  /// No description provided for @empty_home.
-  ///
-  /// In en, this message translates to:
-  /// **'Start by adding a schedule in Settings'**
-  String get empty_home;
-
-  /// No description provided for @empty_intakes.
-  ///
-  /// In en, this message translates to:
-  /// **'Taken instakes will appear here'**
-  String get empty_intakes;
-
-  /// No description provided for @empty_levels.
-  ///
-  /// In en, this message translates to:
-  /// **'Estradiol injections will display in this tab'**
-  String get empty_levels;
-
-  /// No description provided for @empty_supplies.
-  ///
-  /// In en, this message translates to:
-  /// **'No supplies. Add an item to get started.'**
-  String get empty_supplies;
-
   /// No description provided for @nav_home.
   ///
   /// In en, this message translates to:
@@ -155,6 +131,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplies'**
   String get nav_supplies;
+
+  /// No description provided for @empty_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Start by adding a schedule in Settings'**
+  String get empty_home;
+
+  /// No description provided for @todaySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Today - {date}'**
+  String todaySection(Object date);
+
+  /// No description provided for @allDone.
+  ///
+  /// In en, this message translates to:
+  /// **'All done!'**
+  String get allDone;
+
+  /// No description provided for @noIntakesDue.
+  ///
+  /// In en, this message translates to:
+  /// **'No intakes due today'**
+  String get noIntakesDue;
+
+  /// No description provided for @upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get upcoming;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @taken.
+  ///
+  /// In en, this message translates to:
+  /// **'taken'**
+  String get taken;
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'days ago'**
+  String get daysAgo;
+
+  /// No description provided for @inText.
+  ///
+  /// In en, this message translates to:
+  /// **'in'**
+  String get inText;
+
+  /// No description provided for @lastTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Last taken'**
+  String get lastTaken;
+
+  /// No description provided for @neverTakenYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Never taken yet'**
+  String get neverTakenYet;
+
+  /// No description provided for @side.
+  ///
+  /// In en, this message translates to:
+  /// **'side'**
+  String get side;
+
+  /// No description provided for @scheduleFrequencyDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get scheduleFrequencyDaily;
+
+  /// No description provided for @scheduleFrequencyEveryNDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {days} days'**
+  String scheduleFrequencyEveryNDays(Object days);
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
 
   /// No description provided for @schedules.
   ///
@@ -203,12 +269,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get selectLanguage;
-
-  /// No description provided for @settingsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settingsTitle;
 
   /// No description provided for @schedulesCreated.
   ///
@@ -281,360 +341,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mona version {version}'**
   String appVersion(Object version);
-
-  /// No description provided for @notificationsUpdated.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications have been updated!'**
-  String get notificationsUpdated;
-
-  /// No description provided for @notificationsUpdatedDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.'**
-  String get notificationsUpdatedDescription;
-
-  /// No description provided for @dontShowAgain.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t show again'**
-  String get dontShowAgain;
-
-  /// No description provided for @scheduleSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Schedule settings'**
-  String get scheduleSettings;
-
-  /// No description provided for @newItem.
-  ///
-  /// In en, this message translates to:
-  /// **'New item'**
-  String get newItem;
-
-  /// No description provided for @name.
-  ///
-  /// In en, this message translates to:
-  /// **'Name'**
-  String get name;
-
-  /// No description provided for @molecule.
-  ///
-  /// In en, this message translates to:
-  /// **'Molecule'**
-  String get molecule;
-
-  /// No description provided for @adminRoute.
-  ///
-  /// In en, this message translates to:
-  /// **'Administration route'**
-  String get adminRoute;
-
-  /// No description provided for @estradiol.
-  ///
-  /// In en, this message translates to:
-  /// **'Estradiol'**
-  String get estradiol;
-
-  /// No description provided for @progesterone.
-  ///
-  /// In en, this message translates to:
-  /// **'Progesterone'**
-  String get progesterone;
-
-  /// No description provided for @testosterone.
-  ///
-  /// In en, this message translates to:
-  /// **'Testosterone'**
-  String get testosterone;
-
-  /// No description provided for @nandrolone.
-  ///
-  /// In en, this message translates to:
-  /// **'Nandrolone'**
-  String get nandrolone;
-
-  /// No description provided for @spironolactone.
-  ///
-  /// In en, this message translates to:
-  /// **'Spironolactone'**
-  String get spironolactone;
-
-  /// No description provided for @cyproteroneAcetate.
-  ///
-  /// In en, this message translates to:
-  /// **'Cyproterone acetate'**
-  String get cyproteroneAcetate;
-
-  /// No description provided for @leuprorelinAcetate.
-  ///
-  /// In en, this message translates to:
-  /// **'Leuprorelin acetate'**
-  String get leuprorelinAcetate;
-
-  /// No description provided for @bicalutamide.
-  ///
-  /// In en, this message translates to:
-  /// **'Bicalutamide'**
-  String get bicalutamide;
-
-  /// No description provided for @decapeptyl.
-  ///
-  /// In en, this message translates to:
-  /// **'Decapeptyl'**
-  String get decapeptyl;
-
-  /// No description provided for @raloxifene.
-  ///
-  /// In en, this message translates to:
-  /// **'Raloxifene'**
-  String get raloxifene;
-
-  /// No description provided for @tamoxifen.
-  ///
-  /// In en, this message translates to:
-  /// **'Tamoxifen'**
-  String get tamoxifen;
-
-  /// No description provided for @finasteride.
-  ///
-  /// In en, this message translates to:
-  /// **'Finasteride'**
-  String get finasteride;
-
-  /// No description provided for @dutasteride.
-  ///
-  /// In en, this message translates to:
-  /// **'Dutasteride'**
-  String get dutasteride;
-
-  /// No description provided for @minoxidil.
-  ///
-  /// In en, this message translates to:
-  /// **'Minoxidil'**
-  String get minoxidil;
-
-  /// No description provided for @pioglitazone.
-  ///
-  /// In en, this message translates to:
-  /// **'Pioglitazone'**
-  String get pioglitazone;
-
-  /// No description provided for @totalAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Total amount'**
-  String get totalAmount;
-
-  /// No description provided for @concentration.
-  ///
-  /// In en, this message translates to:
-  /// **'Concentration'**
-  String get concentration;
-
-  /// No description provided for @editItem.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit item'**
-  String get editItem;
-
-  /// No description provided for @add.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get add;
-
-  /// No description provided for @save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get save;
-
-  /// No description provided for @usedAmount.
-  ///
-  /// In en, this message translates to:
-  /// **'Used amount'**
-  String get usedAmount;
-
-  /// No description provided for @ester.
-  ///
-  /// In en, this message translates to:
-  /// **'Ester'**
-  String get ester;
-
-  /// No description provided for @deleteItem.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete this item?'**
-  String get deleteItem;
-
-  /// No description provided for @remaining.
-  ///
-  /// In en, this message translates to:
-  /// **'{amount} {unit} remaining'**
-  String remaining(Object amount, Object unit);
-
-  /// No description provided for @injection.
-  ///
-  /// In en, this message translates to:
-  /// **'Injection'**
-  String get injection;
-
-  /// No description provided for @oral.
-  ///
-  /// In en, this message translates to:
-  /// **'Oral'**
-  String get oral;
-
-  /// No description provided for @sublingual.
-  ///
-  /// In en, this message translates to:
-  /// **'Sublingual'**
-  String get sublingual;
-
-  /// No description provided for @patch.
-  ///
-  /// In en, this message translates to:
-  /// **'Patch'**
-  String get patch;
-
-  /// No description provided for @gel.
-  ///
-  /// In en, this message translates to:
-  /// **'Gel'**
-  String get gel;
-
-  /// No description provided for @implant.
-  ///
-  /// In en, this message translates to:
-  /// **'Implant'**
-  String get implant;
-
-  /// No description provided for @suppository.
-  ///
-  /// In en, this message translates to:
-  /// **'Suppository'**
-  String get suppository;
-
-  /// No description provided for @transdermal.
-  ///
-  /// In en, this message translates to:
-  /// **'Transdermal spray'**
-  String get transdermal;
-
-  /// No description provided for @chooseSchedule.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a schedule'**
-  String get chooseSchedule;
-
-  /// No description provided for @addSchedulesFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'Add schedules first.'**
-  String get addSchedulesFirst;
-
-  /// No description provided for @editIntake.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit intake'**
-  String get editIntake;
-
-  /// No description provided for @date.
-  ///
-  /// In en, this message translates to:
-  /// **'Date'**
-  String get date;
-
-  /// No description provided for @amount.
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get amount;
-
-  /// No description provided for @none.
-  ///
-  /// In en, this message translates to:
-  /// **'None'**
-  String get none;
-
-  /// No description provided for @supplyItem.
-  ///
-  /// In en, this message translates to:
-  /// **'Supply item'**
-  String get supplyItem;
-
-  /// No description provided for @injectionSide.
-  ///
-  /// In en, this message translates to:
-  /// **'Injection side'**
-  String get injectionSide;
-
-  /// No description provided for @injectionSideLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'Left'**
-  String get injectionSideLeft;
-
-  /// No description provided for @injectionSideRight.
-  ///
-  /// In en, this message translates to:
-  /// **'Right'**
-  String get injectionSideRight;
-
-  /// No description provided for @deleteIntake.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete this intake?'**
-  String get deleteIntake;
-
-  /// No description provided for @todaySection.
-  ///
-  /// In en, this message translates to:
-  /// **'Today - {date}'**
-  String todaySection(Object date);
-
-  /// No description provided for @allDone.
-  ///
-  /// In en, this message translates to:
-  /// **'All done!'**
-  String get allDone;
-
-  /// No description provided for @noIntakesDue.
-  ///
-  /// In en, this message translates to:
-  /// **'No intakes due today'**
-  String get noIntakesDue;
-
-  /// No description provided for @upcoming.
-  ///
-  /// In en, this message translates to:
-  /// **'Upcoming'**
-  String get upcoming;
-
-  /// No description provided for @takeMedication.
-  ///
-  /// In en, this message translates to:
-  /// **'Take {scheduleName}'**
-  String takeMedication(Object scheduleName);
-
-  /// No description provided for @takeIntake.
-  ///
-  /// In en, this message translates to:
-  /// **'Take intake'**
-  String get takeIntake;
-
-  /// No description provided for @needleDeadSpace.
-  ///
-  /// In en, this message translates to:
-  /// **'Needle dead space'**
-  String get needleDeadSpace;
-
-  /// No description provided for @microliters.
-  ///
-  /// In en, this message translates to:
-  /// **'μL'**
-  String get microliters;
 
   /// No description provided for @addSchedule.
   ///
@@ -726,47 +432,293 @@ abstract class AppLocalizations {
   /// **'No notifications for {scheduleName}. You can add one using the Add button.'**
   String noNotificationsForSchedule(Object scheduleName);
 
-  /// No description provided for @today.
+  /// No description provided for @notificationsUpdated.
   ///
   /// In en, this message translates to:
-  /// **'Today'**
-  String get today;
+  /// **'Notifications have been updated!'**
+  String get notificationsUpdated;
 
-  /// No description provided for @taken.
+  /// No description provided for @notificationsUpdatedDescription.
   ///
   /// In en, this message translates to:
-  /// **'taken'**
-  String get taken;
+  /// **'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.'**
+  String get notificationsUpdatedDescription;
 
-  /// No description provided for @daysAgo.
+  /// No description provided for @dontShowAgain.
   ///
   /// In en, this message translates to:
-  /// **'days ago'**
-  String get daysAgo;
+  /// **'Don\'t show again'**
+  String get dontShowAgain;
 
-  /// No description provided for @inText.
+  /// No description provided for @scheduleSettings.
   ///
   /// In en, this message translates to:
-  /// **'in'**
-  String get inText;
+  /// **'Schedule settings'**
+  String get scheduleSettings;
 
-  /// No description provided for @lastTaken.
+  /// No description provided for @empty_intakes.
   ///
   /// In en, this message translates to:
-  /// **'Last taken'**
-  String get lastTaken;
+  /// **'Taken instakes will appear here'**
+  String get empty_intakes;
 
-  /// No description provided for @neverTakenYet.
+  /// No description provided for @chooseSchedule.
   ///
   /// In en, this message translates to:
-  /// **'Never taken yet'**
-  String get neverTakenYet;
+  /// **'Choose a schedule'**
+  String get chooseSchedule;
 
-  /// No description provided for @side.
+  /// No description provided for @addSchedulesFirst.
   ///
   /// In en, this message translates to:
-  /// **'side'**
-  String get side;
+  /// **'Add schedules first.'**
+  String get addSchedulesFirst;
+
+  /// No description provided for @editIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit intake'**
+  String get editIntake;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @none.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get none;
+
+  /// No description provided for @supplyItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Supply item'**
+  String get supplyItem;
+
+  /// No description provided for @injectionSide.
+  ///
+  /// In en, this message translates to:
+  /// **'Injection side'**
+  String get injectionSide;
+
+  /// No description provided for @deleteIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this intake?'**
+  String get deleteIntake;
+
+  /// No description provided for @takeMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'Take {scheduleName}'**
+  String takeMedication(Object scheduleName);
+
+  /// No description provided for @takeIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Take intake'**
+  String get takeIntake;
+
+  /// No description provided for @needleDeadSpace.
+  ///
+  /// In en, this message translates to:
+  /// **'Needle dead space'**
+  String get needleDeadSpace;
+
+  /// No description provided for @microliters.
+  ///
+  /// In en, this message translates to:
+  /// **'μL'**
+  String get microliters;
+
+  /// No description provided for @empty_levels.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol injections will display in this tab'**
+  String get empty_levels;
+
+  /// No description provided for @empty_supplies.
+  ///
+  /// In en, this message translates to:
+  /// **'No supplies. Add an item to get started.'**
+  String get empty_supplies;
+
+  /// No description provided for @newItem.
+  ///
+  /// In en, this message translates to:
+  /// **'New item'**
+  String get newItem;
+
+  /// No description provided for @adminRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Administration route'**
+  String get adminRoute;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total amount'**
+  String get totalAmount;
+
+  /// No description provided for @concentration.
+  ///
+  /// In en, this message translates to:
+  /// **'Concentration'**
+  String get concentration;
+
+  /// No description provided for @editItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get editItem;
+
+  /// No description provided for @usedAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Used amount'**
+  String get usedAmount;
+
+  /// No description provided for @deleteItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this item?'**
+  String get deleteItem;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} {unit} remaining'**
+  String remaining(Object amount, Object unit);
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @molecule.
+  ///
+  /// In en, this message translates to:
+  /// **'Molecule'**
+  String get molecule;
+
+  /// No description provided for @ester.
+  ///
+  /// In en, this message translates to:
+  /// **'Ester'**
+  String get ester;
+
+  /// No description provided for @estradiol.
+  ///
+  /// In en, this message translates to:
+  /// **'Estradiol'**
+  String get estradiol;
+
+  /// No description provided for @progesterone.
+  ///
+  /// In en, this message translates to:
+  /// **'Progesterone'**
+  String get progesterone;
+
+  /// No description provided for @testosterone.
+  ///
+  /// In en, this message translates to:
+  /// **'Testosterone'**
+  String get testosterone;
+
+  /// No description provided for @nandrolone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nandrolone'**
+  String get nandrolone;
+
+  /// No description provided for @spironolactone.
+  ///
+  /// In en, this message translates to:
+  /// **'Spironolactone'**
+  String get spironolactone;
+
+  /// No description provided for @cyproteroneAcetate.
+  ///
+  /// In en, this message translates to:
+  /// **'Cyproterone acetate'**
+  String get cyproteroneAcetate;
+
+  /// No description provided for @leuprorelinAcetate.
+  ///
+  /// In en, this message translates to:
+  /// **'Leuprorelin acetate'**
+  String get leuprorelinAcetate;
+
+  /// No description provided for @bicalutamide.
+  ///
+  /// In en, this message translates to:
+  /// **'Bicalutamide'**
+  String get bicalutamide;
+
+  /// No description provided for @decapeptyl.
+  ///
+  /// In en, this message translates to:
+  /// **'Decapeptyl'**
+  String get decapeptyl;
+
+  /// No description provided for @raloxifene.
+  ///
+  /// In en, this message translates to:
+  /// **'Raloxifene'**
+  String get raloxifene;
+
+  /// No description provided for @tamoxifen.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamoxifen'**
+  String get tamoxifen;
+
+  /// No description provided for @finasteride.
+  ///
+  /// In en, this message translates to:
+  /// **'Finasteride'**
+  String get finasteride;
+
+  /// No description provided for @dutasteride.
+  ///
+  /// In en, this message translates to:
+  /// **'Dutasteride'**
+  String get dutasteride;
+
+  /// No description provided for @minoxidil.
+  ///
+  /// In en, this message translates to:
+  /// **'Minoxidil'**
+  String get minoxidil;
+
+  /// No description provided for @pioglitazone.
+  ///
+  /// In en, this message translates to:
+  /// **'Pioglitazone'**
+  String get pioglitazone;
 
   /// No description provided for @enanthate.
   ///
@@ -876,17 +828,65 @@ abstract class AppLocalizations {
   /// **'Testosterone cypionate suspension'**
   String get medicationTestosteroneCypionateSuspension;
 
-  /// No description provided for @scheduleFrequencyDaily.
+  /// No description provided for @injection.
   ///
   /// In en, this message translates to:
-  /// **'Every day'**
-  String get scheduleFrequencyDaily;
+  /// **'Injection'**
+  String get injection;
 
-  /// No description provided for @scheduleFrequencyEveryNDays.
+  /// No description provided for @oral.
   ///
   /// In en, this message translates to:
-  /// **'Every {days} days'**
-  String scheduleFrequencyEveryNDays(Object days);
+  /// **'Oral'**
+  String get oral;
+
+  /// No description provided for @sublingual.
+  ///
+  /// In en, this message translates to:
+  /// **'Sublingual'**
+  String get sublingual;
+
+  /// No description provided for @patch.
+  ///
+  /// In en, this message translates to:
+  /// **'Patch'**
+  String get patch;
+
+  /// No description provided for @gel.
+  ///
+  /// In en, this message translates to:
+  /// **'Gel'**
+  String get gel;
+
+  /// No description provided for @implant.
+  ///
+  /// In en, this message translates to:
+  /// **'Implant'**
+  String get implant;
+
+  /// No description provided for @suppository.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppository'**
+  String get suppository;
+
+  /// No description provided for @transdermal.
+  ///
+  /// In en, this message translates to:
+  /// **'Transdermal spray'**
+  String get transdermal;
+
+  /// No description provided for @injectionSideLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get injectionSideLeft;
+
+  /// No description provided for @injectionSideRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get injectionSideRight;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -149,6 +149,7 @@ class IntakeTileViewModel {
     return "${schedule.dose} ${schedule.molecule.unit} • ${schedule.molecule.localizedNameWithEster(schedule.ester, localizations)} • "
         "${schedule.administrationRoute.localizedName(localizations)}"
         "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.name} ${localizations.side}" : ""}";
+    // TODO this reads as "droite côté in french
   }
 
   String get scheduledText {
