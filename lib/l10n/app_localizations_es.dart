@@ -24,6 +24,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nav_supplies => 'Suministros';
 
   @override
+  String get takeAnIntake => 'Registrar una toma';
+
+  @override
   String get addAnItem => 'Añadir un elemento';
 
   @override
@@ -71,6 +74,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String scheduleFrequencyEveryNDays(Object days) {
     return 'Cada $days días';
   }
+
+  @override
+  String get newUpdateAvailable => '¡Hay una nueva actualización disponible!';
+
+  @override
+  String get goToSettings => 'Ir a Configuración';
 
   @override
   String get settingsTitle => 'Configuración';
@@ -285,9 +294,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get takeIntake => 'Registrar toma';
-
-  @override
-  String get takeAnIntake => 'Registrar una toma';
 
   @override
   String get needleDeadSpace => 'Espacio muerto de la aguja';

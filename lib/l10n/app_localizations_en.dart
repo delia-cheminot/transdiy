@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nav_supplies => 'Supplies';
 
   @override
+  String get takeAnIntake => 'Take an intake';
+
+  @override
   String get addAnItem => 'Add an item';
 
   @override
@@ -71,6 +74,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String scheduleFrequencyEveryNDays(Object days) {
     return 'Every $days days';
   }
+
+  @override
+  String get newUpdateAvailable => 'A new update is available!';
+
+  @override
+  String get goToSettings => 'Go to Settings';
 
   @override
   String get settingsTitle => 'Settings';
@@ -285,9 +294,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get takeIntake => 'Take intake';
-
-  @override
-  String get takeAnIntake => 'Take an intake';
 
   @override
   String get needleDeadSpace => 'Needle dead space';

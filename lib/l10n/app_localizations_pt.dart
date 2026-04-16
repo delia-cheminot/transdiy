@@ -24,6 +24,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get nav_supplies => 'Suprimentos';
 
   @override
+  String get takeAnIntake => 'Registrar uma dose';
+
+  @override
   String get addAnItem => 'Adicionar um item';
 
   @override
@@ -71,6 +74,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String scheduleFrequencyEveryNDays(Object days) {
     return 'A cada $days dias';
   }
+
+  @override
+  String get newUpdateAvailable => 'Uma nova atualização está disponível!';
+
+  @override
+  String get goToSettings => 'Ir para Configurações';
 
   @override
   String get settingsTitle => 'Configurações';
@@ -287,9 +296,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get takeIntake => 'Registrar dose';
 
   @override
-  String get takeAnIntake => 'Registrar uma dose';
-
-  @override
   String get needleDeadSpace => 'Espaço morto da agulha';
 
   @override
@@ -492,6 +498,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get nav_supplies => 'Suprimentos';
 
   @override
+  String get takeAnIntake => 'Registrar uma dose';
+
+  @override
   String get addAnItem => 'Adicionar um item';
 
   @override
@@ -539,6 +548,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String scheduleFrequencyEveryNDays(Object days) {
     return 'A cada $days dias';
   }
+
+  @override
+  String get newUpdateAvailable => 'Uma nova atualização está disponível!';
+
+  @override
+  String get goToSettings => 'Ir para Configurações';
 
   @override
   String get settingsTitle => 'Configurações';
@@ -753,9 +768,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get takeIntake => 'Registrar dose';
-
-  @override
-  String get takeAnIntake => 'Registrar uma dose';
 
   @override
   String get needleDeadSpace => 'Espaço morto da agulha';

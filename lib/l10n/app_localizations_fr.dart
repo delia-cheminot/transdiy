@@ -24,6 +24,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nav_supplies => 'Pharmacie';
 
   @override
+  String get takeAnIntake => 'Prendre une prise';
+
+  @override
   String get addAnItem => 'Ajouter un élément';
 
   @override
@@ -71,6 +74,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String scheduleFrequencyEveryNDays(Object days) {
     return 'Tous les $days jours';
   }
+
+  @override
+  String get newUpdateAvailable => 'Une nouvelle mise à jour est disponible !';
+
+  @override
+  String get goToSettings => 'Aller aux paramètres';
 
   @override
   String get settingsTitle => 'Paramètres';
@@ -287,9 +296,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get takeIntake => 'Prendre';
 
   @override
-  String get takeAnIntake => 'Prendre une prise';
-
-  @override
   String get needleDeadSpace => 'Espace mort de l\'aiguille';
 
   @override
@@ -302,7 +308,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get empty_supplies => 'Aucun consommable. Ajoutez un élément pour commencer.';
 
   @override
-  String get newItem => 'Nouveau consommable';
+  String get newItem => 'Nouvel élément';
 
   @override
   String get adminRoute => 'Voie d\'administration';
@@ -314,13 +320,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get concentration => 'Concentration';
 
   @override
-  String get editItem => 'Modifier le consommable';
+  String get editItem => 'Modifier l\'élément';
 
   @override
   String get usedAmount => 'Quantité utilisée';
 
   @override
-  String get deleteItem => 'Supprimer ce consommable ?';
+  String get deleteItem => 'Supprimer cet élément ?';
 
   @override
   String remaining(Object amount, Object unit) {

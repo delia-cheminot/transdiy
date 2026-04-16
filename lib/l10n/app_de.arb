@@ -21,6 +21,8 @@
     "side": "Seite",
     "scheduleFrequencyDaily": "Täglich",
     "scheduleFrequencyEveryNDays": "Alle {days} Tage",
+    "newUpdateAvailable": "Ein neues Update ist verfügbar!",
+    "goToSettings": "Zu den Einstellungen",
 
     "settingsTitle": "Einstellungen",
     "notifications": "Benachrichtigungen",

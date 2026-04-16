@@ -21,6 +21,8 @@
     "side": "lado",
     "scheduleFrequencyDaily": "Todos os dias",
     "scheduleFrequencyEveryNDays": "A cada {days} dias",
+    "newUpdateAvailable": "Uma nova atualização está disponível!",
+    "goToSettings": "Ir para Configurações",
 
     "settingsTitle": "Configurações",
     "notifications": "Notificações",
