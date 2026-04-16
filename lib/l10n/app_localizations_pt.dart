@@ -33,8 +33,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get empty_levels => 'As injeções de estradiol aparecerão nesta aba';
 
   @override
-  String get empty_supplies =>
-      'Sem suprimentos. Adicione um item para começar.';
+  String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
   String get nav_home => 'Mona';
@@ -94,26 +93,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get clickToOpenSettings => 'Toque para abrir as configurações';
 
   @override
-  String get exactRemindersDisabled =>
-      'Os horários exatos de lembrete estão desativados';
+  String get exactRemindersDisabled => 'Os horários exatos de lembrete estão desativados';
 
   @override
-  String get remindersDelayed =>
-      'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
+  String get remindersDelayed => 'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
 
   @override
   String get autoUpdate => 'Atualização automática';
 
   @override
-  String get autoUpdateDescription =>
-      'Verificar automaticamente por atualizações ao iniciar o app';
+  String get autoUpdateDescription => 'Verificar automaticamente por atualizações ao iniciar o app';
 
   @override
   String get checkForUpdates => 'Verificar atualizações';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
+  String get checkForUpdatesDescription => 'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
 
   @override
   String appVersion(Object version) {
@@ -124,8 +119,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notificationsUpdated => 'As notificações foram atualizadas!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
+  String get notificationsUpdatedDescription => 'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
 
   @override
   String get dontShowAgain => 'Não mostrar novamente';
@@ -268,6 +262,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get injectionSide => 'Lado da injeção';
 
   @override
+  String get injectionSideLeft => 'Esquerda';
+
+  @override
+  String get injectionSideRight => 'Direita';
+
+  @override
   String get deleteIntake => 'Excluir esta dose?';
 
   @override
@@ -402,8 +402,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Suspensão de cipionato de estradiol';
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
@@ -421,8 +420,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Suspensão de cipionato de testosterona';
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
 
   @override
   String get scheduleFrequencyDaily => 'Todos os dias';
@@ -435,7 +433,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
 class AppLocalizationsPtBr extends AppLocalizationsPt {
-  AppLocalizationsPtBr() : super('pt_BR');
+  AppLocalizationsPtBr(): super('pt_BR');
 
   @override
   String get appTitle => 'Mona';
@@ -462,8 +460,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get empty_levels => 'As injeções de estradiol aparecerão nesta aba';
 
   @override
-  String get empty_supplies =>
-      'Sem suprimentos. Adicione um item para começar.';
+  String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
   String get nav_home => 'Mona';
@@ -523,26 +520,22 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get clickToOpenSettings => 'Toque para abrir as configurações';
 
   @override
-  String get exactRemindersDisabled =>
-      'Os horários exatos de lembrete estão desativados';
+  String get exactRemindersDisabled => 'Os horários exatos de lembrete estão desativados';
 
   @override
-  String get remindersDelayed =>
-      'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
+  String get remindersDelayed => 'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
 
   @override
   String get autoUpdate => 'Atualização automática';
 
   @override
-  String get autoUpdateDescription =>
-      'Verificar automaticamente por atualizações ao iniciar o app';
+  String get autoUpdateDescription => 'Verificar automaticamente por atualizações ao iniciar o app';
 
   @override
   String get checkForUpdates => 'Verificar atualizações';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
+  String get checkForUpdatesDescription => 'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
 
   @override
   String appVersion(Object version) {
@@ -553,8 +546,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get notificationsUpdated => 'As notificações foram atualizadas!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
+  String get notificationsUpdatedDescription => 'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
 
   @override
   String get dontShowAgain => 'Não mostrar novamente';
@@ -697,6 +689,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get injectionSide => 'Lado da injeção';
 
   @override
+  String get injectionSideLeft => 'Esquerda';
+
+  @override
+  String get injectionSideRight => 'Direita';
+
+  @override
   String get deleteIntake => 'Excluir esta dose?';
 
   @override
@@ -831,8 +829,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Suspensão de cipionato de estradiol';
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
@@ -850,8 +847,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Suspensão de cipionato de testosterona';
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
 
   @override
   String get scheduleFrequencyDaily => 'Todos os dias';

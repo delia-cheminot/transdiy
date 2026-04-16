@@ -80,6 +80,8 @@
     "none": "Nenhum",
     "supplyItem": "Item de suprimento",
     "injectionSide": "Lado da injeção",
+    "injectionSideLeft": "Esquerda",
+    "injectionSideRight": "Direita",
     "deleteIntake": "Excluir esta dose?",
     "todaySection": "Hoje - {date}",
     "allDone": "Tudo pronto!",

@@ -80,6 +80,8 @@
   "none": "None",
   "supplyItem": "Supply item",
   "injectionSide": "Injection side",
+  "injectionSideLeft": "Left",
+  "injectionSideRight": "Right",
   "deleteIntake": "Delete this intake?",
   "todaySection": "Today - {date}",
   "allDone": "All done!",

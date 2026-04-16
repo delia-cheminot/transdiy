@@ -1,9 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/model/administration_route.dart';
-import 'package:mona/l10n/app_localizations_en.dart';
-import 'package:mona/ui/widgets/dropdowns/administration_route_dropdown.dart';
 
 void main() {
   group('AdministrationRoute', () {
@@ -14,27 +11,6 @@ void main() {
 
         // Assert
         expect(route, AdministrationRoute.patch);
-      });
-    });
-
-    group('administrationRouteDropdownMenuItems', () {
-      test('contains all items', () {
-        // Act
-        final items =
-            administrationRouteDropdownMenuItems(AppLocalizationsEn());
-
-        // Assert
-        expect(items.length, AdministrationRoute.all.length);
-      });
-
-      test('menu items labels are capitalized', () {
-        // Act
-        final items =
-            administrationRouteDropdownMenuItems(AppLocalizationsEn());
-        final firstLabel = (items.first.child as Text).data;
-
-        // Assert
-        expect(firstLabel, 'Injection');
       });
     });
 

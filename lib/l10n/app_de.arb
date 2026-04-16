@@ -80,6 +80,8 @@
     "none": "Keine",
     "supplyItem": "Vorratselement",
     "injectionSide": "Injektionsseite",
+    "injectionSideLeft": "Links",
+    "injectionSideRight": "Rechts",
     "deleteIntake": "Diese Einnahme löschen?",
     "todaySection": "Heute – {date}",
     "allDone": "Alles erledigt!",

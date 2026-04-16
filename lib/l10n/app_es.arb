@@ -80,6 +80,8 @@
     "none": "Ninguno",
     "supplyItem": "Elemento de suministro",
     "injectionSide": "Lado de inyección",
+    "injectionSideLeft": "Izquierda",
+    "injectionSideRight": "Derecha",
     "deleteIntake": "¿Eliminar esta toma?",
     "todaySection": "Hoy - {date}",
     "allDone": "¡Todo listo!",

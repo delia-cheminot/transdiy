@@ -9,13 +9,13 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_info_text.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
@@ -217,7 +217,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
             if (_isInjection) ...[
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
-                items: injectionSideDropdownMenuItems,
+                items: injectionSideDropdownMenuItems(localizations),
                 onChanged: _onInjectionSideChanged,
                 label: localizations.injectionSide,
               ),

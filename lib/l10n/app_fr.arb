@@ -80,6 +80,8 @@
   "none": "Aucun",
   "supplyItem": "Article de fourniture",
   "injectionSide": "Côté d'injection",
+  "injectionSideLeft": "Gauche",
+  "injectionSideRight": "Droite",
   "deleteIntake": "Supprimer cette prise ?",
   "todaySection": "Aujourd'hui - {date}",
   "allDone": "Terminé !",
