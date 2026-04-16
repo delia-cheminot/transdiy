@@ -24,6 +24,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nav_supplies => 'Vorräte';
 
   @override
+  String get addAnItem => 'Eintrag hinzufügen';
+
+  @override
   String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
 
   @override
@@ -282,6 +285,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get takeIntake => 'Einnahme erfassen';
+
+  @override
+  String get takeAnIntake => 'Eine Einnahme erfassen';
 
   @override
   String get needleDeadSpace => 'Totraum der Nadel';

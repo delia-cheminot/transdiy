@@ -4,6 +4,8 @@
     "nav_intakes": "Einnahmen",
     "nav_levels": "Werte",
     "nav_supplies": "Vorräte",
+    "takeAnIntake": "Eine Einnahme erfassen",
+    "addAnItem": "Eintrag hinzufügen",
 
     "empty_home": "Beginne, indem du einen Zeitplan in den Einstellungen erstellst",
     "todaySection": "Heute – {date}",

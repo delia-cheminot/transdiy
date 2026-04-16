@@ -24,6 +24,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get nav_supplies => 'Suprimentos';
 
   @override
+  String get addAnItem => 'Adicionar um item';
+
+  @override
   String get empty_home => 'Comece adicionando um cronograma em Configurações';
 
   @override
@@ -284,6 +287,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get takeIntake => 'Registrar dose';
 
   @override
+  String get takeAnIntake => 'Registrar uma dose';
+
+  @override
   String get needleDeadSpace => 'Espaço morto da agulha';
 
   @override
@@ -484,6 +490,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get nav_supplies => 'Suprimentos';
+
+  @override
+  String get addAnItem => 'Adicionar um item';
 
   @override
   String get empty_home => 'Comece adicionando um cronograma em Configurações';
@@ -744,6 +753,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get takeIntake => 'Registrar dose';
+
+  @override
+  String get takeAnIntake => 'Registrar uma dose';
 
   @override
   String get needleDeadSpace => 'Espaço morto da agulha';

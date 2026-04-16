@@ -24,6 +24,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nav_supplies => 'Suministros';
 
   @override
+  String get addAnItem => 'Añadir un elemento';
+
+  @override
   String get empty_home => 'Comienza añadiendo un horario en Configuración';
 
   @override
@@ -282,6 +285,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get takeIntake => 'Registrar toma';
+
+  @override
+  String get takeAnIntake => 'Registrar una toma';
 
   @override
   String get needleDeadSpace => 'Espacio muerto de la aguja';

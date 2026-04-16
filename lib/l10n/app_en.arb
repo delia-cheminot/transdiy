@@ -4,6 +4,8 @@
   "nav_intakes": "Intakes",
   "nav_levels": "Levels",
   "nav_supplies": "Supplies",
+  "takeAnIntake": "Take an intake",
+  "addAnItem": "Add an item",
 
   "empty_home": "Start by adding a schedule in Settings",
   "todaySection": "Today - {date}",

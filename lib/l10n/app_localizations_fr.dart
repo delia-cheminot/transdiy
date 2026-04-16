@@ -24,6 +24,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nav_supplies => 'Pharmacie';
 
   @override
+  String get addAnItem => 'Ajouter un élément';
+
+  @override
   String get empty_home => 'Commencez par ajouter un traitement dans les paramètres';
 
   @override
@@ -282,6 +285,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get takeIntake => 'Prendre';
+
+  @override
+  String get takeAnIntake => 'Prendre une prise';
 
   @override
   String get needleDeadSpace => 'Espace mort de l\'aiguille';

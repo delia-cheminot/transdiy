@@ -37,7 +37,7 @@ List<MainTabConfig> getMainTabs(BuildContext context) {
       icon: Icons.event_outlined,
       selectedIcon: Icons.event_rounded,
       buildFab: (context) => FloatingActionButton(
-        tooltip: 'Take an intake',
+        tooltip: context.l10n.takeAnIntake,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
@@ -70,7 +70,7 @@ List<MainTabConfig> getMainTabs(BuildContext context) {
       icon: Icons.medication_outlined,
       selectedIcon: Icons.medication,
       buildFab: (context) => FloatingActionButton(
-        tooltip: 'Add an item',
+        tooltip: context.l10n.addAnItem,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(

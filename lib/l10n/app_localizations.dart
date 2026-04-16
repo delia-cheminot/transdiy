@@ -132,6 +132,12 @@ abstract class AppLocalizations {
   /// **'Supplies'**
   String get nav_supplies;
 
+  /// No description provided for @addAnItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an item'**
+  String get addAnItem;
+
   /// No description provided for @empty_home.
   ///
   /// In en, this message translates to:
@@ -611,6 +617,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take intake'**
   String get takeIntake;
+
+  /// No description provided for @takeAnIntake.
+  ///
+  /// In en, this message translates to:
+  /// **'Take an intake'**
+  String get takeAnIntake;
 
   /// No description provided for @needleDeadSpace.
   ///

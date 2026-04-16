@@ -4,6 +4,8 @@
     "nav_intakes": "Doses",
     "nav_levels": "Níveis",
     "nav_supplies": "Suprimentos",
+    "takeAnIntake": "Registrar uma dose",
+    "addAnItem": "Adicionar um item",
 
     "empty_home": "Comece adicionando um cronograma em Configurações",
     "todaySection": "Hoje - {date}",

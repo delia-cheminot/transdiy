@@ -4,6 +4,8 @@
   "nav_intakes": "Prises",
   "nav_levels": "Niveaux",
   "nav_supplies": "Pharmacie",
+  "takeAnIntake": "Prendre une prise",
+  "addAnItem": "Ajouter un élément",
 
   "empty_home": "Commencez par ajouter un traitement dans les paramètres",
   "todaySection": "Aujourd'hui - {date}",
@@ -94,13 +96,13 @@
   "empty_levels": "Les injections d’estradiol s’afficheront dans cet onglet",
 
   "empty_supplies": "Aucun consommable. Ajoutez un élément pour commencer.",
-  "newItem": "Nouveau consommable",
+  "newItem": "Nouvel élément",
   "adminRoute": "Voie d'administration",
   "totalAmount": "Quantité totale",
   "concentration": "Concentration",
-  "editItem": "Modifier le consommable",
+  "editItem": "Modifier l'élément",
   "usedAmount": "Quantité utilisée",
-  "deleteItem": "Supprimer ce consommable ?",
+  "deleteItem": "Supprimer cet élément ?",
   "remaining": "{amount} {unit} restant",
 
   "add": "Ajouter",

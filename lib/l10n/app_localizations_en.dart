@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nav_supplies => 'Supplies';
 
   @override
+  String get addAnItem => 'Add an item';
+
+  @override
   String get empty_home => 'Start by adding a schedule in Settings';
 
   @override
@@ -282,6 +285,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get takeIntake => 'Take intake';
+
+  @override
+  String get takeAnIntake => 'Take an intake';
 
   @override
   String get needleDeadSpace => 'Needle dead space';

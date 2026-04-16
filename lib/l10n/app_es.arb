@@ -4,6 +4,8 @@
     "nav_intakes": "Tomas",
     "nav_levels": "Niveles",
     "nav_supplies": "Suministros",
+    "takeAnIntake": "Registrar una toma",
+    "addAnItem": "Añadir un elemento",
 
     "empty_home": "Comienza añadiendo un horario en Configuración",
     "todaySection": "Hoy - {date}",
