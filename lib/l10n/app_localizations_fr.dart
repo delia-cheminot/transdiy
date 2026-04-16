@@ -206,9 +206,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get newSchedule => 'Nouveau traitement';
 
   @override
-  String get next => 'Suivant';
-
-  @override
   String get every => 'Tous les';
 
   @override
@@ -338,6 +335,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get save => 'Enregistrer';
+
+  @override
+  String get next => 'Suivant';
+
+  @override
+  String get delete => 'Supprimer';
 
   @override
   String get name => 'Nom';

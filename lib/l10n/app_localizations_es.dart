@@ -206,9 +206,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get newSchedule => 'Nuevo horario';
 
   @override
-  String get next => 'Siguiente';
-
-  @override
   String get every => 'Cada';
 
   @override
@@ -338,6 +335,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get save => 'Guardar';
+
+  @override
+  String get next => 'Siguiente';
+
+  @override
+  String get delete => 'Eliminar';
 
   @override
   String get name => 'Nombre';

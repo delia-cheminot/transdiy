@@ -62,7 +62,6 @@
     "addSchedule": "Agregar un horario",
     "addScheduleToGetStarted": "Agrega un horario para comenzar.",
     "newSchedule": "Nuevo horario",
-    "next": "Siguiente",
     "every": "Cada",
     "days": "días",
     "startDate": "Fecha de inicio",
@@ -109,6 +108,8 @@
 
     "add": "Añadir",
     "save": "Guardar",
+    "next": "Siguiente",
+    "delete": "Eliminar",
 
     "name": "Nombre",
     "molecule": "Molécula",

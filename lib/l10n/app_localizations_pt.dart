@@ -206,9 +206,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newSchedule => 'Novo cronograma';
 
   @override
-  String get next => 'Próximo';
-
-  @override
   String get every => 'A cada';
 
   @override
@@ -338,6 +335,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get save => 'Salvar';
+
+  @override
+  String get next => 'Próximo';
+
+  @override
+  String get delete => 'Eliminar';
 
   @override
   String get name => 'Nome';
@@ -680,9 +683,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get newSchedule => 'Novo cronograma';
 
   @override
-  String get next => 'Próximo';
-
-  @override
   String get every => 'A cada';
 
   @override
@@ -812,6 +812,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get save => 'Salvar';
+
+  @override
+  String get next => 'Próximo';
+
+  @override
+  String get delete => 'Excluir';
 
   @override
   String get name => 'Nome';

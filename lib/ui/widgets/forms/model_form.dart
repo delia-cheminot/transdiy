@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/dismiss_keyboard_single_child_scroll_view.dart';
 
@@ -74,7 +75,7 @@ class ModelForm extends StatelessWidget {
                     ),
                     onPressed: onDelete,
                     icon: const Icon(Icons.delete),
-                    label: const Text('Delete'),
+                    label: Text(context.l10n.delete),
                   ),
                 ),
                 const SizedBox(width: borderPadding),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -87,7 +88,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   Widget build(BuildContext context) {
     return ModelForm(
       title: 'Edit blood test',
-      submitButtonLabel: 'Save',
+      submitButtonLabel: context.l10n.save,
       isFormValid: _isFormValid,
       saveChanges: _saveBloodTest,
       onDelete: _confirmDelete,

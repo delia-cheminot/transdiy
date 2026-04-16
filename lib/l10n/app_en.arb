@@ -62,7 +62,6 @@
   "addSchedule": "Add a schedule",
   "addScheduleToGetStarted": "Add a schedule to get started.",
   "newSchedule": "New schedule",
-  "next": "Next",
   "every": "Every",
   "days": "days",
   "startDate": "Start date",
@@ -109,6 +108,8 @@
 
   "add": "Add",
   "save": "Save",
+  "next": "Next",
+  "delete": "Delete",
 
   "name": "Name",
   "molecule": "Molecule",

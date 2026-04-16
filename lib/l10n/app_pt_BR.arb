@@ -62,7 +62,6 @@
     "addSchedule": "Adicionar cronograma",
     "addScheduleToGetStarted": "Adicione um cronograma para começar.",
     "newSchedule": "Novo cronograma",
-    "next": "Próximo",
     "every": "A cada",
     "days": "dias",
     "startDate": "Data de início",
@@ -109,6 +108,8 @@
 
     "add": "Adicionar",
     "save": "Salvar",
+    "next": "Próximo",
+    "delete": "Excluir",
 
     "name": "Nome",
     "molecule": "Molécula",

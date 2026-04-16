@@ -62,7 +62,6 @@
   "addSchedule": "Ajouter un traitement",
   "addScheduleToGetStarted": "Ajoutez un traitement pour commencer.",
   "newSchedule": "Nouveau traitement",
-  "next": "Suivant",
   "every": "Tous les",
   "days": "jours",
   "startDate": "Date de début",
@@ -109,6 +108,8 @@
 
   "add": "Ajouter",
   "save": "Enregistrer",
+  "next": "Suivant",
+  "delete": "Supprimer",
 
   "name": "Nom",
   "molecule": "Molécule",

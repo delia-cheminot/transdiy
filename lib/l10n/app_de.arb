@@ -62,7 +62,6 @@
     "addSchedule": "Zeitplan hinzufügen",
     "addScheduleToGetStarted": "Füge einen Zeitplan hinzu, um zu beginnen.",
     "newSchedule": "Neuer Zeitplan",
-    "next": "Weiter",
     "every": "Alle",
     "days": "Tage",
     "startDate": "Startdatum",
@@ -109,6 +108,8 @@
 
     "add": "Hinzufügen",
     "save": "Speichern",
+    "next": "Weiter",
+    "delete": "Löschen",
 
     "name": "Name",
     "molecule": "Wirkstoff",

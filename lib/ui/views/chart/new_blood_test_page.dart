@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
@@ -74,7 +75,7 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
   Widget build(BuildContext context) {
     return ModelForm(
       title: 'New blood test',
-      submitButtonLabel: 'Add',
+      submitButtonLabel: context.l10n.add,
       isFormValid: _isFormValid,
       saveChanges: _addBloodTest,
       fields: <Widget>[

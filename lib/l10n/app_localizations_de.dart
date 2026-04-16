@@ -206,9 +206,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newSchedule => 'Neuer Zeitplan';
 
   @override
-  String get next => 'Weiter';
-
-  @override
   String get every => 'Alle';
 
   @override
@@ -338,6 +335,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get save => 'Speichern';
+
+  @override
+  String get next => 'Weiter';
+
+  @override
+  String get delete => 'Löschen';
 
   @override
   String get name => 'Name';
