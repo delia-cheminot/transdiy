@@ -73,37 +73,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsTitle => 'Einstellungen';
 
   @override
+  String get notifications => 'Benachrichtigungen';
+
+  @override
   String get schedules => 'Zeitpläne';
 
   @override
   String get noSchedules => 'Keine Zeitpläne';
 
   @override
-  String schedulesCount(Object count) {
+  String schedulesCreated(Object count) {
     return '$count erstellt';
   }
-
-  @override
-  String get notifications => 'Benachrichtigungen';
-
-  @override
-  String notificationsEnabled(Object time) {
-    return 'Aktiviert um $time';
-  }
-
-  @override
-  String get notificationsDisabled => 'Deaktiviert';
 
   @override
   String get language => 'Sprache';
 
   @override
   String get selectLanguage => 'Sprache auswählen';
-
-  @override
-  String schedulesCreated(Object count) {
-    return '$count erstellt';
-  }
 
   @override
   String get enableNotifications => 'Benachrichtigungen aktivieren';

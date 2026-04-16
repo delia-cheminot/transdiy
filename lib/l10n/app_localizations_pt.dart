@@ -73,37 +73,24 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsTitle => 'Configurações';
 
   @override
+  String get notifications => 'Notificações';
+
+  @override
   String get schedules => 'Cronogramas';
 
   @override
   String get noSchedules => 'Sem cronogramas';
 
   @override
-  String schedulesCount(Object count) {
+  String schedulesCreated(Object count) {
     return '$count criados';
   }
-
-  @override
-  String get notifications => 'Notificações';
-
-  @override
-  String notificationsEnabled(Object time) {
-    return 'Ativado às $time';
-  }
-
-  @override
-  String get notificationsDisabled => 'Desativado';
 
   @override
   String get language => 'Idioma';
 
   @override
   String get selectLanguage => 'Selecionar idioma';
-
-  @override
-  String schedulesCreated(Object count) {
-    return '$count criados';
-  }
 
   @override
   String get enableNotifications => 'Ativar notificações';
@@ -491,37 +478,24 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get settingsTitle => 'Configurações';
 
   @override
+  String get notifications => 'Notificações';
+
+  @override
   String get schedules => 'Cronogramas';
 
   @override
   String get noSchedules => 'Sem cronogramas';
 
   @override
-  String schedulesCount(Object count) {
+  String schedulesCreated(Object count) {
     return '$count criados';
   }
-
-  @override
-  String get notifications => 'Notificações';
-
-  @override
-  String notificationsEnabled(Object time) {
-    return 'Ativado às $time';
-  }
-
-  @override
-  String get notificationsDisabled => 'Desativado';
 
   @override
   String get language => 'Idioma';
 
   @override
   String get selectLanguage => 'Selecionar idioma';
-
-  @override
-  String schedulesCreated(Object count) {
-    return '$count criados';
-  }
 
   @override
   String get enableNotifications => 'Ativar notificações';

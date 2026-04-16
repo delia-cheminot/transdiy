@@ -222,6 +222,12 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settingsTitle;
 
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
   /// No description provided for @schedules.
   ///
   /// In en, this message translates to:
@@ -234,29 +240,11 @@ abstract class AppLocalizations {
   /// **'No schedules'**
   String get noSchedules;
 
-  /// No description provided for @schedulesCount.
+  /// No description provided for @schedulesCreated.
   ///
   /// In en, this message translates to:
   /// **'{count} created'**
-  String schedulesCount(Object count);
-
-  /// No description provided for @notifications.
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
-
-  /// No description provided for @notificationsEnabled.
-  ///
-  /// In en, this message translates to:
-  /// **'Enabled at {time}'**
-  String notificationsEnabled(Object time);
-
-  /// No description provided for @notificationsDisabled.
-  ///
-  /// In en, this message translates to:
-  /// **'Disabled'**
-  String get notificationsDisabled;
+  String schedulesCreated(Object count);
 
   /// No description provided for @language.
   ///
@@ -269,12 +257,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select Language'**
   String get selectLanguage;
-
-  /// No description provided for @schedulesCreated.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} created'**
-  String schedulesCreated(Object count);
 
   /// No description provided for @enableNotifications.
   ///

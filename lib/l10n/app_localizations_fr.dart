@@ -73,37 +73,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsTitle => 'Paramètres';
 
   @override
+  String get notifications => 'Notifications';
+
+  @override
   String get schedules => 'Traitements';
 
   @override
   String get noSchedules => 'Aucun traitement';
 
   @override
-  String schedulesCount(Object count) {
+  String schedulesCreated(Object count) {
     return '$count créés';
   }
-
-  @override
-  String get notifications => 'Notifications';
-
-  @override
-  String notificationsEnabled(Object time) {
-    return 'Activées à $time';
-  }
-
-  @override
-  String get notificationsDisabled => 'Désactivées';
 
   @override
   String get language => 'Langue';
 
   @override
   String get selectLanguage => 'Sélectionner la langue';
-
-  @override
-  String schedulesCreated(Object count) {
-    return '$count créés';
-  }
 
   @override
   String get enableNotifications => 'Activer les notifications';

@@ -73,37 +73,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTitle => 'Settings';
 
   @override
+  String get notifications => 'Notifications';
+
+  @override
   String get schedules => 'Schedules';
 
   @override
   String get noSchedules => 'No schedules';
 
   @override
-  String schedulesCount(Object count) {
+  String schedulesCreated(Object count) {
     return '$count created';
   }
-
-  @override
-  String get notifications => 'Notifications';
-
-  @override
-  String notificationsEnabled(Object time) {
-    return 'Enabled at $time';
-  }
-
-  @override
-  String get notificationsDisabled => 'Disabled';
 
   @override
   String get language => 'Language';
 
   @override
   String get selectLanguage => 'Select Language';
-
-  @override
-  String schedulesCreated(Object count) {
-    return '$count created';
-  }
 
   @override
   String get enableNotifications => 'Enable notifications';

@@ -21,15 +21,12 @@
   "scheduleFrequencyEveryNDays": "Tous les {days} jours",
 
   "settingsTitle": "Paramètres",
+  "notifications": "Notifications",
   "schedules": "Traitements",
   "noSchedules": "Aucun traitement",
-  "schedulesCount": "{count} créés",
-  "notifications": "Notifications",
-  "notificationsEnabled": "Activées à {time}",
-  "notificationsDisabled": "Désactivées",
+  "schedulesCreated": "{count} créés",
   "language": "Langue",
   "selectLanguage": "Sélectionner la langue",
-  "schedulesCreated": "{count} créés",
   "enableNotifications": "Activer les notifications",
   "enableNotificationsDescription": "Envoyer des rappels pour vos traitements",
   "notificationsDisabledTitle": "Les notifications sont désactivées",
@@ -95,7 +92,7 @@
   "name": "Nom",
   "molecule": "Molécule",
   "ester": "Ester",
-  
+
   "estradiol": "Œstradiol",
   "progesterone": "Progestérone",
   "testosterone": "Testostérone",
