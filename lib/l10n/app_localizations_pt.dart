@@ -128,6 +128,57 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String backupSavedTo(Object path) {
+    return 'Backup salvo em: $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Falha ao exportar: $error';
+  }
+
+  @override
+  String get importDataTitle => 'Importar dados';
+
+  @override
+  String get importDataSubtitle => 'Restaurar dados de um backup JSON';
+
+  @override
+  String get importDataOverwriteWarning => 'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get importConfirm => 'Importar';
+
+  @override
+  String get importSuccessfulTitle => 'Importação concluída';
+
+  @override
+  String get importRestartRequired => 'Reinicie o app para aplicar os dados restaurados.';
+
+  @override
+  String get closeApp => 'Fechar app';
+
+  @override
+  String importFailed(Object error) {
+    return 'Falha ao importar: $error';
+  }
+
+  @override
+  String get updates => 'Atualizações';
+
+  @override
+  String get dataManagement => 'Gestão de dados';
+
+  @override
+  String get exportDataTitle => 'Exportar dados';
+
+  @override
+  String get exportDataSubtitle => 'Salve seus dados num ficheiro JSON';
+
+  @override
   String get addSchedule => 'Adicionar cronograma';
 
   @override
@@ -531,6 +582,57 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String appVersion(Object version) {
     return 'Versão do Mona $version';
   }
+
+  @override
+  String backupSavedTo(Object path) {
+    return 'Backup salvo em: $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Falha ao exportar: $error';
+  }
+
+  @override
+  String get importDataTitle => 'Importar dados';
+
+  @override
+  String get importDataSubtitle => 'Restaurar dados de um backup JSON';
+
+  @override
+  String get importDataOverwriteWarning => 'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get importConfirm => 'Importar';
+
+  @override
+  String get importSuccessfulTitle => 'Importação concluída';
+
+  @override
+  String get importRestartRequired => 'Reinicie o app para aplicar os dados restaurados.';
+
+  @override
+  String get closeApp => 'Fechar app';
+
+  @override
+  String importFailed(Object error) {
+    return 'Falha ao importar: $error';
+  }
+
+  @override
+  String get updates => 'Atualizações';
+
+  @override
+  String get dataManagement => 'Gerenciamento de dados';
+
+  @override
+  String get exportDataTitle => 'Exportar dados';
+
+  @override
+  String get exportDataSubtitle => 'Salve seus dados em um arquivo JSON';
 
   @override
   String get addSchedule => 'Adicionar cronograma';

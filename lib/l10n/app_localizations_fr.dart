@@ -128,6 +128,57 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String backupSavedTo(Object path) {
+    return 'Sauvegarde enregistrée dans : $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Échec de l\'exportation : $error';
+  }
+
+  @override
+  String get importDataTitle => 'Importer des données';
+
+  @override
+  String get importDataSubtitle => 'Restaurer les données depuis une sauvegarde JSON';
+
+  @override
+  String get importDataOverwriteWarning => 'Cela remplacera toutes vos données actuelles par la sauvegarde. Cette action est irréversible. Voulez-vous continuer ?';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get importConfirm => 'Importer';
+
+  @override
+  String get importSuccessfulTitle => 'Import réussi';
+
+  @override
+  String get importRestartRequired => 'Veuillez redémarrer l\'application pour appliquer les données restaurées.';
+
+  @override
+  String get closeApp => 'Fermer l\'application';
+
+  @override
+  String importFailed(Object error) {
+    return 'Échec de l\'importation : $error';
+  }
+
+  @override
+  String get updates => 'Mises à jour';
+
+  @override
+  String get dataManagement => 'Gestion des données';
+
+  @override
+  String get exportDataTitle => 'Exporter les données';
+
+  @override
+  String get exportDataSubtitle => 'Enregistrer vos données dans un fichier JSON';
+
+  @override
   String get addSchedule => 'Ajouter un traitement';
 
   @override

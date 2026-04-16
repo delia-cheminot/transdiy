@@ -128,6 +128,57 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String backupSavedTo(Object path) {
+    return 'Backup gespeichert unter: $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Export fehlgeschlagen: $error';
+  }
+
+  @override
+  String get importDataTitle => 'Daten importieren';
+
+  @override
+  String get importDataSubtitle => 'Daten aus einer JSON-Sicherung wiederherstellen';
+
+  @override
+  String get importDataOverwriteWarning => 'Dadurch werden alle aktuellen Daten durch das Backup überschrieben. Diese Aktion kann nicht rückgängig gemacht werden. Möchtest du fortfahren?';
+
+  @override
+  String get cancel => 'Abbrechen';
+
+  @override
+  String get importConfirm => 'Importieren';
+
+  @override
+  String get importSuccessfulTitle => 'Import erfolgreich';
+
+  @override
+  String get importRestartRequired => 'Bitte starte die App neu, um die wiederhergestellten Daten zu übernehmen.';
+
+  @override
+  String get closeApp => 'App schließen';
+
+  @override
+  String importFailed(Object error) {
+    return 'Import fehlgeschlagen: $error';
+  }
+
+  @override
+  String get updates => 'Aktualisierungen';
+
+  @override
+  String get dataManagement => 'Datenverwaltung';
+
+  @override
+  String get exportDataTitle => 'Daten exportieren';
+
+  @override
+  String get exportDataSubtitle => 'Daten in einer JSON-Datei speichern';
+
+  @override
   String get addSchedule => 'Zeitplan hinzufügen';
 
   @override

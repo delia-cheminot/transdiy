@@ -324,6 +324,96 @@ abstract class AppLocalizations {
   /// **'Mona version {version}'**
   String appVersion(Object version);
 
+  /// No description provided for @backupSavedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved to: {path}'**
+  String backupSavedTo(Object path);
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to export: {error}'**
+  String exportFailed(Object error);
+
+  /// No description provided for @importDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Data'**
+  String get importDataTitle;
+
+  /// No description provided for @importDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore data from a JSON backup'**
+  String get importDataSubtitle;
+
+  /// No description provided for @importDataOverwriteWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?'**
+  String get importDataOverwriteWarning;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @importConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get importConfirm;
+
+  /// No description provided for @importSuccessfulTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Successful'**
+  String get importSuccessfulTitle;
+
+  /// No description provided for @importRestartRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please restart the app to apply the restored data.'**
+  String get importRestartRequired;
+
+  /// No description provided for @closeApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Close App'**
+  String get closeApp;
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import: {error}'**
+  String importFailed(Object error);
+
+  /// No description provided for @updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates'**
+  String get updates;
+
+  /// No description provided for @dataManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Management'**
+  String get dataManagement;
+
+  /// No description provided for @exportDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get exportDataTitle;
+
+  /// No description provided for @exportDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your data to a JSON file'**
+  String get exportDataSubtitle;
+
   /// No description provided for @addSchedule.
   ///
   /// In en, this message translates to:

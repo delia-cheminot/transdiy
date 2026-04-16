@@ -128,6 +128,57 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String backupSavedTo(Object path) {
+    return 'Copia de seguridad guardada en: $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Error al exportar: $error';
+  }
+
+  @override
+  String get importDataTitle => 'Importar datos';
+
+  @override
+  String get importDataSubtitle => 'Restaurar datos desde una copia JSON';
+
+  @override
+  String get importDataOverwriteWarning => 'Esto sobrescribirá todos tus datos actuales con la copia de seguridad. Esta acción no se puede deshacer. ¿Deseas continuar?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get importConfirm => 'Importar';
+
+  @override
+  String get importSuccessfulTitle => 'Importación correcta';
+
+  @override
+  String get importRestartRequired => 'Reinicia la aplicación para aplicar los datos restaurados.';
+
+  @override
+  String get closeApp => 'Cerrar aplicación';
+
+  @override
+  String importFailed(Object error) {
+    return 'Error al importar: $error';
+  }
+
+  @override
+  String get updates => 'Actualizaciones';
+
+  @override
+  String get dataManagement => 'Gestión de datos';
+
+  @override
+  String get exportDataTitle => 'Exportar datos';
+
+  @override
+  String get exportDataSubtitle => 'Guarda tus datos en un archivo JSON';
+
+  @override
   String get addSchedule => 'Agregar un horario';
 
   @override

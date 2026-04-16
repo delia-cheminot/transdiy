@@ -93,13 +93,14 @@ class _SettingsPageState extends State<SettingsPage>
   }
 
   Future<void> _exportData() async {
+    final localizations = context.l10n;
     try {
       final savedPath = await BackupService().exportData();
 
       if (savedPath != null && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Backup saved to: $savedPath'),
+            content: Text(localizations.backupSavedTo(savedPath)),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -107,30 +108,29 @@ class _SettingsPageState extends State<SettingsPage>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to export: $e')),
+          SnackBar(content: Text(localizations.exportFailed(e))),
         );
       }
     }
   }
 
   Future<void> _importData() async {
+    final l10n = context.l10n;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Import Data'),
-        content: const Text(
-            'This will overwrite all your current data with the backup. '
-            'This action cannot be undone. Do you want to continue?'),
+        title: Text(l10n.importDataTitle),
+        content: Text(l10n.importDataOverwriteWarning),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error),
-            child: const Text('Import'),
+            child: Text(l10n.importConfirm),
           ),
         ],
       ),
@@ -140,17 +140,16 @@ class _SettingsPageState extends State<SettingsPage>
       try {
         final success = await BackupService().importData();
         if (success && mounted) {
-          showDialog(
+          showDialog<void>(
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Import Successful'),
-              content: const Text(
-                  'Please restart the app to apply the restored data.'),
+              title: Text(l10n.importSuccessfulTitle),
+              content: Text(l10n.importRestartRequired),
               actions: [
                 TextButton(
                   onPressed: () => exit(0),
-                  child: const Text('Close App'),
+                  child: Text(l10n.closeApp),
                 ),
               ],
             ),
@@ -159,7 +158,7 @@ class _SettingsPageState extends State<SettingsPage>
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to import: $e')),
+            SnackBar(content: Text(l10n.importFailed(e))),
           );
         }
       }
@@ -184,11 +183,11 @@ class _SettingsPageState extends State<SettingsPage>
       appBar: AppBar(title: Text(localizations.settingsTitle)),
       body: ListView(
         children: [
-          const Padding(
+          Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
             child: Text(
-              'Notifications',
+              localizations.notifications,
             ),
           ),
           ListTile(
@@ -247,11 +246,11 @@ class _SettingsPageState extends State<SettingsPage>
             ),
           if (Platform.isAndroid) ...[
             const Divider(),
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                   horizontal: borderPadding, vertical: 8.0),
               child: Text(
-                'Updates',
+                localizations.updates,
               ),
             ),
             SwitchListTile(
@@ -268,22 +267,22 @@ class _SettingsPageState extends State<SettingsPage>
             ),
           ],
           const Divider(),
-          const Padding(
+          Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+                const EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
             child: Text(
-              'Data Management',
+              localizations.dataManagement,
             ),
           ),
           ListTile(
-            title: const Text('Export Data'),
-            subtitle: const Text('Save your data to a JSON file'),
+            title: Text(localizations.exportDataTitle),
+            subtitle: Text(localizations.exportDataSubtitle),
             trailing: const Icon(Symbols.download),
             onTap: _exportData,
           ),
           ListTile(
-            title: const Text('Import Data'),
-            subtitle: const Text('Restore data from a JSON backup'),
+            title: Text(localizations.importDataTitle),
+            subtitle: Text(localizations.importDataSubtitle),
             trailing: const Icon(Symbols.upload),
             onTap: _importData,
           ),

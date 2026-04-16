@@ -128,6 +128,57 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String backupSavedTo(Object path) {
+    return 'Backup saved to: $path';
+  }
+
+  @override
+  String exportFailed(Object error) {
+    return 'Failed to export: $error';
+  }
+
+  @override
+  String get importDataTitle => 'Import Data';
+
+  @override
+  String get importDataSubtitle => 'Restore data from a JSON backup';
+
+  @override
+  String get importDataOverwriteWarning => 'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get importConfirm => 'Import';
+
+  @override
+  String get importSuccessfulTitle => 'Import Successful';
+
+  @override
+  String get importRestartRequired => 'Please restart the app to apply the restored data.';
+
+  @override
+  String get closeApp => 'Close App';
+
+  @override
+  String importFailed(Object error) {
+    return 'Failed to import: $error';
+  }
+
+  @override
+  String get updates => 'Updates';
+
+  @override
+  String get dataManagement => 'Data Management';
+
+  @override
+  String get exportDataTitle => 'Export Data';
+
+  @override
+  String get exportDataSubtitle => 'Save your data to a JSON file';
+
+  @override
   String get addSchedule => 'Add a schedule';
 
   @override
