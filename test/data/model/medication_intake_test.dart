@@ -157,7 +157,8 @@ void main() {
           scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
           dose: Decimal.one,
           takenDateTime: DateTime.utc(2024, 6, 15, 10, 0),
-          takenTimeZone: 'Europe/Amsterdam', // missing from package:timezone latest.dart
+          takenTimeZone:
+              'Europe/Amsterdam', // missing from package:timezone latest.dart
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.oral,
         );
