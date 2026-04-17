@@ -199,6 +199,14 @@
     "suppository": "Zäpfchen",
     "transdermal": "Transdermales Spray",
 
+    "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
+    "administrationRouteUnitPill": "{count, plural, =1{Tablette} other{Tabletten}}",
+    "administrationRouteUnitPatch": "{count, plural, =1{Pflaster} other{Pflaster}}",
+    "administrationRouteUnitPump": "{count, plural, =1{Hub} other{Hübe}}",
+    "administrationRouteUnitImplant": "{count, plural, =1{Implantat} other{Implantate}}",
+    "administrationRouteUnitSuppository": "{count, plural, =1{Zäpfchen} other{Zäpfchen}}",
+    "administrationRouteUnitSpray": "{count, plural, =1{Spray} other{Sprays}}",
+
     "injectionSideLeft": "Links",
     "injectionSideRight": "Rechts",
   "intakeSummaryInjectionSideLeft": "Linke Seite",

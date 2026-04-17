@@ -59,18 +59,10 @@ class SupplyItemCard extends StatelessWidget {
                     item.name,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  // text with description
                   Text(
                     item.localizedSummary(context.l10n),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  Text(
-                    context.l10n.remaining(
-                      item.getAmount(item.remainingDose).toString(),
-                      item.administrationRoute.unit,
-                    ),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  )
                 ],
               ),
             ),

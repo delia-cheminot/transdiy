@@ -579,6 +579,83 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transdermal => 'Spray transdermique';
 
   @override
+  String administrationRouteUnitMl(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ml',
+      one: 'ml',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitPill(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'comprimés',
+      one: 'comprimé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitPatch(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'patchs',
+      one: 'patch',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitPump(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'pressions',
+      one: 'pression',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitImplant(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'implants',
+      one: 'implant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitSuppository(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'suppositoires',
+      one: 'suppositoire',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String administrationRouteUnitSpray(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'pulvérisations',
+      one: 'pulvérisation',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get injectionSideLeft => 'Gauche';
 
   @override

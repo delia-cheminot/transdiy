@@ -199,6 +199,14 @@
     "suppository": "Supositório",
     "transdermal": "Spray transdérmico",
 
+    "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
+    "administrationRouteUnitPill": "{count, plural, =1{comprimido} other{comprimidos}}",
+    "administrationRouteUnitPatch": "{count, plural, =1{adesivo} other{adesivos}}",
+    "administrationRouteUnitPump": "{count, plural, =1{aplicação} other{aplicações}}",
+    "administrationRouteUnitImplant": "{count, plural, =1{implante} other{implantes}}",
+    "administrationRouteUnitSuppository": "{count, plural, =1{supositório} other{supositórios}}",
+    "administrationRouteUnitSpray": "{count, plural, =1{pulverização} other{pulverizações}}",
+
     "injectionSideLeft": "Esquerda",
     "injectionSideRight": "Direita",
   "intakeSummaryInjectionSideLeft": "Lado esquerdo",

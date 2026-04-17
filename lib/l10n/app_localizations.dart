@@ -1134,6 +1134,48 @@ abstract class AppLocalizations {
   /// **'Transdermal spray'**
   String get transdermal;
 
+  /// No description provided for @administrationRouteUnitMl.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{ml} other{ml}}'**
+  String administrationRouteUnitMl(num count);
+
+  /// No description provided for @administrationRouteUnitPill.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{pill} other{pills}}'**
+  String administrationRouteUnitPill(num count);
+
+  /// No description provided for @administrationRouteUnitPatch.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{patch} other{patches}}'**
+  String administrationRouteUnitPatch(num count);
+
+  /// No description provided for @administrationRouteUnitPump.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{pump} other{pumps}}'**
+  String administrationRouteUnitPump(num count);
+
+  /// No description provided for @administrationRouteUnitImplant.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{implant} other{implants}}'**
+  String administrationRouteUnitImplant(num count);
+
+  /// No description provided for @administrationRouteUnitSuppository.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{suppository} other{suppositories}}'**
+  String administrationRouteUnitSuppository(num count);
+
+  /// No description provided for @administrationRouteUnitSpray.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{spray} other{sprays}}'**
+  String administrationRouteUnitSpray(num count);
+
   /// No description provided for @injectionSideLeft.
   ///
   /// In en, this message translates to:

@@ -5,6 +5,7 @@ import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
 import 'package:mona/l10n/helpers/ester_l10n.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dropdowns/administration_route_dropdown.dart';
@@ -179,7 +180,7 @@ class _NewItemPageState extends State<NewItemPage> {
           label: localizations.totalAmount,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: _administrationRoute?.unit,
+          suffixText: _administrationRoute?.localizedUnit(localizations, 1),
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
@@ -187,10 +188,9 @@ class _NewItemPageState extends State<NewItemPage> {
           label: localizations.concentration,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText:
-              _molecule?.unit != null && _administrationRoute?.unit != null
-                  ? '${_molecule?.unit}/${_administrationRoute?.unit}'
-                  : null,
+          suffixText: _molecule != null && _administrationRoute != null
+              ? '${_molecule!.unit}/${_administrationRoute!.localizedUnit(localizations, 1)}'
+              : null,
           regexFormatter: r'[0-9.,]',
         ),
       ],
