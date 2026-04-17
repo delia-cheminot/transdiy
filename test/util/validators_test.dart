@@ -18,8 +18,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredString(l10n, c['value'] as String?)).toList();
+      final results = cases
+          .map((c) => requiredString(l10n, c['value'] as String?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -34,8 +35,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredDateTime(l10n, c['value'] as DateTime?)).toList();
+      final results = cases
+          .map((c) => requiredDateTime(l10n, c['value'] as DateTime?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -50,8 +52,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredMolecule(l10n, c['value'] as Molecule?)).toList();
+      final results = cases
+          .map((c) => requiredMolecule(l10n, c['value'] as Molecule?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert

@@ -162,8 +162,7 @@ class IntakeTileViewModel {
         return localizations.today;
 
       case ScheduleStatus.overdue:
-        final formatted =
-            lastScheduled!.format(DateFormat.MMMMd(languageTag));
+        final formatted = lastScheduled!.format(DateFormat.MMMMd(languageTag));
         return "$formatted - ${localizations.daysAgoCount(daysSinceLastScheduled!)}";
 
       case ScheduleStatus.upcoming:
