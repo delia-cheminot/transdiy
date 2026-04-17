@@ -356,6 +356,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bloodTestDateLabel => 'Fecha del análisis';
 
   @override
+  String chartNowConcentration(Object value) {
+    return 'Ahora $value';
+  }
+
+  @override
+  String chartBloodTestLevelTooltip(Object date, Object level) {
+    return '$date: $level';
+  }
+
+  @override
   String get empty_supplies => 'Sin suministros. Añade un elemento para comenzar.';
 
   @override

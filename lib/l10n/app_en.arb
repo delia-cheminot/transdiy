@@ -113,6 +113,8 @@
   "estradiolLevelLabel": "Estradiol level",
   "testosteroneLevelLabel": "Testosterone level",
   "bloodTestDateLabel": "Test date",
+  "chartNowConcentration": "Now {value}",
+  "chartBloodTestLevelTooltip": "{date}: {level}",
 
   "empty_supplies": "No supplies. Add an item to get started.",
   "newItem": "New item",

@@ -113,6 +113,8 @@
   "estradiolLevelLabel": "Taux d'estradiol",
   "testosteroneLevelLabel": "Taux de testostérone",
   "bloodTestDateLabel": "Date",
+  "chartNowConcentration": "Maintenant {value}",
+  "chartBloodTestLevelTooltip": "{date} : {level}",
 
   "empty_supplies": "Aucun consommable. Ajoutez un élément pour commencer.",
   "newItem": "Nouvel élément",

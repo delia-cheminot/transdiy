@@ -113,6 +113,8 @@
     "estradiolLevelLabel": "Nivel de estradiol",
     "testosteroneLevelLabel": "Nivel de testosterona",
     "bloodTestDateLabel": "Fecha del análisis",
+    "chartNowConcentration": "Ahora {value}",
+    "chartBloodTestLevelTooltip": "{date}: {level}",
 
     "empty_supplies": "Sin suministros. Añade un elemento para comenzar.",
     "newItem": "Nuevo elemento",
@@ -181,6 +183,6 @@
 
     "injectionSideLeft": "Izquierda",
     "injectionSideRight": "Derecha",
-    "intakeSummaryInjectionSideLeft": "Lado izquierdo",
-    "intakeSummaryInjectionSideRight": "Lado derecho"
+  "intakeSummaryInjectionSideLeft": "Lado izquierdo",
+  "intakeSummaryInjectionSideRight": "Lado derecho"
 }

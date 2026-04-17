@@ -744,6 +744,18 @@ abstract class AppLocalizations {
   /// **'Test date'**
   String get bloodTestDateLabel;
 
+  /// No description provided for @chartNowConcentration.
+  ///
+  /// In en, this message translates to:
+  /// **'Now {value}'**
+  String chartNowConcentration(Object value);
+
+  /// No description provided for @chartBloodTestLevelTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}: {level}'**
+  String chartBloodTestLevelTooltip(Object date, Object level);
+
   /// No description provided for @empty_supplies.
   ///
   /// In en, this message translates to:

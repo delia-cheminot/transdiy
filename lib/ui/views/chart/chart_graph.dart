@@ -1,10 +1,13 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/graph_calculator.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:provider/provider.dart';
 
 class _ChartConstants {
@@ -29,6 +32,7 @@ class MainGraph extends StatelessWidget {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final Date firstDay = medicationIntakeProvider.getFirstIntakeLocalDate()!;
 
     Map<int, GraphIntake> daysAndIntakes =
@@ -76,7 +80,7 @@ class MainGraph extends StatelessWidget {
                   const EdgeInsets.only(right: _ChartConstants.axesPadding),
               child: RotatedBox(
                 quarterTurns: -1,
-                child: Text('Concentration (pg/ml)',
+                child: Text('${l10n.concentration} (pg/ml)',
                     style: const TextStyle(
                         fontSize: _ChartConstants.titleFontSize)),
               ),
@@ -89,15 +93,16 @@ class MainGraph extends StatelessWidget {
                   minY: 0,
                   maxY: maxYWithPadding,
                   gridData: FlGridData(show: true),
-                  titlesData: _buildTitlesData(firstDay),
+                  titlesData: _buildTitlesData(context, firstDay),
                   borderData: FlBorderData(show: true),
                   lineBarsData: [
                     _buildLineBarData(spots, theme),
                     _buildBloodTestData(bloodSpots, theme),
                   ],
-                  lineTouchData: _buildLineTouchData(theme, firstDay),
-                  extraLinesData:
-                      _buildTodayVerticalLine(theme, todaySpot, daysSinceStart),
+                  lineTouchData:
+                      _buildLineTouchData(context, theme, firstDay, l10n),
+                  extraLinesData: _buildTodayVerticalLine(
+                      theme, todaySpot, daysSinceStart, l10n),
                 ),
               ),
             ),
@@ -107,9 +112,12 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  ExtraLinesData? _buildTodayVerticalLine(
-      ThemeData theme, FlSpot? todaySpot, double daysSinceStart) {
+  ExtraLinesData? _buildTodayVerticalLine(ThemeData theme, FlSpot? todaySpot,
+      double daysSinceStart, AppLocalizations l10n) {
     if (todaySpot == null) return null;
+
+    final nowLabel =
+        '${l10n.chartNowConcentration(todaySpot.y.toStringAsFixed(0))} pg/ml';
 
     return ExtraLinesData(
       verticalLines: [
@@ -120,7 +128,7 @@ class MainGraph extends StatelessWidget {
           dashArray: [6, 4],
           label: VerticalLineLabel(
             show: true,
-            labelResolver: (_) => 'Now ${todaySpot.y.toStringAsFixed(0)} pg/ml',
+            labelResolver: (_) => nowLabel,
             style: TextStyle(fontSize: 11, color: theme.colorScheme.tertiary),
           ),
         )
@@ -154,7 +162,8 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  LineTouchData _buildLineTouchData(ThemeData theme, Date firstDay) {
+  LineTouchData _buildLineTouchData(BuildContext context, ThemeData theme,
+      Date firstDay, AppLocalizations l10n) {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
@@ -169,7 +178,7 @@ class MainGraph extends StatelessWidget {
               text = t.y.toStringAsFixed(1);
             } else {
               text =
-                  '${_getDateLabel(t.x, firstDay)}: ${t.y.toStringAsFixed(1)} pg/mL';
+                  '${l10n.chartBloodTestLevelTooltip(_getDateLabel(t.x, firstDay, context), t.y.toStringAsFixed(1))} pg/ml';
             }
             return LineTooltipItem(
                 text,
@@ -182,7 +191,7 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  FlTitlesData _buildTitlesData(Date firstDay) {
+  FlTitlesData _buildTitlesData(BuildContext context, Date firstDay) {
     return FlTitlesData(
       show: true,
       bottomTitles: AxisTitles(
@@ -192,7 +201,7 @@ class MainGraph extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Padding(
               padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
-              child: Text("  ${_getDateLabel(value, firstDay)}",
+              child: Text(" ${_getDateLabel(value, firstDay, context)} ",
                   style:
                       const TextStyle(fontSize: _ChartConstants.labelFontSize)),
             );
@@ -215,8 +224,8 @@ class MainGraph extends StatelessWidget {
     );
   }
 
-  String _getDateLabel(double value, Date firstDay) {
+  String _getDateLabel(double value, Date firstDay, BuildContext context) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return "${date.day}/${date.month}";
+    return DateFormat.Md(context.locale.toString()).format(date.toDateTime());
   }
 }

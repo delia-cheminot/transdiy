@@ -356,6 +356,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bloodTestDateLabel => 'Data do exame';
 
   @override
+  String chartNowConcentration(Object value) {
+    return 'Agora $value';
+  }
+
+  @override
+  String chartBloodTestLevelTooltip(Object date, Object level) {
+    return '$date: $level';
+  }
+
+  @override
   String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
@@ -896,6 +906,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get bloodTestDateLabel => 'Data do exame';
+
+  @override
+  String chartNowConcentration(Object value) {
+    return 'Agora $value';
+  }
+
+  @override
+  String chartBloodTestLevelTooltip(Object date, Object level) {
+    return '$date: $level';
+  }
 
   @override
   String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
