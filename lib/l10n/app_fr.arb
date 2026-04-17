@@ -81,6 +81,9 @@
   "updateFailedOpenInstaller": "Échec de l'ouverture de l'installateur : {message}",
   "updateDownloadFailed": "Échec du téléchargement. Vérifiez votre connexion.",
 
+  "notificationMedicationReminderTitle": "Il est temps de prendre {scheduleName}",
+  "notificationMedicationReminderBody": "Prévu pour {dateTime}",
+
   "addSchedule": "Ajouter un traitement",
   "addScheduleToGetStarted": "Ajoutez un traitement pour commencer.",
   "newSchedule": "Nouveau traitement",
@@ -122,6 +125,7 @@
   "addBloodTest": "Ajouter une analyse de sang",
   "editBloodTest": "Modifier la prise de sang",
   "newBloodTest": "Nouvelle prise de sang",
+  "deleteBloodTest": "Supprimer cette prise de sang ?",
   "estradiolLevelLabel": "Taux d'estradiol",
   "testosteroneLevelLabel": "Taux de testostérone",
   "bloodTestDateLabel": "Date",

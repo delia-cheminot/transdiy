@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
@@ -11,6 +12,7 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -25,12 +27,15 @@ import 'package:timezone/timezone.dart' as tz;
 import 'notification_scheduler_test.mocks.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   late MockMedicationScheduleProvider mockMedicationScheduleProvider;
   late MockMedicationIntakeProvider mockMedicationIntakeProvider;
   late MockPreferencesService mockPreferencesService;
   late MockFlutterLocalNotificationsPlugin mockPlugin;
 
-  setUpAll(() {
+  setUpAll(() async {
+    await initializeDateFormatting('en');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Etc/UTC'));
   });
@@ -76,7 +81,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, 'en');
 
         // Assert
         verify(mockPlugin.show(
@@ -118,7 +123,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.cancel(id: pending.id)).called(1);
@@ -167,7 +172,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verifyNever(mockPlugin.zonedSchedule(
@@ -218,7 +223,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verifyNever(mockPlugin.zonedSchedule(
@@ -271,7 +276,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.zonedSchedule(
@@ -325,7 +330,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.zonedSchedule(
@@ -399,7 +404,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.zonedSchedule(
@@ -461,7 +466,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.zonedSchedule(

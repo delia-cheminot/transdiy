@@ -54,28 +54,24 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String daysAgoCount(int count) {
-    if (count == 1) {
-      return 'ontem';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: 'há $count dia',
-      other: 'há $count dias',
       locale: localeName,
+      other: 'há # dias',
+      one: 'ontem',
     );
+    return '$_temp0';
   }
 
   @override
   String inDaysCount(int count) {
-    if (count == 1) {
-      return 'amanhã';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: 'em $count dia',
-      other: 'em $count dias',
       locale: localeName,
+      other: 'em # dias',
+      one: 'amanhã',
     );
+    return '$_temp0';
   }
 
   @override
@@ -245,6 +241,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get updateDownloadFailed => 'Falha na transferência. Verifique a sua ligação.';
 
   @override
+  String notificationMedicationReminderTitle(Object scheduleName) {
+    return 'Hora de tomar $scheduleName';
+  }
+
+  @override
+  String notificationMedicationReminderBody(Object dateTime) {
+    return 'Agendado para $dateTime';
+  }
+
+  @override
   String get addSchedule => 'Adicionar cronograma';
 
   @override
@@ -365,6 +371,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get newBloodTest => 'Novo exame de sangue';
+
+  @override
+  String get deleteBloodTest => 'Eliminar este exame de sangue?';
 
   @override
   String get estradiolLevelLabel => 'Nível de estradiol';
@@ -643,6 +652,28 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get taken => 'tomado';
 
   @override
+  String daysAgoCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'há # dias',
+      one: 'ontem',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String inDaysCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'em # dias',
+      one: 'amanhã',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get lastTaken => 'Última dose';
 
   @override
@@ -809,6 +840,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get updateDownloadFailed => 'Falha no download. Verifique sua conexão.';
 
   @override
+  String notificationMedicationReminderTitle(Object scheduleName) {
+    return 'Hora de tomar $scheduleName';
+  }
+
+  @override
+  String notificationMedicationReminderBody(Object dateTime) {
+    return 'Agendado para $dateTime';
+  }
+
+  @override
   String get addSchedule => 'Adicionar cronograma';
 
   @override
@@ -929,6 +970,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get newBloodTest => 'Novo exame de sangue';
+
+  @override
+  String get deleteBloodTest => 'Excluir este exame de sangue?';
 
   @override
   String get estradiolLevelLabel => 'Nível de estradiol';

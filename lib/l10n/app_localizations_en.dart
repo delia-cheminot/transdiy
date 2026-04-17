@@ -54,28 +54,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String daysAgoCount(int count) {
-    if (count == 1) {
-      return 'yesterday';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: '$count day ago',
-      other: '$count days ago',
       locale: localeName,
+      other: '# days ago',
+      one: 'yesterday',
     );
+    return '$_temp0';
   }
 
   @override
   String inDaysCount(int count) {
-    if (count == 1) {
-      return 'tomorrow';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: 'in $count day',
-      other: 'in $count days',
       locale: localeName,
+      other: 'in # days',
+      one: 'tomorrow',
     );
+    return '$_temp0';
   }
 
   @override
@@ -245,6 +241,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateDownloadFailed => 'Download failed. Please check your connection.';
 
   @override
+  String notificationMedicationReminderTitle(Object scheduleName) {
+    return 'Time to take $scheduleName';
+  }
+
+  @override
+  String notificationMedicationReminderBody(Object dateTime) {
+    return 'Scheduled for $dateTime';
+  }
+
+  @override
   String get addSchedule => 'Add a schedule';
 
   @override
@@ -365,6 +371,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get newBloodTest => 'New blood test';
+
+  @override
+  String get deleteBloodTest => 'Delete this blood test?';
 
   @override
   String get estradiolLevelLabel => 'Estradiol level';

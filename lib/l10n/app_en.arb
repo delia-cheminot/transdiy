@@ -81,6 +81,9 @@
   "updateFailedOpenInstaller": "Failed to open installer: {message}",
   "updateDownloadFailed": "Download failed. Please check your connection.",
 
+  "notificationMedicationReminderTitle": "Time to take {scheduleName}",
+  "notificationMedicationReminderBody": "Scheduled for {dateTime}",
+
   "addSchedule": "Add a schedule",
   "addScheduleToGetStarted": "Add a schedule to get started.",
   "newSchedule": "New schedule",
@@ -122,6 +125,7 @@
   "addBloodTest": "Add a blood test",
   "editBloodTest": "Edit blood test",
   "newBloodTest": "New blood test",
+  "deleteBloodTest": "Delete this blood test?",
   "estradiolLevelLabel": "Estradiol level",
   "testosteroneLevelLabel": "Testosterone level",
   "bloodTestDateLabel": "Test date",

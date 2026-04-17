@@ -81,6 +81,9 @@
     "updateFailedOpenInstaller": "Installer konnte nicht geöffnet werden: {message}",
     "updateDownloadFailed": "Download fehlgeschlagen. Bitte prüfe deine Verbindung.",
 
+    "notificationMedicationReminderTitle": "Zeit, {scheduleName} einzunehmen",
+    "notificationMedicationReminderBody": "Geplant für {dateTime}",
+
     "addSchedule": "Zeitplan hinzufügen",
     "addScheduleToGetStarted": "Füge einen Zeitplan hinzu, um zu beginnen.",
     "newSchedule": "Neuer Zeitplan",
@@ -122,6 +125,7 @@
     "addBloodTest": "Bluttest hinzufügen",
     "editBloodTest": "Bluttest bearbeiten",
     "newBloodTest": "Neuer Bluttest",
+    "deleteBloodTest": "Diesen Bluttest löschen?",
     "estradiolLevelLabel": "Östradiolspiegel",
     "testosteroneLevelLabel": "Testosteronspiegel",
     "bloodTestDateLabel": "Testdatum",

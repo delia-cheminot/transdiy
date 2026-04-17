@@ -6,6 +6,7 @@ import 'package:mona/data/providers/locale_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
@@ -65,11 +66,13 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
   }
 
   void _regenerateNotifications() {
+    if (!mounted) return;
+
     NotificationScheduler(
       _medicationScheduleProvider,
       _medicationIntakeProvider,
       _preferencesService,
-    ).regenerateAll();
+    ).regenerateAll(context.l10n, context.languageTag);
   }
 
   void _checkTimezoneChange() {

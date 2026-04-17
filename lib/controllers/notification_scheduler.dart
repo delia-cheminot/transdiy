@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 
@@ -48,13 +49,15 @@ class NotificationScheduler {
     return notificationsToSchedule;
   }
 
-  Future<void> regenerateAll() async {
+  Future<void> regenerateAll(AppLocalizations l10n, String localeName) async {
     NotificationService().triggerPastPendingNotifications();
     NotificationService().cancelPendingNotifications();
 
     if (!preferencesService.notificationsEnabled) {
       return;
     }
+
+    final scheduledDateTimeFormat = DateFormat.MMMMd(localeName);
 
     final notificationTimes = _getNotificationTimes();
 
@@ -65,8 +68,10 @@ class NotificationScheduler {
           final schedule = entry.value;
 
           return NotificationService().scheduleNotification(
-            title: 'Time to take ${schedule.name}',
-            body: 'Scheduled for ${DateFormat.MMMMd().format(dateTime)}',
+            title: l10n.notificationMedicationReminderTitle(schedule.name),
+            body: l10n.notificationMedicationReminderBody(
+              scheduledDateTimeFormat.format(dateTime),
+            ),
             year: dateTime.year,
             month: dateTime.month,
             day: dateTime.day,

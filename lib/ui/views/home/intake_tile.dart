@@ -42,6 +42,7 @@ class IntakeTile extends StatelessWidget {
       now: now,
       theme: Theme.of(context),
       localizations: localizations,
+      languageTag: context.languageTag,
     );
 
     final textColor =
@@ -118,7 +119,8 @@ class IntakeTileViewModel {
       required this.supplyProvider,
       required this.now,
       required this.theme,
-      required this.localizations});
+      required this.localizations,
+      required this.languageTag});
 
   final MedicationSchedule schedule;
   final ScheduleStatus status;
@@ -127,6 +129,7 @@ class IntakeTileViewModel {
   final DateTime now;
   final ThemeData theme;
   final AppLocalizations localizations;
+  final String languageTag;
 
   Date get nextScheduled => schedule.nextDate;
 
@@ -159,11 +162,12 @@ class IntakeTileViewModel {
         return localizations.today;
 
       case ScheduleStatus.overdue:
-        final formatted = DateFormat.MMMMd().format(lastScheduled!.value);
+        final formatted =
+            lastScheduled!.format(DateFormat.MMMMd(languageTag));
         return "$formatted - ${localizations.daysAgoCount(daysSinceLastScheduled!)}";
 
       case ScheduleStatus.upcoming:
-        final formatted = DateFormat.MMMMd().format(nextScheduled.value);
+        final formatted = nextScheduled.format(DateFormat.MMMMd(languageTag));
         return "$formatted - ${localizations.inDaysCount(daysUntilIntake)}";
 
       case ScheduleStatus.taken:
@@ -177,7 +181,7 @@ class IntakeTileViewModel {
         if (lastTaken != null &&
             lastScheduled != null &&
             !lastTaken!.isSameDayAs(lastScheduled!)) {
-          final formatted = DateFormat.MMMd().format(lastTaken!.value);
+          final formatted = lastTaken!.format(DateFormat.MMMd(languageTag));
           return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
         }
         return null;
@@ -192,7 +196,7 @@ class IntakeTileViewModel {
           return localizations.neverTakenYet;
         }
 
-        final formatted = DateFormat.MMMd().format(lastTaken!.value);
+        final formatted = lastTaken!.format(DateFormat.MMMd(languageTag));
         return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
     }
   }

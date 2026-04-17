@@ -186,15 +186,13 @@ abstract class AppLocalizations {
   /// **'taken'**
   String get taken;
 
-  /// Relative past time for a day count (phrase includes the number for [count] != 1).
-  /// For [count] == 1, implementations return the locale’s “yesterday” word (ARB `=1` branch).
+  /// Past offset in days; =1 is the word “yesterday”, not a numeric phrase.
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{yesterday} other{# days ago}}'**
   String daysAgoCount(int count);
 
-  /// Relative future time for a day count (phrase includes the number for [count] != 1).
-  /// For [count] == 1, implementations return the locale’s “tomorrow” word (ARB `=1` branch).
+  /// Future offset in days; =1 is the word “tomorrow”, not a numeric phrase.
   ///
   /// In en, this message translates to:
   /// **'{count, plural, =1{tomorrow} other{in # days}}'**
@@ -500,6 +498,18 @@ abstract class AppLocalizations {
   /// **'Download failed. Please check your connection.'**
   String get updateDownloadFailed;
 
+  /// No description provided for @notificationMedicationReminderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to take {scheduleName}'**
+  String notificationMedicationReminderTitle(Object scheduleName);
+
+  /// No description provided for @notificationMedicationReminderBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled for {dateTime}'**
+  String notificationMedicationReminderBody(Object dateTime);
+
   /// No description provided for @addSchedule.
   ///
   /// In en, this message translates to:
@@ -727,6 +737,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New blood test'**
   String get newBloodTest;
+
+  /// No description provided for @deleteBloodTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this blood test?'**
+  String get deleteBloodTest;
 
   /// No description provided for @estradiolLevelLabel.
   ///

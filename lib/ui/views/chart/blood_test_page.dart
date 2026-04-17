@@ -49,7 +49,8 @@ class BloodTestPage extends StatelessWidget {
   Widget _buildBloodTestTile(BuildContext context, BloodTest bloodtest,
       BloodTestProvider bloodTestProvider) {
     final l10n = context.l10n;
-    final dateText = DateFormat.yMMMd().format(bloodtest.dateTime);
+    final dateText =
+        DateFormat.yMMMd(context.languageTag).format(bloodtest.localDateTime);
     return ListTile(
       title: Text(dateText),
       subtitle: Text(
@@ -70,7 +71,7 @@ class BloodTestPage extends StatelessWidget {
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {
           final confirmed = await Dialogs.confirmDeleteDialog(
-              context: context, title: "Delete this blood test?");
+              context: context, title: l10n.deleteBloodTest);
           if (confirmed == true) {
             bloodTestProvider.deleteBloodTest(bloodtest);
           }

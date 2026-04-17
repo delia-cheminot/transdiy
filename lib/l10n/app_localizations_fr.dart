@@ -54,28 +54,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String daysAgoCount(int count) {
-    if (count == 1) {
-      return 'hier';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: 'il y a $count jour',
-      other: 'il y a $count jours',
       locale: localeName,
+      other: 'il y a # jours',
+      one: 'hier',
     );
+    return '$_temp0';
   }
 
   @override
   String inDaysCount(int count) {
-    if (count == 1) {
-      return 'demain';
-    }
-    return intl.Intl.plural(
+    String _temp0 = intl.Intl.pluralLogic(
       count,
-      one: 'dans $count jour',
-      other: 'dans $count jours',
       locale: localeName,
+      other: 'dans # jours',
+      one: 'demain',
     );
+    return '$_temp0';
   }
 
   @override
@@ -245,6 +241,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get updateDownloadFailed => 'Échec du téléchargement. Vérifiez votre connexion.';
 
   @override
+  String notificationMedicationReminderTitle(Object scheduleName) {
+    return 'Il est temps de prendre $scheduleName';
+  }
+
+  @override
+  String notificationMedicationReminderBody(Object dateTime) {
+    return 'Prévu pour $dateTime';
+  }
+
+  @override
   String get addSchedule => 'Ajouter un traitement';
 
   @override
@@ -365,6 +371,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get newBloodTest => 'Nouvelle prise de sang';
+
+  @override
+  String get deleteBloodTest => 'Supprimer cette prise de sang ?';
 
   @override
   String get estradiolLevelLabel => 'Taux d\'estradiol';

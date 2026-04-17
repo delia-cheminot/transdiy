@@ -81,6 +81,9 @@
     "updateFailedOpenInstaller": "No se pudo abrir el instalador: {message}",
     "updateDownloadFailed": "Error en la descarga. Comprueba tu conexión.",
 
+    "notificationMedicationReminderTitle": "Es hora de tomar {scheduleName}",
+    "notificationMedicationReminderBody": "Programado para {dateTime}",
+
     "addSchedule": "Agregar un horario",
     "addScheduleToGetStarted": "Agrega un horario para comenzar.",
     "newSchedule": "Nuevo horario",
@@ -122,6 +125,7 @@
     "addBloodTest": "Añadir un análisis de sangre",
     "editBloodTest": "Editar análisis de sangre",
     "newBloodTest": "Nuevo análisis de sangre",
+    "deleteBloodTest": "¿Eliminar este análisis de sangre?",
     "estradiolLevelLabel": "Nivel de estradiol",
     "testosteroneLevelLabel": "Nivel de testosterona",
     "bloodTestDateLabel": "Fecha del análisis",

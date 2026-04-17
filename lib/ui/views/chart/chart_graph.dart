@@ -226,6 +226,6 @@ class MainGraph extends StatelessWidget {
 
   String _getDateLabel(double value, Date firstDay, BuildContext context) {
     final date = firstDay.add(Duration(days: value.toInt()));
-    return DateFormat.Md(context.locale.toString()).format(date.toDateTime());
+    return DateFormat.Md(context.languageTag).format(date.toDateTime());
   }
 }
