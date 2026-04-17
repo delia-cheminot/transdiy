@@ -216,16 +216,11 @@ class MedicationSchedule {
 
   @override
   String toString() {
-    return "$dose mg ${molecule.name} "
-        "${ester != null ? "${ester!.name} " : ""}${administrationRoute.name}\n"
-        "${formatFrequency()}";
-  }
-
-  String formatFrequency() {
-    if (intervalDays == 1) {
-      return "every day";
-    } else {
-      return "every $intervalDays days";
-    }
+    final times =
+        notificationTimes.map((t) => '${t.hour}:${t.minute}').join(', ');
+    return 'MedicationSchedule(id: $id, name: $name, dose: $dose ${molecule.unit}, '
+        'molecule: ${molecule.name}, ester: ${ester?.name}, '
+        'route: ${administrationRoute.name}, intervalDays: $intervalDays, '
+        'startDate: $startDate, notificationTimes: [$times])';
   }
 }

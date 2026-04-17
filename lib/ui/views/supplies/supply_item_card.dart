@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/supply_item_l10n.dart';
 import 'package:mona/ui/views/supplies/edit_item_page.dart';
 
 class SupplyItemCard extends StatelessWidget {
@@ -60,7 +61,7 @@ class SupplyItemCard extends StatelessWidget {
                   ),
                   // text with description
                   Text(
-                    '$item',
+                    item.localizedSummary(context.l10n),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(

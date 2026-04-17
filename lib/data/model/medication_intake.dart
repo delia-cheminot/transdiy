@@ -133,10 +133,9 @@ class MedicationIntake {
 
   @override
   String toString() {
-    return "$dose mg • ${molecule.name} "
-        "${ester != null ? '${ester!.name} ' : ""}"
-        "${administrationRoute.name}"
-        "${side?.name != null ? ' • ${side!.name} side' : ''}";
+    return 'MedicationIntake(id: $id, dose: $dose ${molecule.unit}, '
+        'molecule: ${molecule.name}, ester: ${ester?.name}, '
+        'route: ${administrationRoute.name}, side: ${side?.name})';
   }
   // coverage:ignore-end
 }
