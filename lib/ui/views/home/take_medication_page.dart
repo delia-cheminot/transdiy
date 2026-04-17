@@ -9,7 +9,7 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
-import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/supply_item_l10n.dart';
 import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
@@ -202,10 +202,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem != null)
+            if (_selectedSupplyItem case final supplyItem?)
               FormInfoText(
-                infoText:
-                    ' $_takenDose ${widget.schedule.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.localizedUnit(localizations, _selectedSupplyItem!.getAmount(_takenDose).toDouble())}',
+                infoText: supplyItem.localizedSupplyAmount(
+                  localizations,
+                  _takenDose,
+                  widget.schedule.molecule.unit,
+                ),
               ),
             FormSpacer(),
             FormDropdownField<SupplyItem?>(

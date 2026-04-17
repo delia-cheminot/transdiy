@@ -8,7 +8,7 @@ import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
-import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/supply_item_l10n.dart';
 import 'package:mona/ui/views/intakes/intakes_page.dart';
 import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
@@ -217,9 +217,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
             ),
             if (_selectedSupplyItem case final supplyItem?)
               FormInfoText(
-                infoText: ' $_takenDose ${widget.intake.molecule.unit} = '
-                    '${supplyItem.getAmount(_takenDose)} '
-                    '${supplyItem.administrationRoute.localizedUnit(localizations, supplyItem.getAmount(_takenDose).toDouble())}',
+                infoText: supplyItem.localizedSupplyAmount(
+                  localizations,
+                  _takenDose,
+                  widget.intake.molecule.unit,
+                ),
               ),
             FormSpacer(),
             FormDropdownField<SupplyItem?>(
