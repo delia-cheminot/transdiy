@@ -74,7 +74,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         text: widget.bloodtest.estradiolLevels?.toString());
     _testosteroneLevelsController = TextEditingController(
         text: widget.bloodtest.testosteroneLevels?.toString());
-    _testDateTime = widget.bloodtest.dateTime;
+    _testDateTime = widget.bloodtest.localDateTime;
   }
 
   @override
