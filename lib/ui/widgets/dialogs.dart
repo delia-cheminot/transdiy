@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Dialogs {
-  // TODO we should just pass the name of the element or smth
   static Future<bool?> confirmDeleteDialog(
       {required BuildContext context,
       String title = "Delete this element?",

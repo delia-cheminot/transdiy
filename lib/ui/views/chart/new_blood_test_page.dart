@@ -34,6 +34,12 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
     setState(() {});
   }
 
+  void _onDateTimeChanged(DateTime dateTime) {
+    setState(() {
+      _testDateTime = dateTime;
+    });
+  }
+
   void _addBloodTest() async {
     final bloodTestProvider =
         Provider.of<BloodTestProvider>(context, listen: false);
@@ -94,17 +100,14 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
           errorText: _testosteroneError,
-          suffixText: 'ng/dL', // TODO check si units
+          suffixText: 'ng/dL',
         ),
         FormSpacer(),
         FormDateTimeField(
           datetime: _testDateTime,
           label: 'Test date',
           errorText: _testDateError,
-          onChanged: (date) => setState(() {
-            _testDateTime = date;
-          }),
-          // TODO create a method onDateChanged
+          onChanged: _onDateTimeChanged,
         ),
       ],
     );

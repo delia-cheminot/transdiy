@@ -40,7 +40,7 @@ class BloodTest {
     return tz.TZDateTime.from(dateTime, location);
   }
 
-  Date get localDate => Date.fromDateTime(localDateTime);
+  Date get localDate => localDateTime.toDate;
 
   BloodTest copyWith({
     int? id,

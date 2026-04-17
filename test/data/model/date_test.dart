@@ -137,6 +137,31 @@ void main() {
       });
     });
 
+    group('DateTime/String toDate extensions', () {
+      test('DateTime.toDate matches Date.fromDateTime at 3:59 boundary', () {
+        final input = DateTime(2026, 3, 30, 3, 59);
+        expect(input.toDate, Date.fromDateTime(input));
+      });
+
+      test('DateTime.toDate matches Date.fromDateTime at noon', () {
+        final input = DateTime(2026, 3, 30, 12, 0);
+        expect(input.toDate, Date.fromDateTime(input));
+      });
+
+      test('String.toDate round-trips Date.toString', () {
+        final date = Date.fromDateTime(DateTime(2026, 3, 30, 12, 0));
+        expect(date.toString().toDate, date);
+      });
+
+      test('String.toDate throws like Date.fromString when not UTC midnight',
+          () {
+        expect(
+          () => '2026-03-30T12:00:00Z'.toDate,
+          throwsArgumentError,
+        );
+      });
+    });
+
     group('today', () {
       test('Date.today() is today (or yesterday if it is before 4am)', () {
         // Arrange

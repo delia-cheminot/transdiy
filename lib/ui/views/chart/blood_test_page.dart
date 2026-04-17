@@ -67,7 +67,8 @@ class BloodTestPage extends StatelessWidget {
       trailing: IconButton(
         icon: const Icon(Icons.delete_outline),
         onPressed: () async {
-          final confirmed = await Dialogs.confirmDeleteDialog(context: context);
+          final confirmed = await Dialogs.confirmDeleteDialog(
+              context: context, title: "Delete this blood test?");
           if (confirmed == true) {
             bloodTestProvider.deleteBloodTest(bloodtest);
           }

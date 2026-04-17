@@ -1,21 +1,28 @@
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 
 class NotificationScheduler {
   final MedicationScheduleProvider medicationScheduleProvider;
+  final MedicationIntakeProvider medicationIntakeProvider;
   final PreferencesService preferencesService;
 
   NotificationScheduler(
-      this.medicationScheduleProvider, this.preferencesService);
+    this.medicationScheduleProvider,
+    this.medicationIntakeProvider,
+    this.preferencesService,
+  );
 
   Map<DateTime, MedicationSchedule> _getNotificationTimes() {
     final Map<DateTime, MedicationSchedule> notificationsToSchedule = {};
     final now = DateTime.now();
 
     for (final schedule in medicationScheduleProvider.schedules) {
+      final lastTaken =
+          medicationIntakeProvider.getLastIntakeDateForSchedule(schedule.id);
       final nextDates = schedule.getNextDates(5);
 
       for (final date in nextDates) {
@@ -29,6 +36,9 @@ class NotificationScheduler {
           );
 
           if (now.isAfter(dateTime)) continue;
+          if (date.isToday && schedule.isTakenTodayOrLater(lastTaken)) {
+            continue;
+          }
 
           notificationsToSchedule[dateTime] = schedule;
         }

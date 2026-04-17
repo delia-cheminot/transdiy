@@ -23,7 +23,7 @@ String? positiveDecimal(String? value) {
 String? positiveInt(String? value) {
   if (value.isEmpty) return null;
 
-  return value.intOrZero <= 0 ? 'Must be a positive number' : null;
+  return value.toIntOrZero <= 0 ? 'Must be a positive number' : null;
 }
 
 String? requiredString(String? value) =>

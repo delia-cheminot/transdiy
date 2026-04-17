@@ -121,7 +121,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
 
   Future<void> _confirmDelete() async {
     final confirmed = await Dialogs.confirmDeleteDialog(
-        context: context, title: "Delete this schedule?");
+        context: context, title: "Delete ${widget.schedule.name}?");
 
     if (confirmed == true && mounted) {
       _medicationScheduleProvider.deleteSchedule(widget.schedule);
