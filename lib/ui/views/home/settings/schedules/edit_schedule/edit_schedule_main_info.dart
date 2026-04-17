@@ -41,19 +41,21 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
   late MedicationScheduleProvider _medicationScheduleProvider;
 
   String? get _nameError =>
-      MedicationSchedule.validateName(_nameController.text);
+      MedicationSchedule.validateName(context.l10n, _nameController.text);
   String? get _doseError =>
-      MedicationSchedule.validateDose(_doseController.text);
-  String? get _intervalDaysError =>
-      MedicationSchedule.validateIntervalDays(_intervalDaysController.text);
+      MedicationSchedule.validateDose(context.l10n, _doseController.text);
+  String? get _intervalDaysError => MedicationSchedule.validateIntervalDays(
+      context.l10n, _intervalDaysController.text);
   String? get _startDateError =>
-      MedicationSchedule.validateStartDate(_startDate);
-  String? get _moleculeError => MedicationSchedule.validateMolecule(_molecule);
+      MedicationSchedule.validateStartDate(context.l10n, _startDate);
+  String? get _moleculeError =>
+      MedicationSchedule.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      MedicationSchedule.validateAdministrationRoute(_administrationRoute);
+      MedicationSchedule.validateAdministrationRoute(
+          context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator =
-        MedicationSchedule.esterValidator(_molecule, _administrationRoute);
+    final validator = MedicationSchedule.esterValidator(
+        context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
 

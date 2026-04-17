@@ -41,10 +41,10 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   Decimal? _deadSpace;
 
   String? get _takenDoseError =>
-      MedicationIntake.validateDose(_takenDoseController.text);
+      MedicationIntake.validateDose(context.l10n, _takenDoseController.text);
 
-  String? get _deadSpaceError =>
-      MedicationIntake.validateDeadSpace(_deadSpaceController.text);
+  String? get _deadSpaceError => MedicationIntake.validateDeadSpace(
+      context.l10n, _deadSpaceController.text);
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 

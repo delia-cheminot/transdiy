@@ -560,4 +560,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get intakeSummaryInjectionSideRight => 'Right side';
+
+  @override
+  String get requiredField => 'Required field';
+
+  @override
+  String get mustBePositiveNumber => 'Must be a positive number';
+
+  @override
+  String get invalidTotalAmount => 'Invalid total amount';
+
+  @override
+  String get cannotExceedTotalCapacity => 'Cannot exceed total capacity';
 }

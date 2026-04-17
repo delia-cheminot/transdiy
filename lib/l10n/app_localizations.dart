@@ -1139,6 +1139,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Right side'**
   String get intakeSummaryInjectionSideRight;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required field'**
+  String get requiredField;
+
+  /// No description provided for @mustBePositiveNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be a positive number'**
+  String get mustBePositiveNumber;
+
+  /// No description provided for @invalidTotalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid total amount'**
+  String get invalidTotalAmount;
+
+  /// No description provided for @cannotExceedTotalCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot exceed total capacity'**
+  String get cannotExceedTotalCapacity;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -4,6 +4,7 @@ import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
@@ -114,38 +115,42 @@ class SupplyItem {
     );
   }
 
-  static String? validateTotalAmount(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateTotalAmount(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
 
-  static String? validateName(String? value) => requiredString(value);
+  static String? validateName(AppLocalizations l10n, String? value) =>
+      requiredString(l10n, value);
 
-  static String? validateConcentration(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateConcentration(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
 
-  static String? Function(String?) usedAmountValidator(String totalAmount) {
+  static String? Function(String?) usedAmountValidator(
+      AppLocalizations l10n, String totalAmount) {
     return (String? value) {
-      return requiredPositiveDecimal(value) ??
-          (validateTotalAmount(totalAmount) != null
-              ? 'Invalid total amount'
+      return requiredPositiveDecimal(l10n, value) ??
+          (validateTotalAmount(l10n, totalAmount) != null
+              ? l10n.invalidTotalAmount
               : null) ??
           (value.toDecimalOrZero > totalAmount.toDecimal
-              ? 'Cannot exceed total capacity'
+              ? l10n.cannotExceedTotalCapacity
               : null);
     };
   }
 
-  static String? validateMolecule(Molecule? value) => requiredMolecule(value);
+  static String? validateMolecule(AppLocalizations l10n, Molecule? value) =>
+      requiredMolecule(l10n, value);
 
-  static String? validateAdministrationRoute(AdministrationRoute? value) =>
-      requiredAdministrationRoute(value);
+  static String? validateAdministrationRoute(
+          AppLocalizations l10n, AdministrationRoute? value) =>
+      requiredAdministrationRoute(l10n, value);
 
-  static String? Function(Ester?) esterValidator(
+  static String? Function(Ester?) esterValidator(AppLocalizations l10n,
       Molecule? molecule, AdministrationRoute? administrationRoute) {
     return (Ester? value) {
       return (molecule == KnownMolecules.estradiol &&
               administrationRoute == AdministrationRoute.injection &&
               value == null)
-          ? 'Required field'
+          ? l10n.requiredField
           : null;
     };
   }

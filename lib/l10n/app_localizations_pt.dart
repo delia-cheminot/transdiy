@@ -560,6 +560,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get intakeSummaryInjectionSideRight => 'Lado direito';
+
+  @override
+  String get requiredField => 'Campo obrigatório';
+
+  @override
+  String get mustBePositiveNumber => 'Deve ser um número positivo';
+
+  @override
+  String get invalidTotalAmount => 'Quantidade total inválida';
+
+  @override
+  String get cannotExceedTotalCapacity => 'Não pode exceder a capacidade total';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -1118,4 +1130,16 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get intakeSummaryInjectionSideRight => 'Lado direito';
+
+  @override
+  String get requiredField => 'Campo obrigatório';
+
+  @override
+  String get mustBePositiveNumber => 'Deve ser um número positivo';
+
+  @override
+  String get invalidTotalAmount => 'Quantidade total inválida';
+
+  @override
+  String get cannotExceedTotalCapacity => 'Não pode exceder a capacidade total';
 }

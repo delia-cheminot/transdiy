@@ -4,8 +4,11 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   group('SupplyItem model', () {
     test('toMap and fromMap should preserve values', () {
       // Arrange
@@ -143,7 +146,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => SupplyItem.validateTotalAmount(c['value'] as String?))
+            .map((c) =>
+                SupplyItem.validateTotalAmount(l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -161,7 +165,7 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => SupplyItem.validateName(c['value'] as String?))
+            .map((c) => SupplyItem.validateName(l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -172,7 +176,7 @@ void main() {
       test('validateUsedAmount', () {
         // Arrange
         const total = '100';
-        final validator = SupplyItem.usedAmountValidator(total);
+        final validator = SupplyItem.usedAmountValidator(l10n, total);
         final cases = [
           {'value': null, 'expected': isNotNull},
           {'value': '', 'expected': isNotNull},
@@ -201,7 +205,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => SupplyItem.validateConcentration(c['value'] as String?))
+            .map((c) =>
+                SupplyItem.validateConcentration(l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -218,7 +223,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => SupplyItem.validateMolecule(c['value'] as Molecule?))
+            .map((c) =>
+                SupplyItem.validateMolecule(l10n, c['value'] as Molecule?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -236,7 +242,9 @@ void main() {
         // Act
         final results = cases
             .map((c) => SupplyItem.validateAdministrationRoute(
-                c['value'] as AdministrationRoute?))
+                  l10n,
+                  c['value'] as AdministrationRoute?,
+                ))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -282,6 +290,7 @@ void main() {
         // Act
         final results = cases.map((c) {
           final validator = SupplyItem.esterValidator(
+            l10n,
             c['molecule'] as Molecule?,
             c['route'] as AdministrationRoute?,
           );

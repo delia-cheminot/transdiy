@@ -186,5 +186,10 @@
   "injectionSideLeft": "Gauche",
   "injectionSideRight": "Droite",
   "intakeSummaryInjectionSideLeft": "Côté gauche",
-  "intakeSummaryInjectionSideRight": "Côté droit"
+  "intakeSummaryInjectionSideRight": "Côté droit",
+
+  "requiredField": "Champ obligatoire",
+  "mustBePositiveNumber": "Doit être un nombre positif",
+  "invalidTotalAmount": "Montant total invalide",
+  "cannotExceedTotalCapacity": "Ne peut pas dépasser la capacité totale"
 }

@@ -186,5 +186,10 @@
   "injectionSideLeft": "Left",
   "injectionSideRight": "Right",
   "intakeSummaryInjectionSideLeft": "Left side",
-  "intakeSummaryInjectionSideRight": "Right side"
+  "intakeSummaryInjectionSideRight": "Right side",
+
+  "requiredField": "Required field",
+  "mustBePositiveNumber": "Must be a positive number",
+  "invalidTotalAmount": "Invalid total amount",
+  "cannotExceedTotalCapacity": "Cannot exceed total capacity"
 }

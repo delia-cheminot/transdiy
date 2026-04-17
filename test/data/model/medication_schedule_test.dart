@@ -6,8 +6,11 @@ import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   group('MedicationSchedule', () {
     group('MedicationSchedule model', () {
       test('toMap and fromMap should preserve values', () {
@@ -50,9 +53,9 @@ void main() {
       test('validateName works correctly', () {
         expect(
           [
-            MedicationSchedule.validateName(null),
-            MedicationSchedule.validateName(''),
-            MedicationSchedule.validateName('Valid'),
+            MedicationSchedule.validateName(l10n, null),
+            MedicationSchedule.validateName(l10n, ''),
+            MedicationSchedule.validateName(l10n, 'Valid'),
           ],
           [
             isNotNull,
@@ -65,12 +68,12 @@ void main() {
       test('validateDose works correctly', () {
         expect(
           [
-            MedicationSchedule.validateDose(null),
-            MedicationSchedule.validateDose(''),
-            MedicationSchedule.validateDose('0'),
-            MedicationSchedule.validateDose('-1'),
-            MedicationSchedule.validateDose('abc'),
-            MedicationSchedule.validateDose('2.5'),
+            MedicationSchedule.validateDose(l10n, null),
+            MedicationSchedule.validateDose(l10n, ''),
+            MedicationSchedule.validateDose(l10n, '0'),
+            MedicationSchedule.validateDose(l10n, '-1'),
+            MedicationSchedule.validateDose(l10n, 'abc'),
+            MedicationSchedule.validateDose(l10n, '2.5'),
           ],
           [
             isNotNull,
@@ -86,12 +89,12 @@ void main() {
       test('validateIntervalDays works correctly', () {
         expect(
           [
-            MedicationSchedule.validateIntervalDays(null),
-            MedicationSchedule.validateIntervalDays(''),
-            MedicationSchedule.validateIntervalDays('0'),
-            MedicationSchedule.validateIntervalDays('-2'),
-            MedicationSchedule.validateIntervalDays('abc'),
-            MedicationSchedule.validateIntervalDays('7'),
+            MedicationSchedule.validateIntervalDays(l10n, null),
+            MedicationSchedule.validateIntervalDays(l10n, ''),
+            MedicationSchedule.validateIntervalDays(l10n, '0'),
+            MedicationSchedule.validateIntervalDays(l10n, '-2'),
+            MedicationSchedule.validateIntervalDays(l10n, 'abc'),
+            MedicationSchedule.validateIntervalDays(l10n, '7'),
           ],
           [
             isNotNull,
@@ -113,8 +116,10 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) =>
-                MedicationSchedule.validateStartDate(c['value'] as Date?))
+            .map((c) => MedicationSchedule.validateStartDate(
+                  l10n,
+                  c['value'] as Date?,
+                ))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -131,8 +136,10 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) =>
-                MedicationSchedule.validateMolecule(c['value'] as Molecule?))
+            .map((c) => MedicationSchedule.validateMolecule(
+                  l10n,
+                  c['value'] as Molecule?,
+                ))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -150,7 +157,9 @@ void main() {
         // Act
         final results = cases
             .map((c) => MedicationSchedule.validateAdministrationRoute(
-                c['value'] as AdministrationRoute?))
+                  l10n,
+                  c['value'] as AdministrationRoute?,
+                ))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -196,6 +205,7 @@ void main() {
         // Act
         final results = cases.map((c) {
           final validator = MedicationSchedule.esterValidator(
+            l10n,
             c['molecule'] as Molecule?,
             c['route'] as AdministrationRoute?,
           );

@@ -39,7 +39,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   bool _hasInitializedSupplyItem = false;
 
   String? get _takenDoseError =>
-      MedicationIntake.validateDose(_takenDoseController.text);
+      MedicationIntake.validateDose(context.l10n, _takenDoseController.text);
 
   bool get _isFormValid => _takenDoseError == null;
 

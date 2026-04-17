@@ -37,26 +37,29 @@ class _EditItemPageState extends State<EditItemPage> {
   late PreferencesService _preferencesService;
   late SupplyItemProvider _supplyItemProvider;
 
-  String? get _nameError => SupplyItem.validateName(_nameController.text);
+  String? get _nameError =>
+      SupplyItem.validateName(context.l10n, _nameController.text);
 
   String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalAmountController.text);
+      SupplyItem.validateTotalAmount(context.l10n, _totalAmountController.text);
 
   String? get _usedAmountError {
-    final validator =
-        SupplyItem.usedAmountValidator(_totalAmountController.text);
+    final validator = SupplyItem.usedAmountValidator(
+        context.l10n, _totalAmountController.text);
     return validator(_usedAmountController.text);
   }
 
-  String? get _concentrationError =>
-      SupplyItem.validateConcentration(_concentrationController.text);
+  String? get _concentrationError => SupplyItem.validateConcentration(
+      context.l10n, _concentrationController.text);
 
-  String? get _moleculeError => SupplyItem.validateMolecule(_molecule);
+  String? get _moleculeError =>
+      SupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      SupplyItem.validateAdministrationRoute(_administrationRoute);
+      SupplyItem.validateAdministrationRoute(
+          context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator =
-        SupplyItem.esterValidator(_molecule, _administrationRoute);
+    final validator = SupplyItem.esterValidator(
+        context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
 

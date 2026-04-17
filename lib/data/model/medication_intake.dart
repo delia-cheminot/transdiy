@@ -5,6 +5,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
@@ -119,10 +120,11 @@ class MedicationIntake {
   }
 
   // coverage:ignore-start
-  static String? validateDose(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateDose(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
 
-  static String? validateDeadSpace(String? value) => positiveDecimal(value);
+  static String? validateDeadSpace(AppLocalizations l10n, String? value) =>
+      positiveDecimal(l10n, value);
 
   @override
   bool operator ==(Object other) =>

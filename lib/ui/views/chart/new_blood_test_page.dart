@@ -20,11 +20,12 @@ class _NewBloodTestPageState extends State<NewBloodTestPage> {
   late TextEditingController _testosteroneLevelsController;
   late DateTime _testDateTime;
 
-  String? get _testDateError => BloodTest.validateDate(_testDateTime);
+  String? get _testDateError =>
+      BloodTest.validateDate(context.l10n, _testDateTime);
   String? get _estradiolError =>
-      BloodTest.validateLevel(_estradiolLevelsController.text);
+      BloodTest.validateLevel(context.l10n, _estradiolLevelsController.text);
   String? get _testosteroneError =>
-      BloodTest.validateLevel(_testosteroneLevelsController.text);
+      BloodTest.validateLevel(context.l10n, _testosteroneLevelsController.text);
 
   bool get _isFormValid =>
       _testDateError == null &&

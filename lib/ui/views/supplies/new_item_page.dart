@@ -30,17 +30,20 @@ class _NewItemPageState extends State<NewItemPage> {
   Ester? _ester;
   late PreferencesService _preferencesService;
 
-  String? get _nameError => SupplyItem.validateName(_nameController.text);
+  String? get _nameError =>
+      SupplyItem.validateName(context.l10n, _nameController.text);
   String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalAmountController.text);
-  String? get _concentrationError =>
-      SupplyItem.validateConcentration(_concentrationController.text);
-  String? get _moleculeError => SupplyItem.validateMolecule(_molecule);
+      SupplyItem.validateTotalAmount(context.l10n, _totalAmountController.text);
+  String? get _concentrationError => SupplyItem.validateConcentration(
+      context.l10n, _concentrationController.text);
+  String? get _moleculeError =>
+      SupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      SupplyItem.validateAdministrationRoute(_administrationRoute);
+      SupplyItem.validateAdministrationRoute(
+          context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator =
-        SupplyItem.esterValidator(_molecule, _administrationRoute);
+    final validator = SupplyItem.esterValidator(
+        context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
 
