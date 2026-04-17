@@ -2,7 +2,7 @@ import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
-import 'package:mona/data/providers/locale_provider.dart';
+import 'package:mona/l10n/locale_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
