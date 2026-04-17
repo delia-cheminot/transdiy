@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/locale.dart' as intl;
-import 'package:mona/l10n/locale_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/locale_provider.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 
