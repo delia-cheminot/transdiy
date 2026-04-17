@@ -69,7 +69,7 @@
     "noNotifications": "Sin notificaciones",
     "notificationsCount": "{count} notificaciones",
     "editSchedule": "Editar horario",
-    "deleteSchedule": "¿Eliminar este horario?",
+    "deleteSchedule": "¿Eliminar {name}?",
     "scheduleNotifications": "Notificaciones del horario",
     "addNotification": "Agregar una notificación",
     "noNotificationsForSchedule": "No hay notificaciones para {scheduleName}. Puedes añadir una usando el botón Añadir.",
@@ -111,7 +111,7 @@
     "concentration": "Concentración",
     "editItem": "Editar elemento",
     "usedAmount": "Cantidad usada",
-    "deleteItem": "¿Eliminar este elemento?",
+    "deleteItem": "¿Eliminar {name}?",
     "remaining": "{amount} {unit} restantes",
 
     "add": "Añadir",

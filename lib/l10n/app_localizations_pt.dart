@@ -114,8 +114,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enableNotifications => 'Ativar notificações';
 
   @override
-  String get enableNotificationsDescription =>
-      'Enviar lembretes dos cronogramas';
+  String get enableNotificationsDescription => 'Enviar lembretes dos cronogramas';
 
   @override
   String get notificationsDisabledTitle => 'As notificações estão desativadas';
@@ -124,26 +123,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get clickToOpenSettings => 'Toque para abrir as configurações';
 
   @override
-  String get exactRemindersDisabled =>
-      'Os horários exatos de lembrete estão desativados';
+  String get exactRemindersDisabled => 'Os horários exatos de lembrete estão desativados';
 
   @override
-  String get remindersDelayed =>
-      'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
+  String get remindersDelayed => 'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
 
   @override
   String get autoUpdate => 'Atualização automática';
 
   @override
-  String get autoUpdateDescription =>
-      'Verificar automaticamente por atualizações ao iniciar o app';
+  String get autoUpdateDescription => 'Verificar automaticamente por atualizações ao iniciar o app';
 
   @override
   String get checkForUpdates => 'Verificar atualizações';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
+  String get checkForUpdatesDescription => 'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
 
   @override
   String appVersion(Object version) {
@@ -167,8 +162,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get importDataSubtitle => 'Restaurar dados de um backup JSON';
 
   @override
-  String get importDataOverwriteWarning =>
-      'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
+  String get importDataOverwriteWarning => 'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
 
   @override
   String get cancel => 'Cancelar';
@@ -180,8 +174,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get importSuccessfulTitle => 'Importação concluída';
 
   @override
-  String get importRestartRequired =>
-      'Reinicie o app para aplicar os dados restaurados.';
+  String get importRestartRequired => 'Reinicie o app para aplicar os dados restaurados.';
 
   @override
   String get closeApp => 'Fechar app';
@@ -236,7 +229,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get editSchedule => 'Editar cronograma';
 
   @override
-  String get deleteSchedule => 'Excluir este cronograma?';
+  String deleteSchedule(Object name) {
+    return 'Excluir $name?';
+  }
 
   @override
   String get scheduleNotifications => 'Notificações do cronograma';
@@ -253,8 +248,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get notificationsUpdated => 'As notificações foram atualizadas!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
+  String get notificationsUpdatedDescription => 'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
 
   @override
   String get dontShowAgain => 'Não mostrar novamente';
@@ -313,8 +307,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bloodTestsTitle => 'Exames de sangue';
 
   @override
-  String get empty_blood_tests =>
-      'Os exames de sangue registados aparecem aqui. Comece pelo botão Adicionar!';
+  String get empty_blood_tests => 'Os exames de sangue registados aparecem aqui. Comece pelo botão Adicionar!';
 
   @override
   String get addBloodTest => 'Adicionar exame de sangue';
@@ -335,8 +328,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get bloodTestDateLabel => 'Data do exame';
 
   @override
-  String get empty_supplies =>
-      'Sem suprimentos. Adicione um item para começar.';
+  String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
   String get newItem => 'Novo item';
@@ -357,7 +349,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get usedAmount => 'Quantidade usada';
 
   @override
-  String get deleteItem => 'Excluir este item?';
+  String deleteItem(Object name) {
+    return 'Excluir $name?';
+  }
 
   @override
   String remaining(Object amount, Object unit) {
@@ -464,8 +458,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Suspensão de cipionato de estradiol';
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
@@ -483,8 +476,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Suspensão de cipionato de testosterona';
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
 
   @override
   String get injection => 'Injeção';
@@ -519,7 +511,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
 class AppLocalizationsPtBr extends AppLocalizationsPt {
-  AppLocalizationsPtBr() : super('pt_BR');
+  AppLocalizationsPtBr(): super('pt_BR');
 
   @override
   String get appTitle => 'Mona';
@@ -627,8 +619,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get enableNotifications => 'Ativar notificações';
 
   @override
-  String get enableNotificationsDescription =>
-      'Enviar lembretes dos cronogramas';
+  String get enableNotificationsDescription => 'Enviar lembretes dos cronogramas';
 
   @override
   String get notificationsDisabledTitle => 'As notificações estão desativadas';
@@ -637,26 +628,22 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get clickToOpenSettings => 'Toque para abrir as configurações';
 
   @override
-  String get exactRemindersDisabled =>
-      'Os horários exatos de lembrete estão desativados';
+  String get exactRemindersDisabled => 'Os horários exatos de lembrete estão desativados';
 
   @override
-  String get remindersDelayed =>
-      'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
+  String get remindersDelayed => 'Os lembretes podem atrasar um pouco. Toque para abrir as configurações.';
 
   @override
   String get autoUpdate => 'Atualização automática';
 
   @override
-  String get autoUpdateDescription =>
-      'Verificar automaticamente por atualizações ao iniciar o app';
+  String get autoUpdateDescription => 'Verificar automaticamente por atualizações ao iniciar o app';
 
   @override
   String get checkForUpdates => 'Verificar atualizações';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
+  String get checkForUpdatesDescription => 'Verificar manualmente a versão mais recente\nIsso se conectará à Internet\n(Nenhum dado será enviado)';
 
   @override
   String appVersion(Object version) {
@@ -680,8 +667,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get importDataSubtitle => 'Restaurar dados de um backup JSON';
 
   @override
-  String get importDataOverwriteWarning =>
-      'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
+  String get importDataOverwriteWarning => 'Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?';
 
   @override
   String get cancel => 'Cancelar';
@@ -693,8 +679,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get importSuccessfulTitle => 'Importação concluída';
 
   @override
-  String get importRestartRequired =>
-      'Reinicie o app para aplicar os dados restaurados.';
+  String get importRestartRequired => 'Reinicie o app para aplicar os dados restaurados.';
 
   @override
   String get closeApp => 'Fechar app';
@@ -749,7 +734,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get editSchedule => 'Editar cronograma';
 
   @override
-  String get deleteSchedule => 'Excluir este cronograma?';
+  String deleteSchedule(Object name) {
+    return 'Excluir $name?';
+  }
 
   @override
   String get scheduleNotifications => 'Notificações do cronograma';
@@ -766,8 +753,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get notificationsUpdated => 'As notificações foram atualizadas!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
+  String get notificationsUpdatedDescription => 'Cada cronograma agora tem suas próprias notificações.\n\nConfigure as notificações para seus cronogramas para garantir que você não perca nada.';
 
   @override
   String get dontShowAgain => 'Não mostrar novamente';
@@ -826,8 +812,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get bloodTestsTitle => 'Exames de sangue';
 
   @override
-  String get empty_blood_tests =>
-      'Os exames de sangue registrados aparecem aqui. Comece pelo botão Adicionar!';
+  String get empty_blood_tests => 'Os exames de sangue registrados aparecem aqui. Comece pelo botão Adicionar!';
 
   @override
   String get addBloodTest => 'Adicionar exame de sangue';
@@ -848,8 +833,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get bloodTestDateLabel => 'Data do exame';
 
   @override
-  String get empty_supplies =>
-      'Sem suprimentos. Adicione um item para começar.';
+  String get empty_supplies => 'Sem suprimentos. Adicione um item para começar.';
 
   @override
   String get newItem => 'Novo item';
@@ -870,7 +854,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get usedAmount => 'Quantidade usada';
 
   @override
-  String get deleteItem => 'Excluir este item?';
+  String deleteItem(Object name) {
+    return 'Excluir $name?';
+  }
 
   @override
   String remaining(Object amount, Object unit) {
@@ -977,8 +963,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get medicationEstradiolBenzoate => 'Benzoato de estradiol';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Suspensão de cipionato de estradiol';
+  String get medicationEstradiolCypionateSuspension => 'Suspensão de cipionato de estradiol';
 
   @override
   String get medicationTestosteroneEnanthate => 'Enantato de testosterona';
@@ -996,8 +981,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get medicationTestosteroneBenzoate => 'Benzoato de testosterona';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Suspensão de cipionato de testosterona';
+  String get medicationTestosteroneCypionateSuspension => 'Suspensão de cipionato de testosterona';
 
   @override
   String get injection => 'Injeção';

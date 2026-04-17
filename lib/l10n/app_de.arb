@@ -69,7 +69,7 @@
     "noNotifications": "Keine Benachrichtigungen",
     "notificationsCount": "{count} Benachrichtigungen",
     "editSchedule": "Zeitplan bearbeiten",
-    "deleteSchedule": "Diesen Zeitplan löschen?",
+    "deleteSchedule": "{name} löschen?",
     "scheduleNotifications": "Benachrichtigungen für Zeitplan",
     "addNotification": "Benachrichtigung hinzufügen",
     "noNotificationsForSchedule": "Keine Benachrichtigungen für {scheduleName}. Du kannst eine über die Schaltfläche „Hinzufügen“ erstellen.",
@@ -111,7 +111,7 @@
     "concentration": "Konzentration",
     "editItem": "Eintrag bearbeiten",
     "usedAmount": "Verwendete Menge",
-    "deleteItem": "Diesen Eintrag löschen?",
+    "deleteItem": "{name} löschen?",
     "remaining": "{amount} {unit} verbleibend",
 
     "add": "Hinzufügen",

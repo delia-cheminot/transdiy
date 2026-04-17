@@ -69,7 +69,7 @@
     "noNotifications": "Sem notificações",
     "notificationsCount": "{count} notificações",
     "editSchedule": "Editar cronograma",
-    "deleteSchedule": "Excluir este cronograma?",
+    "deleteSchedule": "Excluir {name}?",
     "scheduleNotifications": "Notificações do cronograma",
     "addNotification": "Adicionar notificação",
     "noNotificationsForSchedule": "Sem notificações para {scheduleName}. Você pode adicionar uma usando o botão Adicionar.",
@@ -111,7 +111,7 @@
     "concentration": "Concentração",
     "editItem": "Editar item",
     "usedAmount": "Quantidade usada",
-    "deleteItem": "Excluir este item?",
+    "deleteItem": "Excluir {name}?",
     "remaining": "{amount} {unit} restantes",
 
     "add": "Adicionar",

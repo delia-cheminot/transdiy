@@ -69,7 +69,7 @@
   "noNotifications": "Aucune notification",
   "notificationsCount": "{count} notifications",
   "editSchedule": "Modifier le traitement",
-  "deleteSchedule": "Supprimer ce traitement ?",
+  "deleteSchedule": "Supprimer {name} ?",
   "scheduleNotifications": "Notifications du traitement",
   "addNotification": "Ajouter une notification",
   "noNotificationsForSchedule": "Aucune notification pour {scheduleName}. Vous pouvez en ajouter une en utilisant le bouton Ajouter.",
@@ -111,7 +111,7 @@
   "concentration": "Concentration",
   "editItem": "Modifier l'élément",
   "usedAmount": "Quantité utilisée",
-  "deleteItem": "Supprimer cet élément ?",
+  "deleteItem": "Supprimer {name} ?",
   "remaining": "{amount} {unit} restant",
 
   "add": "Ajouter",
