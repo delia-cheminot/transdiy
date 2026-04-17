@@ -412,6 +412,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get delete => 'Eliminar';
 
   @override
+  String get deleteElement => '¿Eliminar este elemento?';
+
+  @override
+  String get irreversibleAction => 'Esta acción no se puede deshacer.';
+
+  @override
   String get name => 'Nombre';
 
   @override

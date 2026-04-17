@@ -131,6 +131,8 @@
   "cancel": "Annuler",
   "next": "Suivant",
   "delete": "Supprimer",
+  "deleteElement": "Supprimer cet élément ?",
+  "irreversibleAction": "Cette action est irréversible.",
 
   "name": "Nom",
   "molecule": "Molécule",

@@ -412,6 +412,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get delete => 'Eliminar';
 
   @override
+  String get deleteElement => 'Eliminar este item?';
+
+  @override
+  String get irreversibleAction => 'Esta ação não pode ser desfeita.';
+
+  @override
   String get name => 'Nome';
 
   @override
@@ -962,6 +968,12 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get delete => 'Excluir';
+
+  @override
+  String get deleteElement => 'Excluir este item?';
+
+  @override
+  String get irreversibleAction => 'Esta ação não pode ser desfeita.';
 
   @override
   String get name => 'Nome';

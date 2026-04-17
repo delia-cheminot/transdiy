@@ -131,6 +131,8 @@
   "cancel": "Cancel",
   "next": "Next",
   "delete": "Delete",
+  "deleteElement": "Delete this item?",
+  "irreversibleAction": "This action can't be undone.",
 
   "name": "Name",
   "molecule": "Molecule",

@@ -412,6 +412,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get delete => 'Löschen';
 
   @override
+  String get deleteElement => 'Diesen Eintrag löschen?';
+
+  @override
+  String get irreversibleAction => 'Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
   String get name => 'Name';
 
   @override

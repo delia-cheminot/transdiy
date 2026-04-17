@@ -10,6 +10,6 @@ extension MedicationIntakeL10n on MedicationIntake {
         '$dose ${molecule.unit} • ${molecule.localizedNameWithEster(ester, localizations)} • '
         '${administrationRoute.localizedName(localizations)}';
     if (side == null) return firstLine;
-    return '$firstLine • ${side!.localizedSideSummary(localizations)}';
+    return '$firstLine • ${side!.localizedSummary(localizations)}';
   }
 }

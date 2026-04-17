@@ -412,6 +412,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get delete => 'Supprimer';
 
   @override
+  String get deleteElement => 'Supprimer cet élément ?';
+
+  @override
+  String get irreversibleAction => 'Cette action est irréversible.';
+
+  @override
   String get name => 'Nom';
 
   @override

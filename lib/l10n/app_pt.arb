@@ -131,6 +131,8 @@
     "cancel": "Cancelar",
     "next": "Próximo",
     "delete": "Eliminar",
+    "deleteElement": "Eliminar este item?",
+    "irreversibleAction": "Esta ação não pode ser desfeita.",
 
     "name": "Nome",
     "molecule": "Molécula",

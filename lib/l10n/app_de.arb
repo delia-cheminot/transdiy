@@ -131,6 +131,8 @@
     "cancel": "Abbrechen",
     "next": "Weiter",
     "delete": "Löschen",
+    "deleteElement": "Diesen Eintrag löschen?",
+    "irreversibleAction": "Diese Aktion kann nicht rückgängig gemacht werden.",
 
     "name": "Name",
     "molecule": "Wirkstoff",

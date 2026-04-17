@@ -5,7 +5,7 @@ extension InjectionSideL10n on InjectionSide {
   String localizedName(AppLocalizations localizations) =>
       _InjectionSideDisplayNames.resolve(this, localizations);
 
-  String localizedSideSummary(AppLocalizations localizations) =>
+  String localizedSummary(AppLocalizations localizations) =>
       _InjectionSideSummary.resolve(this, localizations);
 }
 

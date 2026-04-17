@@ -840,6 +840,18 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
+  /// No description provided for @deleteElement.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this item?'**
+  String get deleteElement;
+
+  /// No description provided for @irreversibleAction.
+  ///
+  /// In en, this message translates to:
+  /// **'This action can\'t be undone.'**
+  String get irreversibleAction;
+
   /// No description provided for @name.
   ///
   /// In en, this message translates to:

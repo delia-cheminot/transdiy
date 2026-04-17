@@ -412,6 +412,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
+  String get deleteElement => 'Delete this item?';
+
+  @override
+  String get irreversibleAction => 'This action can\'t be undone.';
+
+  @override
   String get name => 'Name';
 
   @override
