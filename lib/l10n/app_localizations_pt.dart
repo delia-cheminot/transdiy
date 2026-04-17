@@ -65,9 +65,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get neverTakenYet => 'Ainda não tomado';
 
   @override
-  String get side => 'lado';
-
-  @override
   String get scheduleFrequencyDaily => 'Todos os dias';
 
   @override
@@ -507,6 +504,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get injectionSideRight => 'Direita';
+
+  @override
+  String get intakeSummaryInjectionSideLeft => 'Lado esquerdo';
+
+  @override
+  String get intakeSummaryInjectionSideRight => 'Lado direito';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).
@@ -568,9 +571,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get neverTakenYet => 'Ainda não tomado';
-
-  @override
-  String get side => 'lado';
 
   @override
   String get scheduleFrequencyDaily => 'Todos os dias';
@@ -1012,4 +1012,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get injectionSideRight => 'Direita';
+
+  @override
+  String get intakeSummaryInjectionSideLeft => 'Lado esquerdo';
+
+  @override
+  String get intakeSummaryInjectionSideRight => 'Lado direito';
 }

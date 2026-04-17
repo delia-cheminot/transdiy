@@ -11,6 +11,7 @@ import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/injection_side_l10n.dart';
 import 'package:mona/l10n/helpers/molecule_l10n.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:provider/provider.dart';
@@ -148,8 +149,7 @@ class IntakeTileViewModel {
 
     return "${schedule.dose} ${schedule.molecule.unit} • ${schedule.molecule.localizedNameWithEster(schedule.ester, localizations)} • "
         "${schedule.administrationRoute.localizedName(localizations)}"
-        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.name} ${localizations.side}" : ""}";
-    // TODO this reads as "droite côté in french
+        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.localizedSideSummary(localizations)}" : ""}";
   }
 
   String get scheduledText {

@@ -18,7 +18,6 @@
     "inText": "in",
     "lastTaken": "Zuletzt genommen",
     "neverTakenYet": "Noch nie genommen",
-    "side": "Seite",
     "scheduleFrequencyDaily": "Täglich",
     "scheduleFrequencyEveryNDays": "Alle {days} Tage",
     "newUpdateAvailable": "Ein neues Update ist verfügbar!",
@@ -169,5 +168,7 @@
     "transdermal": "Transdermales Spray",
 
     "injectionSideLeft": "Links",
-    "injectionSideRight": "Rechts"
+    "injectionSideRight": "Rechts",
+    "intakeSummaryInjectionSideLeft": "Linke Seite",
+    "intakeSummaryInjectionSideRight": "Rechte Seite"
 }

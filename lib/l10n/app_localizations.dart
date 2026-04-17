@@ -210,12 +210,6 @@ abstract class AppLocalizations {
   /// **'Never taken yet'**
   String get neverTakenYet;
 
-  /// No description provided for @side.
-  ///
-  /// In en, this message translates to:
-  /// **'side'**
-  String get side;
-
   /// No description provided for @scheduleFrequencyDaily.
   ///
   /// In en, this message translates to:
@@ -1049,6 +1043,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Right'**
   String get injectionSideRight;
+
+  /// No description provided for @intakeSummaryInjectionSideLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left side'**
+  String get intakeSummaryInjectionSideLeft;
+
+  /// No description provided for @intakeSummaryInjectionSideRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right side'**
+  String get intakeSummaryInjectionSideRight;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

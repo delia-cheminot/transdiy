@@ -65,9 +65,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get neverTakenYet => 'Never taken yet';
 
   @override
-  String get side => 'side';
-
-  @override
   String get scheduleFrequencyDaily => 'Every day';
 
   @override
@@ -507,4 +504,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get injectionSideRight => 'Right';
+
+  @override
+  String get intakeSummaryInjectionSideLeft => 'Left side';
+
+  @override
+  String get intakeSummaryInjectionSideRight => 'Right side';
 }
