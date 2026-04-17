@@ -134,8 +134,7 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => (c['value'] as String).toInt).toList();
+      final results = cases.map((c) => (c['value'] as String).toInt).toList();
       final expected = cases.map((c) => c['expected'] as int).toList();
 
       // Assert

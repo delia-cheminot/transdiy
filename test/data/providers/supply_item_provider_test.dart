@@ -420,7 +420,8 @@ void main() {
         expect(items.map((e) => e.id).toList(), [1]);
       });
 
-      test('returns the matching item when others differ by molecule route or ester',
+      test(
+          'returns the matching item when others differ by molecule route or ester',
           () async {
         // Arrange
         final matchItem = SupplyItem(

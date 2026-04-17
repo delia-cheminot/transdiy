@@ -38,7 +38,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   }
 
   Future<void> _confirmDelete() async {
-    final confirmed = await Dialogs.confirmDeleteDialog(context: context, title: "Delete this blood test?");
+    final confirmed = await Dialogs.confirmDeleteDialog(
+        context: context, title: "Delete this blood test?");
 
     if (confirmed == true && mounted) {
       _bloodTestProvider.deleteBloodTest(widget.bloodtest);
