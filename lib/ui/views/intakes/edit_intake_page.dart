@@ -215,10 +215,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem != null)
+            if (_selectedSupplyItem case final supplyItem?)
               FormInfoText(
-                infoText:
-                    ' $_takenDose ${widget.intake.molecule.unit} = ${_selectedSupplyItem!.getAmount(_takenDose)} ${_selectedSupplyItem!.administrationRoute.localizedUnit(localizations, _selectedSupplyItem!.getAmount(_takenDose).toDouble())}',
+                infoText: ' $_takenDose ${widget.intake.molecule.unit} = '
+                    '${supplyItem.getAmount(_takenDose)} '
+                    '${supplyItem.administrationRoute.localizedUnit(localizations, supplyItem.getAmount(_takenDose).toDouble())}',
               ),
             FormSpacer(),
             FormDropdownField<SupplyItem?>(
