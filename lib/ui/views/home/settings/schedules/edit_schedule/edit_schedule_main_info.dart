@@ -127,6 +127,7 @@ class _EditScheduleMainInfoPageState extends State<EditScheduleMainInfoPage> {
     final localizations = context.l10n;
     final confirmed = await Dialogs.confirmDeleteDialog(
         context: context, title: localizations.deleteSchedule);
+    // TODO "Delete ${widget.schedule.name}?");
 
     if (confirmed == true && mounted) {
       _medicationScheduleProvider.deleteSchedule(widget.schedule);

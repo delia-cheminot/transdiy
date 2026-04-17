@@ -17,7 +17,6 @@ import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
 import 'package:mona/util/string_parsing.dart';
-import 'package:mona/util/validators.dart';
 import 'package:provider/provider.dart';
 
 class TakeMedicationPage extends StatefulWidget {
@@ -44,8 +43,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   String? get _takenDoseError =>
       MedicationIntake.validateDose(_takenDoseController.text);
 
-  // TODO validate dead space
-  String? get _deadSpaceError => positiveDecimal(_takenDoseController.text);
+  String? get _deadSpaceError =>
+      MedicationIntake.validateDeadSpace(_deadSpaceController.text);
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 

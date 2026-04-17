@@ -134,6 +134,7 @@ class _EditItemPageState extends State<EditItemPage> {
     final localizations = context.l10n;
     final confirmed = await Dialogs.confirmDeleteDialog(
         context: context, title: localizations.deleteItem);
+    // TODO "Delete ${widget.item.name}?"
 
     if (confirmed == true) {
       if (!mounted) return;

@@ -115,14 +115,14 @@ class MedicationIntake {
   }
 
   Date? get takenLocalDate {
-    return takenLocalDateTime != null
-        ? Date.fromDateTime(takenLocalDateTime!)
-        : null;
+    return takenLocalDateTime?.toDate;
   }
 
   // coverage:ignore-start
   static String? validateDose(String? value) =>
       requiredStrictlyPositiveDecimal(value);
+
+  static String? validateDeadSpace(String? value) => positiveDecimal(value);
 
   @override
   bool operator ==(Object other) =>
