@@ -48,7 +48,6 @@
     "importDataTitle": "Importar dados",
     "importDataSubtitle": "Restaurar dados de um backup JSON",
     "importDataOverwriteWarning": "Isso substituirá todos os seus dados atuais pelo backup. Esta ação não pode ser desfeita. Deseja continuar?",
-    "cancel": "Cancelar",
     "importConfirm": "Importar",
     "importSuccessfulTitle": "Importação concluída",
     "importRestartRequired": "Reinicie o app para aplicar os dados restaurados.",
@@ -58,6 +57,18 @@
     "dataManagement": "Gestão de dados",
     "exportDataTitle": "Exportar dados",
     "exportDataSubtitle": "Salve seus dados num ficheiro JSON",
+
+    "updateNoCompatibleApk": "Não foi encontrada nenhuma atualização compatível com o seu dispositivo.",
+    "updateAppUpToDate": "A sua aplicação está atualizada!",
+    "updateCheckNetworkError": "Não foi possível verificar atualizações neste momento.",
+    "updateDialogTitle": "Atualização disponível",
+    "updateDialogBody": "A versão {latest} está disponível! (Atual: {current})\n\nHá uma atualização compatível com o seu dispositivo pronta a instalar.",
+    "updateDownloadAndInstall": "Transferir e instalar",
+    "updateInstallPermissionRequired": "É necessária permissão para instalar atualizações.",
+    "updateDownloadingTitle": "A transferir atualização...",
+    "updateFailedOpenInstaller": "Falha ao abrir o instalador: {message}",
+    "updateDownloadFailed": "Falha na transferência. Verifique a sua ligação.",
+
     "addSchedule": "Adicionar cronograma",
     "addScheduleToGetStarted": "Adicione um cronograma para começar.",
     "newSchedule": "Novo cronograma",
@@ -115,6 +126,7 @@
 
     "add": "Adicionar",
     "save": "Salvar",
+    "cancel": "Cancelar",
     "next": "Próximo",
     "delete": "Eliminar",
 

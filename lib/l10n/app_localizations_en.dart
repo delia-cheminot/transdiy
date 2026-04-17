@@ -162,9 +162,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importDataOverwriteWarning => 'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?';
 
   @override
-  String get cancel => 'Cancel';
-
-  @override
   String get importConfirm => 'Import';
 
   @override
@@ -192,6 +189,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exportDataSubtitle => 'Save your data to a JSON file';
+
+  @override
+  String get updateNoCompatibleApk => 'No compatible update found for your device.';
+
+  @override
+  String get updateAppUpToDate => 'Your app is up to date!';
+
+  @override
+  String get updateCheckNetworkError => 'Could not check for updates right now.';
+
+  @override
+  String get updateDialogTitle => 'Update Available';
+
+  @override
+  String updateDialogBody(Object current, Object latest) {
+    return 'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.';
+  }
+
+  @override
+  String get updateDownloadAndInstall => 'Download & Install';
+
+  @override
+  String get updateInstallPermissionRequired => 'Permission is required to install updates.';
+
+  @override
+  String get updateDownloadingTitle => 'Downloading Update...';
+
+  @override
+  String updateFailedOpenInstaller(Object message) {
+    return 'Failed to open installer: $message';
+  }
+
+  @override
+  String get updateDownloadFailed => 'Download failed. Please check your connection.';
 
   @override
   String get addSchedule => 'Add a schedule';
@@ -360,6 +391,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
+
+  @override
+  String get cancel => 'Cancel';
 
   @override
   String get next => 'Next';

@@ -162,9 +162,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importDataOverwriteWarning => 'Dadurch werden alle aktuellen Daten durch das Backup überschrieben. Diese Aktion kann nicht rückgängig gemacht werden. Möchtest du fortfahren?';
 
   @override
-  String get cancel => 'Abbrechen';
-
-  @override
   String get importConfirm => 'Importieren';
 
   @override
@@ -192,6 +189,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get exportDataSubtitle => 'Daten in einer JSON-Datei speichern';
+
+  @override
+  String get updateNoCompatibleApk => 'Keine kompatible Aktualisierung für dein Gerät gefunden.';
+
+  @override
+  String get updateAppUpToDate => 'Deine App ist auf dem neuesten Stand!';
+
+  @override
+  String get updateCheckNetworkError => 'Aktualisierungen konnten gerade nicht geprüft werden.';
+
+  @override
+  String get updateDialogTitle => 'Aktualisierung verfügbar';
+
+  @override
+  String updateDialogBody(Object current, Object latest) {
+    return 'Version $latest ist verfügbar! (Aktuell: $current)\n\nEine mit deinem Gerät kompatible Aktualisierung kann installiert werden.';
+  }
+
+  @override
+  String get updateDownloadAndInstall => 'Herunterladen & installieren';
+
+  @override
+  String get updateInstallPermissionRequired => 'Zum Installieren von Aktualisierungen ist eine Berechtigung erforderlich.';
+
+  @override
+  String get updateDownloadingTitle => 'Aktualisierung wird heruntergeladen …';
+
+  @override
+  String updateFailedOpenInstaller(Object message) {
+    return 'Installer konnte nicht geöffnet werden: $message';
+  }
+
+  @override
+  String get updateDownloadFailed => 'Download fehlgeschlagen. Bitte prüfe deine Verbindung.';
 
   @override
   String get addSchedule => 'Zeitplan hinzufügen';
@@ -360,6 +391,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get save => 'Speichern';
+
+  @override
+  String get cancel => 'Abbrechen';
 
   @override
   String get next => 'Weiter';

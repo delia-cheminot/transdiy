@@ -48,7 +48,6 @@
   "importDataTitle": "Import Data",
   "importDataSubtitle": "Restore data from a JSON backup",
   "importDataOverwriteWarning": "This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?",
-  "cancel": "Cancel",
   "importConfirm": "Import",
   "importSuccessfulTitle": "Import Successful",
   "importRestartRequired": "Please restart the app to apply the restored data.",
@@ -58,6 +57,18 @@
   "dataManagement": "Data Management",
   "exportDataTitle": "Export Data",
   "exportDataSubtitle": "Save your data to a JSON file",
+
+  "updateNoCompatibleApk": "No compatible update found for your device.",
+  "updateAppUpToDate": "Your app is up to date!",
+  "updateCheckNetworkError": "Could not check for updates right now.",
+  "updateDialogTitle": "Update Available",
+  "updateDialogBody": "Version {latest} is available! (Current: {current})\n\nAn update compatible with your device is ready to be installed.",
+  "updateDownloadAndInstall": "Download & Install",
+  "updateInstallPermissionRequired": "Permission is required to install updates.",
+  "updateDownloadingTitle": "Downloading Update...",
+  "updateFailedOpenInstaller": "Failed to open installer: {message}",
+  "updateDownloadFailed": "Download failed. Please check your connection.",
+
   "addSchedule": "Add a schedule",
   "addScheduleToGetStarted": "Add a schedule to get started.",
   "newSchedule": "New schedule",
@@ -115,6 +126,7 @@
 
   "add": "Add",
   "save": "Save",
+  "cancel": "Cancel",
   "next": "Next",
   "delete": "Delete",
 

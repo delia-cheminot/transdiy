@@ -48,7 +48,6 @@
   "importDataTitle": "Importer des données",
   "importDataSubtitle": "Restaurer les données depuis une sauvegarde JSON",
   "importDataOverwriteWarning": "Cela remplacera toutes vos données actuelles par la sauvegarde. Cette action est irréversible. Voulez-vous continuer ?",
-  "cancel": "Annuler",
   "importConfirm": "Importer",
   "importSuccessfulTitle": "Import réussi",
   "importRestartRequired": "Veuillez redémarrer l'application pour appliquer les données restaurées.",
@@ -58,6 +57,18 @@
   "dataManagement": "Gestion des données",
   "exportDataTitle": "Exporter les données",
   "exportDataSubtitle": "Enregistrer vos données dans un fichier JSON",
+
+  "updateNoCompatibleApk": "Aucune mise à jour compatible avec votre appareil.",
+  "updateAppUpToDate": "Votre application est à jour !",
+  "updateCheckNetworkError": "Impossible de vérifier les mises à jour pour le moment.",
+  "updateDialogTitle": "Mise à jour disponible",
+  "updateDialogBody": "La version {latest} est disponible ! (Actuelle : {current})\n\nUne mise à jour compatible avec votre appareil est prête à être installée.",
+  "updateDownloadAndInstall": "Télécharger et installer",
+  "updateInstallPermissionRequired": "Une autorisation est requise pour installer les mises à jour.",
+  "updateDownloadingTitle": "Téléchargement de la mise à jour...",
+  "updateFailedOpenInstaller": "Échec de l'ouverture de l'installateur : {message}",
+  "updateDownloadFailed": "Échec du téléchargement. Vérifiez votre connexion.",
+
   "addSchedule": "Ajouter un traitement",
   "addScheduleToGetStarted": "Ajoutez un traitement pour commencer.",
   "newSchedule": "Nouveau traitement",
@@ -115,6 +126,7 @@
 
   "add": "Ajouter",
   "save": "Enregistrer",
+  "cancel": "Annuler",
   "next": "Suivant",
   "delete": "Supprimer",
 

@@ -384,12 +384,6 @@ abstract class AppLocalizations {
   /// **'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?'**
   String get importDataOverwriteWarning;
 
-  /// No description provided for @cancel.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel'**
-  String get cancel;
-
   /// No description provided for @importConfirm.
   ///
   /// In en, this message translates to:
@@ -443,6 +437,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save your data to a JSON file'**
   String get exportDataSubtitle;
+
+  /// No description provided for @updateNoCompatibleApk.
+  ///
+  /// In en, this message translates to:
+  /// **'No compatible update found for your device.'**
+  String get updateNoCompatibleApk;
+
+  /// No description provided for @updateAppUpToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Your app is up to date!'**
+  String get updateAppUpToDate;
+
+  /// No description provided for @updateCheckNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not check for updates right now.'**
+  String get updateCheckNetworkError;
+
+  /// No description provided for @updateDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Available'**
+  String get updateDialogTitle;
+
+  /// No description provided for @updateDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {latest} is available! (Current: {current})\n\nAn update compatible with your device is ready to be installed.'**
+  String updateDialogBody(Object current, Object latest);
+
+  /// No description provided for @updateDownloadAndInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Download & Install'**
+  String get updateDownloadAndInstall;
+
+  /// No description provided for @updateInstallPermissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission is required to install updates.'**
+  String get updateInstallPermissionRequired;
+
+  /// No description provided for @updateDownloadingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading Update...'**
+  String get updateDownloadingTitle;
+
+  /// No description provided for @updateFailedOpenInstaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to open installer: {message}'**
+  String updateFailedOpenInstaller(Object message);
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Please check your connection.'**
+  String get updateDownloadFailed;
 
   /// No description provided for @addSchedule.
   ///
@@ -755,6 +809,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 
   /// No description provided for @next.
   ///
