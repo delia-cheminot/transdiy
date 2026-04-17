@@ -186,17 +186,19 @@ abstract class AppLocalizations {
   /// **'taken'**
   String get taken;
 
-  /// No description provided for @daysAgo.
+  /// Relative past time for a day count (phrase includes the number for [count] != 1).
+  /// For [count] == 1, implementations return the locale’s “yesterday” word (ARB `=1` branch).
   ///
   /// In en, this message translates to:
-  /// **'days ago'**
-  String get daysAgo;
+  /// **'{count, plural, =1{yesterday} other{# days ago}}'**
+  String daysAgoCount(int count);
 
-  /// No description provided for @inText.
+  /// Relative future time for a day count (phrase includes the number for [count] != 1).
+  /// For [count] == 1, implementations return the locale’s “tomorrow” word (ARB `=1` branch).
   ///
   /// In en, this message translates to:
-  /// **'in'**
-  String get inText;
+  /// **'{count, plural, =1{tomorrow} other{in # days}}'**
+  String inDaysCount(int count);
 
   /// No description provided for @lastTaken.
   ///

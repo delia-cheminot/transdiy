@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/schedule_manager.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
@@ -100,7 +101,7 @@ class HomePage extends StatelessWidget {
     return _buildScheduleSection(
       context,
       title: localizations
-          .todaySection(DateFormat.MMMMd(locale).format(DateTime.now())),
+          .todaySection(Date.today().format(DateFormat.MMMMd(locale))),
       statuses: [
         ScheduleStatus.overdue,
         ScheduleStatus.todayOverdue,

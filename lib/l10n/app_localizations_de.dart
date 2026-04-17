@@ -53,10 +53,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taken => 'genommen';
 
   @override
-  String get daysAgo => 'Tage her';
+  String daysAgoCount(int count) {
+    if (count == 1) {
+      return 'gestern';
+    }
+    return intl.Intl.plural(
+      count,
+      one: 'vor $count Tag',
+      other: 'vor $count Tagen',
+      locale: localeName,
+    );
+  }
 
   @override
-  String get inText => 'in';
+  String inDaysCount(int count) {
+    if (count == 1) {
+      return 'morgen';
+    }
+    return intl.Intl.plural(
+      count,
+      one: 'in $count Tag',
+      other: 'in $count Tagen',
+      locale: localeName,
+    );
+  }
 
   @override
   String get lastTaken => 'Zuletzt genommen';

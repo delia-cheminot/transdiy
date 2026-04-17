@@ -14,8 +14,20 @@
     "upcoming": "Bevorstehend",
     "today": "Heute",
     "taken": "genommen",
-    "daysAgo": "Tage her",
-    "inText": "in",
+    "daysAgoCount": "{count, plural, =1{gestern} other{vor # Tagen}}",
+    "@daysAgoCount": {
+        "description": "=1 „gestern“; sonst „vor # Tagen“.",
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
+    "inDaysCount": "{count, plural, =1{morgen} other{in # Tagen}}",
+    "@inDaysCount": {
+        "description": "=1 „morgen“; sonst „in # Tagen“.",
+        "placeholders": {
+            "count": {"type": "int"}
+        }
+    },
     "lastTaken": "Zuletzt genommen",
     "neverTakenYet": "Noch nie genommen",
     "scheduleFrequencyDaily": "Täglich",

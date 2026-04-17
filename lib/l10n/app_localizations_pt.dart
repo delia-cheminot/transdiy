@@ -53,10 +53,30 @@ class AppLocalizationsPt extends AppLocalizations {
   String get taken => 'tomado';
 
   @override
-  String get daysAgo => 'dias atrás';
+  String daysAgoCount(int count) {
+    if (count == 1) {
+      return 'ontem';
+    }
+    return intl.Intl.plural(
+      count,
+      one: 'há $count dia',
+      other: 'há $count dias',
+      locale: localeName,
+    );
+  }
 
   @override
-  String get inText => 'em';
+  String inDaysCount(int count) {
+    if (count == 1) {
+      return 'amanhã';
+    }
+    return intl.Intl.plural(
+      count,
+      one: 'em $count dia',
+      other: 'em $count dias',
+      locale: localeName,
+    );
+  }
 
   @override
   String get lastTaken => 'Última dose';
@@ -621,12 +641,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get taken => 'tomado';
-
-  @override
-  String get daysAgo => 'dias atrás';
-
-  @override
-  String get inText => 'em';
 
   @override
   String get lastTaken => 'Última dose';

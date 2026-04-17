@@ -14,8 +14,20 @@
   "upcoming": "À venir",
   "today": "Aujourd'hui",
   "taken": "pris",
-  "daysAgo": "jours auparavant",
-  "inText": "dans",
+  "daysAgoCount": "{count, plural, =1{hier} other{il y a # jours}}",
+  "@daysAgoCount": {
+    "description": "Décalage passé en jours ; =1 = hier (mot, pas « il y a 1 jour »).",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "inDaysCount": "{count, plural, =1{demain} other{dans # jours}}",
+  "@inDaysCount": {
+    "description": "Décalage futur en jours ; =1 = demain (mot, pas « dans 1 jour »).",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "lastTaken": "Dernière prise",
   "neverTakenYet": "Jamais pris auparavant",
   "scheduleFrequencyDaily": "Tous les jours",

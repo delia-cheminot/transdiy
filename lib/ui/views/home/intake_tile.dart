@@ -160,11 +160,11 @@ class IntakeTileViewModel {
 
       case ScheduleStatus.overdue:
         final formatted = DateFormat.MMMMd().format(lastScheduled!.value);
-        return "$formatted - $daysSinceLastScheduled ${localizations.daysAgo}";
+        return "$formatted - ${localizations.daysAgoCount(daysSinceLastScheduled!)}";
 
       case ScheduleStatus.upcoming:
         final formatted = DateFormat.MMMMd().format(nextScheduled.value);
-        return "$formatted - ${localizations.inText} $daysUntilIntake ${localizations.days}";
+        return "$formatted - ${localizations.inDaysCount(daysUntilIntake)}";
 
       case ScheduleStatus.taken:
         return localizations.taken;
@@ -178,7 +178,7 @@ class IntakeTileViewModel {
             lastScheduled != null &&
             !lastTaken!.isSameDayAs(lastScheduled!)) {
           final formatted = DateFormat.MMMd().format(lastTaken!.value);
-          return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
+          return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
         }
         return null;
 
@@ -193,7 +193,7 @@ class IntakeTileViewModel {
         }
 
         final formatted = DateFormat.MMMd().format(lastTaken!.value);
-        return "${localizations.lastTaken} $daysSinceLastTaken ${localizations.daysAgo} ($formatted)";
+        return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
     }
   }
 

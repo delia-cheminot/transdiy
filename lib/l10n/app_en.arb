@@ -14,8 +14,20 @@
   "upcoming": "Upcoming",
   "today": "Today",
   "taken": "taken",
-  "daysAgo": "days ago",
-  "inText": "in",
+  "daysAgoCount": "{count, plural, =1{yesterday} other{# days ago}}",
+  "@daysAgoCount": {
+    "description": "Past offset in days; =1 is the word “yesterday”, not a numeric phrase.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "inDaysCount": "{count, plural, =1{tomorrow} other{in # days}}",
+  "@inDaysCount": {
+    "description": "Future offset in days; =1 is the word “tomorrow”, not a numeric phrase.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "lastTaken": "Last taken",
   "neverTakenYet": "Never taken yet",
   "scheduleFrequencyDaily": "Every day",
