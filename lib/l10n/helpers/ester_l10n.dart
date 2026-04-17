@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/l10n/app_localizations.dart';
 
@@ -6,18 +5,6 @@ extension EsterL10n on Ester {
   String localizedName(AppLocalizations localizations) =>
       _EsterDisplayNames.resolve(this, localizations);
 }
-
-List<DropdownMenuItem<Ester>> esterDropdownMenuItems(
-  AppLocalizations localizations,
-) =>
-    Ester.all
-        .map(
-          (ester) => DropdownMenuItem<Ester>(
-            value: ester,
-            child: Text(ester.localizedName(localizations)),
-          ),
-        )
-        .toList();
 
 abstract final class _EsterDisplayNames {
   static final Map<String, String Function(AppLocalizations)> _labelsByName = {

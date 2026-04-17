@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/l10n/app_localizations_en.dart';
-import 'package:mona/l10n/helpers/ester_l10n.dart';
+import 'package:mona/ui/widgets/dropdowns/ester_dropdown.dart';
 
 void main() {
   group('Ester', () {
