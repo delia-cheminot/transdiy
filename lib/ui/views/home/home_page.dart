@@ -58,18 +58,67 @@ class HomePage extends StatelessWidget {
 
   List<Widget> _buildUpdateSection(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final end = DateTime(2026, 7, 17);
+    final now = DateTime.now();
+    final difference = end.difference(now).inDays;
     return [
       Card.filled(
+        color: colorScheme.errorContainer,
         clipBehavior: Clip.antiAlias,
-        child: ListTile(
+        child: InkWell(
           onTap: () => _openMonaAppStoreListing(context),
-          title: Text('New version available!',
-              style: theme.textTheme.titleMedium),
-          subtitle: const Text(
-            'Update Mona on the App Store to continue using the app.',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: theme.colorScheme.error,
+                  child: Icon(
+                    Symbols.warning,
+                    color: theme.colorScheme.onError,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Important update',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onErrorContainer,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Update Mona on the App Store to continue using the app.\n'
+                        'This TestFlight version will expire in $difference days.',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onErrorContainer,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: FilledButton(
+                          onPressed: () => _openMonaAppStoreListing(context),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: colorScheme.error,
+                            foregroundColor: colorScheme.onError,
+                          ),
+                          child: const Text('Update'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     ];
   }
 
