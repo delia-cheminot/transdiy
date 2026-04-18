@@ -16,7 +16,7 @@ class _ChartConstants {
   static const double labelFontSize = 12;
   static const double titleFontSize = 14;
   static const double axesPadding = 8.0;
-  static const double bottomReservedSize = 32;
+  static const double bottomReservedSize = 40;
   static const double leftReservedSize = 40;
   static const double lineBarWidth = 3;
   static const double tooltipPadding = 6;
@@ -51,9 +51,8 @@ class MainGraph extends StatelessWidget {
         .toList();
 
     final int totalDays = medicationIntakeProvider
-            .getLastIntakeDate()!
-            .differenceInDays(firstDay) +
-        1;
+        .getLastIntakeDate()!
+        .differenceInDays(firstDay);
     final double daysSinceStart =
         DateTime.now().difference(firstDay.toDateTime()).inSeconds / 86400.0;
 
@@ -199,11 +198,18 @@ class MainGraph extends StatelessWidget {
           showTitles: true,
           reservedSize: _ChartConstants.bottomReservedSize,
           getTitlesWidget: (value, meta) {
-            return Padding(
-              padding: const EdgeInsets.only(top: _ChartConstants.axesPadding),
-              child: Text(" ${_getDateLabel(value, firstDay, context)} ",
-                  style:
-                      const TextStyle(fontSize: _ChartConstants.labelFontSize)),
+            return SideTitleWidget(
+              meta: meta,
+              space: _ChartConstants.axesPadding,
+              child: Transform.rotate(
+                angle: -math.pi / 4,
+                child: Text(
+                  _getDateLabel(value, firstDay, context),
+                  style: const TextStyle(
+                    fontSize: _ChartConstants.labelFontSize,
+                  ),
+                ),
+              ),
             );
           },
         ),
