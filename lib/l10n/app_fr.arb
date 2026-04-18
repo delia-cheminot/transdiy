@@ -141,7 +141,7 @@
   "editItem": "Modifier l'élément",
   "usedAmount": "Quantité utilisée",
   "deleteItem": "Supprimer {name} ?",
-  "remaining": "{amount} {unit} restant",
+  "remaining": "Reste {amount} {unit}",
 
   "add": "Ajouter",
   "save": "Enregistrer",
