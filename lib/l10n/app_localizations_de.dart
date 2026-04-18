@@ -34,11 +34,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
 
   @override
-  String todaySection(Object date) {
-    return 'Heute – $date';
-  }
-
-  @override
   String get allDone => 'Alles erledigt!';
 
   @override

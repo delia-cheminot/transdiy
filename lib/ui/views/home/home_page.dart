@@ -68,6 +68,7 @@ class HomePage extends StatelessWidget {
     if (schedules.isEmpty && showAllDoneMessage) {
       widgets.add(
         Card.filled(
+          margin: const EdgeInsets.symmetric(vertical: 4),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: theme.colorScheme.tertiary,
@@ -96,12 +97,10 @@ class HomePage extends StatelessWidget {
   }
 
   List<Widget> _buildTodaySection(BuildContext context) {
-    final localizations = context.l10n;
-    final locale = context.languageTag;
+    final date = Date.today().format(DateFormat.MMMMEEEEd(context.languageTag));
     return _buildScheduleSection(
       context,
-      title: localizations
-          .todaySection(Date.today().format(DateFormat.MMMMEEEEd(locale))),
+      title: date.replaceRange(0, 1, date.substring(0, 1).toUpperCase()),
       statuses: [
         ScheduleStatus.overdue,
         ScheduleStatus.todayOverdue,
@@ -112,10 +111,9 @@ class HomePage extends StatelessWidget {
   }
 
   List<Widget> _buildUpcomingSection(BuildContext context) {
-    final localizations = context.l10n;
     return _buildScheduleSection(
       context,
-      title: localizations.upcoming,
+      title: context.l10n.upcoming,
       statuses: [ScheduleStatus.upcoming],
     );
   }

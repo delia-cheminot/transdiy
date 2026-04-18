@@ -18,7 +18,7 @@ class PharmacyPage extends StatelessWidget {
           isEmpty: supplyItemProvider.items.isEmpty,
           emptyMessage: context.l10n.empty_supplies,
           child: MasonryGridView.builder(
-            padding: pagePadding,
+            padding: pagePadding - const EdgeInsets.symmetric(horizontal: 4),
             gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300),
             itemCount: supplyItemProvider.items.length,

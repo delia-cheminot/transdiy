@@ -33,11 +33,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get empty_home => 'Comienza añadiendo un horario en Configuración';
 
   @override
-  String todaySection(Object date) {
-    return 'Hoy - $date';
-  }
-
-  @override
   String get allDone => '¡Todo listo!';
 
   @override

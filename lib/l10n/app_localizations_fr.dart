@@ -34,11 +34,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Commencez par ajouter un plannig dans les paramètres';
 
   @override
-  String todaySection(Object date) {
-    return 'Aujourd\'hui - $date';
-  }
-
-  @override
   String get allDone => 'Terminé !';
 
   @override

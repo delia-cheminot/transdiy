@@ -153,12 +153,6 @@ abstract class AppLocalizations {
   /// **'Start by adding a schedule in Settings'**
   String get empty_home;
 
-  /// No description provided for @todaySection.
-  ///
-  /// In en, this message translates to:
-  /// **'Today - {date}'**
-  String todaySection(Object date);
-
   /// No description provided for @allDone.
   ///
   /// In en, this message translates to:

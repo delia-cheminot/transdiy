@@ -8,7 +8,6 @@
     "addAnItem": "Añadir un elemento",
 
     "empty_home": "Comienza añadiendo un horario en Configuración",
-    "todaySection": "Hoy - {date}",
     "allDone": "¡Todo listo!",
     "noIntakesDue": "No hay tomas pendientes hoy",
     "upcoming": "Próximamente",

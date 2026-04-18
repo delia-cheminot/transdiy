@@ -51,6 +51,7 @@ class IntakeTile extends StatelessWidget {
     return Card.filled(
       color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
       clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(

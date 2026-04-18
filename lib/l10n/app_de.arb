@@ -8,7 +8,6 @@
     "addAnItem": "Eintrag hinzufügen",
 
     "empty_home": "Beginne, indem du einen Zeitplan in den Einstellungen erstellst",
-    "todaySection": "Heute – {date}",
     "allDone": "Alles erledigt!",
     "noIntakesDue": "Heute sind keine Einnahmen fällig",
     "upcoming": "Bevorstehend",

@@ -33,11 +33,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get empty_home => 'Comece adicionando um cronograma em Configurações';
 
   @override
-  String todaySection(Object date) {
-    return 'Hoje - $date';
-  }
-
-  @override
   String get allDone => 'Tudo pronto!';
 
   @override
@@ -726,11 +721,6 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get empty_home => 'Comece adicionando um cronograma em Configurações';
-
-  @override
-  String todaySection(Object date) {
-    return 'Hoje - $date';
-  }
 
   @override
   String get allDone => 'Tudo pronto!';
