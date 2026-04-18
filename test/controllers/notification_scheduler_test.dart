@@ -251,6 +251,8 @@ void main() {
         NotificationService.createPlugin = () => mockPlugin;
 
         const scheduleId = 1002;
+        final scheduledTime = TimeOfDay.fromDateTime(
+            DateTime.now().add(const Duration(minutes: 1)));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -260,9 +262,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [
-              TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 1)))
-            ],
+            notificationTimes: [scheduledTime],
           )
         ]);
         when(mockMedicationIntakeProvider
@@ -279,6 +279,17 @@ void main() {
         await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          final dateTime = DateTime(date.year, date.month, date.day,
+              scheduledTime.hour, scheduledTime.minute);
+          if (!checkNow.isAfter(dateTime)) {
+            expectedCount++;
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -287,7 +298,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(5);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -304,6 +315,8 @@ void main() {
         NotificationService.createPlugin = () => mockPlugin;
 
         const scheduleId = 1003;
+        final scheduledTime = TimeOfDay.fromDateTime(
+            DateTime.now().subtract(const Duration(minutes: 1)));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -313,10 +326,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [
-              TimeOfDay.fromDateTime(
-                  DateTime.now().subtract(Duration(minutes: 1)))
-            ],
+            notificationTimes: [scheduledTime],
           )
         ]);
         when(mockMedicationIntakeProvider
@@ -333,6 +343,17 @@ void main() {
         await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          final dateTime = DateTime(date.year, date.month, date.day,
+              scheduledTime.hour, scheduledTime.minute);
+          if (!checkNow.isAfter(dateTime)) {
+            expectedCount++;
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -341,7 +362,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(4);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -361,24 +382,6 @@ void main() {
           TimeOfDay(hour: (now.hour + 1) % 24, minute: 0),
           TimeOfDay(hour: (now.hour + 2) % 24, minute: 30),
         ];
-
-        // When we generate the notification times and they go after 23:59 it
-        // goes back to 00:00 but as the same day than DateTime.now() and not
-        // the next day so the scheduler see it as behind the current time
-        // and ignores them.
-        // So we have to count the ignored times for the test to pass.
-
-        int ignored = 0;
-        for (final time in times) {
-          final dateTime = DateTime(
-            now.year,
-            now.month,
-            now.day,
-            time.hour,
-            time.minute,
-          );
-          if (now.isAfter(dateTime)) ignored++;
-        }
 
         const scheduleId = 1004;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
@@ -407,6 +410,19 @@ void main() {
         await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          for (final time in times) {
+            final dateTime = DateTime(
+                date.year, date.month, date.day, time.hour, time.minute);
+            if (!checkNow.isAfter(dateTime)) {
+              expectedCount++;
+            }
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -415,7 +431,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(10 - ignored);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
