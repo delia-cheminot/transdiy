@@ -14,14 +14,14 @@
   "upcoming": "Upcoming",
   "today": "Today",
   "taken": "taken",
-  "daysAgoCount": "{count, plural, =1{yesterday} other{# days ago}}",
+  "daysAgoCount": "{count, plural, =1{yesterday} other{{count} days ago}}",
   "@daysAgoCount": {
     "description": "Past offset in days; =1 is the word “yesterday”, not a numeric phrase.",
     "placeholders": {
       "count": {"type": "int"}
     }
   },
-  "inDaysCount": "{count, plural, =1{tomorrow} other{in # days}}",
+  "inDaysCount": "{count, plural, =1{tomorrow} other{in {count} days}}",
   "@inDaysCount": {
     "description": "Future offset in days; =1 is the word “tomorrow”, not a numeric phrase.",
     "placeholders": {

@@ -14,14 +14,14 @@
     "upcoming": "Próximamente",
     "today": "Hoy",
     "taken": "tomado",
-    "daysAgoCount": "{count, plural, =1{ayer} other{hace # días}}",
+    "daysAgoCount": "{count, plural, =1{ayer} other{hace {count} días}}",
     "@daysAgoCount": {
         "description": "=1 ayer; resto hace # días.",
         "placeholders": {
             "count": {"type": "int"}
         }
     },
-    "inDaysCount": "{count, plural, =1{mañana} other{en # días}}",
+    "inDaysCount": "{count, plural, =1{mañana} other{en {count} días}}",
     "@inDaysCount": {
         "description": "=1 mañana; resto en # días.",
         "placeholders": {
