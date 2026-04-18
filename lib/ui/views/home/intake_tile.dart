@@ -213,10 +213,10 @@ class IntakeTileViewModel {
         : Symbols.schedule;
 
     return CircleAvatar(
-      backgroundColor: theme.colorScheme.onPrimaryContainer,
+      backgroundColor: theme.colorScheme.primary,
       child: Icon(
         icon,
-        color: theme.colorScheme.primaryContainer,
+        color: theme.colorScheme.onPrimary,
       ),
     );
   }
