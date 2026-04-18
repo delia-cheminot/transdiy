@@ -183,6 +183,9 @@ class _SettingsPageState extends State<SettingsPage>
       appBar: AppBar(title: Text(localizations.settingsTitle)),
       body: ListView(
         children: [
+          //
+          // ==== Schedules and notifications ====
+          //
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: borderPadding, vertical: 8.0),
@@ -232,6 +235,9 @@ class _SettingsPageState extends State<SettingsPage>
               },
             ),
           const Divider(),
+          //
+          // ==== General ====
+          //
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: borderPadding, vertical: 8.0),
@@ -278,6 +284,9 @@ class _SettingsPageState extends State<SettingsPage>
             ),
           ],
           const Divider(),
+          //
+          // ==== Data management ====
+          //
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: borderPadding, vertical: 8.0),
@@ -288,13 +297,13 @@ class _SettingsPageState extends State<SettingsPage>
           ListTile(
             title: Text(localizations.exportDataTitle),
             subtitle: Text(localizations.exportDataSubtitle),
-            trailing: const Icon(Symbols.download),
+            trailing: const Icon(Symbols.upload),
             onTap: _exportData,
           ),
           ListTile(
             title: Text(localizations.importDataTitle),
             subtitle: Text(localizations.importDataSubtitle),
-            trailing: const Icon(Symbols.upload),
+            trailing: const Icon(Symbols.download),
             onTap: _importData,
           ),
           const SizedBox(height: 32),
