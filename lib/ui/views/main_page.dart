@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
-import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
 import 'package:mona/ui/widgets/update_banner.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +16,6 @@ class _MainPageState extends State<MainPage> {
 
   bool _isUpdateAvailable = false;
   bool _hideUpdateBanner = false;
-  bool _hideUpdateDialog = false;
 
   MainTabConfig get currentTab => getMainTabs(context)[_selectedIndex];
 
@@ -31,11 +28,6 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _runAutomaticUpdateCheck();
-
-      if (context.read<PreferencesService>().shouldShowScheduleDialog &&
-          mounted) {
-        _showUpdateDialog();
-      }
     });
   }
 
@@ -50,69 +42,6 @@ class _MainPageState extends State<MainPage> {
         _isUpdateAvailable = true;
       });
     }
-  }
-
-  void _showUpdateDialog() {
-    final localizations = context.l10n;
-
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(localizations.notificationsUpdated),
-          content: StatefulBuilder(
-            builder: (context, setState) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(localizations.notificationsUpdatedDescription,
-                      textAlign: TextAlign.start),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        value: _hideUpdateDialog,
-                        onChanged: (value) {
-                          setState(() {
-                            _hideUpdateDialog = value ?? false;
-                          });
-                        },
-                      ),
-                      Text(localizations.dontShowAgain),
-                    ],
-                  ),
-                ],
-              );
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                if (_hideUpdateDialog) {
-                  final preferencesService = context.read<PreferencesService>();
-                  await preferencesService.setShowScheduleDialog(false);
-                }
-
-                if (!context.mounted) return;
-
-                Navigator.of(context).pop();
-                if (!context.mounted) return;
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => SchedulesPage(),
-                  ),
-                );
-              },
-              child: Text(localizations.scheduleSettings),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override

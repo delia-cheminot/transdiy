@@ -96,13 +96,6 @@ class PreferencesService extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get shouldShowScheduleDialog =>
-      _prefs.getBool('show_schedule_dialog') ?? true;
-
-  Future<void> setShowScheduleDialog(bool value) {
-    return _prefs.setBool('show_schedule_dialog', value);
-  }
-
   static Future<PreferencesService> init() async {
     final prefs = await SharedPreferences.getInstance();
     return PreferencesService._(prefs);

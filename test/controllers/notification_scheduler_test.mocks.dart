@@ -421,13 +421,6 @@ class MockPreferencesService extends _i1.Mock
       ) as List<_i11.Molecule>);
 
   @override
-  bool get shouldShowScheduleDialog => (super.noSuchMethod(
-        Invocation.getter(#shouldShowScheduleDialog),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
-
-  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
@@ -482,16 +475,6 @@ class MockPreferencesService extends _i1.Mock
         Invocation.method(
           #removeCustomMolecule,
           [name],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
-
-  @override
-  _i5.Future<void> setShowScheduleDialog(bool? value) => (super.noSuchMethod(
-        Invocation.method(
-          #setShowScheduleDialog,
-          [value],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
