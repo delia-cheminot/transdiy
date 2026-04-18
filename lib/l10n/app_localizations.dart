@@ -285,6 +285,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get language;
 
+  /// No description provided for @languageFollowDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow device language'**
+  String get languageFollowDevice;
+
   /// No description provided for @selectLanguage.
   ///
   /// In en, this message translates to:

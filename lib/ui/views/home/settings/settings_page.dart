@@ -242,8 +242,11 @@ class _SettingsPageState extends State<SettingsPage>
           ListTile(
             title: Text(localizations.language),
             subtitle: Text(
-              _nativeLanguageNameForStoredTag(preferencesService.languageTag) ??
-                  preferencesService.languageTag,
+              preferencesService.savedLanguageTag == null
+                  ? localizations.languageFollowDevice
+                  : (_nativeLanguageNameForStoredTag(
+                          preferencesService.savedLanguageTag!) ??
+                      preferencesService.savedLanguageTag!),
             ),
             trailing: Icon(Icons.chevron_right),
             onTap: () {

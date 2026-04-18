@@ -18,33 +18,53 @@ class LocaleProvider extends ChangeNotifier {
   List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
 
   void setLocale(Locale newLocale) {
-    if (locale == newLocale) return;
+    final tag = newLocale.toLanguageTag();
+    final matched = _matchToSupported(newLocale);
 
-    _locale = newLocale;
-    _prefs.setLanguageTag(newLocale.toLanguageTag());
+    if (_locale == matched && _prefs.savedLanguageTag == tag) return;
+
+    _locale = matched;
+    _prefs.setSavedLanguageTag(tag);
     notifyListeners();
+  }
+
+  Future<void> setFollowSystemLocale() async {
+    await _prefs.setSavedLanguageTag(null);
+    final before = _locale;
+    _loadLocale();
+    if (_locale != before) {
+      notifyListeners();
+    }
+  }
+
+  Locale _matchToSupported(Locale source) {
+    for (final l in supportedLocales) {
+      if (l.languageCode != source.languageCode) continue;
+      if (l.countryCode == source.countryCode) return l;
+    }
+    return supportedLocales.firstWhere(
+      (l) => l.languageCode == source.languageCode,
+      orElse: () => const Locale('en'),
+    );
   }
 
   void _loadLocale() {
     Locale? result;
 
-    final savedTag = _prefs.languageTag;
-    final parsed = intl.Locale.tryParse(savedTag);
-    if (parsed != null) {
-      result = Locale.fromSubtags(
-        languageCode: parsed.languageCode,
-        scriptCode: parsed.scriptCode,
-        countryCode: parsed.countryCode,
-      );
+    final savedTag = _prefs.savedLanguageTag;
+    if (savedTag != null) {
+      final parsed = intl.Locale.tryParse(savedTag);
+      if (parsed != null) {
+        result = Locale.fromSubtags(
+          languageCode: parsed.languageCode,
+          scriptCode: parsed.scriptCode,
+          countryCode: parsed.countryCode,
+        );
+      }
     }
 
     result ??= PlatformDispatcher.instance.locale;
 
-    final match = supportedLocales.firstWhere(
-      (l) => l.languageCode == result!.languageCode,
-      orElse: () => const Locale('en'),
-    );
-
-    _locale = match;
+    _locale = _matchToSupported(result);
   }
 }

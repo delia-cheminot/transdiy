@@ -43,6 +43,7 @@
   "noSchedules": "No schedules",
   "schedulesCreated": "{count} created",
   "language": "Language",
+  "languageFollowDevice": "Follow device language",
   "selectLanguage": "Select Language",
   "enableNotifications": "Enable notifications",
   "enableNotificationsDescription": "Send reminders for schedules",

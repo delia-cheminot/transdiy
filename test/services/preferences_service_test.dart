@@ -153,5 +153,34 @@ void main() {
             ]));
       });
     });
+
+    group('savedLanguageTag', () {
+      test('returns null when unset or empty', () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('language_tag', '');
+        final service = await PreferencesService.init();
+
+        expect(service.savedLanguageTag, isNull);
+      });
+
+      test('returns stored tag', () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('language_tag', 'fr');
+        final service = await PreferencesService.init();
+
+        expect(service.savedLanguageTag, 'fr');
+      });
+
+      test('setSavedLanguageTag clears when null', () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('language_tag', 'de');
+        final service = await PreferencesService.init();
+
+        await service.setSavedLanguageTag(null);
+
+        expect(service.savedLanguageTag, isNull);
+        expect(prefs.getString('language_tag'), isNull);
+      });
+    });
   });
 }

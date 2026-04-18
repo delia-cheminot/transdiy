@@ -408,17 +408,11 @@ class MockPreferencesService extends _i1.Mock
       ) as bool);
 
   @override
-  String get languageTag => (super.noSuchMethod(
-        Invocation.getter(#languageTag),
-        returnValue: _i11.dummyValue<String>(
-          this,
-          Invocation.getter(#languageTag),
-        ),
-        returnValueForMissingStub: _i11.dummyValue<String>(
-          this,
-          Invocation.getter(#languageTag),
-        ),
-      ) as String);
+  String? get savedLanguageTag => (super.noSuchMethod(
+        Invocation.getter(#savedLanguageTag),
+        returnValue: null,
+        returnValueForMissingStub: null,
+      ) as String?);
 
   @override
   List<_i12.Molecule> get customMolecules => (super.noSuchMethod(
@@ -471,9 +465,9 @@ class MockPreferencesService extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> setLanguageTag(String? code) => (super.noSuchMethod(
+  _i5.Future<void> setSavedLanguageTag(String? code) => (super.noSuchMethod(
         Invocation.method(
-          #setLanguageTag,
+          #setSavedLanguageTag,
           [code],
         ),
         returnValue: _i5.Future<void>.value(),

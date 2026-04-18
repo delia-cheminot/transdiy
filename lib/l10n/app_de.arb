@@ -43,6 +43,7 @@
     "noSchedules": "Keine Zeitpläne",
     "schedulesCreated": "{count} erstellt",
     "language": "Sprache",
+    "languageFollowDevice": "Gerätesprache verwenden",
     "selectLanguage": "Sprache auswählen",
     "enableNotifications": "Benachrichtigungen aktivieren",
     "enableNotificationsDescription": "Erinnerungen für Zeitpläne senden",

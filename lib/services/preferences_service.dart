@@ -10,7 +10,6 @@ class PreferencesService extends ChangeNotifier {
   static const _languageTagKey = 'language_tag';
 
   static const bool defaultNotificationsEnabled = false;
-  static const String defaultLanguageCode = 'en';
 
   static const _autoCheckUpdatesKey = 'auto_check_updates';
   static const bool defaultAutoCheckUpdates = false;
@@ -30,16 +29,23 @@ class PreferencesService extends ChangeNotifier {
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
-  String get languageTag =>
-      _prefs.getString(_languageTagKey) ?? defaultLanguageCode;
+  String? get savedLanguageTag {
+    final tag = _prefs.getString(_languageTagKey);
+    if (tag == null || tag.isEmpty) return null;
+    return tag;
+  }
 
   Future<void> setNotificationsEnabled(bool isEnabled) async {
     await _prefs.setBool(_notificationsEnabledKey, isEnabled);
     notifyListeners();
   }
 
-  Future<void> setLanguageTag(String code) async {
-    await _prefs.setString(_languageTagKey, code);
+  Future<void> setSavedLanguageTag(String? code) async {
+    if (code == null || code.isEmpty) {
+      await _prefs.remove(_languageTagKey);
+    } else {
+      await _prefs.setString(_languageTagKey, code);
+    }
     notifyListeners();
   }
 

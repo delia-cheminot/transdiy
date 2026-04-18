@@ -43,6 +43,7 @@
     "noSchedules": "Sem cronogramas",
     "schedulesCreated": "{count} criados",
     "language": "Idioma",
+    "languageFollowDevice": "Seguir o idioma do dispositivo",
     "selectLanguage": "Selecionar idioma",
     "enableNotifications": "Ativar notificações",
     "enableNotificationsDescription": "Enviar lembretes dos cronogramas",

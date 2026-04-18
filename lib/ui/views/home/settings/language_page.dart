@@ -21,10 +21,13 @@ class LanguagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final preferencesService = context.watch<PreferencesService>();
     final localeProvider = context.read<LocaleProvider>();
-    final savedTag = preferencesService.languageTag;
+    final savedTag = preferencesService.savedLanguageTag;
 
     void onLanguageChanged(String? value) {
-      if (value == null) return;
+      if (value == null) {
+        localeProvider.setFollowSystemLocale();
+        return;
+      }
 
       final parsed = intl.Locale.tryParse(value);
       if (parsed == null) return;
@@ -38,13 +41,17 @@ class LanguagePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.language)),
-      body: RadioGroup<String>(
+      body: RadioGroup<String?>(
         groupValue: savedTag,
         onChanged: onLanguageChanged,
         child: ListView(
           children: [
+            RadioListTile<String?>(
+              title: Text(context.l10n.languageFollowDevice),
+              value: null,
+            ),
             for (final (code, englishName, nativeName) in languages)
-              RadioListTile<String>(
+              RadioListTile<String?>(
                 title: Text(nativeName),
                 subtitle: code != 'en' ? Text(englishName) : null,
                 value: code,

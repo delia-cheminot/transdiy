@@ -43,6 +43,7 @@
     "noSchedules": "Sin horarios",
     "schedulesCreated": "{count} creados",
     "language": "Idioma",
+    "languageFollowDevice": "Seguir el idioma del dispositivo",
     "selectLanguage": "Seleccionar idioma",
     "enableNotifications": "Activar notificaciones",
     "enableNotificationsDescription": "Enviar recordatorios para los horarios",

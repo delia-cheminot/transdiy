@@ -43,6 +43,7 @@
   "noSchedules": "Aucun planning",
   "schedulesCreated": "{count} créés",
   "language": "Langue",
+  "languageFollowDevice": "Suivre la langue de l’appareil",
   "selectLanguage": "Sélectionner la langue",
   "enableNotifications": "Activer les notifications",
   "enableNotificationsDescription": "Envoyer des rappels pour vos plannings",

@@ -121,6 +121,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get language => 'Idioma';
 
   @override
+  String get languageFollowDevice => 'Seguir o idioma do dispositivo';
+
+  @override
   String get selectLanguage => 'Selecionar idioma';
 
   @override
@@ -811,6 +814,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get language => 'Idioma';
+
+  @override
+  String get languageFollowDevice => 'Seguir o idioma do dispositivo';
 
   @override
   String get selectLanguage => 'Selecionar idioma';

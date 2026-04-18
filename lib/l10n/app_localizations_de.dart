@@ -122,6 +122,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get language => 'Sprache';
 
   @override
+  String get languageFollowDevice => 'Gerätesprache verwenden';
+
+  @override
   String get selectLanguage => 'Sprache auswählen';
 
   @override
