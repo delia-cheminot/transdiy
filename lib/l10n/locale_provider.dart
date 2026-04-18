@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:intl/locale.dart' as intl;
 import 'package:mona/l10n/app_localizations.dart';
@@ -63,7 +61,7 @@ class LocaleProvider extends ChangeNotifier {
       }
     }
 
-    result ??= PlatformDispatcher.instance.locale;
+    result ??= WidgetsBinding.instance.platformDispatcher.locale;
 
     _locale = _matchToSupported(result);
   }
