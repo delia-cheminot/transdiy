@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
     return MainPageWrapper(
       isLoading: (medicationScheduleProvider.isLoading ||
           medicationIntakeProvider.isLoading),
-      isEmpty: medicationScheduleProvider.schedules.isEmpty,
+      isEmpty: false,
       emptyMessage: 'Start by adding a schedule in Settings',
       child: SingleChildScrollView(
         child: Padding(
