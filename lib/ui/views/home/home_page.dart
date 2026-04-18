@@ -8,6 +8,25 @@ import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final Uri _monaAppStoreListingUri = Uri.parse(
+  'https://apps.apple.com/app/mona-hrt-journal/id6757274628',
+);
+
+Future<void> _openMonaAppStoreListing(BuildContext context) async {
+  final launched = await launchUrl(
+    _monaAppStoreListingUri,
+    mode: LaunchMode.externalApplication,
+  );
+  if (!launched && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          content: Text(
+              'Could not open. You can manually search for "Mona HRT" on the App Store.')),
+    );
+  }
+}
 
 class HomePage extends StatelessWidget {
   @override
@@ -27,6 +46,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ..._buildUpdateSection(context),
               ..._buildTodaySection(context),
               ..._buildUpcomingSection(context),
             ],
@@ -34,6 +54,23 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Widget> _buildUpdateSection(BuildContext context) {
+    final theme = Theme.of(context);
+    return [
+      Card.filled(
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          onTap: () => _openMonaAppStoreListing(context),
+          title: Text('New version available!',
+              style: theme.textTheme.titleMedium),
+          subtitle: const Text(
+            'Update Mona on the App Store to continue using the app.',
+          ),
+        ),
+      ),
+    ];
   }
 
   List<Widget> _buildScheduleSection(
