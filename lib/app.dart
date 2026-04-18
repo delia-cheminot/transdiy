@@ -103,7 +103,7 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
         final darkColorScheme = _getDarkColorScheme(darkDynamic);
 
         return MaterialApp(
-          title: AppLocalizations.of(context)?.appTitle ?? 'Mona',
+          title: 'Mona',
           locale: context.watch<LocaleProvider>().locale,
           supportedLocales: context.watch<LocaleProvider>().supportedLocales,
           localizationsDelegates: const [
