@@ -31,7 +31,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get empty_home =>
-      'Commencez par ajouter une routine dans les paramètres';
+      'Commencez par ajouter un plannig dans les paramètres';
 
   @override
   String todaySection(Object date) {
@@ -102,20 +102,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get notifications => 'Notifications';
 
   @override
-  String get schedulesAndNotifications => 'Routines et notifications';
+  String get schedulesAndNotifications => 'Plannings et notifications';
 
   @override
   String get general => 'Général';
 
   @override
-  String get schedules => 'Routines';
+  String get schedules => 'Plannings';
 
   @override
-  String get noSchedules => 'Aucune routine';
+  String get noSchedules => 'Aucun planning';
 
   @override
   String schedulesCreated(Object count) {
-    return '$count créées';
+    return '$count créés';
   }
 
   @override
@@ -129,7 +129,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get enableNotificationsDescription =>
-      'Envoyer des rappels pour vos routines';
+      'Envoyer des rappels pour vos plannings';
 
   @override
   String get notificationsDisabledTitle => 'Les notifications sont désactivées';
@@ -265,13 +265,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get addSchedule => 'Ajouter une routine';
+  String get addSchedule => 'Ajouter un planning';
 
   @override
-  String get addScheduleToGetStarted => 'Ajoutez une routine pour commencer.';
+  String get addScheduleToGetStarted => 'Ajoutez un planning pour commencer.';
 
   @override
-  String get newSchedule => 'Nouvelle routine';
+  String get newSchedule => 'Nouveau planning';
 
   @override
   String get every => 'Tous les';
@@ -283,7 +283,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get startDate => 'Date de début';
 
   @override
-  String get editScheduleInfo => 'Modifier les informations de la routine';
+  String get editScheduleInfo => 'Modifier les informations du planning';
 
   @override
   String get noNotifications => 'Aucune notification';
@@ -294,7 +294,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get editSchedule => 'Modifier la routine';
+  String get editSchedule => 'Modifier le planning';
 
   @override
   String deleteSchedule(Object name) {
@@ -302,7 +302,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get scheduleNotifications => 'Notifications de la routine';
+  String get scheduleNotifications => 'Notifications du planning';
 
   @override
   String get addNotification => 'Ajouter une notification';
@@ -317,22 +317,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notificationsUpdatedDescription =>
-      'Chaque routine a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos routines pour vous assurer de ne rien manquer.';
+      'Chaque planning a désormais ses propres notifications.\n\nVeuillez configurer les notifications pour vos plannings pour vous assurer de ne rien manquer.';
 
   @override
   String get dontShowAgain => 'Ne plus afficher';
 
   @override
-  String get scheduleSettings => 'Paramètres des routines';
+  String get scheduleSettings => 'Paramètres des plannings';
 
   @override
   String get empty_intakes => 'Les prises enregistrées apparaîtront ici';
 
   @override
-  String get chooseSchedule => 'Choisir une routine';
+  String get chooseSchedule => 'Choisir un planning';
 
   @override
-  String get addSchedulesFirst => 'Ajoutez d\'abord des routines.';
+  String get addSchedulesFirst => 'Ajoutez d\'abord des plannings.';
 
   @override
   String get editIntake => 'Modifier la prise';
