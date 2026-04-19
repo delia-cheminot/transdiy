@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:provider/provider.dart';
 
@@ -70,11 +71,12 @@ class _EditScheduleNotificationsPageState
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final localizations = context.l10n;
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Schedule notifications'),
+          title: Text(localizations.scheduleNotifications),
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -84,20 +86,20 @@ class _EditScheduleNotificationsPageState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Schedule notifications'),
+        title: Text(localizations.scheduleNotifications),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: TextButton(
               onPressed: _savechanges,
-              child: Text('Save'),
+              child: Text(localizations.save),
             ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _pickTime,
-        tooltip: 'Add a notification',
+        tooltip: localizations.addNotification,
         child: Icon(Icons.add),
       ),
       resizeToAvoidBottomInset: false,
@@ -106,7 +108,8 @@ class _EditScheduleNotificationsPageState
               child: Padding(
                 padding: pagePadding,
                 child: Text(
-                  'No notifications for ${widget.schedule.name}. You can add one using the Add button.',
+                  localizations
+                      .noNotificationsForSchedule(widget.schedule.name),
                   textAlign: TextAlign.center,
                 ),
               ),

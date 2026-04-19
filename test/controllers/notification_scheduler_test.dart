@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
@@ -11,6 +12,7 @@ import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -25,12 +27,15 @@ import 'package:timezone/timezone.dart' as tz;
 import 'notification_scheduler_test.mocks.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   late MockMedicationScheduleProvider mockMedicationScheduleProvider;
   late MockMedicationIntakeProvider mockMedicationIntakeProvider;
   late MockPreferencesService mockPreferencesService;
   late MockFlutterLocalNotificationsPlugin mockPlugin;
 
-  setUpAll(() {
+  setUpAll(() async {
+    await initializeDateFormatting('en');
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation('Etc/UTC'));
   });
@@ -76,7 +81,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, 'en');
 
         // Assert
         verify(mockPlugin.show(
@@ -118,7 +123,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.cancel(id: pending.id)).called(1);
@@ -167,7 +172,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verifyNever(mockPlugin.zonedSchedule(
@@ -218,7 +223,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verifyNever(mockPlugin.zonedSchedule(
@@ -246,6 +251,8 @@ void main() {
         NotificationService.createPlugin = () => mockPlugin;
 
         const scheduleId = 1002;
+        final scheduledTime = TimeOfDay.fromDateTime(
+            DateTime.now().add(const Duration(minutes: 1)));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -255,9 +262,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [
-              TimeOfDay.fromDateTime(DateTime.now().add(Duration(minutes: 1)))
-            ],
+            notificationTimes: [scheduledTime],
           )
         ]);
         when(mockMedicationIntakeProvider
@@ -271,9 +276,20 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          final dateTime = DateTime(date.year, date.month, date.day,
+              scheduledTime.hour, scheduledTime.minute);
+          if (!checkNow.isAfter(dateTime)) {
+            expectedCount++;
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -282,7 +298,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(5);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -299,6 +315,8 @@ void main() {
         NotificationService.createPlugin = () => mockPlugin;
 
         const scheduleId = 1003;
+        final scheduledTime = TimeOfDay.fromDateTime(
+            DateTime.now().subtract(const Duration(minutes: 1)));
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
         when(mockMedicationScheduleProvider.schedules).thenReturn([
           MedicationSchedule(
@@ -308,10 +326,7 @@ void main() {
             intervalDays: 1,
             molecule: KnownMolecules.estradiol,
             administrationRoute: AdministrationRoute.oral,
-            notificationTimes: [
-              TimeOfDay.fromDateTime(
-                  DateTime.now().subtract(Duration(minutes: 1)))
-            ],
+            notificationTimes: [scheduledTime],
           )
         ]);
         when(mockMedicationIntakeProvider
@@ -325,9 +340,20 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          final dateTime = DateTime(date.year, date.month, date.day,
+              scheduledTime.hour, scheduledTime.minute);
+          if (!checkNow.isAfter(dateTime)) {
+            expectedCount++;
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -336,7 +362,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(4);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -356,24 +382,6 @@ void main() {
           TimeOfDay(hour: (now.hour + 1) % 24, minute: 0),
           TimeOfDay(hour: (now.hour + 2) % 24, minute: 30),
         ];
-
-        // When we generate the notification times and they go after 23:59 it
-        // goes back to 00:00 but as the same day than DateTime.now() and not
-        // the next day so the scheduler see it as behind the current time
-        // and ignores them.
-        // So we have to count the ignored times for the test to pass.
-
-        int ignored = 0;
-        for (final time in times) {
-          final dateTime = DateTime(
-            now.year,
-            now.month,
-            now.day,
-            time.hour,
-            time.minute,
-          );
-          if (now.isAfter(dateTime)) ignored++;
-        }
 
         const scheduleId = 1004;
         when(mockPreferencesService.notificationsEnabled).thenReturn(true);
@@ -399,9 +407,22 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
+        final checkNow = DateTime.now();
+        int expectedCount = 0;
+        final dates =
+            List.generate(5, (i) => Date.today().add(Duration(days: i)));
+        for (final date in dates) {
+          for (final time in times) {
+            final dateTime = DateTime(
+                date.year, date.month, date.day, time.hour, time.minute);
+            if (!checkNow.isAfter(dateTime)) {
+              expectedCount++;
+            }
+          }
+        }
         verify(mockPlugin.zonedSchedule(
           id: anyNamed('id'),
           title: anyNamed('title'),
@@ -410,7 +431,7 @@ void main() {
           notificationDetails: anyNamed('notificationDetails'),
           androidScheduleMode: anyNamed('androidScheduleMode'),
           payload: anyNamed('payload'),
-        )).called(10 - ignored);
+        )).called(expectedCount);
 
         // Cleanup
         NotificationService.createPlugin = origCreate;
@@ -461,7 +482,7 @@ void main() {
         );
 
         // Act
-        await scheduler.regenerateAll();
+        await scheduler.regenerateAll(l10n, l10n.localeName);
 
         // Assert
         verify(mockPlugin.zonedSchedule(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/molecule_l10n.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:provider/provider.dart';
@@ -8,17 +11,18 @@ import 'package:provider/provider.dart';
 class ChooseSchedulePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final localizations = context.l10n;
     final MedicationScheduleProvider medicationScheduleProvider =
         context.read<MedicationScheduleProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose a schedule'),
+        title: Text(localizations.chooseSchedule),
       ),
       body: SafeArea(
         child: medicationScheduleProvider.schedules.isEmpty
             ? Center(
-                child: Text('Add schedules first.'),
+                child: Text(localizations.addSchedulesFirst),
               )
             : ListView.builder(
                 padding: pagePadding,
@@ -42,9 +46,10 @@ class ChooseScheduleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    String subtitle = "${schedule.dose} mg • ${schedule.molecule.name} "
-        "${schedule.ester != null ? "${schedule.ester!.name} " : ""}"
-        "${schedule.administrationRoute.name}";
+    final localizations = context.l10n;
+    String subtitle =
+        "${schedule.dose} ${schedule.molecule.unit} • ${schedule.molecule.localizedNameWithEster(schedule.ester, localizations)} • "
+        "${schedule.administrationRoute.localizedName(localizations)}";
 
     return Card.filled(
       clipBehavior: Clip.antiAlias,

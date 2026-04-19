@@ -17,7 +17,7 @@ class _MainPageState extends State<MainPage> {
   bool _isUpdateAvailable = false;
   bool _hideUpdateBanner = false;
 
-  MainTabConfig get currentTab => mainTabs[_selectedIndex];
+  MainTabConfig get currentTab => getMainTabs(context)[_selectedIndex];
 
   void _selectIndex(int index) {
     setState(() => _selectedIndex = index);
@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
             selectedIndex: _selectedIndex,
             onDestinationSelected: _selectIndex,
             destinations: [
-              for (final tab in mainTabs)
+              for (final tab in getMainTabs(context))
                 NavigationDestination(
                   label: tab.title,
                   icon: Icon(tab.icon),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -25,11 +26,12 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   late BloodTestProvider _bloodTestProvider;
   bool _dateTimeChanged = false;
 
-  String? get _testDateError => BloodTest.validateDate(_testDateTime);
+  String? get _testDateError =>
+      BloodTest.validateDate(context.l10n, _testDateTime);
   String? get _estradiolLevelsError =>
-      BloodTest.validateLevel(_estradiolLevelsController.text);
+      BloodTest.validateLevel(context.l10n, _estradiolLevelsController.text);
   String? get _testosteroneLevelsError =>
-      BloodTest.validateLevel(_testosteroneLevelsController.text);
+      BloodTest.validateLevel(context.l10n, _testosteroneLevelsController.text);
 
   bool get _isFormValid => _testDateError == null;
 
@@ -86,25 +88,26 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return ModelForm(
-      title: 'Edit blood test',
-      submitButtonLabel: 'Save',
+      title: l10n.editBloodTest,
+      submitButtonLabel: l10n.save,
       isFormValid: _isFormValid,
       saveChanges: _saveBloodTest,
       onDelete: _confirmDelete,
       fields: <Widget>[
         FormTextField(
           controller: _estradiolLevelsController,
-          label: 'Estradiol level',
+          label: l10n.estradiolLevelLabel,
           errorText: _estradiolLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
-          suffixText: 'pg/ml',
+          suffixText: 'pg/mL',
         ),
         FormTextField(
           controller: _testosteroneLevelsController,
-          label: 'Testosterone level',
+          label: l10n.testosteroneLevelLabel,
           errorText: _testosteroneLevelsError,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
@@ -114,7 +117,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
         FormSpacer(),
         FormDateTimeField(
           datetime: _testDateTime,
-          label: 'Test date',
+          label: l10n.bloodTestDateLabel,
           errorText: _testDateError,
           onChanged: (date) => setState(() {
             _testDateTime = date;

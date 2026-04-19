@@ -1,8 +1,11 @@
 import 'package:dynamic_system_colors/dynamic_system_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mona/controllers/notification_scheduler.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/locale_provider.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
@@ -61,12 +64,20 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  void _regenerateNotifications() {
+  void _regenerateNotifications() async {
+    if (!mounted) return;
+
+    final locale = context.read<LocaleProvider>().locale;
+
+    final l10n = await AppLocalizations.delegate.load(locale);
+
+    if (!mounted) return;
+
     NotificationScheduler(
       _medicationScheduleProvider,
       _medicationIntakeProvider,
       _preferencesService,
-    ).regenerateAll();
+    ).regenerateAll(l10n, locale.toLanguageTag());
   }
 
   void _checkTimezoneChange() {
@@ -93,6 +104,14 @@ class _MonaAppState extends State<MonaApp> with WidgetsBindingObserver {
 
         return MaterialApp(
           title: 'Mona',
+          locale: context.watch<LocaleProvider>().locale,
+          supportedLocales: context.watch<LocaleProvider>().supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,

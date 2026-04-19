@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
@@ -14,18 +14,6 @@ import 'package:timezone/timezone.dart' as tz;
 enum InjectionSide {
   left,
   right,
-}
-
-extension InjectionSideDropdown on InjectionSide {
-  static List<DropdownMenuItem<InjectionSide>> get menuItems =>
-      InjectionSide.values
-          .map(
-            (side) => DropdownMenuItem<InjectionSide>(
-              value: side,
-              child: Text(side.name[0].toUpperCase() + side.name.substring(1)),
-            ),
-          )
-          .toList();
 }
 
 class MedicationIntake {
@@ -132,10 +120,11 @@ class MedicationIntake {
   }
 
   // coverage:ignore-start
-  static String? validateDose(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateDose(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
 
-  static String? validateDeadSpace(String? value) => positiveDecimal(value);
+  static String? validateDeadSpace(AppLocalizations l10n, String? value) =>
+      positiveDecimal(l10n, value);
 
   @override
   bool operator ==(Object other) =>
@@ -146,10 +135,9 @@ class MedicationIntake {
 
   @override
   String toString() {
-    return "$dose mg • ${molecule.name} "
-        "${ester != null ? '${ester!.name} ' : ""}"
-        "${administrationRoute.name}"
-        "${side?.name != null ? ' • ${side!.name} side' : ''}";
+    return 'MedicationIntake(id: $id, dose: $dose ${molecule.unit}, '
+        'molecule: ${molecule.name}, ester: ${ester?.name}, '
+        'route: ${administrationRoute.name}, side: ${side?.name})';
   }
   // coverage:ignore-end
 }

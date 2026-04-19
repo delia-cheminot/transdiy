@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
@@ -69,9 +70,11 @@ class BloodTest {
   }
 
   // coverage:ignore-start
-  static String? validateDate(DateTime? value) => requiredDateTime(value);
+  static String? validateDate(AppLocalizations l10n, DateTime? value) =>
+      requiredDateTime(l10n, value);
 
-  static String? validateLevel(String? value) => positiveDecimal(value);
+  static String? validateLevel(AppLocalizations l10n, String? value) =>
+      positiveDecimal(l10n, value);
 
   @override
   bool operator ==(Object other) =>

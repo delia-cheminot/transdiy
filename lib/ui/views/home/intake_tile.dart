@@ -8,6 +8,11 @@ import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
+import 'package:mona/l10n/helpers/injection_side_l10n.dart';
+import 'package:mona/l10n/helpers/molecule_l10n.dart';
 import 'package:mona/ui/views/home/take_medication_page.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +31,7 @@ class IntakeTile extends StatelessWidget {
     final theme = Theme.of(context);
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
     final supplyItemProvider = context.watch<SupplyItemProvider>();
+    final localizations = context.l10n;
     final now = DateTime.now();
 
     final viewModel = IntakeTileViewModel(
@@ -35,6 +41,8 @@ class IntakeTile extends StatelessWidget {
       supplyProvider: supplyItemProvider,
       now: now,
       theme: Theme.of(context),
+      localizations: localizations,
+      languageTag: context.languageTag,
     );
 
     final textColor =
@@ -43,6 +51,7 @@ class IntakeTile extends StatelessWidget {
     return Card.filled(
       color: viewModel.isActive ? theme.colorScheme.primaryContainer : null,
       clipBehavior: Clip.antiAlias,
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(
@@ -110,7 +119,9 @@ class IntakeTileViewModel {
       required this.intakeProvider,
       required this.supplyProvider,
       required this.now,
-      required this.theme});
+      required this.theme,
+      required this.localizations,
+      required this.languageTag});
 
   final MedicationSchedule schedule;
   final ScheduleStatus status;
@@ -118,10 +129,12 @@ class IntakeTileViewModel {
   final SupplyItemProvider supplyProvider;
   final DateTime now;
   final ThemeData theme;
+  final AppLocalizations localizations;
+  final String languageTag;
 
   Date get nextScheduled => schedule.nextDate;
 
-  Date? get previousScheduled => schedule.previousDate;
+  Date? get lastScheduled => schedule.previousDate;
 
   Date? get lastTaken =>
       intakeProvider.getLastIntakeDateForSchedule(schedule.id);
@@ -130,7 +143,7 @@ class IntakeTileViewModel {
 
   int? get daysSinceLastTaken => lastTaken?.daysAwayFromToday;
 
-  int? get daysSinceLastScheduled => previousScheduled?.daysAwayFromToday;
+  int? get daysSinceLastScheduled => lastScheduled?.daysAwayFromToday;
 
   String get intakeInfo {
     final nextSide = MedicationIntakeManager(
@@ -138,28 +151,27 @@ class IntakeTileViewModel {
       supplyProvider,
     ).getNextSide();
 
-    return "${schedule.dose} mg • ${schedule.molecule.name} "
-        "${schedule.ester != null ? "${schedule.ester!.name} " : ""}"
-        "${schedule.administrationRoute.name}"
-        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.name} side" : ""}";
+    return "${schedule.dose} ${schedule.molecule.unit} • ${schedule.molecule.localizedNameWithEster(schedule.ester, localizations)} • "
+        "${schedule.administrationRoute.localizedName(localizations)}"
+        "${schedule.administrationRoute == AdministrationRoute.injection ? " • ${nextSide.localizedSummary(localizations)}" : ""}";
   }
 
   String get scheduledText {
     switch (status) {
       case ScheduleStatus.today:
       case ScheduleStatus.todayOverdue:
-        return "Today";
+        return localizations.today;
 
       case ScheduleStatus.overdue:
-        final formatted = previousScheduled!.format(DateFormat.MMMMd());
-        return "$formatted - $daysSinceLastScheduled days ago";
+        final formatted = lastScheduled!.format(DateFormat.MMMMd(languageTag));
+        return "$formatted - ${localizations.daysAgoCount(daysSinceLastScheduled!)}";
 
       case ScheduleStatus.upcoming:
-        final formatted = nextScheduled.format(DateFormat.MMMMd());
-        return "$formatted - in $daysUntilIntake days";
+        final formatted = nextScheduled.format(DateFormat.MMMMd(languageTag));
+        return "$formatted - ${localizations.inDaysCount(daysUntilIntake)}";
 
       case ScheduleStatus.taken:
-        return "taken";
+        return localizations.taken;
     }
   }
 
@@ -167,10 +179,10 @@ class IntakeTileViewModel {
     switch (status) {
       case ScheduleStatus.today:
         if (lastTaken != null &&
-            previousScheduled != null &&
-            !lastTaken!.isSameDayAs(previousScheduled!)) {
-          final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
-          return "Last taken $daysSinceLastTaken days ago ($formatted)";
+            lastScheduled != null &&
+            !lastTaken!.isSameDayAs(lastScheduled!)) {
+          final formatted = lastTaken!.format(DateFormat.MMMd(languageTag));
+          return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
         }
         return null;
 
@@ -181,11 +193,11 @@ class IntakeTileViewModel {
       case ScheduleStatus.overdue:
       case ScheduleStatus.todayOverdue:
         if (lastTaken == null) {
-          return "Never taken yet";
+          return localizations.neverTakenYet;
         }
 
-        final formatted = DateFormat.MMMd().format(lastTaken!.toDateTime());
-        return "Last taken $daysSinceLastTaken days ago ($formatted)";
+        final formatted = lastTaken!.format(DateFormat.MMMd(languageTag));
+        return "${localizations.lastTaken} ${localizations.daysAgoCount(daysSinceLastTaken!)} ($formatted)";
     }
   }
 

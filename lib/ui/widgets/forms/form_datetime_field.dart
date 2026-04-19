@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/widgets/forms/base_form_field.dart';
 
@@ -18,12 +19,17 @@ class FormDateTimeField extends BaseFormField {
 
   @override
   Widget buildField(BuildContext context) {
+    final String locale = context.languageTag;
+    final DateFormat timeFormat = MediaQuery.of(context).alwaysUse24HourFormat
+        ? DateFormat.Hm(locale)
+        : DateFormat.jm(locale);
+
     return Row(
       children: <Widget>[
         Expanded(
           child: TextField(
             controller: TextEditingController(
-                text: datetime.toString().split(' ').first),
+                text: DateFormat.yMMMd(locale).format(datetime)),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: label,
@@ -39,14 +45,14 @@ class FormDateTimeField extends BaseFormField {
         SizedBox(width: borderPadding),
         IntrinsicWidth(
           child: TextField(
-            controller: TextEditingController(
-                text: DateFormat('HH:mm').format(datetime)),
+            controller:
+                TextEditingController(text: timeFormat.format(datetime)),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               errorText: errorText,
               suffixIcon: errorText != null
                   ? Icon(Icons.error)
-                  : Icon(Icons.calendar_today),
+                  : Icon(Icons.access_time),
             ),
             readOnly: true,
             onTap: () => _selectTime(context),

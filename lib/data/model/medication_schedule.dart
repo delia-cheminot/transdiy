@@ -6,6 +6,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
@@ -163,28 +164,32 @@ class MedicationSchedule {
     );
   }
 
-  static String? validateName(String? value) => requiredString(value);
+  static String? validateName(AppLocalizations l10n, String? value) =>
+      requiredString(l10n, value);
 
-  static String? validateDose(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  static String? validateDose(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
 
-  static String? validateIntervalDays(String? value) =>
-      requiredPositiveInt(value);
+  static String? validateIntervalDays(AppLocalizations l10n, String? value) =>
+      requiredPositiveInt(l10n, value);
 
-  static String? validateStartDate(Date? value) => requiredDate(value);
+  static String? validateStartDate(AppLocalizations l10n, Date? value) =>
+      requiredDate(l10n, value);
 
-  static String? validateMolecule(Molecule? value) => requiredMolecule(value);
+  static String? validateMolecule(AppLocalizations l10n, Molecule? value) =>
+      requiredMolecule(l10n, value);
 
-  static String? validateAdministrationRoute(AdministrationRoute? value) =>
-      requiredAdministrationRoute(value);
+  static String? validateAdministrationRoute(
+          AppLocalizations l10n, AdministrationRoute? value) =>
+      requiredAdministrationRoute(l10n, value);
 
-  static String? Function(Ester?) esterValidator(
+  static String? Function(Ester?) esterValidator(AppLocalizations l10n,
       Molecule? molecule, AdministrationRoute? administrationRoute) {
     return (Ester? value) {
       return (molecule == KnownMolecules.estradiol &&
               administrationRoute == AdministrationRoute.injection &&
               value == null)
-          ? 'Required field'
+          ? l10n.requiredField
           : null;
     };
   }
@@ -216,16 +221,11 @@ class MedicationSchedule {
 
   @override
   String toString() {
-    return "$dose mg ${molecule.name} "
-        "${ester != null ? "${ester!.name} " : ""}${administrationRoute.name}\n"
-        "${formatFrequency()}";
-  }
-
-  String formatFrequency() {
-    if (intervalDays == 1) {
-      return "every day";
-    } else {
-      return "every $intervalDays days";
-    }
+    final times =
+        notificationTimes.map((t) => '${t.hour}:${t.minute}').join(', ');
+    return 'MedicationSchedule(id: $id, name: $name, dose: $dose ${molecule.unit}, '
+        'molecule: ${molecule.name}, ester: ${ester?.name}, '
+        'route: ${administrationRoute.name}, intervalDays: $intervalDays, '
+        'startDate: $startDate, notificationTimes: [$times])';
   }
 }
