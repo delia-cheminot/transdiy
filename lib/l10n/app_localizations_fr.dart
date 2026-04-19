@@ -31,7 +31,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get empty_home =>
-      'Commencez par ajouter un plannig dans les paramètres';
+      'Commencez par ajouter un planning dans les paramètres';
 
   @override
   String get allDone => 'Terminé !';
