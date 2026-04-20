@@ -22,13 +22,13 @@ We use a standard **Fork and Pull Request** workflow. To keep our main branch st
 We have provided a script to automatically set up FVM, configure your shell, and fetch the necessary dependencies.
 
 ```bash
-chmod +x scripts/setup_dev.sh
-./scripts/setup_dev.sh
+chmod +x setup_dev.sh
+./setup_dev.sh
 ```
 
 Windows users :
 ```powershell
-./scripts/setup_dev.ps1
+./setup_dev.ps1
 ```
 
 > [!NOTE]
