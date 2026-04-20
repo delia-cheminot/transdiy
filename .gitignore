@@ -48,7 +48,6 @@ android/.kotlin/
 
 # FVM Version Cache
 .fvm/
-.fvmrc
 
 android/build/
 
