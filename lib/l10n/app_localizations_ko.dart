@@ -24,10 +24,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get nav_supplies => '보유량';
 
   @override
-  String get takeAnIntake => 'Take an intake';
+  String get takeAnIntake => '[Take an intake]';
 
   @override
-  String get addAnItem => 'Add an item';
+  String get addAnItem => '[Add an item]';
 
   @override
   String get empty_home => '설정에서 일정을 추가하여 시작하세요';
@@ -55,7 +55,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: '$count days ago',
       one: 'yesterday',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -66,7 +66,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'in $count days',
       one: 'tomorrow',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -76,18 +76,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get neverTakenYet => '아직 투여한 적 없음';
 
   @override
-  String get scheduleFrequencyDaily => 'Every day';
+  String get scheduleFrequencyDaily => '[Every day]';
 
   @override
   String scheduleFrequencyEveryNDays(Object days) {
-    return 'Every $days days';
+    return '[Every $days days]';
   }
 
   @override
-  String get newUpdateAvailable => 'A new update is available!';
+  String get newUpdateAvailable => '[A new update is available!]';
 
   @override
-  String get goToSettings => 'Go to Settings';
+  String get goToSettings => '[Go to Settings]';
 
   @override
   String get settingsTitle => '설정';
@@ -96,10 +96,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get notifications => '알림';
 
   @override
-  String get schedulesAndNotifications => 'Schedules & notifications';
+  String get schedulesAndNotifications => '[Schedules & notifications]';
 
   @override
-  String get general => 'General';
+  String get general => '[General]';
 
   @override
   String get schedules => '일정';
@@ -116,7 +116,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get language => '언어';
 
   @override
-  String get languageFollowDevice => 'Follow device language';
+  String get languageFollowDevice => '[Follow device language]';
 
   @override
   String get selectLanguage => '언어 선택';
@@ -125,7 +125,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get enableNotifications => '알림 활성화';
 
   @override
-  String get enableNotificationsDescription => 'Send reminders for schedules';
+  String get enableNotificationsDescription => '[Send reminders for schedules]';
 
   @override
   String get notificationsDisabledTitle => '알림이 비활성화되어 있습니다';
@@ -149,7 +149,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get checkForUpdates => '업데이트 확인';
 
   @override
-  String get checkForUpdatesDescription => '최신 버전을 수동으로 확인합니다\n인터넷에 연결됩니다\n(데이터는 전송되지 않습니다)';
+  String get checkForUpdatesDescription =>
+      '최신 버전을 수동으로 확인합니다\n인터넷에 연결됩니다\n(데이터는 전송되지 않습니다)';
 
   @override
   String appVersion(Object version) {
@@ -158,94 +159,100 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String backupSavedTo(Object path) {
-    return 'Backup saved to: $path';
+    return '[Backup saved to: $path]';
   }
 
   @override
   String exportFailed(Object error) {
-    return 'Failed to export: $error';
+    return '[Failed to export: $error]';
   }
 
   @override
-  String get importDataTitle => 'Import Data';
+  String get importDataTitle => '[Import Data]';
 
   @override
-  String get importDataSubtitle => 'Restore data from a JSON backup';
+  String get importDataSubtitle => '[Restore data from a JSON backup]';
 
   @override
-  String get importDataOverwriteWarning => 'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?';
+  String get importDataOverwriteWarning =>
+      '[This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?]';
 
   @override
-  String get importConfirm => 'Import';
+  String get importConfirm => '[Import]';
 
   @override
-  String get importSuccessfulTitle => 'Import Successful';
+  String get importSuccessfulTitle => '[Import Successful]';
 
   @override
-  String get importRestartRequired => 'Please restart the app to apply the restored data.';
+  String get importRestartRequired =>
+      '[Please restart the app to apply the restored data.]';
 
   @override
-  String get closeApp => 'Close App';
+  String get closeApp => '[Close App]';
 
   @override
   String importFailed(Object error) {
-    return 'Failed to import: $error';
+    return '[Failed to import: $error]';
   }
 
   @override
-  String get updates => 'Updates';
+  String get updates => '[Updates]';
 
   @override
-  String get dataManagement => 'Data Management';
+  String get dataManagement => '[Data Management]';
 
   @override
-  String get exportDataTitle => 'Export Data';
+  String get exportDataTitle => '[Export Data]';
 
   @override
-  String get exportDataSubtitle => 'Save your data to a JSON file';
+  String get exportDataSubtitle => '[Save your data to a JSON file]';
 
   @override
-  String get updateNoCompatibleApk => 'No compatible update found for your device.';
+  String get updateNoCompatibleApk =>
+      '[No compatible update found for your device.]';
 
   @override
-  String get updateAppUpToDate => 'Your app is up to date!';
+  String get updateAppUpToDate => '[Your app is up to date!]';
 
   @override
-  String get updateCheckNetworkError => 'Could not check for updates right now.';
+  String get updateCheckNetworkError =>
+      '[Could not check for updates right now.]';
 
   @override
-  String get updateDialogTitle => 'Update Available';
+  String get updateDialogTitle => '[Update Available]';
 
   @override
   String updateDialogBody(Object current, Object latest) {
-    return 'Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.';
+    return '[Version $latest is available! (Current: $current)\n\nAn update compatible with your device is ready to be installed.]';
   }
 
   @override
-  String get updateDownloadAndInstall => 'Download & Install';
+  String get updateDownloadAndInstall => '[Download & Install]';
 
   @override
-  String get updateInstallPermissionRequired => 'Permission is required to install updates.';
+  String get updateInstallPermissionRequired =>
+      '[Permission is required to install updates.]';
 
   @override
-  String get updateDownloadingTitle => 'Downloading Update...';
+  String get updateDownloadingTitle => '[Downloading Update...]';
 
   @override
   String updateFailedOpenInstaller(Object message) {
-    return 'Failed to open installer: $message';
+    return '[Failed to open installer: $message]';
   }
 
   @override
-  String get updateDownloadFailed => 'Download failed. Please check your connection.';
+  String get updateDownloadFailed =>
+      '[Download failed. Please check your connection.]';
 
   @override
   String notificationMedicationReminderTitle(Object scheduleName) {
-    return 'Time to take $scheduleName';
+    return '[Time to take $scheduleName]';
   }
 
   @override
   String notificationMedicationReminderBody(Object dateTime) {
-    return 'Scheduled for $dateTime';
+    return '[Scheduled for $dateTime]';
   }
 
   @override
@@ -282,7 +289,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String deleteSchedule(Object name) {
-    return '이 일정을 삭제하시겠습니까?';
+    return '$name을(를) 삭제하시겠습니까?';
   }
 
   @override
@@ -300,7 +307,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get notificationsUpdated => '알림이 업데이트되었습니다!';
 
   @override
-  String get notificationsUpdatedDescription => '이제 각 일정마다 개별 알림이 설정됩니다.\n\n일정에 대한 알림을 설정하여 놓치지 않도록 하세요.';
+  String get notificationsUpdatedDescription =>
+      '이제 각 일정마다 개별 알림이 설정됩니다.\n\n일정에 대한 알림을 설정하여 놓치지 않도록 하세요.';
 
   @override
   String get dontShowAgain => '다시 표시하지 않기';
@@ -353,43 +361,44 @@ class AppLocalizationsKo extends AppLocalizations {
   String get microliters => 'μL';
 
   @override
-  String get empty_levels => '혈중 에스트라디올 예상 농도가 이 탭에 표시됩니다';
+  String get empty_levels => '[Estradiol injections will display in this tab]';
 
   @override
-  String get bloodTestsTitle => 'Blood Tests';
+  String get bloodTestsTitle => '[Blood Tests]';
 
   @override
-  String get empty_blood_tests => 'Taken blood tests will appear here. Start by using the Add button!';
+  String get empty_blood_tests =>
+      '[Taken blood tests will appear here. Start by using the Add button!]';
 
   @override
-  String get addBloodTest => 'Add a blood test';
+  String get addBloodTest => '[Add a blood test]';
 
   @override
-  String get editBloodTest => 'Edit blood test';
+  String get editBloodTest => '[Edit blood test]';
 
   @override
-  String get newBloodTest => 'New blood test';
+  String get newBloodTest => '[New blood test]';
 
   @override
-  String get deleteBloodTest => 'Delete this blood test?';
+  String get deleteBloodTest => '[Delete this blood test?]';
 
   @override
-  String get estradiolLevelLabel => 'Estradiol level';
+  String get estradiolLevelLabel => '[Estradiol level]';
 
   @override
-  String get testosteroneLevelLabel => 'Testosterone level';
+  String get testosteroneLevelLabel => '[Testosterone level]';
 
   @override
-  String get bloodTestDateLabel => 'Test date';
+  String get bloodTestDateLabel => '[Test date]';
 
   @override
   String chartNowConcentration(Object value) {
-    return 'Now $value';
+    return '[Now $value]';
   }
 
   @override
   String chartBloodTestLevelTooltip(Object date, Object level) {
-    return '$date: $level';
+    return '[$date: $level]';
   }
 
   @override
@@ -415,7 +424,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String deleteItem(Object name) {
-    return '이 항목을 삭제하시겠습니까?';
+    return '$name을(를) 삭제하시겠습니까?';
   }
 
   @override
@@ -430,19 +439,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get save => '저장';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => '[Cancel]';
 
   @override
   String get next => '다음';
 
   @override
-  String get delete => 'Delete';
+  String get delete => '[Delete]';
 
   @override
-  String get deleteElement => 'Delete this item?';
+  String get deleteElement => '[Delete this item?]';
 
   @override
-  String get irreversibleAction => 'This action can\'t be undone.';
+  String get irreversibleAction => '[This action can\'t be undone.]';
 
   @override
   String get name => '이름';
@@ -496,7 +505,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get minoxidil => '미녹시딜';
 
   @override
-  String get pioglitazone => 'Pioglitazone';
+  String get pioglitazone => '[Pioglitazone]';
 
   @override
   String get enanthate => '에난테이트';
@@ -517,40 +526,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get cypionateSuspension => '시피오네이트 현탁액';
 
   @override
-  String get medicationEstradiolEnanthate => 'Estradiol enanthate';
+  String get medicationEstradiolEnanthate => '[Estradiol enanthate]';
 
   @override
-  String get medicationEstradiolValerate => 'Estradiol valerate';
+  String get medicationEstradiolValerate => '[Estradiol valerate]';
 
   @override
-  String get medicationEstradiolCypionate => 'Estradiol cypionate';
+  String get medicationEstradiolCypionate => '[Estradiol cypionate]';
 
   @override
-  String get medicationEstradiolUndecylate => 'Estradiol undecylate';
+  String get medicationEstradiolUndecylate => '[Estradiol undecylate]';
 
   @override
-  String get medicationEstradiolBenzoate => 'Estradiol benzoate';
+  String get medicationEstradiolBenzoate => '[Estradiol benzoate]';
 
   @override
-  String get medicationEstradiolCypionateSuspension => 'Estradiol cypionate suspension';
+  String get medicationEstradiolCypionateSuspension =>
+      '[Estradiol cypionate suspension]';
 
   @override
-  String get medicationTestosteroneEnanthate => 'Testosterone enanthate';
+  String get medicationTestosteroneEnanthate => '[Testosterone enanthate]';
 
   @override
-  String get medicationTestosteroneValerate => 'Testosterone valerate';
+  String get medicationTestosteroneValerate => '[Testosterone valerate]';
 
   @override
-  String get medicationTestosteroneCypionate => 'Testosterone cypionate';
+  String get medicationTestosteroneCypionate => '[Testosterone cypionate]';
 
   @override
-  String get medicationTestosteroneUndecylate => 'Testosterone undecylate';
+  String get medicationTestosteroneUndecylate => '[Testosterone undecylate]';
 
   @override
-  String get medicationTestosteroneBenzoate => 'Testosterone benzoate';
+  String get medicationTestosteroneBenzoate => '[Testosterone benzoate]';
 
   @override
-  String get medicationTestosteroneCypionateSuspension => 'Testosterone cypionate suspension';
+  String get medicationTestosteroneCypionateSuspension =>
+      '[Testosterone cypionate suspension]';
 
   @override
   String get injection => '주사';
@@ -584,7 +595,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'ml',
       one: 'ml',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -595,7 +606,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'pills',
       one: 'pill',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -606,7 +617,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'patches',
       one: 'patch',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -617,7 +628,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'pumps',
       one: 'pump',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -628,7 +639,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'implants',
       one: 'implant',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -639,7 +650,7 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'suppositories',
       one: 'suppository',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
@@ -650,30 +661,30 @@ class AppLocalizationsKo extends AppLocalizations {
       other: 'sprays',
       one: 'spray',
     );
-    return '$_temp0';
+    return '[$_temp0]';
   }
 
   @override
-  String get injectionSideLeft => 'Left';
+  String get injectionSideLeft => '[Left]';
 
   @override
-  String get injectionSideRight => 'Right';
+  String get injectionSideRight => '[Right]';
 
   @override
-  String get intakeSummaryInjectionSideLeft => 'Left side';
+  String get intakeSummaryInjectionSideLeft => '[Left side]';
 
   @override
-  String get intakeSummaryInjectionSideRight => 'Right side';
+  String get intakeSummaryInjectionSideRight => '[Right side]';
 
   @override
-  String get requiredField => 'Required field';
+  String get requiredField => '[Required field]';
 
   @override
-  String get mustBePositiveNumber => 'Must be a positive number';
+  String get mustBePositiveNumber => '[Must be a positive number]';
 
   @override
-  String get invalidTotalAmount => 'Invalid total amount';
+  String get invalidTotalAmount => '[Invalid total amount]';
 
   @override
-  String get cannotExceedTotalCapacity => 'Cannot exceed total capacity';
+  String get cannotExceedTotalCapacity => '[Cannot exceed total capacity]';
 }
