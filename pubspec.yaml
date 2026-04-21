@@ -62,6 +62,8 @@ dependencies:
   path_provider: ^2.1.4
   open_filex: ^4.5.0
   pub_semver: ^2.2.0
+  flutter_localizations:
+    sdk: flutter
   file_picker: ^8.0.0
   share_plus: ^10.0.0
 
@@ -92,6 +94,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/
