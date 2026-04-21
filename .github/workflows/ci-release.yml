@@ -1,0 +1,220 @@
+name: CI — release
+
+# Trigger on version tags pushed after merging dev into main (e.g. v1.2.3)
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  # ── Format ────────────────────────────────────────────────────────────────
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check formatting
+        run: dart format --set-exit-if-changed .
+
+  # ── Analyze ───────────────────────────────────────────────────────────────
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+  # ── Tests & coverage ──────────────────────────────────────────────────────
+  test_coverage:
+    name: Tests and coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run tests with coverage
+        run: flutter test --coverage
+
+  # ── Version bump commit ───────────────────────────────────────────────────
+  bump_version:
+    name: Bump version
+    runs-on: ubuntu-latest
+    # Only run after all quality checks pass
+    needs: [format, analyze, test_coverage]
+
+    steps:
+      - name: Checkout repository
+        # Needs a PAT (not the default GITHUB_TOKEN) so the push is allowed
+        # on a branch protected by branch protection rules.
+        # Create a fine-grained PAT with "Contents: Read and write" on this repo
+        # and store it as the secret VERSION_BUMP_PAT.
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.VERSION_BUMP_PAT }}
+          ref: main
+
+      # Extract version number from the tag (strips the leading "v")
+      - name: Parse version from tag
+        id: version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"           # e.g. "1.2.3"
+          BUILD_NUMBER="${{ github.run_number }}"   # auto-incremented by GitHub
+          echo "version=$VERSION"       >> "$GITHUB_OUTPUT"
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+
+      # Update pubspec.yaml: replace the version line
+      - name: Update pubspec.yaml
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          BUILD="${{ steps.version.outputs.build_number }}"
+          sed -i "s/^version: .*/version: ${VERSION}+${BUILD}/" pubspec.yaml
+
+      # Update MARKETING_VERSION in the Runner target only (not RunnerTests).
+      # RunnerTests always has MARKETING_VERSION = 1.0 so we only replace
+      # occurrences that match the previous app version (read from pubspec
+      # before the sed above ran — we re-read the file on disk).
+      - name: Update MARKETING_VERSION in project.pbxproj
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          FILE="ios/Runner.xcodeproj/project.pbxproj"
+          # Read the old version straight from the pbxproj (e.g. "1.5.2")
+          OLD_VERSION=$(grep -m1 'MARKETING_VERSION = [0-9]' "$FILE" \
+            | sed 's/.*MARKETING_VERSION = \([^;]*\);.*/\1/')
+          sed -i "s/MARKETING_VERSION = ${OLD_VERSION};/MARKETING_VERSION = ${VERSION};/g" "$FILE"
+
+      # Commit the two modified files
+      - name: Commit version bump
+        run: |
+          git config user.name  "délia"
+          git config user.email "delia@cheminot.net"
+          git add pubspec.yaml ios/Runner.xcodeproj/project.pbxproj
+          git commit -m "chore: update version"
+          git push origin main
+
+  # ── Build Android release APK (signed) ────────────────────────────────────
+  build_android:
+    name: Build Android APK (release)
+    runs-on: ubuntu-latest
+    # Run after the version bump so the APK embeds the correct version
+    needs: [bump_version]
+
+    steps:
+      # Checkout main again so we get the version bump commit
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      # Decode the keystore stored as a base64 secret and write it to disk
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode \
+            > android/app/upload-keystore.jks
+
+      # Write key.properties so Gradle can find the signing config
+      - name: Create key.properties
+        run: |
+          cat <<EOF > android/key.properties
+          storeFile=upload-keystore.jks
+          storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          EOF
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      # Remove signing artifacts from the runner before the job ends
+      - name: Clean up signing files
+        if: always()
+        run: |
+          rm -f android/app/upload-keystore.jks
+          rm -f android/key.properties
+
+      # Rename the APK to mona-[version].apk (strips the leading "v" from the tag)
+      - name: Rename APK
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          mv build/app/outputs/flutter-apk/app-release.apk              "build/app/outputs/flutter-apk/mona-${VERSION}.apk"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-apk
+          path: build/app/outputs/flutter-apk/mona-*.apk
+          retention-days: 7
+
+  # ── GitHub Release ─────────────────────────────────────────────────────────
+  create_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build_android]
+
+    steps:
+      # Download the APK uploaded by the build_android job
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-release-apk
+          path: artifacts/
+
+      # Create the release and attach the APK
+      # The tag name becomes the release title (e.g. "v1.2.3")
+      - name: Create release and upload APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: artifacts/mona-*.apk
+          generate_release_notes: false
