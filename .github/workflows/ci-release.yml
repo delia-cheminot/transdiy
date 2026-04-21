@@ -200,6 +200,8 @@ jobs:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     needs: [build_android]
+    permissions:
+      contents: write
 
     steps:
       # Download the APK uploaded by the build_android job
