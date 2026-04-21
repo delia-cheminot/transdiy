@@ -1,4 +1,4 @@
-name: CI — release
+name: CI - release
 
 # Trigger on version tags pushed after merging dev into main (e.g. v1.2.3)
 on:

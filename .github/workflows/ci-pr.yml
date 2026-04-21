@@ -2,9 +2,6 @@ name: CI - pull request
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
 
 jobs:
   format:
