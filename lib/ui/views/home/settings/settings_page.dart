@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/distribution.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/backup_service.dart';
 import 'package:mona/services/notification_service.dart';
@@ -261,7 +262,7 @@ class _SettingsPageState extends State<SettingsPage>
               );
             },
           ),
-          if (Platform.isAndroid) ...[
+          if (Platform.isAndroid && !isPlayStoreDistribution) ...[
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(

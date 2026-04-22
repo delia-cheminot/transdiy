@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/distribution.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
@@ -32,6 +33,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> _runAutomaticUpdateCheck() async {
+    if (isPlayStoreDistribution) return;
     final prefs = context.read<PreferencesService>();
     if (!prefs.autoCheckUpdatesEnabled) return;
 

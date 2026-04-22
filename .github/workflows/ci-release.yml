@@ -173,7 +173,7 @@ jobs:
           EOF
 
       - name: Build release APK
-        run: flutter build apk --release
+        run: flutter build apk --release --flavor standalone
 
       # Remove signing artifacts from the runner before the job ends
       - name: Clean up signing files
@@ -186,7 +186,7 @@ jobs:
       - name: Rename APK
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          mv build/app/outputs/flutter-apk/app-release.apk              "build/app/outputs/flutter-apk/mona-${VERSION}.apk"
+          mv build/app/outputs/flutter-apk/app-standalone-release.apk "build/app/outputs/flutter-apk/mona-${VERSION}.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4

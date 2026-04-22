@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mona/distribution.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -24,7 +25,7 @@ class UpdateService {
   }
 
   Future<bool> isUpdateAvailable() async {
-    if (!Platform.isAndroid) return false;
+    if (isPlayStoreDistribution || !Platform.isAndroid) return false;
     try {
       final packageInfo = await PackageInfo.fromPlatform();
       final data = await _fetchLatestRelease();
@@ -44,7 +45,7 @@ class UpdateService {
   }
 
   Future<void> checkForUpdates(BuildContext context) async {
-    if (!Platform.isAndroid) return;
+    if (isPlayStoreDistribution || !Platform.isAndroid) return;
     final l10n = context.l10n;
 
     try {

@@ -86,10 +86,10 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --flavor standalone
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-debug-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: build/app/outputs/flutter-apk/app-standalone-debug.apk
