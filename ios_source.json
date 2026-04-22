@@ -4,7 +4,7 @@
   "identifier": "com.deliacheminot.mona",
   "description": "Take control of your hormonal health with Mona. We make apps for trans people's health.",
   "iconURL": "https://i.imgur.com/PeIdqwy.png",
-  "sourceURL": "https://raw.githubusercontent.com/delia-cheminot/mona-hrt/refs/heads/main/ios_source.json",
+  "sourceURL": "https://raw.githubusercontent.com/mona-hrt/mona/refs/heads/main/ios_source.json",
   "website": "https://discord.gg/qsHzkX89vJ",
   "tintColor": "#4d0473",
   "featuredApps": [
@@ -31,12 +31,21 @@
         "https://i.imgur.com/vuSqW2l.png",
         "https://i.imgur.com/5cjzlB0.png"
       ],
-      "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/download/v1.5.2/mona-1.5.2.ipa",
+      "downloadURL": "https://github.com/mona-hrt/mona/releases/download/v1.6.0/mona-1.6.0.ipa",
       "size": 10700000,
-      "version": "1.5.1",
-      "versionDate": "2026-04-10T14:39:00Z",
-      "versionDescription": "Bug fix: adds more timezones which prevents a display bug in some of the app pages",
+      "version": "1.6.0",
+      "versionDate": "2026-04-22T12:39:00Z",
+      "versionDescription": "- Mona now speaks your language: Mona is now available in French, German, Spanish, Portuguese, and Brasilian Portuguese.\n- Smarter notifications: If you've already logged an intake for today, Mona won't send a reminder for it. One less thing to dismiss.\n- Bug fix: blood test times shifting on save. When editing a blood test, the time was displayed in UTC instead of your local timezone, which caused it to drift when saved. That's now fixed.",
       "versions": [
+        {
+          "downloadURL": "https://github.com/mona-hrt/mona/releases/download/v1.6.0/mona-1.6.0.ipa",
+          "size": 10700000,
+          "version": "1.6.0",
+          "buildVersion": "1",
+          "date": "2026-04-22T12:39:00Z",
+          "localizedDescription": "- Mona now speaks your language: Mona is now available in French, German, Spanish, Portuguese, and Brasilian Portuguese.\n- Smarter notifications: If you've already logged an intake for today, Mona won't send a reminder for it. One less thing to dismiss.\n- Bug fix: blood test times shifting on save. When editing a blood test, the time was displayed in UTC instead of your local timezone, which caused it to drift when saved. That's now fixed.",
+          "minOSVersion": "13.0"
+        },
         {
           "downloadURL": "https://github.com/delia-cheminot/mona-hrt/releases/tag/v1.5.2/mona-1.5.2.ipa",
           "size": 10700000,
