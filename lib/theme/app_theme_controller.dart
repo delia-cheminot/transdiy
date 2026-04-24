@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:mona/services/preferences_service.dart';
+import 'package:mona/theme/tonal_spot_theme_generator.dart';
+
+/// Resolves [ThemeData] for light and dark from system dynamic colors and
+/// [PreferencesService] (custom seed / toggles). Listens to prefs and notifies
+/// so widgets using [context.watch] can rebuild.
+class AppThemeProvider extends ChangeNotifier {
+  AppThemeProvider(this._prefs) {
+    _prefs.addListener(_onPrefsChanged);
+  }
+
+  final PreferencesService _prefs;
+
+  void _onPrefsChanged() => notifyListeners();
+
+  @override
+  void dispose() {
+    _prefs.removeListener(_onPrefsChanged);
+    super.dispose();
+  }
+
+  static const _useMaterial3 = true;
+
+  /// Builds the pair of themes for the current preferences and the latest
+  /// system [ColorScheme]s from [DynamicColorBuilder] (null = use fallback).
+  ({ThemeData theme, ThemeData darkTheme}) buildThemeData({
+    required ColorScheme? systemLight,
+    required ColorScheme? systemDark,
+  }) {
+    if (_prefs.customThemeEnabled && _prefs.customThemeSourceArgb != null) {
+      final custom = TonalSpotThemeGenerator.colorSchemesForSourceArgb(
+        _prefs.customThemeSourceArgb!,
+      );
+      return (
+        theme: ThemeData(
+          useMaterial3: _useMaterial3,
+          colorScheme: custom.light,
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: _useMaterial3,
+          colorScheme: custom.dark,
+        ),
+      );
+    }
+
+    return (
+      theme: ThemeData(
+        useMaterial3: _useMaterial3,
+        colorScheme:
+            systemLight ?? ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: _useMaterial3,
+        colorScheme: systemDark ??
+            ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              brightness: Brightness.dark,
+            ),
+      ),
+    );
+  }
+}

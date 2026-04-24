@@ -14,6 +14,10 @@ class PreferencesService extends ChangeNotifier {
   static const _autoCheckUpdatesKey = 'auto_check_updates';
   static const bool defaultAutoCheckUpdates = false;
 
+  static const _customThemeEnabledKey = 'custom_theme_enabled';
+  static const _customThemeSourceArgbKey = 'custom_theme_source_argb';
+  static const bool defaultCustomThemeEnabled = false;
+
   late final SharedPreferences _prefs;
 
   PreferencesService._(this._prefs);
@@ -45,6 +49,28 @@ class PreferencesService extends ChangeNotifier {
       await _prefs.remove(_languageTagKey);
     } else {
       await _prefs.setString(_languageTagKey, code);
+    }
+    notifyListeners();
+  }
+
+  bool get customThemeEnabled =>
+      _prefs.getBool(_customThemeEnabledKey) ?? defaultCustomThemeEnabled;
+
+  int? get customThemeSourceArgb {
+    if (!_prefs.containsKey(_customThemeSourceArgbKey)) return null;
+    return _prefs.getInt(_customThemeSourceArgbKey);
+  }
+
+  Future<void> setCustomThemeEnabled(bool isEnabled) async {
+    await _prefs.setBool(_customThemeEnabledKey, isEnabled);
+    notifyListeners();
+  }
+
+  Future<void> setCustomThemeSourceArgb(int? argb) async {
+    if (argb == null) {
+      await _prefs.remove(_customThemeSourceArgbKey);
+    } else {
+      await _prefs.setInt(_customThemeSourceArgbKey, argb);
     }
     notifyListeners();
   }
