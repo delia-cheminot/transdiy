@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mona/services/preferences_service.dart';
-import 'package:mona/theme/tonal_spot_theme_generator.dart';
+import 'package:mona/theme/custom_theme_schemes.dart';
 
 /// Resolves [ThemeData] for light and dark from system dynamic colors and
 /// [PreferencesService] (custom seed / toggles). Listens to prefs and notifies
@@ -28,18 +28,17 @@ class AppThemeProvider extends ChangeNotifier {
     required ColorScheme? systemLight,
     required ColorScheme? systemDark,
   }) {
-    if (_prefs.customThemeEnabled && _prefs.customThemeSourceArgb != null) {
-      final custom = TonalSpotThemeGenerator.colorSchemesForSourceArgb(
-        _prefs.customThemeSourceArgb!,
-      );
+    if (_prefs.customThemeEnabled) {
+      final custom = _prefs.customTheme;
+      final schemes = CustomThemeSchemes.fromSettings(custom);
       return (
         theme: ThemeData(
           useMaterial3: _useMaterial3,
-          colorScheme: custom.light,
+          colorScheme: schemes.light,
         ),
         darkTheme: ThemeData(
           useMaterial3: _useMaterial3,
-          colorScheme: custom.dark,
+          colorScheme: schemes.dark,
         ),
       );
     }

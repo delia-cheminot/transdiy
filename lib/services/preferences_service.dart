@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/theme/custom_theme_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService extends ChangeNotifier {
@@ -15,12 +16,44 @@ class PreferencesService extends ChangeNotifier {
   static const bool defaultAutoCheckUpdates = false;
 
   static const _customThemeEnabledKey = 'custom_theme_enabled';
-  static const _customThemeSourceArgbKey = 'custom_theme_source_argb';
+  static const _customThemeSettingsKey = 'custom_theme_settings';
   static const bool defaultCustomThemeEnabled = false;
 
   late final SharedPreferences _prefs;
 
   PreferencesService._(this._prefs);
+
+  bool get customThemeEnabled =>
+      _prefs.getBool(_customThemeEnabledKey) ?? defaultCustomThemeEnabled;
+
+  Future<void> setCustomThemeEnabled(bool isEnabled) async {
+    await _prefs.setBool(_customThemeEnabledKey, isEnabled);
+    notifyListeners();
+  }
+
+  CustomThemeSettings get customTheme {
+    final jsonString = _prefs.getString(_customThemeSettingsKey);
+    if (jsonString == null || jsonString.isEmpty) {
+      return const CustomThemeSettings();
+    }
+    try {
+      final decoded = jsonDecode(jsonString);
+      if (decoded is! Map<String, dynamic>) {
+        return const CustomThemeSettings();
+      }
+      return CustomThemeSettings.fromJson(decoded);
+    } catch (_) {
+      return const CustomThemeSettings();
+    }
+  }
+
+  Future<void> setCustomTheme(CustomThemeSettings value) async {
+    await _prefs.setString(
+      _customThemeSettingsKey,
+      jsonEncode(value.toJson()),
+    );
+    notifyListeners();
+  }
 
   bool get autoCheckUpdatesEnabled =>
       _prefs.getBool(_autoCheckUpdatesKey) ?? defaultAutoCheckUpdates;
@@ -49,28 +82,6 @@ class PreferencesService extends ChangeNotifier {
       await _prefs.remove(_languageTagKey);
     } else {
       await _prefs.setString(_languageTagKey, code);
-    }
-    notifyListeners();
-  }
-
-  bool get customThemeEnabled =>
-      _prefs.getBool(_customThemeEnabledKey) ?? defaultCustomThemeEnabled;
-
-  int? get customThemeSourceArgb {
-    if (!_prefs.containsKey(_customThemeSourceArgbKey)) return null;
-    return _prefs.getInt(_customThemeSourceArgbKey);
-  }
-
-  Future<void> setCustomThemeEnabled(bool isEnabled) async {
-    await _prefs.setBool(_customThemeEnabledKey, isEnabled);
-    notifyListeners();
-  }
-
-  Future<void> setCustomThemeSourceArgb(int? argb) async {
-    if (argb == null) {
-      await _prefs.remove(_customThemeSourceArgbKey);
-    } else {
-      await _prefs.setInt(_customThemeSourceArgbKey, argb);
     }
     notifyListeners();
   }

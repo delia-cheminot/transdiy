@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:mona/theme/custom_theme_schemes.dart';
+import 'package:mona/theme/custom_theme_settings.dart';
 import 'package:mona/theme/tonal_spot_theme_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +11,7 @@ class ThemePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preferences = context.watch<PreferencesService>();
-    final argb = preferences.customThemeSourceArgb;
+    final customTheme = preferences.customTheme;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Thème')),
@@ -25,53 +27,135 @@ class ThemePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: FilledButton(
               onPressed: () async {
-                await preferences.setCustomThemeSourceArgb(
-                  TonalSpotThemeGenerator.randomSourceArgb(),
+                await preferences.setCustomTheme(
+                  customTheme.copyWith(
+                      seedArgb: TonalSpotThemeGenerator.randomSourceArgb()),
                 );
               },
               child: const Text('Générer'),
             ),
           ),
           const SizedBox(height: 16),
-          if (argb != null) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Source ARGB: 0x'
-                    '${argb.toRadixString(16).toUpperCase().padLeft(8, '0')}',
-                    style: Theme.of(context).textTheme.bodySmall,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Variante M3',
+                    style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: 4),
+                InputDecorator(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   ),
-                  const SizedBox(height: 12),
-                  _ThemeShowcaseCard(sourceArgb: argb),
-                ],
-              ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<DynamicSchemeVariant>(
+                      isExpanded: true,
+                      value: customTheme.variant,
+                      items: [
+                        for (final v in DynamicSchemeVariant.values)
+                          DropdownMenuItem(
+                            value: v,
+                            child: Text(
+                              _variantLabelFr(v),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                      ],
+                      onChanged: (v) {
+                        if (v == null) return;
+                        preferences
+                            .setCustomTheme(customTheme.copyWith(variant: v));
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text('Contraste',
+                    style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  _contrastLabel(customTheme.contrastLevel),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Slider(
+                  value: customTheme.contrastLevel.clamp(
+                    CustomThemeSettings.contrastMin,
+                    CustomThemeSettings.contrastMax,
+                  ),
+                  min: CustomThemeSettings.contrastMin,
+                  max: CustomThemeSettings.contrastMax,
+                  divisions: 2,
+                  label: _contrastLabel(customTheme.contrastLevel),
+                  onChanged: (v) {
+                    preferences.setCustomTheme(
+                      customTheme.copyWith(
+                          contrastLevel: _snapContrastToStop(v)),
+                    );
+                  },
+                ),
+              ],
             ),
-          ] else
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text('Aucune graine — appuie sur Générer.'),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Source ARGB: 0x'
+                  '${customTheme.seedArgb.toRadixString(16).toUpperCase().padLeft(8, '0')}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(height: 12),
+                _ThemeShowcaseCard(settings: customTheme),
+              ],
             ),
+          ),
         ],
       ),
     );
   }
 }
 
-/// Faux écran M3 (même [ColorScheme] qu’en app pour cette graine) pour juger
-/// [primary] / [secondary] / [tertiary] en vrai sur des composants.
-class _ThemeShowcaseCard extends StatelessWidget {
-  const _ThemeShowcaseCard({required this.sourceArgb});
+/// Slider à 3 crans pour M3 : -1, 0, 1.
+double _snapContrastToStop(double value) {
+  if (value <= -0.5) return -1.0;
+  if (value >= 0.5) return 1.0;
+  return 0.0;
+}
 
-  final int sourceArgb;
+String _contrastLabel(double level) {
+  if (level <= -0.5) return 'Faible (accessibilité minimale)';
+  if (level >= 0.5) return 'Élevé (accessibilité max.)';
+  return 'Standard (spec M3)';
+}
+
+String _variantLabelFr(DynamicSchemeVariant v) {
+  return switch (v) {
+    DynamicSchemeVariant.tonalSpot => 'Tonal spot (défaut M3)',
+    DynamicSchemeVariant.fidelity => 'Fidélité à la graine',
+    DynamicSchemeVariant.monochrome => 'Monochrome',
+    DynamicSchemeVariant.neutral => 'Neutre (peu de chroma)',
+    DynamicSchemeVariant.vibrant => 'Vibrant',
+    DynamicSchemeVariant.expressive => 'Expressif',
+    DynamicSchemeVariant.content => 'Contenu (proche fidélité)',
+    DynamicSchemeVariant.rainbow => 'Arc-en-ciel (ludique)',
+    DynamicSchemeVariant.fruitSalad => 'Fruit salad (ludique)',
+  };
+}
+
+class _ThemeShowcaseCard extends StatelessWidget {
+  const _ThemeShowcaseCard({required this.settings});
+
+  final CustomThemeSettings settings;
 
   @override
   Widget build(BuildContext context) {
-    final schemes = TonalSpotThemeGenerator.colorSchemesForSourceArgb(
-      sourceArgb,
-    );
+    final schemes = CustomThemeSchemes.fromSettings(settings);
     final scheme = Theme.of(context).brightness == Brightness.dark
         ? schemes.dark
         : schemes.light;
