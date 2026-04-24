@@ -11,36 +11,17 @@ class TonalSpotThemeGenerator {
 
   static final Random _random = Random();
 
-  /// Picks a random base RGB, corrects with [DislikeAnalyzer], builds
-  /// [SchemeTonalSpot] for light and dark, and maps to [ColorScheme]s.
-  static ({int sourceArgb, ColorScheme light, ColorScheme dark})
-      generateWithRandomBase([Random? random]) {
+  /// Random opaque RGB, corrected with [DislikeAnalyzer] — the seed stored for
+  /// [colorSchemesForSourceArgb] (which builds [SchemeTonalSpot] + [ColorScheme]s).
+  static int randomSourceArgb([Random? random]) {
     final rng = random ?? _random;
     final r = rng.nextInt(256);
     final g = rng.nextInt(256);
     final b = rng.nextInt(256);
     const opaque = 0xFF000000;
     final argb = opaque | (r << 16) | (g << 8) | b;
-
     final hct = DislikeAnalyzer.fixIfDisliked(Hct.fromInt(argb));
-    final sourceArgb = hct.toInt();
-
-    final lightM3 = SchemeTonalSpot(
-      sourceColorHct: hct,
-      isDark: false,
-      contrastLevel: 0.0,
-    );
-    final darkM3 = SchemeTonalSpot(
-      sourceColorHct: hct,
-      isDark: true,
-      contrastLevel: 0.0,
-    );
-
-    return (
-      sourceArgb: sourceArgb,
-      light: colorSchemeFromDynamicScheme(lightM3),
-      dark: colorSchemeFromDynamicScheme(darkM3),
-    );
+    return hct.toInt();
   }
 
   static ({ColorScheme light, ColorScheme dark}) colorSchemesForSourceArgb(

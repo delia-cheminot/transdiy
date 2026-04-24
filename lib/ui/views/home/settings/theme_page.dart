@@ -14,7 +14,6 @@ class ThemePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Thème')),
       body: ListView(
-        padding: const EdgeInsets.all(16),
         children: [
           SwitchListTile(
             title: const Text('Thème personnalisé'),
@@ -24,8 +23,9 @@ class ThemePage extends StatelessWidget {
           const SizedBox(height: 8),
           FilledButton(
             onPressed: () async {
-              final result = TonalSpotThemeGenerator.generateWithRandomBase();
-              await preferences.setCustomThemeSourceArgb(result.sourceArgb);
+              await preferences.setCustomThemeSourceArgb(
+                TonalSpotThemeGenerator.randomSourceArgb(),
+              );
             },
             child: const Text('Générer'),
           ),
