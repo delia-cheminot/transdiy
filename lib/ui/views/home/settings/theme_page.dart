@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/theme/custom_theme_schemes.dart';
 import 'package:mona/theme/custom_theme_settings.dart';
-import 'package:mona/theme/tonal_spot_theme_generator.dart';
 import 'package:provider/provider.dart';
 
 class ThemePage extends StatelessWidget {
@@ -29,7 +28,7 @@ class ThemePage extends StatelessWidget {
               onPressed: () async {
                 await preferences.setCustomTheme(
                   customTheme.copyWith(
-                      seedArgb: TonalSpotThemeGenerator.randomSourceArgb()),
+                      seedArgb: CustomThemeSchemes.randomSourceArgb()),
                 );
               },
               child: const Text('Générer'),
