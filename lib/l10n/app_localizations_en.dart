@@ -137,19 +137,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exactRemindersDisabled => 'Exact reminder times are disabled';
 
   @override
-  String get remindersDelayed => 'Reminders may be slightly delayed. Tap to open settings.';
+  String get remindersDelayed =>
+      'Reminders may be slightly delayed. Tap to open settings.';
 
   @override
   String get autoUpdate => 'Auto-Update';
 
   @override
-  String get autoUpdateDescription => 'Automatically check new updates when app is launched';
+  String get autoUpdateDescription =>
+      'Automatically check new updates when app is launched';
 
   @override
   String get checkForUpdates => 'Check for Updates';
 
   @override
-  String get checkForUpdatesDescription => 'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)';
+  String get checkForUpdatesDescription =>
+      'Check for the latest version manually\nThis will connect you to Internet\n(No data will be sent)';
 
   @override
   String appVersion(Object version) {
@@ -173,7 +176,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importDataSubtitle => 'Restore data from a JSON backup';
 
   @override
-  String get importDataOverwriteWarning => 'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?';
+  String get importDataOverwriteWarning =>
+      'This will overwrite all your current data with the backup. This action cannot be undone. Do you want to continue?';
 
   @override
   String get importConfirm => 'Import';
@@ -182,7 +186,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importSuccessfulTitle => 'Import Successful';
 
   @override
-  String get importRestartRequired => 'Please restart the app to apply the restored data.';
+  String get importRestartRequired =>
+      'Please restart the app to apply the restored data.';
 
   @override
   String get closeApp => 'Close App';
@@ -205,13 +210,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportDataSubtitle => 'Save your data to a JSON file';
 
   @override
-  String get updateNoCompatibleApk => 'No compatible update found for your device.';
+  String get updateNoCompatibleApk =>
+      'No compatible update found for your device.';
 
   @override
   String get updateAppUpToDate => 'Your app is up to date!';
 
   @override
-  String get updateCheckNetworkError => 'Could not check for updates right now.';
+  String get updateCheckNetworkError =>
+      'Could not check for updates right now.';
 
   @override
   String get updateDialogTitle => 'Update Available';
@@ -225,7 +232,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get updateDownloadAndInstall => 'Download & Install';
 
   @override
-  String get updateInstallPermissionRequired => 'Permission is required to install updates.';
+  String get updateInstallPermissionRequired =>
+      'Permission is required to install updates.';
 
   @override
   String get updateDownloadingTitle => 'Downloading Update...';
@@ -236,7 +244,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get updateDownloadFailed => 'Download failed. Please check your connection.';
+  String get updateDownloadFailed =>
+      'Download failed. Please check your connection.';
 
   @override
   String notificationMedicationReminderTitle(Object scheduleName) {
@@ -300,7 +309,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsUpdated => 'Notifications have been updated!';
 
   @override
-  String get notificationsUpdatedDescription => 'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
+  String get notificationsUpdatedDescription =>
+      'Each schedule now has its own notifications.\n\nPlease set up notifications for your schedules to make sure you don\'t miss anything.';
 
   @override
   String get dontShowAgain => 'Don\'t show again';
@@ -359,7 +369,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bloodTestsTitle => 'Blood Tests';
 
   @override
-  String get empty_blood_tests => 'Taken blood tests will appear here. Start by using the Add button!';
+  String get empty_blood_tests =>
+      'Taken blood tests will appear here. Start by using the Add button!';
 
   @override
   String get addBloodTest => 'Add a blood test';
@@ -532,7 +543,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Estradiol benzoate';
 
   @override
-  String get medicationEstradiolCypionateSuspension => 'Estradiol cypionate suspension';
+  String get medicationEstradiolCypionateSuspension =>
+      'Estradiol cypionate suspension';
 
   @override
   String get medicationTestosteroneEnanthate => 'Testosterone enanthate';
@@ -550,7 +562,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Testosterone benzoate';
 
   @override
-  String get medicationTestosteroneCypionateSuspension => 'Testosterone cypionate suspension';
+  String get medicationTestosteroneCypionateSuspension =>
+      'Testosterone cypionate suspension';
 
   @override
   String get injection => 'Injection';
