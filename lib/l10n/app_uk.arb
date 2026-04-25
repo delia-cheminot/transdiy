@@ -13,14 +13,14 @@
   "upcoming": "Найближче",
   "today": "Сьогодні",
   "taken": "Прийнято",
-  "daysAgoCount": "{count, plural, =1{yesterday} other{{count} days ago}}",
+  "daysAgoCount": "{count, plural, =1{вчора} few{{count} дні тому} other{{count} днів тому}}",
   "@daysAgoCount": {
     "description": "Past offset in days; =1 is the word “yesterday”, not a numeric phrase.",
     "placeholders": {
       "count": {"type": "int"}
     }
   },
-  "inDaysCount": "{count, plural, =1{tomorrow} other{in {count} days}}",
+  "inDaysCount": "{count, plural, =1{завтра} few{через {count} дні} many{через {count} днів} other{через {count} днів}}",
   "@inDaysCount": {
     "description": "Future offset in days; =1 is the word “tomorrow”, not a numeric phrase.",
     "placeholders": {
@@ -42,7 +42,7 @@
   "noSchedules": "Розкладів немає",
   "schedulesCreated": "{count} створено",
   "language": "Мова",
-  "languageFollowDevice": "Дотримуватись мови пристрою",
+  "languageFollowDevice": "Мова пристрою",
   "selectLanguage": "Вибрати мову",
   "enableNotifications": "Увімкнути сповіщення",
   "enableNotificationsDescription": "Увімкнути нагадування",
@@ -119,7 +119,7 @@
   "needleDeadSpace": "Мертва зона голки",
   "microliters": "μL",
 
-  "empty_levels": "Ін'єкції естрадіолу відображатимуться тут",
+  "empty_levels": "Ін'єкції відображатимуться тут",
   "bloodTestsTitle": "Аналізи крові",
   "empty_blood_tests": "Висновки з аналізів крові з'являтимуться тут. Натисніть Додати!",
   "addBloodTest": "Додати аналіз крові",
