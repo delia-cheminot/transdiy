@@ -93,7 +93,7 @@ Take control of your hormonal health with Mona, the fully local, open-source app
 
 We welcome pull requests from external contributors! The app is currently under development and any help is appreciated.
 
-Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
+Please see our **[Contributing Guidelines](https://github.com/mona-hrt/mona/blob/main/.github/CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
 
 # Support
 
