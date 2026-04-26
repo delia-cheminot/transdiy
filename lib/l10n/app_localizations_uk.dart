@@ -446,7 +446,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get cancel => 'Скасувати';
 
   @override
-  String get next => 'Next';
+  String get next => 'Далі';
 
   @override
   String get delete => 'Видалити';
