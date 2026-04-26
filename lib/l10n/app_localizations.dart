@@ -10,6 +10,7 @@ import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_pt.dart';
+import 'app_localizations_uk.dart';
 
 // ignore_for_file: type=lint
 
@@ -102,7 +103,8 @@ abstract class AppLocalizations {
     Locale('es'),
     Locale('fr'),
     Locale('pt'),
-    Locale('pt', 'BR')
+    Locale('pt', 'BR'),
+    Locale('uk')
   ];
 
   /// No description provided for @appTitle.
@@ -624,7 +626,7 @@ abstract class AppLocalizations {
   /// No description provided for @empty_intakes.
   ///
   /// In en, this message translates to:
-  /// **'Taken instakes will appear here'**
+  /// **'Taken intakes will appear here'**
   String get empty_intakes;
 
   /// No description provided for @chooseSchedule.
@@ -1238,8 +1240,14 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es', 'fr', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'de',
+        'en',
+        'es',
+        'fr',
+        'pt',
+        'uk'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1270,6 +1278,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsFr();
     case 'pt':
       return AppLocalizationsPt();
+    case 'uk':
+      return AppLocalizationsUk();
   }
 
   throw FlutterError(

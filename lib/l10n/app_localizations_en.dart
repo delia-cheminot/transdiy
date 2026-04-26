@@ -319,7 +319,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduleSettings => 'Schedule settings';
 
   @override
-  String get empty_intakes => 'Taken instakes will appear here';
+  String get empty_intakes => 'Taken intakes will appear here';
 
   @override
   String get chooseSchedule => 'Choose a schedule';
