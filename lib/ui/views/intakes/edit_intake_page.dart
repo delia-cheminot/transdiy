@@ -67,9 +67,9 @@ class _EditIntakePageState extends State<EditIntakePage> {
 
     MedicationIntake updatedIntake = intake.copyWith(
       takenDateTime: _takenDate.toUtc(),
+      takenTimeZone: timezone?.identifier,
       dose: _takenDose,
       side: _selectedSide,
-      takenTimeZone: timezone?.identifier,
       supplyItemId: newItem?.id,
     );
 
