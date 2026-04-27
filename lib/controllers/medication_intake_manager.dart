@@ -37,7 +37,7 @@ class MedicationIntakeManager {
       molecule: schedule.molecule,
       administrationRoute: schedule.administrationRoute,
       ester: schedule.ester,
-      supplyItemId: supplyItem?.id
+      supplyItemId: supplyItem?.id,
     ));
 
     if (supplyItem == null) return;
@@ -51,10 +51,12 @@ class MedicationIntakeManager {
   }
 
   void deleteIntake(MedicationIntake intake) {
-      SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId);
-      if (item != null) SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
+    SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId);
+    if (item != null) {
+      SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
+    }
 
-      _medicationIntakeProvider.deleteIntake(intake);
+    _medicationIntakeProvider.deleteIntake(intake);
   }
 
   InjectionSide getNextSide() {

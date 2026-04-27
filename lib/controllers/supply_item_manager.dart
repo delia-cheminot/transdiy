@@ -32,7 +32,7 @@ class SupplyItemManager {
     bool sameItems = nextItem == previousItem;
 
     if (previousItem != null) {
-      if(sameItems) {
+      if (sameItems) {
         Decimal doseDifference = nextDose - previousDose;
         useDose(previousItem, doseDifference);
       } else {

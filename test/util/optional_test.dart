@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/util/optional.dart';
 
 void main() {
-
   group('Optional class tests', () {
     late int callCountTrue;
     late int callCountFalse;
@@ -37,7 +36,8 @@ void main() {
 
       test("orElse return else", () => expect(optional.orElse(number()), 2026));
 
-      test("orElseNullable return else", () => expect(optional.orElseNullable(200), 200));
+      test("orElseNullable return else",
+          () => expect(optional.orElseNullable(200), 200));
 
       test("ifSet callback isn't called", () {
         optional.ifSet(callbackTrue);
@@ -85,7 +85,6 @@ void main() {
     });
 
     group('Optional starts set to null', () {
-
       late Optional optional;
 
       setUp(() => optional = Optional.of(null));
@@ -96,9 +95,11 @@ void main() {
 
       test("get is null", () => expect(optional.get(), null));
 
-      test("orElse should return else", () => expect(optional.orElse("banane"), "banane"));
+      test("orElse should return else",
+          () => expect(optional.orElse("banane"), "banane"));
 
-      test("orElseNullable should return null", () => expect(optional.orElseNullable("banane"), null));
+      test("orElseNullable should return null",
+          () => expect(optional.orElseNullable("banane"), null));
 
       test("function in ifSet should be called", () {
         optional.ifSet(callbackTrue);
@@ -132,9 +133,7 @@ void main() {
       });
     });
 
-
     group('Optional starts set to "bonjour"', () {
-
       late Optional<String> optional;
 
       setUp(() => optional = Optional.of("Bonjour"));
@@ -145,9 +144,11 @@ void main() {
 
       test('get is "Bonjour"', () => expect(optional.get(), "Bonjour"));
 
-      test('orElse return "Bonjour"', () => expect(optional.orElse("Vide"), "Bonjour"));
+      test('orElse return "Bonjour"',
+          () => expect(optional.orElse("Vide"), "Bonjour"));
 
-      test('orElseNullable return "Bonjour"', () => expect(optional.orElseNullable("Vide"), "Bonjour"));
+      test('orElseNullable return "Bonjour"',
+          () => expect(optional.orElseNullable("Vide"), "Bonjour"));
 
       test("function in ifSet should be called", () {
         optional.ifSet(callbackTrue);
@@ -179,7 +180,6 @@ void main() {
         expect(optional.isSet(), false);
         expect(optional.isPresent(), false);
       });
-
     });
   });
 }

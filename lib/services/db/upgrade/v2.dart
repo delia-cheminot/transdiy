@@ -2,10 +2,8 @@ import 'package:mona/services/db/upgrade/db_upgrade.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 class DbUpgradeV2 implements DbUpgrade {
-
   @override
   Future<void> upgrade(Database db, int oldVersion, int newVersion) async {
-
     // medication_schedules migration
     _upgradeMedicationSchedules(db);
 
@@ -14,7 +12,6 @@ class DbUpgradeV2 implements DbUpgrade {
 
     // medication_intakes migration
     _upgradeMedicationIntakes(db);
-
   }
 
   Future<void> _upgradeMedicationSchedules(Database db) async {

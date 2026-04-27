@@ -79,8 +79,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
     Navigator.of(context).pop();
   }
 
-  void _deleteIntake(MedicationIntakeProvider medicationIntakeProvider,
-      SupplyItemProvider supplyItemProvider, MedicationIntake intake) async {
+  void _deleteIntake(
+    MedicationIntakeProvider medicationIntakeProvider,
+    SupplyItemProvider supplyItemProvider,
+    MedicationIntake intake,
+  ) async {
     if (!mounted) return;
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .deleteIntake(intake);

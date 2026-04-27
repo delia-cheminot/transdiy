@@ -105,28 +105,32 @@ void main() {
       );
     });
 
-
-    test("inserting a supplyItemId that doesn't exist in medication_intakes does not succeed", () async {
-
+    test(
+        "inserting a supplyItemId that doesn't exist in medication_intakes does not succeed",
+        () async {
       final supplyItemId = -67;
 
-      expect( () async => await db.insert('medication_intakes', {
-        'scheduledDateTime': DateTime(2025, 9, 14, 10, 30).toIso8601String(),
-        'takenDateTime': null,
-        'dose': '2.5',
-        'side': null,
-        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
-        'administrationRouteName': 'oral',
-        'supplyItemId': supplyItemId,
-      }), throwsA(
-        predicate((e) =>
-        e is DatabaseException &&
-            e.getResultCode() == 787), // Foreign key constraint failed code
-      ) );
+      expect(
+          () async => await db.insert('medication_intakes', {
+                'scheduledDateTime':
+                    DateTime(2025, 9, 14, 10, 30).toIso8601String(),
+                'takenDateTime': null,
+                'dose': '2.5',
+                'side': null,
+                'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+                'administrationRouteName': 'oral',
+                'supplyItemId': supplyItemId,
+              }),
+          throwsA(
+            predicate((e) =>
+                e is DatabaseException &&
+                e.getResultCode() == 787), // Foreign key constraint failed code
+          ));
     });
 
-    test("deleting a supplyItem sets the field supplyItemId in medication_intakes NULL", () async {
-
+    test(
+        "deleting a supplyItem sets the field supplyItemId in medication_intakes NULL",
+        () async {
       final supplyItemId = await db.insert('supply_items', {
         'name': 'Test Item',
         'totalDose': '100',
@@ -147,17 +151,11 @@ void main() {
         'supplyItemId': supplyItemId,
       });
 
-      await db.delete(
-          "supply_items",
-          where: 'id = ?',
-          whereArgs: [supplyItemId]
-      );
+      await db
+          .delete("supply_items", where: 'id = ?', whereArgs: [supplyItemId]);
 
-      final intakes = await db.query(
-        "medication_intakes",
-        where: 'id = ?',
-        whereArgs: [intakeId]
-      );
+      final intakes = await db
+          .query("medication_intakes", where: 'id = ?', whereArgs: [intakeId]);
       final intake = intakes.single;
 
       expect(

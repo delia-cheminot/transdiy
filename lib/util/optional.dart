@@ -3,7 +3,6 @@
 /// It allows to know if the value has been explicitely set to null
 /// or if the value hasn't been set at all.
 class Optional<T> {
-
   /// The object
   T? _obj;
 
@@ -14,12 +13,13 @@ class Optional<T> {
   bool isSet() => _isSet;
 
   /// Runs a function if the item is present
-  void ifSet(void Function(T?) setCallback){
-    if(isSet()) setCallback(_obj);
+  void ifSet(void Function(T?) setCallback) {
+    if (isSet()) setCallback(_obj);
   }
 
   /// Runs a function if the item is set or another function if the item isn't set
-  void ifSetOrElse(void Function(T?) setCallback, void Function() notSetCallback){
+  void ifSetOrElse(
+      void Function(T?) setCallback, void Function() notSetCallback) {
     isSet() ? setCallback(_obj) : notSetCallback();
   }
 
@@ -27,12 +27,13 @@ class Optional<T> {
   bool isPresent() => _isSet && _obj != null;
 
   /// Runs a function if the item is present
-  void ifPresent(void Function(T) presentCallback){
-    if(isPresent()) presentCallback(_obj as T);
+  void ifPresent(void Function(T) presentCallback) {
+    if (isPresent()) presentCallback(_obj as T);
   }
 
   /// Runs a function if the item is present or another function if the item isn't present
-  void ifPresentOrElse(void Function(T) presentCallback, void Function() absentCallback){
+  void ifPresentOrElse(
+      void Function(T) presentCallback, void Function() absentCallback) {
     isPresent() ? presentCallback(_obj as T) : absentCallback();
   }
 
@@ -78,7 +79,6 @@ class Optional<T> {
 
   @override
   int get hashCode => Object.hash(_obj, _isSet);
-
 }
 
 /// Used to make code work when Optional is null
