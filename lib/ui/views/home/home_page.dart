@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:mona/controllers/schedule_manager.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -15,12 +17,13 @@ class HomePage extends StatelessWidget {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final localizations = context.l10n;
 
     return MainPageWrapper(
       isLoading: (medicationScheduleProvider.isLoading ||
           medicationIntakeProvider.isLoading),
       isEmpty: medicationScheduleProvider.schedules.isEmpty,
-      emptyMessage: 'Start by adding a schedule in Settings',
+      emptyMessage: localizations.empty_home,
       child: SingleChildScrollView(
         child: Padding(
           padding: pagePadding,
@@ -43,6 +46,7 @@ class HomePage extends StatelessWidget {
     bool showAllDoneMessage = false,
   }) {
     final theme = Theme.of(context);
+    final localizations = context.l10n;
     final scheduleManager = ScheduleManager(
       context.watch<MedicationScheduleProvider>(),
       context.watch<MedicationIntakeProvider>(),
@@ -64,6 +68,7 @@ class HomePage extends StatelessWidget {
     if (schedules.isEmpty && showAllDoneMessage) {
       widgets.add(
         Card.filled(
+          margin: const EdgeInsets.symmetric(vertical: 4),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: theme.colorScheme.tertiary,
@@ -72,8 +77,9 @@ class HomePage extends StatelessWidget {
                 color: theme.colorScheme.onTertiary,
               ),
             ),
-            title: Text("All done !", style: theme.textTheme.titleMedium),
-            subtitle: Text("No intakes due today"),
+            title:
+                Text(localizations.allDone, style: theme.textTheme.titleMedium),
+            subtitle: Text(localizations.noIntakesDue),
           ),
         ),
       );
@@ -90,22 +96,25 @@ class HomePage extends StatelessWidget {
     return widgets;
   }
 
-  List<Widget> _buildTodaySection(BuildContext context) =>
-      _buildScheduleSection(
-        context,
-        title: "Today - ${DateFormat.MMMMd().format(DateTime.now())}",
-        statuses: [
-          ScheduleStatus.overdue,
-          ScheduleStatus.todayOverdue,
-          ScheduleStatus.today
-        ],
-        showAllDoneMessage: true,
-      );
+  List<Widget> _buildTodaySection(BuildContext context) {
+    final date = Date.today().format(DateFormat.MMMMEEEEd(context.languageTag));
+    return _buildScheduleSection(
+      context,
+      title: date.replaceRange(0, 1, date.substring(0, 1).toUpperCase()),
+      statuses: [
+        ScheduleStatus.overdue,
+        ScheduleStatus.todayOverdue,
+        ScheduleStatus.today
+      ],
+      showAllDoneMessage: true,
+    );
+  }
 
-  List<Widget> _buildUpcomingSection(BuildContext context) =>
-      _buildScheduleSection(
-        context,
-        title: "Upcoming",
-        statuses: [ScheduleStatus.upcoming],
-      );
+  List<Widget> _buildUpcomingSection(BuildContext context) {
+    return _buildScheduleSection(
+      context,
+      title: context.l10n.upcoming,
+      statuses: [ScheduleStatus.upcoming],
+    );
+  }
 }

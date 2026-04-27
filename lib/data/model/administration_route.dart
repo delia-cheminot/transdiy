@@ -68,17 +68,6 @@ class AdministrationRoute {
     return all.firstWhere((route) => route.name == name);
   }
 
-  static List<DropdownMenuItem<AdministrationRoute>> get menuItems => all
-      .map(
-        (route) => DropdownMenuItem<AdministrationRoute>(
-          value: route,
-          child: Text(
-            route.name[0].toUpperCase() + route.name.substring(1),
-          ),
-        ),
-      )
-      .toList();
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

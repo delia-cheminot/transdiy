@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/medication_schedule_l10n.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_page.dart';
 import 'package:provider/provider.dart';
 import 'new_schedule_page.dart';
@@ -9,11 +11,12 @@ class SchedulesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final localizations = context.l10n;
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Schedules'),
+          title: Text(localizations.schedules),
         ),
         body: Center(
           child: CircularProgressIndicator(),
@@ -23,12 +26,12 @@ class SchedulesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Schedules'),
+        title: Text(localizations.schedules),
       ),
       body: SafeArea(
         child: medicationScheduleProvider.schedules.isEmpty
             ? Center(
-                child: Text('Add a schedule to get started.'),
+                child: Text(localizations.addScheduleToGetStarted),
               )
             : ListView.builder(
                 itemCount: medicationScheduleProvider.schedules.length,
@@ -36,7 +39,9 @@ class SchedulesPage extends StatelessWidget {
                   final schedule = medicationScheduleProvider.schedules[index];
                   return ListTile(
                     title: Text(schedule.name),
-                    subtitle: Text("$schedule"),
+                    subtitle: Text(
+                      schedule.localizedSummary(localizations),
+                    ),
                     leading: CircleAvatar(
                       child: Icon(
                         schedule.administrationRoute.icon,
@@ -62,7 +67,7 @@ class SchedulesPage extends StatelessWidget {
             builder: (context) => NewSchedulePage(),
           ));
         },
-        tooltip: 'Add a schedule',
+        tooltip: localizations.addSchedule,
         child: Icon(Icons.add),
       ),
     );

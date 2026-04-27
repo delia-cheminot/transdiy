@@ -1,0 +1,246 @@
+import 'package:decimal/decimal.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mona/data/model/blood_test.dart';
+import 'package:mona/data/model/date.dart';
+import 'package:mona/data/providers/blood_test_provider.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'generic_repository_mock.dart';
+
+void main() {
+  late BloodTestProvider provider;
+  late GenericRepositoryMock<BloodTest> repo;
+
+  setUpAll(() {
+    tz.initializeTimeZones();
+  });
+
+  setUp(() {
+    repo = GenericRepositoryMock<BloodTest>(
+      withId: (i, id) => BloodTest(
+        id: id,
+        dateTime: i.dateTime,
+        timeZone: i.timeZone,
+        estradiolLevels: i.estradiolLevels,
+        testosteroneLevels: i.testosteroneLevels,
+      ),
+    );
+  });
+
+  group('BloodTestProvider Tests', () {
+    test('initialization loads bloodtests', () async {
+      // Arrange
+      await repo.insert(BloodTest(
+        id: 1,
+        dateTime: DateTime.utc(2025, 3, 14, 6, 7),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      ));
+
+      // Act
+      provider = BloodTestProvider(repository: repo);
+      await Future.doWhile(() async {
+        if (provider.isLoading) {
+          await Future.delayed(Duration(milliseconds: 10));
+          return true;
+        }
+        return false;
+      });
+
+      // Assert
+      expect(provider.bloodtestsSortedDesc.length, repo.items.length);
+    });
+
+    test('add inserts a new test', () async {
+      // Arrange
+      final newDate = DateTime.utc(2025, 1, 1, 1, 1);
+      final newEstradiolLevels = Decimal.parse('111.1');
+      final newTestosteroneLevels = Decimal.parse('1.1');
+      provider = BloodTestProvider(repository: repo);
+
+      // Act
+      await provider.add(BloodTest(
+        dateTime: newDate,
+        timeZone: 'Etc/UTC',
+        estradiolLevels: newEstradiolLevels,
+        testosteroneLevels: newTestosteroneLevels,
+      ));
+
+      // Assert
+      expect(
+        provider.bloodtestsSortedDesc.any((i) =>
+            i.dateTime == newDate &&
+            i.estradiolLevels == newEstradiolLevels &&
+            i.testosteroneLevels == newTestosteroneLevels),
+        true,
+      );
+    });
+
+    test('updateBloodTest updates an existing test', () async {
+      // Arrange
+      repo.insert(BloodTest(
+        id: 1,
+        dateTime: DateTime.utc(2025, 3, 14, 6, 7),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      ));
+      provider = BloodTestProvider(repository: repo);
+      final bloodtestToUpdate = repo.items.first;
+      final updatedBloodTest = BloodTest(
+        id: bloodtestToUpdate.id,
+        dateTime: DateTime.utc(2025, 2, 2, 2, 2),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: bloodtestToUpdate.estradiolLevels,
+        testosteroneLevels: bloodtestToUpdate.testosteroneLevels,
+      );
+
+      // Act
+      await provider.updateBloodTest(updatedBloodTest);
+
+      // Assert
+      final fetchedBloodTests = provider.bloodtestsSortedDesc
+          .firstWhere((i) => i.id == bloodtestToUpdate.id);
+      expect(fetchedBloodTests.dateTime, DateTime.utc(2025, 2, 2, 2, 2));
+    });
+
+    test('deleteBloodTestFromId removes the test', () async {
+      // Arrange
+      repo.insert(BloodTest(
+        id: 1,
+        dateTime: DateTime.utc(2025, 3, 14, 6, 7),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      ));
+      provider = BloodTestProvider(repository: repo);
+
+      // Act
+      await provider.deleteBloodTestFromId(1);
+
+      // Assert
+      expect(provider.bloodtestsSortedDesc.length, 0);
+    });
+
+    test('deleteBloodTest removes the test by object', () async {
+      // Arrange
+      final bloodtestToDelete = BloodTest(
+        id: 1,
+        dateTime: DateTime.utc(2025, 3, 14, 6, 7),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('167.1'),
+        testosteroneLevels: Decimal.parse('1.67'),
+      );
+
+      repo.insert(bloodtestToDelete);
+      provider = BloodTestProvider(repository: repo);
+
+      // Act
+      await provider.deleteBloodTest(bloodtestToDelete);
+
+      // Assert
+      expect(provider.bloodtestsSortedDesc.length, 0);
+    });
+
+    test('bloodtestsSortedDesc returns test sorted descending', () async {
+      provider = BloodTestProvider(repository: repo);
+      provider.add(BloodTest(
+        id: 666,
+        dateTime: DateTime.utc(2025, 5, 4, 3, 0),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('234.5'),
+        testosteroneLevels: Decimal.parse('2.34'),
+      ));
+      provider.add(BloodTest(
+        id: 667, // ekip
+        dateTime: DateTime.utc(2025, 6, 7, 8, 9),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('292.9'),
+        testosteroneLevels: Decimal.parse('2.43'),
+      ));
+      provider.add(BloodTest(
+        id: 668,
+        dateTime: DateTime.utc(2025, 3, 2, 1, 0),
+        timeZone: 'Etc/UTC',
+        estradiolLevels: Decimal.parse('261.2'),
+        testosteroneLevels: Decimal.parse('3.3'),
+      ));
+
+      final sorted = provider.bloodtestsSortedDesc;
+
+      expect(
+        sorted.asMap().entries.every((entry) {
+          final i = entry.key;
+          final bloodtest = entry.value;
+          if (i < sorted.length - 1) {
+            final next = sorted[i + 1];
+            if (bloodtest.dateTime.isBefore(next.dateTime)) {
+              return false;
+            }
+          }
+          return true;
+        }),
+        true,
+      );
+    });
+
+    group('getDaysAndBloodTests', () {
+      test('returns empty map when no bloodtests', () {
+        // Arrange
+        provider = BloodTestProvider(repository: repo);
+
+        // Act
+        final result = provider
+            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
+
+        // Assert
+        expect(result, {});
+      });
+
+      test('includes only bloodtests with estradiolLevels', () async {
+        // Arrange
+        provider = BloodTestProvider(repository: repo);
+        await provider.add(BloodTest(
+          id: 666,
+          dateTime: DateTime.utc(2025, 5, 4, 3, 0),
+          timeZone: 'Etc/UTC',
+          estradiolLevels: Decimal.parse('234.5'),
+          testosteroneLevels: Decimal.parse('2.34'),
+        ));
+        await provider.add(BloodTest(
+          id: 667,
+          dateTime: DateTime.utc(2025, 5, 5),
+          timeZone: 'Etc/UTC',
+          estradiolLevels: null,
+          testosteroneLevels: Decimal.parse('5.0'),
+        ));
+
+        // Act
+        final result = provider
+            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
+
+        // Assert
+        expect(result, {0: 234.5});
+      });
+
+      test('calculates correct days difference', () async {
+        // Arrange
+        provider = BloodTestProvider(repository: repo);
+        await provider.add(BloodTest(
+          id: 668,
+          dateTime: DateTime.utc(2025, 5, 6, 23, 59),
+          timeZone: 'Etc/UTC',
+          estradiolLevels: Decimal.parse('12.3'),
+          testosteroneLevels: null,
+        ));
+
+        // Act
+        final result = provider.getDaysAndBloodTests(
+            Date.fromDateTime(DateTime(2025, 5, 4, 21, 0)));
+
+        // Assert
+        expect(result, {2: 12.3});
+      });
+    });
+  });
+}

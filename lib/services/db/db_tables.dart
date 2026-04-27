@@ -1,5 +1,4 @@
-const String createSupplyItemsTable =
-'''
+const String createSupplyItemsTable = '''
     CREATE TABLE supply_items(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       totalDose TEXT NOT NULL,
@@ -13,12 +12,12 @@ const String createSupplyItemsTable =
     )
     ''';
 
-const String createMedicationIntakesTable =
-'''
+const String createMedicationIntakesTable = '''
     CREATE TABLE medication_intakes(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       scheduledDateTime TEXT NOT NULL,
       takenDateTime TEXT,
+      takenTimeZone TEXT,
       dose TEXT NOT NULL,
       scheduleId INTEGER,
       side TEXT,
@@ -30,8 +29,7 @@ const String createMedicationIntakesTable =
     )
     ''';
 
-const String createMedicationSchedulesTable =
-'''
+const String createMedicationSchedulesTable = '''
     CREATE TABLE medication_schedules(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -42,5 +40,15 @@ const String createMedicationSchedulesTable =
       administrationRouteName TEXT NOT NULL,
       esterName TEXT,
       notificationTimes TEXT NOT NULL
+    )
+    ''';
+
+const String createBloodTestsTable = '''
+    CREATE TABLE blood_tests(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      dateTime TEXT NOT NULL,
+      timeZone TEXT NOT NULL,
+      estradiolLevels TEXT,
+      testosteroneLevels TEXT
     )
     ''';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mona/ui/constants/dimensions.dart';
 
 class MainPageWrapper extends StatelessWidget {
   final bool isLoading;
@@ -16,7 +17,14 @@ class MainPageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isLoading) return Center(child: CircularProgressIndicator());
-    if (isEmpty) return Center(child: Text(emptyMessage));
+    if (isEmpty) {
+      return Padding(
+        padding: pagePadding,
+        child: Center(
+          child: Text(emptyMessage, textAlign: TextAlign.center),
+        ),
+      );
+    }
     return child;
   }
 }

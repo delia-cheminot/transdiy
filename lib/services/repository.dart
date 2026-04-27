@@ -12,7 +12,8 @@ class Repository<T> {
     required this.tableName,
     required this.toMap,
     required this.fromMap,
-  }) : _dbFuture = db != null ? Future.value(db) : AppDatabase.getInstance().database; 
+  }) : _dbFuture =
+            db != null ? Future.value(db) : AppDatabase.getInstance().database;
 
   Future<int> insert(T element) async {
     final db = await _dbFuture;

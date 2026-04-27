@@ -4,6 +4,7 @@ import 'package:mona/services/db/db_tables.dart';
 import 'package:mona/services/db/upgrade/v2.dart';
 import 'package:mona/services/db/upgrade/v3.dart';
 import 'package:mona/services/db/upgrade/v4.dart';
+import 'package:mona/services/db/upgrade/v5.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -50,7 +51,7 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
       onConfigure: _configureDB,
@@ -66,17 +67,21 @@ class AppDatabase {
     await db.execute(createSupplyItemsTable);
     await db.execute(createMedicationIntakesTable);
     await db.execute(createMedicationSchedulesTable);
+    await db.execute(createBloodTestsTable);
   }
 
   Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
-    if(oldVersion < 2) {
+    if (oldVersion < 2) {
       DbUpgradeV2().upgrade(db, oldVersion, newVersion);
     }
-    if(oldVersion < 3) {
+    if (oldVersion < 3) {
       DbUpgradeV3().upgrade(db, oldVersion, newVersion);
     }
-    if(oldVersion < 4) {
+    if (oldVersion < 4) {
       DbUpgradeV4().upgrade(db, oldVersion, newVersion);
+    }
+    if (oldVersion < 5) {
+      DbUpgradeV5().upgrade(db, oldVersion, newVersion);
     }
   }
 

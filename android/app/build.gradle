@@ -57,6 +57,18 @@ android {
         versionName = flutterVersionName
     }
 
+    // `play`: Google Play (no REQUEST_INSTALL_PACKAGES; Dart hides sideload update UI).
+    // `standalone`: sideload / GitHub APKs (in-app updates + install permission).
+    flavorDimensions "distribution"
+    productFlavors {
+        play {
+            dimension "distribution"
+        }
+        standalone {
+            dimension "distribution"
+        }
+    }
+
     signingConfigs {
         release {
             if (keystorePropertiesFile.exists()) {

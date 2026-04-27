@@ -4,12 +4,17 @@ import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/administration_route_l10n.dart';
 import 'package:mona/services/preferences_service.dart';
+import 'package:mona/ui/widgets/dropdowns/administration_route_dropdown.dart';
+import 'package:mona/ui/widgets/dropdowns/ester_dropdown.dart';
+import 'package:mona/ui/widgets/dropdowns/molecule_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
 import 'package:mona/ui/widgets/forms/form_text_field.dart';
 import 'package:mona/ui/widgets/forms/model_form.dart';
-import 'package:mona/util/decimal_helpers.dart';
+import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class NewItemPage extends StatefulWidget {
@@ -26,17 +31,20 @@ class _NewItemPageState extends State<NewItemPage> {
   Ester? _ester;
   late PreferencesService _preferencesService;
 
-  String? get _nameError => SupplyItem.validateName(_nameController.text);
+  String? get _nameError =>
+      SupplyItem.validateName(context.l10n, _nameController.text);
   String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(_totalAmountController.text);
-  String? get _concentrationError =>
-      SupplyItem.validateConcentration(_concentrationController.text);
-  String? get _moleculeError => SupplyItem.validateMolecule(_molecule);
+      SupplyItem.validateTotalAmount(context.l10n, _totalAmountController.text);
+  String? get _concentrationError => SupplyItem.validateConcentration(
+      context.l10n, _concentrationController.text);
+  String? get _moleculeError =>
+      SupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      SupplyItem.validateAdministrationRoute(_administrationRoute);
+      SupplyItem.validateAdministrationRoute(
+          context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator =
-        SupplyItem.esterValidator(_molecule, _administrationRoute);
+    final validator = SupplyItem.esterValidator(
+        context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
 
@@ -89,8 +97,8 @@ class _NewItemPageState extends State<NewItemPage> {
   }
 
   void _addItem() async {
-    final totalAmount = parseDecimal(_totalAmountController.text);
-    final concentration = parseDecimal(_concentrationController.text);
+    final totalAmount = _totalAmountController.text.toDecimal;
+    final concentration = _concentrationController.text.toDecimal;
     final totalDose = concentration * totalAmount;
     final name = _nameController.text;
     final supplyItemProvider =
@@ -129,53 +137,60 @@ class _NewItemPageState extends State<NewItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = context.l10n;
+
     return ModelForm(
-      title: 'New item',
-      submitButtonLabel: 'Add',
+      title: localizations.newItem,
+      submitButtonLabel: localizations.add,
       isFormValid: _isFormValid,
       saveChanges: _addItem,
       fields: [
         FormTextField(
           controller: _nameController,
-          label: 'Name',
+          label: localizations.name,
           onChanged: _refresh,
           inputType: TextInputType.text,
         ),
         FormSpacer(),
         FormDropdownField<Molecule>(
           value: _molecule,
-          items: _preferencesService.moleculeDropdownItems,
+          items: moleculeDropdownMenuItems(
+            _preferencesService.allMolecules,
+            localizations,
+          ),
           onChanged: _onMoleculeChanged,
-          label: 'Molecule',
+          label: localizations.molecule,
         ),
         FormDropdownField<AdministrationRoute>(
           value: _administrationRoute,
-          items: AdministrationRoute.menuItems,
+          items: administrationRouteDropdownMenuItems(localizations),
           onChanged: _onAdministrationRouteChanged,
-          label: 'Administration route',
+          label: localizations.adminRoute,
         ),
         if (_useEsterField)
           FormDropdownField<Ester>(
             value: _ester,
-            items: Ester.menuItems,
+            items: esterDropdownMenuItems(localizations),
             onChanged: _onEsterChanged,
-            label: 'Ester',
+            label: localizations.ester,
           ),
         FormSpacer(),
         FormTextField(
           controller: _totalAmountController,
-          label: 'Total amount',
+          label: localizations.totalAmount,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: _administrationRoute?.unit,
+          suffixText: _administrationRoute?.localizedUnit(localizations, 1),
           regexFormatter: r'[0-9.,]',
         ),
         FormTextField(
           controller: _concentrationController,
-          label: 'Concentration',
+          label: localizations.concentration,
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
-          suffixText: '${_molecule?.unit}/${_administrationRoute?.unit}',
+          suffixText: _molecule != null && _administrationRoute != null
+              ? '${_molecule!.unit}/${_administrationRoute!.localizedUnit(localizations, 1)}'
+              : null,
           regexFormatter: r'[0-9.,]',
         ),
       ],

@@ -1,34 +1,27 @@
 import 'dart:convert';
 
 import 'package:decimal/decimal.dart';
-import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/optional.dart';
+import 'package:mona/util/string_parsing.dart';
+import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 enum InjectionSide {
   left,
   right,
 }
 
-extension InjectionSideDropdown on InjectionSide {
-  static List<DropdownMenuItem<InjectionSide>> get menuItems =>
-      InjectionSide.values
-          .map(
-            (side) => DropdownMenuItem<InjectionSide>(
-              value: side,
-              child: Text(side.name[0].toUpperCase() + side.name.substring(1)),
-            ),
-          )
-          .toList();
-}
-
 class MedicationIntake {
   final int id;
   final DateTime scheduledDateTime;
   final DateTime? takenDateTime;
+  final String? takenTimeZone;
   final Decimal dose;
   final int? scheduleId;
   final InjectionSide? side;
@@ -38,27 +31,34 @@ class MedicationIntake {
   final Ester? ester;
   final int? supplyItemId;
 
-  MedicationIntake({
-    int? id,
-    required this.scheduledDateTime,
-    required this.dose,
-    this.takenDateTime,
-    this.scheduleId,
-    this.side,
-    required this.molecule,
-    required this.administrationRoute,
-    this.ester,
-    this.supplyItemId
-  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
+  MedicationIntake(
+      {int? id,
+      required this.scheduledDateTime,
+      required this.dose,
+      this.takenDateTime,
+      this.takenTimeZone,
+      this.scheduleId,
+      this.side,
+      required this.molecule,
+      required this.administrationRoute,
+      this.ester,
+      this.supplyItemId})
+      : id = id ?? DateTime.now().millisecondsSinceEpoch {
+    if (takenDateTime != null && !takenDateTime!.isUtc) {
+      throw ArgumentError('takenDateTime must be UTC');
+    }
+    if (takenDateTime != null && takenTimeZone == null) {
+      throw ArgumentError('takenTimeZone must be provided');
+    }
+  }
 
   factory MedicationIntake.fromMap(Map<String, Object?> map) {
     return MedicationIntake(
       id: map['id'] as int?,
-      scheduledDateTime: DateTime.parse(map['scheduledDateTime'] as String),
-      takenDateTime: map['takenDateTime'] == null
-          ? null
-          : DateTime.parse(map['takenDateTime'] as String),
-      dose: Decimal.parse(map['dose'] as String),
+      scheduledDateTime: (map['scheduledDateTime'] as String).toDateTime,
+      takenDateTime: (map['takenDateTime'] as String?).toDateTimeOrNull,
+      takenTimeZone: map['takenTimeZone'] as String?,
+      dose: (map['dose'] as String).toDecimal,
       scheduleId: map['scheduleId'] as int?,
       side: map['side'] == null
           ? null
@@ -76,6 +76,7 @@ class MedicationIntake {
       'id': id,
       'scheduledDateTime': scheduledDateTime.toIso8601String(),
       'takenDateTime': takenDateTime?.toIso8601String(),
+      'takenTimeZone': takenTimeZone,
       'dose': dose.toString(),
       'scheduleId': scheduleId,
       'side': side?.name,
@@ -90,6 +91,7 @@ class MedicationIntake {
     int? id,
     DateTime? scheduledDateTime,
     DateTime? takenDateTime,
+    String? takenTimeZone,
     Decimal? dose,
     int? scheduleId,
     InjectionSide? side,
@@ -102,6 +104,7 @@ class MedicationIntake {
       id: id ?? this.id,
       scheduledDateTime: scheduledDateTime ?? this.scheduledDateTime,
       takenDateTime: takenDateTime ?? this.takenDateTime,
+      takenTimeZone: takenTimeZone ?? this.takenTimeZone,
       dose: dose ?? this.dose,
       scheduleId: scheduleId ?? this.scheduleId,
       side: side ?? this.side,
@@ -112,8 +115,23 @@ class MedicationIntake {
     );
   }
 
-  static String? validateDose(String? value) =>
-      requiredStrictlyPositiveDecimal(value);
+  DateTime? get takenLocalDateTime {
+    if (takenDateTime == null) return null;
+
+    final location = timeZoneLocation(takenTimeZone!);
+    return tz.TZDateTime.from(takenDateTime!, location);
+  }
+
+  Date? get takenLocalDate {
+    return takenLocalDateTime?.toDate;
+  }
+
+  // coverage:ignore-start
+  static String? validateDose(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
+
+  static String? validateDeadSpace(AppLocalizations l10n, String? value) =>
+      positiveDecimal(l10n, value);
 
   @override
   bool operator ==(Object other) =>
@@ -124,9 +142,9 @@ class MedicationIntake {
 
   @override
   String toString() {
-    return "$dose mg • ${molecule.name} "
-        "${ester != null ? '${ester!.name} ' : ""}"
-        "${administrationRoute.name}"
-        "${side?.name != null ? ' • ${side!.name} side' : ''}";
+    return 'MedicationIntake(id: $id, dose: $dose ${molecule.unit}, '
+        'molecule: ${molecule.name}, ester: ${ester?.name}, '
+        'route: ${administrationRoute.name}, side: ${side?.name})';
   }
+  // coverage:ignore-end
 }
