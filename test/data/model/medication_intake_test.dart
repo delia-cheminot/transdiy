@@ -58,7 +58,8 @@ void main() {
           ester: Ester.cypionate);
 
       final map = intake.toMap();
-      final fromMap = MedicationIntake.fromMap(map);
+      final fromMap =
+          MedicationIntakeMapper.fromMap(Map<String, dynamic>.from(map));
 
       expect(
         fromMap,
