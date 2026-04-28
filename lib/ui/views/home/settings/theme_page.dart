@@ -43,34 +43,11 @@ class ThemePage extends StatelessWidget {
                 Text('Variante M3',
                     style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: 4),
-                InputDecorator(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<DynamicSchemeVariant>(
-                      isExpanded: true,
-                      value: customTheme.variant,
-                      items: [
-                        for (final v in DynamicSchemeVariant.values)
-                          DropdownMenuItem(
-                            value: v,
-                            child: Text(
-                              _variantLabelFr(v),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                      ],
-                      onChanged: (v) {
-                        if (v == null) return;
-                        preferences
-                            .setCustomTheme(customTheme.copyWith(variant: v));
-                      },
-                    ),
-                  ),
+                _VariantGrid(
+                  seedArgb: customTheme.seedArgb,
+                  selected: customTheme.variant,
+                  onChanged: (v) => preferences
+                      .setCustomTheme(customTheme.copyWith(variant: v)),
                 ),
                 const SizedBox(height: 16),
                 Text('Contraste',
@@ -131,20 +108,6 @@ String _contrastLabel(double level) {
   if (level <= -0.5) return 'Faible (accessibilité minimale)';
   if (level >= 0.5) return 'Élevé (accessibilité max.)';
   return 'Standard (spec M3)';
-}
-
-String _variantLabelFr(DynamicSchemeVariant v) {
-  return switch (v) {
-    DynamicSchemeVariant.tonalSpot => 'Tonal spot (défaut M3)',
-    DynamicSchemeVariant.fidelity => 'Fidélité à la graine',
-    DynamicSchemeVariant.monochrome => 'Monochrome',
-    DynamicSchemeVariant.neutral => 'Neutre (peu de chroma)',
-    DynamicSchemeVariant.vibrant => 'Vibrant',
-    DynamicSchemeVariant.expressive => 'Expressif',
-    DynamicSchemeVariant.content => 'Contenu (proche fidélité)',
-    DynamicSchemeVariant.rainbow => 'Arc-en-ciel (ludique)',
-    DynamicSchemeVariant.fruitSalad => 'Fruit salad (ludique)',
-  };
 }
 
 class _ThemeShowcaseCard extends StatelessWidget {
@@ -243,4 +206,131 @@ class _ThemeShowcaseCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _VariantGrid extends StatelessWidget {
+  const _VariantGrid({
+    required this.seedArgb,
+    required this.selected,
+    required this.onChanged,
+  });
+
+  final int seedArgb;
+  final DynamicSchemeVariant selected;
+  final ValueChanged<DynamicSchemeVariant> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: [
+        for (final variant in DynamicSchemeVariant.values)
+          _VariantSwatch(
+            seedArgb: seedArgb,
+            variant: variant,
+            isSelected: variant == selected,
+            onTap: () => onChanged(variant),
+          ),
+      ],
+    );
+  }
+}
+
+class _VariantSwatch extends StatelessWidget {
+  const _VariantSwatch({
+    required this.seedArgb,
+    required this.variant,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final int seedArgb;
+  final DynamicSchemeVariant variant;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  static const double _size = 48;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = ColorScheme.fromSeed(
+      seedColor: Color(seedArgb),
+      dynamicSchemeVariant: variant,
+      brightness: Theme.of(context).brightness,
+    );
+
+    final borderColor = isSelected
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.outlineVariant;
+
+    return Container(
+      width: _size + 8,
+      height: _size + 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: borderColor,
+          width: isSelected ? 2.5 : 1.5,
+        ),
+      ),
+      padding: const EdgeInsets.all(2),
+      child: Material(
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          customBorder: const CircleBorder(),
+          child: CustomPaint(
+            painter: _QuadrantPainter(
+              topLeft: scheme.primary,
+              topRight: scheme.primaryContainer,
+              bottomLeft: scheme.secondary,
+              bottomRight: scheme.tertiary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _QuadrantPainter extends CustomPainter {
+  const _QuadrantPainter({
+    required this.topLeft,
+    required this.topRight,
+    required this.bottomLeft,
+    required this.bottomRight,
+  });
+
+  final Color topLeft;
+  final Color topRight;
+  final Color bottomLeft;
+  final Color bottomRight;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final half = size.width / 2;
+    final paint = Paint()..style = PaintingStyle.fill;
+
+    paint.color = topLeft;
+    canvas.drawRect(Rect.fromLTWH(0, 0, half, half), paint);
+
+    paint.color = topRight;
+    canvas.drawRect(Rect.fromLTWH(half, 0, half, half), paint);
+
+    paint.color = bottomLeft;
+    canvas.drawRect(Rect.fromLTWH(0, half, half, half), paint);
+
+    paint.color = bottomRight;
+    canvas.drawRect(Rect.fromLTWH(half, half, half, half), paint);
+  }
+
+  @override
+  bool shouldRepaint(_QuadrantPainter old) =>
+      old.topLeft != topLeft ||
+      old.topRight != topRight ||
+      old.bottomLeft != bottomLeft ||
+      old.bottomRight != bottomRight;
 }
