@@ -13,6 +13,7 @@ class DbUpgradeV5 implements DbUpgrade {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         scheduledDateTime TEXT NOT NULL,
         takenDateTime TEXT,
+        takenTimeZone TEXT,
         dose TEXT NOT NULL,
         scheduleId INTEGER,
         side TEXT,
@@ -26,13 +27,13 @@ class DbUpgradeV5 implements DbUpgrade {
 
     await db.execute('''
       INSERT INTO medication_intakes_new (
-        id, scheduledDateTime, takenDateTime, dose,
-        scheduleId, side, moleculeJson,
+        id, scheduledDateTime, takenDateTime, takenTimeZone,
+        dose, scheduleId, side, moleculeJson,
         administrationRouteName, esterName, supplyItemId
       )
       SELECT
-        id, scheduledDateTime, takenDateTime, dose,
-        scheduleId, side, moleculeJson,
+        id, scheduledDateTime, takenDateTime, takenTimeZone,
+        dose, scheduleId, side, moleculeJson,
         administrationRouteName, esterName,
         null
       FROM medication_intakes

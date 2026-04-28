@@ -62,12 +62,15 @@ class _EditIntakePageState extends State<EditIntakePage> {
     SupplyItemManager(supplyItemProvider)
         .switchDoses(previousItem, newItem, intake.dose, _takenDose);
 
-    final timezone =
-        _takenDateChanged ? await FlutterTimezone.getLocalTimezone() : null;
+    String? timezoneIdentifier = intake.takenTimeZone;
+    if (_takenDateChanged) {
+      final TimezoneInfo timezone = await FlutterTimezone.getLocalTimezone();
+      timezoneIdentifier = timezone.identifier;
+    }
 
     MedicationIntake updatedIntake = intake.copyWith(
       takenDateTime: _takenDate.toUtc(),
-      takenTimeZone: timezone?.identifier,
+      takenTimeZone: timezoneIdentifier,
       dose: _takenDose,
       side: _selectedSide,
       supplyItemId: newItem?.id,
