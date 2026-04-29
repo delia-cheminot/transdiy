@@ -547,4 +547,24 @@ class MockSupplyItemManager extends _i1.Mock implements _i15.SupplyItemManager {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+
+  @override
+  void switchDoses(
+    _i4.SupplyItem? previousItem,
+    _i4.SupplyItem? nextItem,
+    _i16.Decimal? previousDose,
+    _i16.Decimal? nextDose,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #switchDoses,
+          [
+            previousItem,
+            nextItem,
+            previousDose,
+            nextDose,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

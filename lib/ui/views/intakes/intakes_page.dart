@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/medication_intake_l10n.dart';
 import 'package:mona/ui/views/intakes/edit_intake_page.dart';
@@ -38,6 +40,8 @@ class IntakesPage extends StatelessWidget {
     final dateText =
         DateFormat.yMMMd(locale).format(intake.takenLocalDateTime!);
 
+    final supplyItemProvider = context.read<SupplyItemProvider>();
+
     return ListTile(
       title: Text(dateText),
       subtitle: Text(intake.localizedSummary(context.l10n)),
@@ -51,8 +55,9 @@ class IntakesPage extends StatelessWidget {
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
-            // TODO track supply item id in intake to put the quantity back
-            medicationIntakeProvider.deleteIntake(intake);
+            MedicationIntakeManager(
+                    medicationIntakeProvider, supplyItemProvider)
+                .deleteIntake(intake);
           }
         },
       ),

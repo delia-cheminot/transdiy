@@ -132,6 +132,7 @@ class MedicationIntakeProvider extends ChangeNotifier {
   static final _medicationIntakeRepository = Repository<MedicationIntake>(
     tableName: 'medication_intakes',
     toMap: (MedicationIntake intake) => intake.toMap(),
-    fromMap: (Map<String, Object?> map) => MedicationIntake.fromMap(map),
+    fromMap: (map) =>
+        MedicationIntakeMapper.fromMap(Map<String, dynamic>.from(map)),
   );
 }
