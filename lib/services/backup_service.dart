@@ -113,6 +113,12 @@ class BackupService {
     }
   }
 
+  String _timestampedFileName() {
+    final ts =
+        DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-');
+    return 'mona_backup_$ts.json';
+  }
+
   Future<String?> exportData() async {
     final jsonString = await _generateBackupJson();
     final bytes = Uint8List.fromList(utf8.encode(jsonString));
@@ -121,7 +127,7 @@ class BackupService {
 
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Mona Backup',
-      fileName: 'mona_backup.json',
+      fileName: _timestampedFileName(),
       type: isAndroid ? FileType.any : FileType.custom,
       allowedExtensions: isAndroid ? null : ['json'],
       bytes: bytes,
