@@ -117,11 +117,13 @@ class BackupService {
     final jsonString = await _generateBackupJson();
     final bytes = Uint8List.fromList(utf8.encode(jsonString));
 
+    final bool isAndroid = !isDesktop && Platform.isAndroid;
+
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Mona Backup',
       fileName: 'mona_backup.json',
-      type: FileType.custom,
-      allowedExtensions: ['json'],
+      type: isAndroid ? FileType.any : FileType.custom,
+      allowedExtensions: isAndroid ? null : ['json'],
       bytes: bytes,
     );
 
@@ -138,9 +140,11 @@ class BackupService {
   }
 
   Future<bool> importData() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
+    final bool isAndroid = !isDesktop && Platform.isAndroid;
+
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: isAndroid ? FileType.any : FileType.custom,
+      allowedExtensions: isAndroid ? null : ['json'],
     );
 
     if (result != null && result.files.single.path != null) {
