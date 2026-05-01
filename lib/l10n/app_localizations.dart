@@ -245,6 +245,78 @@ abstract class AppLocalizations {
   /// **'You are using a legacy version of Mona. Please update. Tap to learn more.'**
   String get legacyVersionMessage;
 
+  /// No description provided for @legacyDeprecationIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of Mona is deprecated. To keep using Mona and receive updates, please install the standalone build by following the steps below.'**
+  String get legacyDeprecationIntro;
+
+  /// No description provided for @legacyStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your data'**
+  String get legacyStep1Title;
+
+  /// No description provided for @legacyStep1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'In Settings, tap \'Export Data\' to save a JSON backup of your data.'**
+  String get legacyStep1Description;
+
+  /// No description provided for @legacyStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the new version'**
+  String get legacyStep2Title;
+
+  /// No description provided for @legacyStep2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'From the latest release on GitHub, download the file named mona-<version>.apk.'**
+  String get legacyStep2Description;
+
+  /// No description provided for @legacyStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Uninstall this version'**
+  String get legacyStep3Title;
+
+  /// No description provided for @legacyStep3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this app from your device. Your backup file is safe.'**
+  String get legacyStep3Description;
+
+  /// No description provided for @legacyStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Install the new APK'**
+  String get legacyStep4Title;
+
+  /// No description provided for @legacyStep4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the APK file you downloaded and follow Android\'s prompts to install it.'**
+  String get legacyStep4Description;
+
+  /// No description provided for @legacyStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Import your data'**
+  String get legacyStep5Title;
+
+  /// No description provided for @legacyStep5Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the new Mona, go to Settings and tap \'Import Data\' to restore your backup.'**
+  String get legacyStep5Description;
+
+  /// No description provided for @openLatestRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'View on GitHub'**
+  String get openLatestRelease;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:
