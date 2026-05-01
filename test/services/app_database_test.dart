@@ -37,6 +37,7 @@ void main() {
 
     test('can insert and query supply_items', () async {
       final id = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '0',
@@ -66,6 +67,7 @@ void main() {
 
     test('can insert and query medication_intakes', () async {
       final supplyItemId = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '10',
@@ -132,6 +134,7 @@ void main() {
         "deleting a supplyItem sets the field supplyItemId in medication_intakes NULL",
         () async {
       final supplyItemId = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '10',
