@@ -29,15 +29,15 @@ class SupplyItemProvider extends ChangeNotifier {
           (a, b) => a.getRatio().compareTo(b.getRatio()),
         );
 
-  MedicationSupply? getItemById(int? id) {
+  Supply? getItemById(int? id) {
     try {
-      return medicationItems.firstWhere((item) => item.id == id);
+      return items.firstWhere((item) => item.id == id);
     } catch (e) {
       return null;
     }
   }
 
-  SupplyItemProvider({Repository<MedicationSupply>? repository})
+  SupplyItemProvider({Repository<Supply>? repository})
       : repository = repository ?? defaultRepository {
     _init();
   }
