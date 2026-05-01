@@ -97,6 +97,15 @@ class UpdateService {
         assets.where((a) => a['name'].toString().endsWith('.apk')).toList();
     if (apkAssets.isEmpty) return null;
 
+    if (isStandaloneDistribution) {
+      for (var asset in apkAssets) {
+        if (asset['name'].toString().toLowerCase().contains('mona-')) {
+          return asset;
+        }
+      }
+      return null;
+    }
+
     final deviceInfo = DeviceInfoPlugin();
     final androidInfo = await deviceInfo.androidInfo;
     final supportedAbis = androidInfo.supportedAbis;
