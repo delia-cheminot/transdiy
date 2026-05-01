@@ -3,21 +3,21 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/supply.dart';
 import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
-  List<SupplyItem> _items = [];
+  List<Supply> _items = [];
   bool _isLoading = true;
-  final Repository<SupplyItem> repository;
+  final Repository<Supply> repository;
 
-  static final defaultRepository = Repository<SupplyItem>(
+  static final defaultRepository = Repository<Supply>(
     tableName: 'supply_items',
     toMap: (item) => item.toMap(),
-    fromMap: (map) => SupplyItem.fromMap(map),
+    fromMap: (map) => Supply.fromMap(map),
   );
 
-  List<SupplyItem> get items => _items;
+  List<Supply> get items => _items;
   List<MedicationSupply> get medicationItems =>
       _items.where((item) => item.type == SupplyType.medication).toList()
           as List<MedicationSupply>;
