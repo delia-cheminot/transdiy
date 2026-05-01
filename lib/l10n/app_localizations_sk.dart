@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for English (`sk`).
+/// The translations for Slovak (`sk`).
 class AppLocalizationsSk extends AppLocalizations {
   AppLocalizationsSk([String locale = 'sk']) : super(locale);
 
@@ -63,8 +63,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
+      few: 'o $count dni',
       other: 'o $count dní',
-      few:  'o $count dni',
       one: 'zajtra',
     );
     return '$_temp0';
@@ -80,16 +80,14 @@ class AppLocalizationsSk extends AppLocalizations {
   String get scheduleFrequencyDaily => 'Každý deň';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
-    final int value = days as int;
-
-    return intl.Intl.plural(
-      value,
-      locale: 'sk',
-      one: 'Každý $value deň',
-      few: 'Každé $value dni',
-      other: 'Každých $value dní',
+  String scheduleFrequencyEveryNDays(num days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      few: 'Každé $days dni',
+      other: 'Každých $days dní',
     );
+    return '$_temp0';
   }
 
   @override
@@ -117,17 +115,16 @@ class AppLocalizationsSk extends AppLocalizations {
   String get noSchedules => 'Žiadne plány';
 
   @override
-  String schedulesCreated(Object count) {
-    final int value = count as int;
-
-    return intl.Intl.plural(
-      value,
-      locale: 'sk',
-      one: 'Vytvorený $value plán',
-      few: 'Vytvorené $value plány',
-      other: 'Vytvorených $value plánov',
+  String schedulesCreated(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      few: 'Vytvorené $count plány',
+      other: 'Vytvorených $count plánov',
+      one: 'Vytvorený $count plán',
     );
-    }
+    return '$_temp0';
+  }
 
   @override
   String get language => 'Jazyk';
@@ -154,22 +151,19 @@ class AppLocalizationsSk extends AppLocalizations {
   String get exactRemindersDisabled => 'Presné časy pripomienok sú vypnuté';
 
   @override
-  String get remindersDelayed =>
-      'Pripomienky môžu byť jemne oneskorené. Klikni pre otvorenie nastavení.';
+  String get remindersDelayed => 'Pripomienky môžu byť jemne oneskorené. Klikni pre otvorenie nastavení.';
 
   @override
   String get autoUpdate => 'Automatické aktualizácie';
 
   @override
-  String get autoUpdateDescription =>
-      'Automaticky skontrolovať najnovšie aktualizácie pre otvorení apky';
+  String get autoUpdateDescription => 'Automaticky skontrolovať najnovšie aktualizácie pre otvorení apky';
 
   @override
   String get checkForUpdates => 'Skontrolovať aktualizácie';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Skontrolovať najnovšiu verziu manuálne\nTáto akcia ťa pripojí na internet.\n(Žiadne dáta nebudú odoslané)';
+  String get checkForUpdatesDescription => 'Skontrolovať najnovšiu verziu manuálne\nTáto akcia ťa pripojí na internet.\n(Žiadne dáta nebudú odoslané)';
 
   @override
   String appVersion(Object version) {
@@ -193,8 +187,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get importDataSubtitle => 'Obnoviť dáta pomocou JSON zálohy';
 
   @override
-  String get importDataOverwriteWarning =>
-      'Týmto sa všetky tvoje dáta prepíšu zálohou. Túto akciu nie je možné vrátiť späť. Chceš pokračovať?';
+  String get importDataOverwriteWarning => 'Týmto sa všetky tvoje dáta prepíšu zálohou. Túto akciu nie je možné vrátiť späť. Chceš pokračovať?';
 
   @override
   String get importConfirm => 'Import';
@@ -203,8 +196,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get importSuccessfulTitle => 'Import úspešný';
 
   @override
-  String get importRestartRequired =>
-      'Prosím reštartuj apku pre načítanie importovaných dát.';
+  String get importRestartRequired => 'Prosím reštartuj apku pre načítanie importovaných dát.';
 
   @override
   String get closeApp => 'Zavrieť apku';
@@ -227,15 +219,13 @@ class AppLocalizationsSk extends AppLocalizations {
   String get exportDataSubtitle => 'Ulož svoje dáta do JSON súboru';
 
   @override
-  String get updateNoCompatibleApk =>
-      'Pre tvoje zariadenie nebola nájdená kompatibilná aktualizácia.';
+  String get updateNoCompatibleApk => 'Pre tvoje zariadenie nebola nájdená kompatibilná aktualizácia.';
 
   @override
   String get updateAppUpToDate => 'Tvoja apka má najnovšiu aktualizáciu!';
 
   @override
-  String get updateCheckNetworkError =>
-      'Nebolo možné skontrolovať aktualizácie.';
+  String get updateCheckNetworkError => 'Nebolo možné skontrolovať aktualizácie.';
 
   @override
   String get updateDialogTitle => 'Dostupná aktualizácia';
@@ -249,8 +239,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get updateDownloadAndInstall => 'Stiahni & nainštaluj';
 
   @override
-  String get updateInstallPermissionRequired =>
-      'Pre inštaláciu aktualizácií je potrebné povolenie.';
+  String get updateInstallPermissionRequired => 'Pre inštaláciu aktualizácií je potrebné povolenie.';
 
   @override
   String get updateDownloadingTitle => 'Sťahovanie aktualizácie...';
@@ -261,8 +250,7 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get updateDownloadFailed =>
-      'Sťahovanie sa nepodarilo. Prosím skontroluj svoje pripojenie.';
+  String get updateDownloadFailed => 'Sťahovanie sa nepodarilo. Prosím skontroluj svoje pripojenie.';
 
   @override
   String notificationMedicationReminderTitle(Object scheduleName) {
@@ -271,7 +259,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String notificationMedicationReminderBody(Object dateTime) {
-    return 'Naplánované na $dateTime';
+    return 'Naplánovaná na $dateTime';
   }
 
   @override
@@ -299,16 +287,15 @@ class AppLocalizationsSk extends AppLocalizations {
   String get noNotifications => 'Žiadne notifikácie';
 
   @override
-  String notificationsCount(Object count) {
-   final int value = count as int;
-
-    return intl.Intl.plural(
-      value,
-      locale: 'sk',
-      one: '$value notifikácia',
-      few: '$value notifikácie',
-      other: '$value notifikácií',
+  String notificationsCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      few: '$count notifikácie',
+      other: '$count notifikácií',
+      one: '$count notifikácia',
     );
+    return '$_temp0';
   }
 
   @override
@@ -327,15 +314,14 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String noNotificationsForSchedule(Object scheduleName) {
-    return 'Žiadne notifikácie pre $scheduleName. Môžeš nejaké pridať pomocou tlačidla Pridaj.';
+    return 'Žiadne notifikácie pre $scheduleName. Stlač tlačidlo Pridaj.';
   }
 
   @override
   String get notificationsUpdated => 'Notifikácie boli aktualizované!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Každý plán má teraz vlastné notifikácie..\n\nZapni si notifikácie pre svoje plány, aby ti nič neušlo.';
+  String get notificationsUpdatedDescription => 'Každý plán má teraz vlastné notifikácie.\n\nZapni si notifikácie pre svoje plány, aby ti nič neušlo.';
 
   @override
   String get dontShowAgain => 'Nezobrazovať znovu';
@@ -368,7 +354,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get supplyItem => 'Zásoba';
 
   @override
-  String get injectionSide => 'Strana pre injekciu';
+  String get injectionSide => 'Strana injekcie';
 
   @override
   String get deleteIntake => 'Vymazať túto dávku?';
@@ -394,8 +380,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get bloodTestsTitle => 'Krvné testy';
 
   @override
-  String get empty_blood_tests =>
-      'Krvné testy sa zobrazia tu. Začni tlačidlom Pridať!';
+  String get empty_blood_tests => 'Krvné testy sa zobrazia tu. Začni tlačidlom Pridať!';
 
   @override
   String get addBloodTest => 'Pridaj krvný test';
@@ -455,15 +440,15 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
-    final int value = int.parse(amount.toString());
-    return intl.Intl.plural(
-      value,
-      locale: 'sk',
+  String remaining(num amount, Object unit) {
+    String _temp0 = intl.Intl.pluralLogic(
+      amount,
+      locale: localeName,
+      other: 'Zostáva $amount $unit',
+      few: 'Zostávajú $amount $unit',
       one: 'Zostáva 1 $unit',
-      few: 'Zostávajú $value $unit',
-      other: 'Zostáva $value $unit',
     );
+    return '$_temp0';
   }
 
   @override
@@ -575,8 +560,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Estradiol benzoát';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Estradiolová suspenzia cypionátu';
+  String get medicationEstradiolCypionateSuspension => 'Estradiolová suspenzia cypionátu';
 
   @override
   String get medicationTestosteroneEnanthate => 'Testosterón enantát';
@@ -594,8 +578,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Testosterón benzoát';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Testosterónová suspenzia cypionátu';
+  String get medicationTestosteroneCypionateSuspension => 'Testosterónová suspenzia cypionátu';
 
   @override
   String get injection => 'Injekcia';
@@ -637,8 +620,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'piluliek',
       few: 'pilulky',
+      other: 'piluliek',
       one: 'pilulka',
     );
     return '$_temp0';
@@ -649,8 +632,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'náplastí',
       few: 'náplasti',
+      other: 'náplastí',
       one: 'náplasť',
     );
     return '$_temp0';
@@ -661,8 +644,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'stlačení',
       few: 'stlačenia',
+      other: 'stlačení',
       one: 'stlačenie',
     );
     return '$_temp0';
@@ -673,8 +656,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'implantátov',
       few: 'implantáty',
+      other: 'implantátov',
       one: 'implantát',
     );
     return '$_temp0';
@@ -685,8 +668,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'čapíkov',
       few: 'čapíky',
+      other: 'čapíkov',
       one: 'čapík',
     );
     return '$_temp0';
@@ -697,8 +680,8 @@ class AppLocalizationsSk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'sprejov',
       few: 'spreje',
+      other: 'sprejov',
       one: 'sprej',
     );
     return '$_temp0';

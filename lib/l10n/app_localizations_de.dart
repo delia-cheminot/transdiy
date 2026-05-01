@@ -30,8 +30,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addAnItem => 'Eintrag hinzufügen';
 
   @override
-  String get empty_home =>
-      'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
+  String get empty_home => 'Beginne, indem du einen Zeitplan in den Einstellungen erstellst';
 
   @override
   String get allDone => 'Alles erledigt!';
@@ -80,7 +79,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get scheduleFrequencyDaily => 'Täglich';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
+  String scheduleFrequencyEveryNDays(num days) {
     return 'Alle $days Tage';
   }
 
@@ -109,7 +108,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noSchedules => 'Keine Zeitpläne';
 
   @override
-  String schedulesCreated(Object count) {
+  String schedulesCreated(num count) {
     return '$count erstellt';
   }
 
@@ -126,37 +125,31 @@ class AppLocalizationsDe extends AppLocalizations {
   String get enableNotifications => 'Benachrichtigungen aktivieren';
 
   @override
-  String get enableNotificationsDescription =>
-      'Erinnerungen für Zeitpläne senden';
+  String get enableNotificationsDescription => 'Erinnerungen für Zeitpläne senden';
 
   @override
-  String get notificationsDisabledTitle =>
-      'Benachrichtigungen sind deaktiviert';
+  String get notificationsDisabledTitle => 'Benachrichtigungen sind deaktiviert';
 
   @override
   String get clickToOpenSettings => 'Tippe, um die Einstellungen zu öffnen';
 
   @override
-  String get exactRemindersDisabled =>
-      'Exakte Erinnerungszeiten sind deaktiviert';
+  String get exactRemindersDisabled => 'Exakte Erinnerungszeiten sind deaktiviert';
 
   @override
-  String get remindersDelayed =>
-      'Erinnerungen können sich leicht verzögern. Tippe, um die Einstellungen zu öffnen.';
+  String get remindersDelayed => 'Erinnerungen können sich leicht verzögern. Tippe, um die Einstellungen zu öffnen.';
 
   @override
   String get autoUpdate => 'Automatische Updates';
 
   @override
-  String get autoUpdateDescription =>
-      'Beim Start der App automatisch nach Updates suchen';
+  String get autoUpdateDescription => 'Beim Start der App automatisch nach Updates suchen';
 
   @override
   String get checkForUpdates => 'Nach Updates suchen';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Manuell nach der neuesten Version suchen\nDies stellt eine Internetverbindung her\n(Es werden keine Daten gesendet)';
+  String get checkForUpdatesDescription => 'Manuell nach der neuesten Version suchen\nDies stellt eine Internetverbindung her\n(Es werden keine Daten gesendet)';
 
   @override
   String appVersion(Object version) {
@@ -177,12 +170,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importDataTitle => 'Daten importieren';
 
   @override
-  String get importDataSubtitle =>
-      'Daten aus einer JSON-Sicherung wiederherstellen';
+  String get importDataSubtitle => 'Daten aus einer JSON-Sicherung wiederherstellen';
 
   @override
-  String get importDataOverwriteWarning =>
-      'Dadurch werden alle aktuellen Daten durch das Backup überschrieben. Diese Aktion kann nicht rückgängig gemacht werden. Möchtest du fortfahren?';
+  String get importDataOverwriteWarning => 'Dadurch werden alle aktuellen Daten durch das Backup überschrieben. Diese Aktion kann nicht rückgängig gemacht werden. Möchtest du fortfahren?';
 
   @override
   String get importConfirm => 'Importieren';
@@ -191,8 +182,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importSuccessfulTitle => 'Import erfolgreich';
 
   @override
-  String get importRestartRequired =>
-      'Bitte starte die App neu, um die wiederhergestellten Daten zu übernehmen.';
+  String get importRestartRequired => 'Bitte starte die App neu, um die wiederhergestellten Daten zu übernehmen.';
 
   @override
   String get closeApp => 'App schließen';
@@ -215,15 +205,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exportDataSubtitle => 'Daten in einer JSON-Datei speichern';
 
   @override
-  String get updateNoCompatibleApk =>
-      'Keine kompatible Aktualisierung für dein Gerät gefunden.';
+  String get updateNoCompatibleApk => 'Keine kompatible Aktualisierung für dein Gerät gefunden.';
 
   @override
   String get updateAppUpToDate => 'Deine App ist auf dem neuesten Stand!';
 
   @override
-  String get updateCheckNetworkError =>
-      'Aktualisierungen konnten gerade nicht geprüft werden.';
+  String get updateCheckNetworkError => 'Aktualisierungen konnten gerade nicht geprüft werden.';
 
   @override
   String get updateDialogTitle => 'Aktualisierung verfügbar';
@@ -237,8 +225,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get updateDownloadAndInstall => 'Herunterladen & installieren';
 
   @override
-  String get updateInstallPermissionRequired =>
-      'Zum Installieren von Aktualisierungen ist eine Berechtigung erforderlich.';
+  String get updateInstallPermissionRequired => 'Zum Installieren von Aktualisierungen ist eine Berechtigung erforderlich.';
 
   @override
   String get updateDownloadingTitle => 'Aktualisierung wird heruntergeladen …';
@@ -249,8 +236,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get updateDownloadFailed =>
-      'Download fehlgeschlagen. Bitte prüfe deine Verbindung.';
+  String get updateDownloadFailed => 'Download fehlgeschlagen. Bitte prüfe deine Verbindung.';
 
   @override
   String notificationMedicationReminderTitle(Object scheduleName) {
@@ -266,8 +252,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addSchedule => 'Zeitplan hinzufügen';
 
   @override
-  String get addScheduleToGetStarted =>
-      'Füge einen Zeitplan hinzu, um zu beginnen.';
+  String get addScheduleToGetStarted => 'Füge einen Zeitplan hinzu, um zu beginnen.';
 
   @override
   String get newSchedule => 'Neuer Zeitplan';
@@ -288,7 +273,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noNotifications => 'Keine Benachrichtigungen';
 
   @override
-  String notificationsCount(Object count) {
+  String notificationsCount(num count) {
     return '$count Benachrichtigungen';
   }
 
@@ -315,8 +300,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get notificationsUpdated => 'Benachrichtigungen wurden aktualisiert!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
+  String get notificationsUpdatedDescription => 'Jeder Zeitplan hat jetzt eigene Benachrichtigungen.\n\nBitte richte Benachrichtigungen für deine Zeitpläne ein, damit du nichts verpasst.';
 
   @override
   String get dontShowAgain => 'Nicht mehr anzeigen';
@@ -369,15 +353,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get microliters => 'μL';
 
   @override
-  String get empty_levels =>
-      'Estradiol-Injektionen werden in diesem Tab angezeigt';
+  String get empty_levels => 'Estradiol-Injektionen werden in diesem Tab angezeigt';
 
   @override
   String get bloodTestsTitle => 'Bluttests';
 
   @override
-  String get empty_blood_tests =>
-      'Erfasste Bluttests werden hier angezeigt. Starte mit der Schaltfläche „Hinzufügen“!';
+  String get empty_blood_tests => 'Erfasste Bluttests werden hier angezeigt. Starte mit der Schaltfläche „Hinzufügen“!';
 
   @override
   String get addBloodTest => 'Bluttest hinzufügen';
@@ -411,8 +393,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get empty_supplies =>
-      'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
+  String get empty_supplies => 'Keine Vorräte. Füge einen Eintrag hinzu, um zu beginnen.';
 
   @override
   String get newItem => 'Neuer Eintrag';
@@ -438,7 +419,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
+  String remaining(num amount, Object unit) {
     return '$amount $unit verbleibend';
   }
 
@@ -461,8 +442,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get deleteElement => 'Diesen Eintrag löschen?';
 
   @override
-  String get irreversibleAction =>
-      'Diese Aktion kann nicht rückgängig gemacht werden.';
+  String get irreversibleAction => 'Diese Aktion kann nicht rückgängig gemacht werden.';
 
   @override
   String get name => 'Name';
@@ -552,8 +532,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Estradiolbenzoat';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Estradiolcypionat-Suspension';
+  String get medicationEstradiolCypionateSuspension => 'Estradiolcypionat-Suspension';
 
   @override
   String get medicationTestosteroneEnanthate => 'Testosteronenantat';
@@ -571,8 +550,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Testosteronbenzoat';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Testosteroncypionat-Suspension';
+  String get medicationTestosteroneCypionateSuspension => 'Testosteroncypionat-Suspension';
 
   @override
   String get injection => 'Injektion';
@@ -697,6 +675,5 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invalidTotalAmount => 'Ungültige Gesamtmenge';
 
   @override
-  String get cannotExceedTotalCapacity =>
-      'Darf die Gesamtkapazität nicht überschreiten';
+  String get cannotExceedTotalCapacity => 'Darf die Gesamtkapazität nicht überschreiten';
 }
