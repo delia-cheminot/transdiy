@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
+import 'package:mona/data/model/generic_supply.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/supply.dart';
@@ -41,7 +42,14 @@ class MedicationIntakeManager {
       supplyItemId: supplyItem?.id,
     ));
 
-    if (supplyItem == null || supplyItem is! MedicationSupply) return;
+    if (supplyItem == null) return;
+
+    if (supplyItem is GenericSupply) {
+      await SupplyItemManager(_supplyItemProvider).use(supplyItem);
+      return;
+    }
+
+    if (supplyItem is! MedicationSupply) return;
 
     if (deadSpace != null && deadSpace > Decimal.zero) {
       final deadSpaceMl = deadSpace * Decimal.parse('0.001');
@@ -54,7 +62,13 @@ class MedicationIntakeManager {
   void deleteIntake(MedicationIntake intake) {
     Supply? item = _supplyItemProvider.getItemById(intake.supplyItemId);
 
-    if (item != null && item is MedicationSupply) {
+    if (item == null) return;
+
+    if (item is GenericSupply) {
+      SupplyItemManager(_supplyItemProvider).putBack(item);
+    }
+
+    if (item is MedicationSupply) {
       SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
     }
 

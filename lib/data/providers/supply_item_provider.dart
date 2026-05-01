@@ -86,17 +86,17 @@ class SupplyItemProvider extends ChangeNotifier {
     await fetchItems();
   }
 
-  Future<void> deleteItem(MedicationSupply item) async {
+  Future<void> deleteItem(Supply item) async {
     await repository.delete(item.id);
     await fetchItems();
   }
 
-  Future<void> add(MedicationSupply supplyItem) async {
+  Future<void> add(Supply supplyItem) async {
     await repository.insert(supplyItem);
     await fetchItems();
   }
 
-  Future<void> updateItem(MedicationSupply item) async {
+  Future<void> updateItem(Supply item) async {
     await repository.update(item, item.id);
     await fetchItems();
   }

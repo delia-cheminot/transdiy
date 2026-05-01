@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:mona/data/model/generic_supply.dart';
 import '../data/model/medication_supply.dart';
 import '../data/providers/supply_item_provider.dart';
 
@@ -23,6 +24,20 @@ class SupplyItemManager {
 
     await _supplyItemProvider.updateItem(item.copyWith(
       usedDose: item.usedDose + doseToUse,
+    ));
+  }
+
+  /// Uses one unit of the [GenericSupply] and updates the database.
+  Future<void> use(GenericSupply item) async {
+    await _supplyItemProvider.updateItem(item.copyWith(
+      amount: item.amount - 1,
+    ));
+  }
+
+  /// Puts back one unit of the [GenericSupply] and updates the database.
+  Future<void> putBack(GenericSupply item) async {
+    await _supplyItemProvider.updateItem(item.copyWith(
+      amount: item.amount + 1,
     ));
   }
 
