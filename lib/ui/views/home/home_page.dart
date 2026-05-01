@@ -24,7 +24,9 @@ class HomePage extends StatelessWidget {
     return MainPageWrapper(
       isLoading: (medicationScheduleProvider.isLoading ||
           medicationIntakeProvider.isLoading),
-      isEmpty: medicationScheduleProvider.schedules.isEmpty,
+      isEmpty: isLegacyDistribution
+          ? false
+          : medicationScheduleProvider.schedules.isEmpty,
       emptyMessage: localizations.empty_home,
       child: SingleChildScrollView(
         child: Padding(
