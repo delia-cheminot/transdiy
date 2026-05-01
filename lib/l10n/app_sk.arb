@@ -140,7 +140,7 @@
   "editItem": "Uprav vybavenie",
   "usedAmount": "Použité množstvo",
   "deleteItem": "Vymazať {name}?",
-  "remaining":   "{amount, plural, =1{Zostáva 1 {unit}} few{Zostávajú {amount} {unit}} other{Zostáva {amount} {unit}}}",
+  "remaining":   "{amount, plural, few{Zostávajú {amount} {unit}} other{Zostáva {amount} {unit}}}",
   "add": "Pridať",
   "save": "Uložiť",
   "cancel": "Zrušiť",

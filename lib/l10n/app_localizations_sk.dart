@@ -446,7 +446,6 @@ class AppLocalizationsSk extends AppLocalizations {
       locale: localeName,
       other: 'Zostáva $amount $unit',
       few: 'Zostávajú $amount $unit',
-      one: 'Zostáva 1 $unit',
     );
     return '$_temp0';
   }
