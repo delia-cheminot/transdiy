@@ -2,6 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/medication_schedule_l10n.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_main_info.dart';
 import 'package:mona/ui/views/home/settings/schedules/edit_schedule/edit_schedule_notifications_page.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,7 @@ class EditSchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final localizations = context.l10n;
     final currentSchedule = medicationScheduleProvider.schedules
         .firstWhereOrNull((s) => s.id == schedule.id);
 
@@ -32,8 +35,10 @@ class EditSchedulePage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: Text('Edit schedule info'),
-            subtitle: Text(currentSchedule.toString()),
+            title: Text(localizations.editScheduleInfo),
+            subtitle: Text(
+              currentSchedule.localizedSummary(localizations),
+            ),
             trailing: Icon(Icons.edit),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
@@ -45,12 +50,12 @@ class EditSchedulePage extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Notifications'),
+            title: Text(localizations.notifications),
             subtitle: currentSchedule.notificationTimes.isEmpty
-                ? const Text('No notifications')
+                ? Text(localizations.noNotifications)
                 : currentSchedule.notificationTimes.length > 4
-                    ? Text(
-                        '${currentSchedule.notificationTimes.length} notifications')
+                    ? Text(localizations.notificationsCount(
+                        currentSchedule.notificationTimes.length))
                     : Text(
                         currentSchedule.notificationTimes
                             .map((time) => time.format(context))

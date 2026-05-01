@@ -1,6 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
+import 'package:mona/util/timezone_location.dart';
 import 'package:mona/util/validators.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -34,10 +36,12 @@ class BloodTest {
     );
   }
 
-  DateTime get localDateTime =>
-      tz.TZDateTime.from(dateTime, tz.getLocation(timeZone));
+  DateTime get localDateTime {
+    final location = timeZoneLocation(timeZone);
+    return tz.TZDateTime.from(dateTime, location);
+  }
 
-  Date get localDate => Date.fromDateTime(localDateTime);
+  Date get localDate => localDateTime.toDate;
 
   BloodTest copyWith({
     int? id,
@@ -60,15 +64,17 @@ class BloodTest {
       'id': id,
       'dateTime': dateTime.toIso8601String(),
       'timeZone': timeZone,
-      'estradiolLevels': estradiolLevels.toString(),
-      'testosteroneLevels': testosteroneLevels.toString(),
+      'estradiolLevels': estradiolLevels?.toString(),
+      'testosteroneLevels': testosteroneLevels?.toString(),
     };
   }
 
   // coverage:ignore-start
-  static String? validateDate(DateTime? value) => requiredDateTime(value);
+  static String? validateDate(AppLocalizations l10n, DateTime? value) =>
+      requiredDateTime(l10n, value);
 
-  static String? validateLevel(String? value) => strictlyPositiveDecimal(value);
+  static String? validateLevel(AppLocalizations l10n, String? value) =>
+      positiveDecimal(l10n, value);
 
   @override
   bool operator ==(Object other) =>

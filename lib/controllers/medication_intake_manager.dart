@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
-import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/medication_supply.dart';
-import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import '../data/model/medication_intake.dart';
+import '../data/providers/medication_intake_provider.dart';
 
 class MedicationIntakeManager {
   final MedicationIntakeProvider _medicationIntakeProvider;
@@ -18,7 +18,7 @@ class MedicationIntakeManager {
     required DateTime scheduledDateTime,
     required DateTime takenDateTime,
     required String takenTimeZone,
-    MedicationSupply? supplyItem,
+    MedicationSupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
     Decimal? deadSpace, //in μL
@@ -37,6 +37,7 @@ class MedicationIntakeManager {
       molecule: schedule.molecule,
       administrationRoute: schedule.administrationRoute,
       ester: schedule.ester,
+      supplyItemId: supplyItem?.id,
     ));
 
     if (supplyItem == null) return;
@@ -47,6 +48,16 @@ class MedicationIntakeManager {
     }
 
     await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
+  }
+
+  void deleteIntake(MedicationIntake intake) {
+    MedicationSupplyItem? item =
+        _supplyItemProvider.getItemById(intake.supplyItemId);
+    if (item != null) {
+      SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
+    }
+
+    _medicationIntakeProvider.deleteIntake(intake);
   }
 
   InjectionSide getNextSide() {

@@ -11,7 +11,7 @@ void main() {
         dateTime: DateTime.utc(2025, 3, 14, 6, 7),
         timeZone: 'Etc/UTC',
         estradiolLevels: Decimal.parse('167.1'),
-        testosteroneLevels: Decimal.parse('1.67'),
+        testosteroneLevels: null,
       );
 
       // Act

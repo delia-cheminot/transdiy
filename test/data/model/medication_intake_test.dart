@@ -5,7 +5,7 @@ import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
 void main() {
   setUpAll(() {
@@ -58,7 +58,8 @@ void main() {
           ester: Ester.cypionate);
 
       final map = intake.toMap();
-      final fromMap = MedicationIntake.fromMap(map);
+      final fromMap =
+          MedicationIntakeMapper.fromMap(Map<String, dynamic>.from(map));
 
       expect(
         fromMap,
@@ -148,6 +149,22 @@ void main() {
 
         // Assert
         expect(takenLocalDateTime?.hour, 10);
+      });
+
+      test(
+          'takenLocalDateTime works with timezone names not in the reduced database',
+          () {
+        final intake = MedicationIntake(
+          scheduledDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          dose: Decimal.one,
+          takenDateTime: DateTime.utc(2024, 6, 15, 10, 0),
+          takenTimeZone:
+              'Europe/Amsterdam', // missing from package:timezone latest.dart
+          molecule: KnownMolecules.estradiol,
+          administrationRoute: AdministrationRoute.oral,
+        );
+
+        expect(intake.takenLocalDate, Date(DateTime.utc(2024, 6, 15)));
       });
 
       test(

@@ -1,75 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/generic_supply.dart';
-import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
-import 'package:mona/data/model/supply_type.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
-  List<MedicationSupply> _medicationItems = [];
-  List<GenericSupply> _genericItems = [];
+  List<MedicationSupplyItem> _items = [];
   bool _isLoading = true;
-  final Repository<SupplyItem> repository;
+  final Repository<MedicationSupplyItem> repository;
 
-  static final defaultRepository = Repository<SupplyItem>(
+  static final defaultRepository = Repository<MedicationSupplyItem>(
     tableName: 'supply_items',
     toMap: (item) => item.toMap(),
-    fromMap: (map) => SupplyItem.fromMap(map),
+    fromMap: (map) => MedicationSupplyItem.fromMap(map),
   );
 
-  List<MedicationSupply> get medicationItems => _medicationItems..sort(
-        (a, b) => a.name.compareTo(b.name),
-  );
-  List<GenericSupply> get genericItems => _genericItems..sort(
-        (a, b) => a.name.compareTo(b.name),
-  );
+  List<MedicationSupplyItem> get items => _items;
 
   bool get isLoading => _isLoading;
 
-  List<MedicationSupply> get medicationSuppliesOrderedByRemainingDose => [..._medicationItems]..sort(
+  List<MedicationSupplyItem> get orderedByRemainingDose => [..._items]..sort(
       (a, b) => a.getRatio().compareTo(b.getRatio()),
     );
 
-  SupplyItemProvider({Repository<SupplyItem>? repository})
+  MedicationSupplyItem? getItemById(int? id) {
+    try {
+      return _items.firstWhere((item) => item.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  SupplyItemProvider({Repository<MedicationSupplyItem>? repository})
       : repository = repository ?? defaultRepository {
-    fetchAll();
+    _init();
   }
 
-  Future<void> fetchAll() async {
-    fetchMedicationItems();
-    fetchGenericItems();
-    notifyListeners();
+  Future<void> _init() async {
+    _items = await repository.getAll();
     _isLoading = false;
-  }
-
-  Future<void> fetchMedicationItems() async {
-    _medicationItems = (await repository.getAll())
-      .where((item) =>
-          item.getType()==SupplyType.medication
-      )
-      .map((item)=>item as MedicationSupply)
-      .toList();
     notifyListeners();
   }
 
-  Future<void> fetchGenericItems() async {
-    _genericItems = (await repository.getAll())
-      .where((item) =>
-          item.getType()==SupplyType.generic
-      )
-      .map((item)=>item as GenericSupply)
-      .toList();
+  Future<void> fetchItems() async {
+    _items = await repository.getAll();
     notifyListeners();
   }
 
-  MedicationSupply? getMostUsedItemForMedication(Molecule molecule,
+  MedicationSupplyItem? getMostUsedItemForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_medicationItems.isEmpty) return null;
+    if (_items.isEmpty) return null;
 
-    final filtered = medicationSuppliesOrderedByRemainingDose.where(
+    final filtered = orderedByRemainingDose.where(
       (item) =>
           item.molecule == molecule &&
           item.administrationRoute == administrationRoute &&
@@ -79,11 +62,11 @@ class SupplyItemProvider extends ChangeNotifier {
     return filtered.isEmpty ? null : filtered.first;
   }
 
-  List<MedicationSupply> getItemsForMedication(Molecule molecule,
+  List<MedicationSupplyItem> getItemsForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_medicationItems.isEmpty) return [];
+    if (_items.isEmpty) return [];
 
-    return medicationSuppliesOrderedByRemainingDose
+    return orderedByRemainingDose
         .where(
           (item) =>
               item.molecule == molecule &&
@@ -95,21 +78,21 @@ class SupplyItemProvider extends ChangeNotifier {
 
   Future<void> deleteItemFromId(int id) async {
     await repository.delete(id);
-    await fetchAll();
+    await fetchItems();
   }
 
-  Future<void> deleteItem(SupplyItem item) async {
-    await repository.delete(item.getId());
-    await fetchAll();
+  Future<void> deleteItem(MedicationSupplyItem item) async {
+    await repository.delete(item.id);
+    await fetchItems();
   }
 
-  Future<void> add(SupplyItem medicationSupply) async {
-    await repository.insert(medicationSupply);
-    await fetchAll();
+  Future<void> add(MedicationSupplyItem supplyItem) async {
+    await repository.insert(supplyItem);
+    await fetchItems();
   }
 
-  Future<void> updateItem(SupplyItem item) async {
-    await repository.update(item, item.getId());
-    await fetchAll();
+  Future<void> updateItem(MedicationSupplyItem item) async {
+    await repository.update(item, item.id);
+    await fetchItems();
   }
 }

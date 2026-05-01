@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/l10n/helpers/medication_intake_l10n.dart';
 import 'package:mona/ui/views/intakes/edit_intake_page.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
@@ -15,7 +19,7 @@ class IntakesPage extends StatelessWidget {
         return MainPageWrapper(
           isLoading: medicationIntakeProvider.isLoading,
           isEmpty: medicationIntakeProvider.takenIntakes.isEmpty,
-          emptyMessage: 'Taken intakes will appear here',
+          emptyMessage: context.l10n.empty_intakes,
           child: ListView.builder(
             itemCount: medicationIntakeProvider.takenIntakes.length,
             itemBuilder: (context, index) {
@@ -32,11 +36,15 @@ class IntakesPage extends StatelessWidget {
 
   Widget _buildIntakeTile(BuildContext context, MedicationIntake intake,
       MedicationIntakeProvider medicationIntakeProvider) {
-    final dateText = DateFormat.yMMMd().format(intake.takenLocalDateTime!);
+    final locale = context.languageTag;
+    final dateText =
+        DateFormat.yMMMd(locale).format(intake.takenLocalDateTime!);
+
+    final supplyItemProvider = context.read<SupplyItemProvider>();
 
     return ListTile(
       title: Text(dateText),
-      subtitle: Text('$intake'),
+      subtitle: Text(intake.localizedSummary(context.l10n)),
       leading: CircleAvatar(
         child: Icon(
           intake.administrationRoute.icon,
@@ -47,8 +55,9 @@ class IntakesPage extends StatelessWidget {
         onPressed: () async {
           final confirmed = await confirmDeleteIntake(context);
           if (confirmed == true) {
-            // TODO track supply item id in intake to put the quantity back
-            medicationIntakeProvider.deleteIntake(intake);
+            MedicationIntakeManager(
+                    medicationIntakeProvider, supplyItemProvider)
+                .deleteIntake(intake);
           }
         },
       ),
@@ -65,6 +74,6 @@ class IntakesPage extends StatelessWidget {
 
   static Future<bool?> confirmDeleteIntake(BuildContext context) {
     return Dialogs.confirmDeleteDialog(
-        context: context, title: "Delete this intake?");
+        context: context, title: context.l10n.deleteIntake);
   }
 }

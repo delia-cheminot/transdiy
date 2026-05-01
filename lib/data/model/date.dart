@@ -83,3 +83,11 @@ class Date {
   }
   // coverage:ignore-end
 }
+
+extension DateTimeToDate on DateTime {
+  Date get toDate => Date.fromDateTime(this);
+}
+
+extension StringToDate on String {
+  Date get toDate => Date.fromString(this);
+}

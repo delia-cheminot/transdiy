@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Ester {
   final String name;
 
@@ -27,15 +25,6 @@ class Ester {
     if (name == null) return null;
     return all.firstWhere((ester) => ester.name == name);
   }
-
-  static List<DropdownMenuItem<Ester>> get menuItems => all
-      .map(
-        (ester) => DropdownMenuItem<Ester>(
-          value: ester,
-          child: Text(ester.name[0].toUpperCase() + ester.name.substring(1)),
-        ),
-      )
-      .toList();
 
   @override
   bool operator ==(Object other) =>

@@ -3,13 +3,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 
 void main() {
-  group('MedicationSupply model', () {
+  final l10n = AppLocalizationsEn();
+
+  group('SupplyItem model', () {
     test('toMap and fromMap should preserve values', () {
       // Arrange
-      final item = MedicationSupply(
+      final item = MedicationSupplyItem(
         id: 1,
         name: 'Test Item',
         totalDose: Decimal.parse('100'),
@@ -23,12 +26,12 @@ void main() {
 
       // Act
       final map = item.toMap();
-      final fromMap = MedicationSupply.fromMap(map);
+      final fromMap = MedicationSupplyItem.fromMap(map);
 
       // Assert
       expect(
         fromMap,
-        isA<MedicationSupply>()
+        isA<MedicationSupplyItem>()
             .having((s) => s.id, 'id', item.id)
             .having((s) => s.name, 'name', item.name)
             .having((s) => s.totalDose, 'totalDose', item.totalDose)
@@ -109,7 +112,7 @@ void main() {
 
       // Act
       final results = testCases.map((testCase) {
-        final item = MedicationSupply(
+        final item = MedicationSupplyItem(
           name: testCase['name'] as String,
           totalDose: testCase['totalDose'] as Decimal,
           concentration: testCase['concentration'] as Decimal,
@@ -143,7 +146,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => MedicationSupply.validateTotalAmount(c['value'] as String?))
+            .map((c) => MedicationSupplyItem.validateTotalAmount(
+                l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -161,7 +165,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => MedicationSupply.validateName(c['value'] as String?))
+            .map((c) =>
+                MedicationSupplyItem.validateName(l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -172,7 +177,7 @@ void main() {
       test('validateUsedAmount', () {
         // Arrange
         const total = '100';
-        final validator = MedicationSupply.usedAmountValidator(total);
+        final validator = MedicationSupplyItem.usedAmountValidator(l10n, total);
         final cases = [
           {'value': null, 'expected': isNotNull},
           {'value': '', 'expected': isNotNull},
@@ -201,7 +206,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => MedicationSupply.validateConcentration(c['value'] as String?))
+            .map((c) => MedicationSupplyItem.validateConcentration(
+                l10n, c['value'] as String?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -218,7 +224,8 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => MedicationSupply.validateMolecule(c['value'] as Molecule?))
+            .map((c) => MedicationSupplyItem.validateMolecule(
+                l10n, c['value'] as Molecule?))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -235,8 +242,10 @@ void main() {
 
         // Act
         final results = cases
-            .map((c) => MedicationSupply.validateAdministrationRoute(
-                c['value'] as AdministrationRoute?))
+            .map((c) => MedicationSupplyItem.validateAdministrationRoute(
+                  l10n,
+                  c['value'] as AdministrationRoute?,
+                ))
             .toList();
         final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -281,7 +290,8 @@ void main() {
 
         // Act
         final results = cases.map((c) {
-          final validator = MedicationSupply.esterValidator(
+          final validator = MedicationSupplyItem.esterValidator(
+            l10n,
             c['molecule'] as Molecule?,
             c['route'] as AdministrationRoute?,
           );
@@ -296,7 +306,7 @@ void main() {
 
     test('canUseDose should return true if within totalDose', () {
       // Arrange
-      final item = MedicationSupply(
+      final item = MedicationSupplyItem(
         name: 'Dose Test',
         totalDose: Decimal.fromInt(100),
         concentration: Decimal.one,
@@ -317,7 +327,7 @@ void main() {
 
     test('remainingDose returns correct value', () {
       // Arrange
-      final item = MedicationSupply(
+      final item = MedicationSupplyItem(
         name: 'Remaining',
         totalDose: Decimal.fromInt(100),
         usedDose: Decimal.fromInt(30),
@@ -336,7 +346,7 @@ void main() {
     group('Dose/Amount calculations', () {
       test('getAmount returns correct amount', () {
         // Arrange
-        final item = MedicationSupply(
+        final item = MedicationSupplyItem(
           name: 'Calc Test',
           totalDose: Decimal.fromInt(100),
           concentration: Decimal.parse('2.5'),
@@ -359,7 +369,7 @@ void main() {
 
       test('getDose returns correct dose', () {
         // Arrange
-        final item = MedicationSupply(
+        final item = MedicationSupplyItem(
           name: 'Calc Test',
           totalDose: Decimal.fromInt(100),
           concentration: Decimal.parse('2.5'),

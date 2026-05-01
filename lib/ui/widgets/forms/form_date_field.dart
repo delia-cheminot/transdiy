@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/widgets/forms/base_form_field.dart';
 
 class FormDateField extends BaseFormField {
@@ -18,8 +20,8 @@ class FormDateField extends BaseFormField {
   @override
   Widget buildField(BuildContext context) {
     return TextField(
-      controller:
-          TextEditingController(text: '${date.year}-${date.month}-${date.day}'),
+      controller: TextEditingController(
+          text: date.format(DateFormat.yMMMd(context.languageTag))),
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
@@ -42,7 +44,7 @@ class FormDateField extends BaseFormField {
     );
 
     if (picked != null) {
-      onChanged(Date(picked.toUtc()));
+      onChanged(Date(DateTime.utc(picked.year, picked.month, picked.day)));
     }
   }
 }

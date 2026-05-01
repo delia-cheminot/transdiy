@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
-import 'package:mona/services/app_database.dart';
+import 'package:mona/services/db/app_database.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -10,6 +10,8 @@ import 'package:sqflite/sqflite.dart';
 class BackupService {
   bool get isDesktop =>
       Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+
+  bool get isAndroid => !isDesktop && Platform.isAndroid;
 
   static const _tables = [
     'medication_intakes',
@@ -113,15 +115,21 @@ class BackupService {
     }
   }
 
+  String _timestampedFileName() {
+    final ts =
+        DateTime.now().toIso8601String().split('.').first.replaceAll(':', '-');
+    return 'mona_backup_$ts.json';
+  }
+
   Future<String?> exportData() async {
     final jsonString = await _generateBackupJson();
     final bytes = Uint8List.fromList(utf8.encode(jsonString));
 
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Mona Backup',
-      fileName: 'mona_backup.json',
-      type: FileType.custom,
-      allowedExtensions: ['json'],
+      fileName: _timestampedFileName(),
+      type: isAndroid ? FileType.any : FileType.custom,
+      allowedExtensions: isAndroid ? null : ['json'],
       bytes: bytes,
     );
 
@@ -138,9 +146,9 @@ class BackupService {
   }
 
   Future<bool> importData() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['json'],
+    final FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: isAndroid ? FileType.any : FileType.custom,
+      allowedExtensions: isAndroid ? null : ['json'],
     );
 
     if (result != null && result.files.single.path != null) {

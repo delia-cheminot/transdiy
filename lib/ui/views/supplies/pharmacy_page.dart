@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mona/data/model/generic_supply.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
-import 'package:mona/ui/views/supplies/generic_supply_card.dart';
-import 'package:mona/ui/views/supplies/medication_supply_card.dart';
+import 'package:mona/ui/views/supplies/supply_item_card.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -16,22 +15,16 @@ class PharmacyPage extends StatelessWidget {
       builder: (context, supplyItemProvider, child) {
         return MainPageWrapper(
           isLoading: supplyItemProvider.isLoading,
-          isEmpty: supplyItemProvider.medicationItems.isEmpty && supplyItemProvider.genericItems.isEmpty,
-          emptyMessage: 'No supplies. Add an item to get started!',
+          isEmpty: supplyItemProvider.items.isEmpty,
+          emptyMessage: context.l10n.empty_supplies,
           child: MasonryGridView.builder(
-            padding: pagePadding,
-            gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 300),
-            itemCount: supplyItemProvider.medicationItems.length + supplyItemProvider.genericItems.length,
+            padding: pagePadding - const EdgeInsets.symmetric(horizontal: 4),
+            gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 300),
+            itemCount: supplyItemProvider.items.length,
             itemBuilder: (context, index) {
-              if (index < supplyItemProvider.medicationItems.length) {
-                MedicationSupply item = supplyItemProvider.medicationItems[index];
-                return MedicationSupplyCard(item: item);
-              }
-              else {
-                List<GenericSupply> genericSupplies = supplyItemProvider.genericItems;
-                GenericSupply item = genericSupplies[index - supplyItemProvider.medicationItems.length];
-                return GenericSupplyCard(item: item);
-              }
+              MedicationSupplyItem item = supplyItemProvider.items[index];
+              return SupplyItemCard(item: item);
             },
           ),
         );

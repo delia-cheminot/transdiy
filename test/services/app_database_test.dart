@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mona/services/app_database.dart';
+import 'package:mona/services/db/app_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
@@ -44,7 +44,6 @@ void main() {
         'quantity': 1,
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
-        'type': 'medication'
       });
 
       final item = await db.query(
@@ -66,6 +65,16 @@ void main() {
     });
 
     test('can insert and query medication_intakes', () async {
+      final supplyItemId = await db.insert('supply_items', {
+        'name': 'Test Item',
+        'totalDose': '100',
+        'usedDose': '10',
+        'concentration': '200',
+        'quantity': 1,
+        'moleculeJson': '{"name":"progesterone","unit":"mg"}',
+        'administrationRouteName': 'oral',
+      });
+
       final id = await db.insert('medication_intakes', {
         'scheduledDateTime': DateTime(2025, 9, 14, 10, 30).toIso8601String(),
         'takenDateTime': null,
@@ -73,6 +82,7 @@ void main() {
         'side': null,
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
+        'supplyItemId': supplyItemId,
       });
 
       final allIntakes = await db.query(
@@ -90,7 +100,67 @@ void main() {
           containsPair('dose', '2.5'),
           containsPair('takenDateTime', null),
           containsPair('side', null),
+          containsPair('supplyItemId', supplyItemId),
         ),
+      );
+    });
+
+    test(
+        "inserting a supplyItemId that doesn't exist in medication_intakes does not succeed",
+        () async {
+      final supplyItemId = -67;
+
+      expect(
+          () async => await db.insert('medication_intakes', {
+                'scheduledDateTime':
+                    DateTime(2025, 9, 14, 10, 30).toIso8601String(),
+                'takenDateTime': null,
+                'dose': '2.5',
+                'side': null,
+                'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+                'administrationRouteName': 'oral',
+                'supplyItemId': supplyItemId,
+              }),
+          throwsA(
+            predicate((e) =>
+                e is DatabaseException &&
+                e.getResultCode() == 787), // Foreign key constraint failed code
+          ));
+    });
+
+    test(
+        "deleting a supplyItem sets the field supplyItemId in medication_intakes NULL",
+        () async {
+      final supplyItemId = await db.insert('supply_items', {
+        'name': 'Test Item',
+        'totalDose': '100',
+        'usedDose': '10',
+        'concentration': '200',
+        'quantity': 1,
+        'moleculeJson': '{"name":"progesterone","unit":"mg"}',
+        'administrationRouteName': 'oral',
+      });
+
+      final intakeId = await db.insert('medication_intakes', {
+        'scheduledDateTime': DateTime(2025, 9, 14, 10, 30).toIso8601String(),
+        'takenDateTime': null,
+        'dose': '2.5',
+        'side': null,
+        'moleculeJson': '{"name":"estradiol","unit":"mg"}',
+        'administrationRouteName': 'oral',
+        'supplyItemId': supplyItemId,
+      });
+
+      await db
+          .delete("supply_items", where: 'id = ?', whereArgs: [supplyItemId]);
+
+      final intakes = await db
+          .query("medication_intakes", where: 'id = ?', whereArgs: [intakeId]);
+      final intake = intakes.single;
+
+      expect(
+        intake,
+        containsPair('supplyItemId', null),
       );
     });
 

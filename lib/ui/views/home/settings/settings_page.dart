@@ -1,16 +1,27 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/distribution.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/services/backup_service.dart';
 import 'package:mona/services/notification_service.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/constants/dimensions.dart';
+import 'package:mona/ui/views/home/settings/language_page.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
+String? _nativeLanguageNameForStoredTag(String tag) {
+  for (final (code, _, nativeName) in LanguagePage.languages) {
+    if (code == tag) return nativeName;
+  }
+  return null;
+}
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -83,13 +94,14 @@ class _SettingsPageState extends State<SettingsPage>
   }
 
   Future<void> _exportData() async {
+    final localizations = context.l10n;
     try {
       final savedPath = await BackupService().exportData();
 
       if (savedPath != null && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Backup saved to: $savedPath'),
+            content: Text(localizations.backupSavedTo(savedPath)),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -97,30 +109,29 @@ class _SettingsPageState extends State<SettingsPage>
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to export: $e')),
+          SnackBar(content: Text(localizations.exportFailed(e))),
         );
       }
     }
   }
 
   Future<void> _importData() async {
+    final l10n = context.l10n;
     final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Import Data'),
-        content: const Text(
-            'This will overwrite all your current data with the backup. '
-            'This action cannot be undone. Do you want to continue?'),
+        title: Text(l10n.importDataTitle),
+        content: Text(l10n.importDataOverwriteWarning),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error),
-            child: const Text('Import'),
+            child: Text(l10n.importConfirm),
           ),
         ],
       ),
@@ -130,17 +141,16 @@ class _SettingsPageState extends State<SettingsPage>
       try {
         final success = await BackupService().importData();
         if (success && mounted) {
-          showDialog(
+          showDialog<void>(
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('Import Successful'),
-              content: const Text(
-                  'Please restart the app to apply the restored data.'),
+              title: Text(l10n.importSuccessfulTitle),
+              content: Text(l10n.importRestartRequired),
               actions: [
                 TextButton(
                   onPressed: () => exit(0),
-                  child: const Text('Close App'),
+                  child: Text(l10n.closeApp),
                 ),
               ],
             ),
@@ -149,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage>
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to import: $e')),
+            SnackBar(content: Text(l10n.importFailed(e))),
           );
         }
       }
@@ -160,30 +170,36 @@ class _SettingsPageState extends State<SettingsPage>
   Widget build(BuildContext context) {
     final medicationScheduleProvider =
         context.watch<MedicationScheduleProvider>();
+    final preferencesService = context.watch<PreferencesService>();
+    final localizations = context.l10n;
 
     if (medicationScheduleProvider.isLoading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Settings')),
+        appBar: AppBar(title: Text(localizations.settingsTitle)),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Settings')),
+      appBar: AppBar(title: Text(localizations.settingsTitle)),
       body: ListView(
         children: [
-          const Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+          //
+          // ==== Schedules and notifications ====
+          //
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
             child: Text(
-              'Notifications',
+              localizations.schedulesAndNotifications,
             ),
           ),
           ListTile(
-            title: Text('Schedules'),
+            title: Text(localizations.schedules),
             subtitle: Text(medicationScheduleProvider.schedules.isEmpty
-                ? 'No schedules'
-                : '${medicationScheduleProvider.schedules.length} created'),
+                ? localizations.noSchedules
+                : localizations.schedulesCreated(
+                    medicationScheduleProvider.schedules.length)),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute<void>(
@@ -192,16 +208,16 @@ class _SettingsPageState extends State<SettingsPage>
             },
           ),
           SwitchListTile(
-            title: const Text('Enable notifications'),
-            subtitle: const Text('Send reminders for schedules'),
+            title: Text(localizations.enableNotifications),
+            subtitle: Text(localizations.enableNotificationsDescription),
             value: _notificationsEnabled,
             onChanged: _toggleNotifications,
           ),
           if (_notificationsEnabled && !_permissionGranted)
             ListTile(
               leading: const Icon(Icons.info_outline),
-              title: const Text('Notifications are disabled'),
-              subtitle: const Text("Click to open settings"),
+              title: Text(localizations.notificationsDisabledTitle),
+              subtitle: Text(localizations.clickToOpenSettings),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await openAppSettings();
@@ -212,56 +228,83 @@ class _SettingsPageState extends State<SettingsPage>
               !_exactAlarmsGranted)
             ListTile(
               leading: const Icon(Icons.info_outline),
-              title: const Text('Exact reminder times are disabled'),
-              subtitle: const Text(
-                  'Reminders may be slightly delayed. Tap to open settings.'),
+              title: Text(localizations.exactRemindersDisabled),
+              subtitle: Text(localizations.remindersDelayed),
               trailing: const Icon(Icons.chevron_right),
               onTap: () async {
                 await openAppSettings();
               },
             ),
-          if (Platform.isAndroid) ...[
+          const Divider(),
+          //
+          // ==== General ====
+          //
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
+            child: Text(
+              localizations.general,
+            ),
+          ),
+          ListTile(
+            title: Text(localizations.language),
+            subtitle: Text(
+              preferencesService.savedLanguageTag == null
+                  ? localizations.languageFollowDevice
+                  : (_nativeLanguageNameForStoredTag(
+                          preferencesService.savedLanguageTag!) ??
+                      preferencesService.savedLanguageTag!),
+            ),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (context) => LanguagePage()),
+              );
+            },
+          ),
+          if (Platform.isAndroid && !isPlayStoreDistribution) ...[
             const Divider(),
-            const Padding(
-              padding: EdgeInsets.symmetric(
+            Padding(
+              padding: const EdgeInsets.symmetric(
                   horizontal: borderPadding, vertical: 8.0),
               child: Text(
-                'Updates',
+                localizations.updates,
               ),
             ),
             SwitchListTile(
-              title: const Text('Auto-Update'),
-              subtitle: const Text(
-                  'Automatically check new updates when app is launched'),
+              title: Text(localizations.autoUpdate),
+              subtitle: Text(localizations.autoUpdateDescription),
               value: _autoCheckUpdatesEnabled,
               onChanged: _toggleAutoCheckUpdates,
             ),
             ListTile(
-              title: const Text('Check for Updates'),
-              subtitle: const Text(
-                  'Check for the latest version manually\nThis will connect you to Internet\nNo data will be sent'),
+              title: Text(localizations.checkForUpdates),
+              subtitle: Text(localizations.checkForUpdatesDescription),
               trailing: const Icon(Symbols.update),
               onTap: () => UpdateService().checkForUpdates(context),
             ),
           ],
           const Divider(),
-          const Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: borderPadding, vertical: 8.0),
+          //
+          // ==== Data management ====
+          //
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: borderPadding, vertical: 8.0),
             child: Text(
-              'Data Management',
+              localizations.dataManagement,
             ),
           ),
           ListTile(
-            title: const Text('Export Data'),
-            subtitle: const Text('Save your data to a JSON file'),
-            trailing: const Icon(Symbols.download),
+            title: Text(localizations.exportDataTitle),
+            subtitle: Text(localizations.exportDataSubtitle),
+            trailing: const Icon(Symbols.upload),
             onTap: _exportData,
           ),
           ListTile(
-            title: const Text('Import Data'),
-            subtitle: const Text('Restore data from a JSON backup'),
-            trailing: const Icon(Symbols.upload),
+            title: Text(localizations.importDataTitle),
+            subtitle: Text(localizations.importDataSubtitle),
+            trailing: const Icon(Symbols.download),
             onTap: _importData,
           ),
           const SizedBox(height: 32),
@@ -272,7 +315,7 @@ class _SettingsPageState extends State<SettingsPage>
               final info = snapshot.data!;
               return Center(
                 child: Text(
-                  'Mona version ${info.version}',
+                  localizations.appVersion(info.version),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               );

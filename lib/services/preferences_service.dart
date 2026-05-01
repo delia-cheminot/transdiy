@@ -1,11 +1,13 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
+import 'package:flutter/foundation.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService extends ChangeNotifier {
   static const _notificationsEnabledKey = 'notifications_enabled';
   static const _customMoleculesKey = 'custom_molecules';
+  static const _languageTagKey = 'language_tag';
 
   static const bool defaultNotificationsEnabled = false;
 
@@ -27,8 +29,23 @@ class PreferencesService extends ChangeNotifier {
   bool get notificationsEnabled =>
       _prefs.getBool(_notificationsEnabledKey) ?? defaultNotificationsEnabled;
 
+  String? get savedLanguageTag {
+    final tag = _prefs.getString(_languageTagKey);
+    if (tag == null || tag.isEmpty) return null;
+    return tag;
+  }
+
   Future<void> setNotificationsEnabled(bool isEnabled) async {
     await _prefs.setBool(_notificationsEnabledKey, isEnabled);
+    notifyListeners();
+  }
+
+  Future<void> setSavedLanguageTag(String? code) async {
+    if (code == null || code.isEmpty) {
+      await _prefs.remove(_languageTagKey);
+    } else {
+      await _prefs.setString(_languageTagKey, code);
+    }
     notifyListeners();
   }
 
@@ -54,17 +71,6 @@ class PreferencesService extends ChangeNotifier {
     return map.values.toList();
   }
 
-  List<DropdownMenuItem<Molecule>> get moleculeDropdownItems => allMolecules
-      .map(
-        (molecule) => DropdownMenuItem<Molecule>(
-          value: molecule,
-          child: Text(
-            molecule.name[0].toUpperCase() + molecule.name.substring(1),
-          ),
-        ),
-      )
-      .toList();
-
   Future<void> addCustomMolecule(Molecule molecule) async {
     final existing = customMolecules;
 
@@ -88,13 +94,6 @@ class PreferencesService extends ChangeNotifier {
 
     await _prefs.setString(_customMoleculesKey, jsonString);
     notifyListeners();
-  }
-
-  bool get shouldShowScheduleDialog =>
-      _prefs.getBool('show_schedule_dialog') ?? true;
-
-  Future<void> setShowScheduleDialog(bool value) {
-    return _prefs.setBool('show_schedule_dialog', value);
   }
 
   static Future<PreferencesService> init() async {

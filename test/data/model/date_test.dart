@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/date.dart';
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart';
 
 void main() {
-  setUpAll(() {
+  setUpAll(() async {
+    await initializeDateFormatting('en');
     tz.initializeTimeZones();
   });
 
@@ -134,6 +136,31 @@ void main() {
 
         // Act & Assert
         expect(() => Date.fromString(invalidString), throwsFormatException);
+      });
+    });
+
+    group('DateTime/String toDate extensions', () {
+      test('DateTime.toDate matches Date.fromDateTime at 3:59 boundary', () {
+        final input = DateTime(2026, 3, 30, 3, 59);
+        expect(input.toDate, Date.fromDateTime(input));
+      });
+
+      test('DateTime.toDate matches Date.fromDateTime at noon', () {
+        final input = DateTime(2026, 3, 30, 12, 0);
+        expect(input.toDate, Date.fromDateTime(input));
+      });
+
+      test('String.toDate round-trips Date.toString', () {
+        final date = Date.fromDateTime(DateTime(2026, 3, 30, 12, 0));
+        expect(date.toString().toDate, date);
+      });
+
+      test('String.toDate throws like Date.fromString when not UTC midnight',
+          () {
+        expect(
+          () => '2026-03-30T12:00:00Z'.toDate,
+          throwsArgumentError,
+        );
       });
     });
 
@@ -419,10 +446,11 @@ void main() {
         final date = Date(DateTime.utc(2024, 6, 15));
 
         // Act
-        final formatted = date.format(DateFormat.yMMMd());
+        final formatted = date.format(DateFormat.yMMMd('en'));
 
         // Assert
-        expect(formatted, DateFormat.yMMMd().format(DateTime.utc(2024, 6, 15)));
+        expect(formatted,
+            DateFormat.yMMMd('en').format(DateTime.utc(2024, 6, 15)));
       });
 
       test('formats date with a custom pattern', () {
@@ -430,7 +458,7 @@ void main() {
         final date = Date(DateTime.utc(2024, 6, 15));
 
         // Act
-        final formatted = date.format(DateFormat('dd/MM/yyyy'));
+        final formatted = date.format(DateFormat('dd/MM/yyyy', 'en'));
 
         // Assert
         expect(formatted, '15/06/2024');

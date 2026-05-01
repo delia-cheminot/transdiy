@@ -1,9 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/l10n/app_localizations_en.dart';
 import 'package:mona/util/validators.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   group('validators', () {
     test('requiredString works correctly', () {
       // Arrange
@@ -15,8 +18,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredString(c['value'] as String?)).toList();
+      final results = cases
+          .map((c) => requiredString(l10n, c['value'] as String?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -31,8 +35,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredDateTime(c['value'] as DateTime?)).toList();
+      final results = cases
+          .map((c) => requiredDateTime(l10n, c['value'] as DateTime?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -47,8 +52,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredMolecule(c['value'] as Molecule?)).toList();
+      final results = cases
+          .map((c) => requiredMolecule(l10n, c['value'] as Molecule?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -64,8 +70,10 @@ void main() {
 
       // Act
       final results = cases
-          .map((c) =>
-              requiredAdministrationRoute(c['value'] as AdministrationRoute?))
+          .map((c) => requiredAdministrationRoute(
+                l10n,
+                c['value'] as AdministrationRoute?,
+              ))
           .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -106,7 +114,7 @@ void main() {
 
       // Act
       final results = cases
-          .map((c) => strictlyPositiveDecimal(c['value'] as String?))
+          .map((c) => strictlyPositiveDecimal(l10n, c['value'] as String?))
           .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -146,8 +154,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => positiveDecimal(c['value'] as String?)).toList();
+      final results = cases
+          .map((c) => positiveDecimal(l10n, c['value'] as String?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -186,7 +195,7 @@ void main() {
 
       // Act
       final results =
-          cases.map((c) => positiveInt(c['value'] as String?)).toList();
+          cases.map((c) => positiveInt(l10n, c['value'] as String?)).toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
@@ -226,7 +235,8 @@ void main() {
 
       // Act
       final results = cases
-          .map((c) => requiredStrictlyPositiveDecimal(c['value'] as String?))
+          .map((c) =>
+              requiredStrictlyPositiveDecimal(l10n, c['value'] as String?))
           .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -267,7 +277,7 @@ void main() {
 
       // Act
       final results = cases
-          .map((c) => requiredPositiveDecimal(c['value'] as String?))
+          .map((c) => requiredPositiveDecimal(l10n, c['value'] as String?))
           .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
@@ -306,8 +316,9 @@ void main() {
       ];
 
       // Act
-      final results =
-          cases.map((c) => requiredPositiveInt(c['value'] as String?)).toList();
+      final results = cases
+          .map((c) => requiredPositiveInt(l10n, c['value'] as String?))
+          .toList();
       final expected = cases.map((c) => c['expected'] as Matcher).toList();
 
       // Assert
