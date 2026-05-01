@@ -192,5 +192,31 @@ void main() {
         ],
       );
     });
+
+    test('can insert and query blood_tests', () async {
+      final id = await db.insert('blood_tests', {
+        'dateTime': DateTime(2025, 9, 13).toIso8601String(),
+        'timeZone': 'Etc/UTC',
+        'estradiolLevels': '167.1',
+        'estradiolUnit': 'pg/mL',
+        'testosteroneLevels': '1.67',
+        'testosteroneUnit': 'ng/dL',
+      });
+
+      final test =
+          await db.query('blood_tests', where: 'id = ?', whereArgs: [id]);
+
+      expect([
+        test.first['estradiolLevels'],
+        test.first['estradiolUnit'],
+        test.first['testosteroneLevels'],
+        test.first['testosteroneUnit'],
+      ], [
+        '167.1',
+        'pg/mL',
+        '1.67',
+        'ng/dL',
+      ]);
+    });
   });
 }

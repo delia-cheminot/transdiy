@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'generic_repository_mock.dart';
@@ -33,8 +34,9 @@ void main() {
         id: 1,
         dateTime: DateTime.utc(2025, 3, 14, 6, 7),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('167.1'),
-        testosteroneLevels: Decimal.parse('1.67'),
+        estradiolLevels: UnitValue(Decimal.parse('167.1'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('1.67'), TestosteroneUnit.ng_dL),
       ));
 
       // Act
@@ -54,8 +56,10 @@ void main() {
     test('add inserts a new test', () async {
       // Arrange
       final newDate = DateTime.utc(2025, 1, 1, 1, 1);
-      final newEstradiolLevels = Decimal.parse('111.1');
-      final newTestosteroneLevels = Decimal.parse('1.1');
+      final newEstradiolLevels =
+          UnitValue(Decimal.parse('111.1'), EstradiolUnit.pg_mL);
+      final newTestosteroneLevels =
+          UnitValue(Decimal.parse('1.1'), TestosteroneUnit.ng_dL);
       provider = BloodTestProvider(repository: repo);
 
       // Act
@@ -82,8 +86,9 @@ void main() {
         id: 1,
         dateTime: DateTime.utc(2025, 3, 14, 6, 7),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('167.1'),
-        testosteroneLevels: Decimal.parse('1.67'),
+        estradiolLevels: UnitValue(Decimal.parse('167.1'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('1.67'), TestosteroneUnit.ng_dL),
       ));
       provider = BloodTestProvider(repository: repo);
       final bloodtestToUpdate = repo.items.first;
@@ -110,8 +115,9 @@ void main() {
         id: 1,
         dateTime: DateTime.utc(2025, 3, 14, 6, 7),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('167.1'),
-        testosteroneLevels: Decimal.parse('1.67'),
+        estradiolLevels: UnitValue(Decimal.parse('167.1'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('1.67'), TestosteroneUnit.ng_dL),
       ));
       provider = BloodTestProvider(repository: repo);
 
@@ -128,8 +134,9 @@ void main() {
         id: 1,
         dateTime: DateTime.utc(2025, 3, 14, 6, 7),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('167.1'),
-        testosteroneLevels: Decimal.parse('1.67'),
+        estradiolLevels: UnitValue(Decimal.parse('167.1'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('1.67'), TestosteroneUnit.ng_dL),
       );
 
       repo.insert(bloodtestToDelete);
@@ -148,22 +155,25 @@ void main() {
         id: 666,
         dateTime: DateTime.utc(2025, 5, 4, 3, 0),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('234.5'),
-        testosteroneLevels: Decimal.parse('2.34'),
+        estradiolLevels: UnitValue(Decimal.parse('234.5'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('2.34'), TestosteroneUnit.ng_dL),
       ));
       provider.add(BloodTest(
         id: 667, // ekip
         dateTime: DateTime.utc(2025, 6, 7, 8, 9),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('292.9'),
-        testosteroneLevels: Decimal.parse('2.43'),
+        estradiolLevels: UnitValue(Decimal.parse('292.9'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('2.43'), TestosteroneUnit.ng_dL),
       ));
       provider.add(BloodTest(
         id: 668,
         dateTime: DateTime.utc(2025, 3, 2, 1, 0),
         timeZone: 'Etc/UTC',
-        estradiolLevels: Decimal.parse('261.2'),
-        testosteroneLevels: Decimal.parse('3.3'),
+        estradiolLevels: UnitValue(Decimal.parse('261.2'), EstradiolUnit.pg_mL),
+        testosteroneLevels:
+            UnitValue(Decimal.parse('3.3'), TestosteroneUnit.ng_dL),
       ));
 
       final sorted = provider.bloodtestsSortedDesc;
@@ -190,8 +200,8 @@ void main() {
         provider = BloodTestProvider(repository: repo);
 
         // Act
-        final result = provider
-            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
+        final result = provider.getDaysAndBloodTests(
+            Date.fromDateTime(DateTime(2025, 5, 4)), EstradiolUnit.pg_mL);
 
         // Assert
         expect(result, {});
@@ -204,20 +214,23 @@ void main() {
           id: 666,
           dateTime: DateTime.utc(2025, 5, 4, 3, 0),
           timeZone: 'Etc/UTC',
-          estradiolLevels: Decimal.parse('234.5'),
-          testosteroneLevels: Decimal.parse('2.34'),
+          estradiolLevels:
+              UnitValue(Decimal.parse('234.5'), EstradiolUnit.pg_mL),
+          testosteroneLevels:
+              UnitValue(Decimal.parse('2.34'), TestosteroneUnit.ng_dL),
         ));
         await provider.add(BloodTest(
           id: 667,
           dateTime: DateTime.utc(2025, 5, 5),
           timeZone: 'Etc/UTC',
           estradiolLevels: null,
-          testosteroneLevels: Decimal.parse('5.0'),
+          testosteroneLevels:
+              UnitValue(Decimal.parse('5.0'), TestosteroneUnit.ng_dL),
         ));
 
         // Act
-        final result = provider
-            .getDaysAndBloodTests(Date.fromDateTime(DateTime(2025, 5, 4)));
+        final result = provider.getDaysAndBloodTests(
+            Date.fromDateTime(DateTime(2025, 5, 4)), EstradiolUnit.pg_mL);
 
         // Assert
         expect(result, {0: 234.5});
@@ -230,13 +243,15 @@ void main() {
           id: 668,
           dateTime: DateTime.utc(2025, 5, 6, 23, 59),
           timeZone: 'Etc/UTC',
-          estradiolLevels: Decimal.parse('12.3'),
+          estradiolLevels:
+              UnitValue(Decimal.parse('12.3'), EstradiolUnit.pg_mL),
           testosteroneLevels: null,
         ));
 
         // Act
         final result = provider.getDaysAndBloodTests(
-            Date.fromDateTime(DateTime(2025, 5, 4, 21, 0)));
+            Date.fromDateTime(DateTime(2025, 5, 4, 21, 0)),
+            EstradiolUnit.pg_mL);
 
         // Assert
         expect(result, {2: 12.3});

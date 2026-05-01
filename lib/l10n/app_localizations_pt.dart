@@ -744,6 +744,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cannotExceedTotalCapacity => 'Não pode exceder a capacidade total';
+
+  @override
+  String get units => 'Units';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).

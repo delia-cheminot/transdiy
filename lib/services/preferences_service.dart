@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService extends ChangeNotifier {
   static const _notificationsEnabledKey = 'notifications_enabled';
   static const _customMoleculesKey = 'custom_molecules';
   static const _languageTagKey = 'language_tag';
+  static const _unitsTagKey = "units";
 
   static const bool defaultNotificationsEnabled = false;
 
@@ -46,6 +48,13 @@ class PreferencesService extends ChangeNotifier {
     } else {
       await _prefs.setString(_languageTagKey, code);
     }
+    notifyListeners();
+  }
+
+  Units get units => Units.values[_prefs.getInt(_unitsTagKey) ?? 0];
+
+  Future<void> setUnits(Units units) async {
+    await _prefs.setInt(_unitsTagKey, units.index);
     notifyListeners();
   }
 

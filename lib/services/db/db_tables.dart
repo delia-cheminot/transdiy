@@ -50,6 +50,8 @@ const String createBloodTestsTable = '''
       dateTime TEXT NOT NULL,
       timeZone TEXT NOT NULL,
       estradiolLevels TEXT,
-      testosteroneLevels TEXT
+      testosteroneLevels TEXT,
+      estradiolUnit TEXT,
+      testosteroneUnit TEXT
     )
     ''';

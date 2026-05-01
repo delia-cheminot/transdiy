@@ -744,4 +744,7 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get cannotExceedTotalCapacity =>
       'Не може перевищувати загальну ємність';
+
+  @override
+  String get units => 'Units';
 }

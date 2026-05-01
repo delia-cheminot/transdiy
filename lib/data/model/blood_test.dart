@@ -1,5 +1,5 @@
-import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/timezone_location.dart';
@@ -10,8 +10,8 @@ class BloodTest {
   final int id;
   final DateTime dateTime;
   final String timeZone;
-  final Decimal? estradiolLevels;
-  final Decimal? testosteroneLevels;
+  final UnitValue<EstradiolUnit>? estradiolLevels;
+  final UnitValue<TestosteroneUnit>? testosteroneLevels;
 
   BloodTest({
     int? id,
@@ -26,14 +26,28 @@ class BloodTest {
   }
 
   factory BloodTest.fromMap(Map<String, Object?> map) {
+    final estradiolLevels = (map['estradiolLevels'] as String?).toDecimalOrNull;
+    final estradiolUnitName = map['estradiolUnit'] as String?;
+    final estradiolUnit = estradiolUnitName != null
+        ? EstradiolUnit.parse(estradiolUnitName)
+        : EstradiolUnit.pg_mL;
+    final testosteroneLevels =
+        (map['testosteroneLevels'] as String?).toDecimalOrNull;
+    final testosteroneUnitName = map['testosteroneUnit'] as String?;
+    final testosteroneUnit = testosteroneUnitName != null
+        ? TestosteroneUnit.parse(testosteroneUnitName)
+        : TestosteroneUnit.ng_dL;
+
     return BloodTest(
-      id: map['id'] as int?,
-      dateTime: (map['dateTime'] as String).toDateTime,
-      timeZone: map['timeZone'] as String,
-      estradiolLevels: (map['estradiolLevels'] as String?).toDecimalOrNull,
-      testosteroneLevels:
-          (map['testosteroneLevels'] as String?).toDecimalOrNull,
-    );
+        id: map['id'] as int?,
+        dateTime: (map['dateTime'] as String).toDateTime,
+        timeZone: map['timeZone'] as String,
+        estradiolLevels: estradiolLevels != null
+            ? UnitValue(estradiolLevels, estradiolUnit)
+            : null,
+        testosteroneLevels: testosteroneLevels != null
+            ? UnitValue(testosteroneLevels, testosteroneUnit)
+            : null);
   }
 
   DateTime get localDateTime {
@@ -47,8 +61,8 @@ class BloodTest {
     int? id,
     DateTime? dateTime,
     String? timeZone,
-    Decimal? estradiolLevels,
-    Decimal? testosteroneLevels,
+    UnitValue<EstradiolUnit>? estradiolLevels,
+    UnitValue<TestosteroneUnit>? testosteroneLevels,
   }) {
     return BloodTest(
       id: id ?? this.id,
@@ -64,8 +78,10 @@ class BloodTest {
       'id': id,
       'dateTime': dateTime.toIso8601String(),
       'timeZone': timeZone,
-      'estradiolLevels': estradiolLevels?.toString(),
-      'testosteroneLevels': testosteroneLevels?.toString(),
+      'estradiolLevels': estradiolLevels?.value.toString(),
+      'estradiolUnit': estradiolLevels?.unit.toString(),
+      'testosteroneLevels': testosteroneLevels?.value.toString(),
+      'testosteroneUnit': testosteroneLevels?.unit.toString(),
     };
   }
 
@@ -82,5 +98,5 @@ class BloodTest {
 
   @override
   int get hashCode => id.hashCode;
-  // coverage:ignore-end
+// coverage:ignore-end
 }

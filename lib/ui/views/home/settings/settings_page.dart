@@ -12,6 +12,7 @@ import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/settings/language_page.dart';
 import 'package:mona/ui/views/home/settings/schedules/schedules_page.dart';
+import 'package:mona/ui/views/home/settings/units_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -260,6 +261,15 @@ class _SettingsPageState extends State<SettingsPage>
               Navigator.of(context).push(
                 MaterialPageRoute<void>(builder: (context) => LanguagePage()),
               );
+            },
+          ),
+          ListTile(
+            title: Text(localizations.units),
+            subtitle: Text(preferencesService.units.name),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (context) => UnitsPage()));
             },
           ),
           if (Platform.isAndroid && !isPlayStoreDistribution) ...[

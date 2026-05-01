@@ -741,4 +741,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cannotExceedTotalCapacity => 'Cannot exceed total capacity';
+
+  @override
+  String get units => 'Units';
 }

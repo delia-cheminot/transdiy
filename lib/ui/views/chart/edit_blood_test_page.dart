@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/data/model/blood_test.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_spacer.dart';
@@ -24,6 +26,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   late TextEditingController _testosteroneLevelsController;
   late DateTime _testDateTime;
   late BloodTestProvider _bloodTestProvider;
+  late PreferencesService _preferencesService;
   bool _dateTimeChanged = false;
 
   String? get _testDateError =>
@@ -56,12 +59,25 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
     final timezone =
         _dateTimeChanged ? await FlutterTimezone.getLocalTimezone() : null;
 
+    final defaultUnits = _preferencesService.units;
+
+    final estradiolLevels = _estradiolLevelsController.text.toDecimalOrNull;
+    final estradiolUnit =
+        widget.bloodtest.estradiolLevels?.unit ?? defaultUnits.estradiol;
+    final testosteroneLevels =
+        _testosteroneLevelsController.text.toDecimalOrNull;
+    final testosteroneUnit =
+        widget.bloodtest.testosteroneLevels?.unit ?? defaultUnits.testosterone;
+
     final updatedBloodTest = widget.bloodtest.copyWith(
-      dateTime: _testDateTime.toUtc(),
-      timeZone: timezone?.identifier,
-      estradiolLevels: _estradiolLevelsController.text.toDecimalOrNull,
-      testosteroneLevels: _testosteroneLevelsController.text.toDecimalOrNull,
-    );
+        dateTime: _testDateTime.toUtc(),
+        timeZone: timezone?.identifier,
+        estradiolLevels: estradiolLevels != null
+            ? UnitValue(estradiolLevels, estradiolUnit)
+            : null,
+        testosteroneLevels: testosteroneLevels != null
+            ? UnitValue(testosteroneLevels, testosteroneUnit)
+            : null);
     await _bloodTestProvider.updateBloodTest(updatedBloodTest);
 
     if (!mounted) return;
@@ -72,10 +88,11 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   void initState() {
     super.initState();
     _bloodTestProvider = Provider.of<BloodTestProvider>(context, listen: false);
+    _preferencesService = Provider.of(context, listen: false);
     _estradiolLevelsController = TextEditingController(
-        text: widget.bloodtest.estradiolLevels?.toString());
+        text: widget.bloodtest.estradiolLevels?.value.toString());
     _testosteroneLevelsController = TextEditingController(
-        text: widget.bloodtest.testosteroneLevels?.toString());
+        text: widget.bloodtest.testosteroneLevels?.value.toString());
     _testDateTime = widget.bloodtest.localDateTime;
   }
 
@@ -89,6 +106,7 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final defaultUnits = _preferencesService.units;
     return ModelForm(
       title: l10n.editBloodTest,
       submitButtonLabel: l10n.save,
@@ -103,7 +121,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
-          suffixText: 'pg/mL',
+          suffixText: widget.bloodtest.estradiolLevels?.unit.name ??
+              defaultUnits.estradiol.name,
         ),
         FormTextField(
           controller: _testosteroneLevelsController,
@@ -112,7 +131,8 @@ class _EditBloodTestPageState extends State<EditBloodTestPage> {
           onChanged: _refresh,
           inputType: TextInputType.numberWithOptions(decimal: true),
           regexFormatter: '[0-9.,]',
-          suffixText: 'ng/dL',
+          suffixText: widget.bloodtest.testosteroneLevels?.unit.name ??
+              defaultUnits.testosterone.name,
         ),
         FormSpacer(),
         FormDateTimeField(

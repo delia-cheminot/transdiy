@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/blood_test.dart';
 import 'package:mona/data/model/date.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/services/repository.dart';
 
 class BloodTestProvider extends ChangeNotifier {
@@ -37,7 +38,7 @@ class BloodTestProvider extends ChangeNotifier {
     await _fetchBloodTests();
   }
 
-  Map<int, double> getDaysAndBloodTests(Date startDate) {
+  Map<int, double> getDaysAndBloodTests(Date startDate, EstradiolUnit unit) {
     if (bloodtestsSortedDesc.isEmpty) return {};
 
     return Map.fromEntries(
@@ -47,7 +48,7 @@ class BloodTestProvider extends ChangeNotifier {
           .map(
             (bloodtest) => MapEntry(
               bloodtest.localDate.differenceInDays(startDate),
-              bloodtest.estradiolLevels!.toDouble(),
+              bloodtest.estradiolLevels!.inUnit(unit),
             ),
           ),
     );
