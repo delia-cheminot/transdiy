@@ -8,7 +8,7 @@ import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
-class SupplyItem {
+class MedicationSupplyItem {
   final int id;
   final String name;
   final Decimal totalDose;
@@ -20,7 +20,7 @@ class SupplyItem {
   final AdministrationRoute administrationRoute;
   final Ester? ester;
 
-  SupplyItem({
+  MedicationSupplyItem({
     int? id,
     required this.name,
     required this.totalDose,
@@ -33,8 +33,8 @@ class SupplyItem {
   })  : usedDose = usedDose ?? Decimal.zero,
         id = id ?? DateTime.now().millisecondsSinceEpoch;
 
-  factory SupplyItem.fromMap(Map<String, Object?> map) {
-    return SupplyItem(
+  factory MedicationSupplyItem.fromMap(Map<String, Object?> map) {
+    return MedicationSupplyItem(
       id: map['id'] as int?,
       name: map['name'] as String,
       totalDose: (map['totalDose'] as String).toDecimal,
@@ -90,7 +90,7 @@ class SupplyItem {
 
   Decimal getDose(Decimal amount) => amount * concentration;
 
-  SupplyItem copyWith({
+  MedicationSupplyItem copyWith({
     int? id,
     String? name,
     Decimal? totalDose,
@@ -102,7 +102,7 @@ class SupplyItem {
     Ester? ester,
     bool clearEster = false,
   }) {
-    return SupplyItem(
+    return MedicationSupplyItem(
       id: id ?? this.id,
       name: name ?? this.name,
       totalDose: totalDose ?? this.totalDose,
@@ -157,7 +157,7 @@ class SupplyItem {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is SupplyItem && other.id == id;
+      identical(this, other) || other is MedicationSupplyItem && other.id == id;
 
   @override
   int get hashCode => id.hashCode;

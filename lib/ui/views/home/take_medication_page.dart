@@ -5,7 +5,7 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
@@ -36,7 +36,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-  SupplyItem? _selectedSupplyItem;
+  MedicationSupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
   late TextEditingController _deadSpaceController;
   Decimal? _deadSpace;
@@ -112,7 +112,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
-  void _onSupplyItemChanged(SupplyItem? item) {
+  void _onSupplyItemChanged(MedicationSupplyItem? item) {
     setState(() {
       _selectedSupplyItem = item;
     });
@@ -166,12 +166,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           widget.schedule.ester,
         );
         final supplyItemDropdownItems = [
-          DropdownMenuItem<SupplyItem?>(
+          DropdownMenuItem<MedicationSupplyItem?>(
             value: null,
             child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<SupplyItem?>(
+            (item) => DropdownMenuItem<MedicationSupplyItem?>(
               value: item,
               child: Text(item.name),
             ),
@@ -211,7 +211,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 ),
               ),
             FormSpacer(),
-            FormDropdownField<SupplyItem?>(
+            FormDropdownField<MedicationSupplyItem?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,
               onChanged: _onSupplyItemChanged,
