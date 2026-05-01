@@ -11,6 +11,8 @@ class BackupService {
   bool get isDesktop =>
       Platform.isLinux || Platform.isWindows || Platform.isMacOS;
 
+  bool get isAndroid => !isDesktop && Platform.isAndroid;
+
   static const _tables = [
     'medication_intakes',
     'medication_schedules',
@@ -123,8 +125,6 @@ class BackupService {
     final jsonString = await _generateBackupJson();
     final bytes = Uint8List.fromList(utf8.encode(jsonString));
 
-    final bool isAndroid = !isDesktop && Platform.isAndroid;
-
     String? outputFile = await FilePicker.platform.saveFile(
       dialogTitle: 'Save Mona Backup',
       fileName: _timestampedFileName(),
@@ -146,8 +146,6 @@ class BackupService {
   }
 
   Future<bool> importData() async {
-    final bool isAndroid = !isDesktop && Platform.isAndroid;
-
     final FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: isAndroid ? FileType.any : FileType.custom,
       allowedExtensions: isAndroid ? null : ['json'],
