@@ -88,6 +88,7 @@ class MedicationSupply implements Supply {
       'moleculeJson': jsonEncode(molecule.toJson()),
       'administrationRouteName': administrationRoute.name,
       'esterName': ester?.name,
+      'type': type.name,
     };
   }
 
