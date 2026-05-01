@@ -1,7 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import '../data/model/medication_intake.dart';
 import '../data/providers/medication_intake_provider.dart';
@@ -18,7 +18,7 @@ class MedicationIntakeManager {
     required DateTime scheduledDateTime,
     required DateTime takenDateTime,
     required String takenTimeZone,
-    MedicationSupplyItem? supplyItem,
+    MedicationSupply? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
     Decimal? deadSpace, //in μL
@@ -51,7 +51,7 @@ class MedicationIntakeManager {
   }
 
   void deleteIntake(MedicationIntake intake) {
-    MedicationSupplyItem? item =
+    MedicationSupply? item =
         _supplyItemProvider.getItemById(intake.supplyItemId);
     if (item != null) {
       SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);

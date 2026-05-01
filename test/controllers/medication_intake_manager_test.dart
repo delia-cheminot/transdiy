@@ -7,7 +7,7 @@ import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 
@@ -35,7 +35,7 @@ void main() {
         final date = DateTime.now();
         const side = InjectionSide.left;
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -88,7 +88,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -107,10 +107,9 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late MedicationSupplyItem updatedSupplyItem;
+        late MedicationSupply updatedSupplyItem;
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem =
-              inv.positionalArguments.first as MedicationSupplyItem;
+          updatedSupplyItem = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 
@@ -137,7 +136,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -156,11 +155,10 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late MedicationSupplyItem updatedSupplyItem;
+        late MedicationSupply updatedSupplyItem;
 
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem =
-              inv.positionalArguments.first as MedicationSupplyItem;
+          updatedSupplyItem = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 

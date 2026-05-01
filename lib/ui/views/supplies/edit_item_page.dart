@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/administration_route_l10n.dart';
@@ -19,7 +19,7 @@ import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditItemPage extends StatefulWidget {
-  final MedicationSupplyItem item;
+  final MedicationSupply item;
 
   EditItemPage({required this.item});
 
@@ -39,27 +39,27 @@ class _EditItemPageState extends State<EditItemPage> {
   late SupplyItemProvider _supplyItemProvider;
 
   String? get _nameError =>
-      MedicationSupplyItem.validateName(context.l10n, _nameController.text);
+      MedicationSupply.validateName(context.l10n, _nameController.text);
 
-  String? get _totalAmountError => MedicationSupplyItem.validateTotalAmount(
+  String? get _totalAmountError => MedicationSupply.validateTotalAmount(
       context.l10n, _totalAmountController.text);
 
   String? get _usedAmountError {
-    final validator = MedicationSupplyItem.usedAmountValidator(
+    final validator = MedicationSupply.usedAmountValidator(
         context.l10n, _totalAmountController.text);
     return validator(_usedAmountController.text);
   }
 
-  String? get _concentrationError => MedicationSupplyItem.validateConcentration(
+  String? get _concentrationError => MedicationSupply.validateConcentration(
       context.l10n, _concentrationController.text);
 
   String? get _moleculeError =>
-      MedicationSupplyItem.validateMolecule(context.l10n, _molecule);
+      MedicationSupply.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      MedicationSupplyItem.validateAdministrationRoute(
+      MedicationSupply.validateAdministrationRoute(
           context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator = MedicationSupplyItem.esterValidator(
+    final validator = MedicationSupply.esterValidator(
         context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
