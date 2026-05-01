@@ -1,14 +1,16 @@
 const String createSupplyItemsTable = '''
     CREATE TABLE supply_items(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      totalDose TEXT NOT NULL,
-      usedDose TEXT NOT NULL,
-      concentration TEXT NOT NULL,
+      type TEXT NOT NULL,
       name TEXT NOT NULL,
       quantity INTEGER NOT NULL,
-      moleculeJson TEXT NOT NULL,
-      administrationRouteName TEXT NOT NULL,
-      esterName TEXT
+      totalDose TEXT,
+      usedDose TEXT,
+      concentration TEXT,
+      moleculeJson TEXT,
+      administrationRouteName TEXT,
+      esterName TEXT,
+      amount INTEGER
     )
     ''';
 

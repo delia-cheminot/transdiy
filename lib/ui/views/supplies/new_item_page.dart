@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/administration_route_l10n.dart';
@@ -32,18 +32,18 @@ class _NewItemPageState extends State<NewItemPage> {
   late PreferencesService _preferencesService;
 
   String? get _nameError =>
-      MedicationSupplyItem.validateName(context.l10n, _nameController.text);
-  String? get _totalAmountError => MedicationSupplyItem.validateTotalAmount(
+      MedicationSupply.validateName(context.l10n, _nameController.text);
+  String? get _totalAmountError => MedicationSupply.validateTotalAmount(
       context.l10n, _totalAmountController.text);
-  String? get _concentrationError => MedicationSupplyItem.validateConcentration(
+  String? get _concentrationError => MedicationSupply.validateConcentration(
       context.l10n, _concentrationController.text);
   String? get _moleculeError =>
-      MedicationSupplyItem.validateMolecule(context.l10n, _molecule);
+      MedicationSupply.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      MedicationSupplyItem.validateAdministrationRoute(
+      MedicationSupply.validateAdministrationRoute(
           context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator = MedicationSupplyItem.esterValidator(
+    final validator = MedicationSupply.esterValidator(
         context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
@@ -104,7 +104,7 @@ class _NewItemPageState extends State<NewItemPage> {
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
 
-    final item = MedicationSupplyItem(
+    final item = MedicationSupply(
       name: name,
       totalDose: totalDose,
       concentration: concentration,

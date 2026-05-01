@@ -5,6 +5,7 @@ import 'package:mona/services/db/upgrade/v2.dart';
 import 'package:mona/services/db/upgrade/v3.dart';
 import 'package:mona/services/db/upgrade/v4.dart';
 import 'package:mona/services/db/upgrade/v5.dart';
+import 'package:mona/services/db/upgrade/v6.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -41,7 +42,7 @@ class AppDatabase {
       inMemoryDatabasePath,
       version: 1,
       onCreate: _createDB,
-      onConfigure: _configureDB,
+      onOpen: _onOpen,
     );
   }
 
@@ -51,15 +52,14 @@ class AppDatabase {
 
     return await openDatabase(
       path,
-      version: 5,
+      version: 6,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
-      onConfigure: _configureDB,
+      onOpen: _onOpen,
     );
   }
 
-  Future _configureDB(Database db) async {
-    // Enable foreign key support
+  Future _onOpen(Database db) async {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
@@ -82,6 +82,9 @@ class AppDatabase {
     }
     if (oldVersion < 5) {
       DbUpgradeV5().upgrade(db, oldVersion, newVersion);
+    }
+    if (oldVersion < 6) {
+      DbUpgradeV6().upgrade(db, oldVersion, newVersion);
     }
   }
 

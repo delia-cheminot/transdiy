@@ -1,11 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/supply.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
@@ -36,7 +36,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-  MedicationSupplyItem? _selectedSupplyItem;
+  Supply? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
   late TextEditingController _deadSpaceController;
   Decimal? _deadSpace;
@@ -49,31 +49,20 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 
-  bool get _isInjection =>
-      widget.schedule.administrationRoute == AdministrationRoute.injection;
-
   void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider) async {
-    if (!_isFormValid) return;
+    if (!_isFormValid || !mounted) return;
 
-    final timezone = await FlutterTimezone.getLocalTimezone();
-    final tzName = timezone.identifier;
-
-    if (!mounted) return;
-
-    await MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
       scheduledDateTime: widget.scheduledDate,
       takenDateTime: _takenDate.toUtc(),
-      takenTimeZone: tzName,
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
       deadSpace: _deadSpace,
     );
-
-    if (!mounted) return;
 
     Navigator.of(context).pop();
   }
@@ -112,7 +101,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     }
   }
 
-  void _onSupplyItemChanged(MedicationSupplyItem? item) {
+  void _onSupplyItemChanged(Supply? item) {
     setState(() {
       _selectedSupplyItem = item;
     });
@@ -137,13 +126,16 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isInjection =
+        widget.schedule.administrationRoute == AdministrationRoute.injection;
+
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
         final localizations = context.l10n;
 
-        if (!isLoading && !_hasInitializedSide && _isInjection) {
+        if (!isLoading && !_hasInitializedSide && isInjection) {
           _selectedSide = MedicationIntakeManager(
             medicationIntakeProvider,
             supplyItemProvider,
@@ -166,12 +158,12 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
           widget.schedule.ester,
         );
         final supplyItemDropdownItems = [
-          DropdownMenuItem<MedicationSupplyItem?>(
+          DropdownMenuItem<Supply?>(
             value: null,
             child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<MedicationSupplyItem?>(
+            (item) => DropdownMenuItem<Supply?>(
               value: item,
               child: Text(item.name),
             ),
@@ -202,7 +194,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem case final supplyItem?)
+            if (_selectedSupplyItem case final MedicationSupply supplyItem)
               FormInfoText(
                 infoText: supplyItem.localizedSupplyAmount(
                   localizations,
@@ -211,13 +203,13 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 ),
               ),
             FormSpacer(),
-            FormDropdownField<MedicationSupplyItem?>(
+            FormDropdownField<Supply?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,
               onChanged: _onSupplyItemChanged,
               label: localizations.supplyItem,
             ),
-            if (_isInjection) ...[
+            if (isInjection) ...[
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
                 items: injectionSideDropdownMenuItems(localizations),

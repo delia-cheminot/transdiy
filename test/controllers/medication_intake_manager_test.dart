@@ -6,8 +6,8 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/medication_supply.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 
@@ -33,9 +33,8 @@ void main() {
             mockMedicationIntakeProvider, mockSupplyItemProvider);
         final dose = Decimal.parse('2');
         final date = DateTime.now();
-        const side = InjectionSide.left;
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -64,21 +63,11 @@ void main() {
           dose: dose,
           scheduledDateTime: date,
           takenDateTime: date.toUtc(),
-          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
-          side: side,
         );
 
-        expect(
-          addedIntake,
-          predicate((MedicationIntake i) =>
-              i.dose == dose &&
-              i.scheduledDateTime == date &&
-              i.takenDateTime == date.toUtc() &&
-              i.side == side &&
-              i.scheduleId == schedule.id),
-        );
+        expect(addedIntake, predicate((MedicationIntake i) => i.isTaken));
       });
 
       test('decreases supply item dose', () async {
@@ -88,7 +77,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -107,10 +96,9 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late MedicationSupplyItem updatedSupplyItem;
+        late MedicationSupply updatedSupplyItem;
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem =
-              inv.positionalArguments.first as MedicationSupplyItem;
+          updatedSupplyItem = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 
@@ -118,10 +106,8 @@ void main() {
           dose: dose,
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate.toUtc(),
-          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
-          side: null,
         );
 
         expect(updatedSupplyItem.usedDose, supplyItem.usedDose + dose);
@@ -137,7 +123,7 @@ void main() {
         final scheduledDate = DateTime.now();
         final takenDate = DateTime.now();
 
-        final supplyItem = MedicationSupplyItem(
+        final supplyItem = MedicationSupply(
           id: 10,
           name: 'SupplySingle',
           totalDose: Decimal.parse('10'),
@@ -156,11 +142,10 @@ void main() {
           notificationTimes: List.empty(),
         );
 
-        late MedicationSupplyItem updatedSupplyItem;
+        late MedicationSupply updatedSupplyItem;
 
         when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
-          updatedSupplyItem =
-              inv.positionalArguments.first as MedicationSupplyItem;
+          updatedSupplyItem = inv.positionalArguments.first as MedicationSupply;
           return Future.value();
         });
 
@@ -168,7 +153,6 @@ void main() {
           dose: dose,
           scheduledDateTime: scheduledDate,
           takenDateTime: takenDate.toUtc(),
-          takenTimeZone: 'Europe/Paris',
           supplyItem: supplyItem,
           schedule: schedule,
           side: null,

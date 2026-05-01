@@ -1,5 +1,6 @@
 import 'package:decimal/decimal.dart';
-import '../data/model/medication_supply_item.dart';
+import 'package:mona/data/model/generic_supply.dart';
+import '../data/model/medication_supply.dart';
 import '../data/providers/supply_item_provider.dart';
 
 class SupplyItemManager {
@@ -7,8 +8,8 @@ class SupplyItemManager {
 
   SupplyItemManager(this._supplyItemProvider);
 
-  /// Uses a portion of the amount of the [MedicationSupplyItem] and updates the database.
-  Future<void> useDose(MedicationSupplyItem item, Decimal doseToUse) async {
+  /// Uses a portion of the amount of the [MedicationSupply] and updates the database.
+  Future<void> useDose(MedicationSupply item, Decimal doseToUse) async {
     if (doseToUse == Decimal.zero) {
       return;
     }
@@ -26,9 +27,23 @@ class SupplyItemManager {
     ));
   }
 
-  /// Switch doses between two [MedicationSupplyItem]
-  void switchDoses(MedicationSupplyItem? previousItem,
-      MedicationSupplyItem? nextItem, Decimal previousDose, Decimal nextDose) {
+  /// Uses one unit of the [GenericSupply] and updates the database.
+  Future<void> use(GenericSupply item) async {
+    await _supplyItemProvider.updateItem(item.copyWith(
+      amount: item.amount - 1,
+    ));
+  }
+
+  /// Puts back one unit of the [GenericSupply] and updates the database.
+  Future<void> putBack(GenericSupply item) async {
+    await _supplyItemProvider.updateItem(item.copyWith(
+      amount: item.amount + 1,
+    ));
+  }
+
+  /// Switch doses between two [MedicationSupply]
+  void switchDoses(MedicationSupply? previousItem, MedicationSupply? nextItem,
+      Decimal previousDose, Decimal nextDose) {
     bool sameItems = nextItem == previousItem;
 
     if (previousItem != null) {

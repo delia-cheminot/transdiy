@@ -5,7 +5,8 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
-import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/supply.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
@@ -37,7 +38,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   late Decimal _takenDose;
   InjectionSide? _selectedSide;
   bool _hasInitializedSide = false;
-  MedicationSupplyItem? _selectedSupplyItem;
+  Supply? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
 
   String? get _takenDoseError =>
@@ -52,15 +53,16 @@ class _EditIntakePageState extends State<EditIntakePage> {
       MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider,
       MedicationIntake intake,
-      MedicationSupplyItem? newItem) async {
+      Supply? newItem) async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    MedicationSupplyItem? previousItem =
-        supplyItemProvider.getItemById(intake.supplyItemId);
+    Supply? previousItem = supplyItemProvider.getItemById(intake.supplyItemId);
+    final previousMedication = previousItem as MedicationSupply?;
+    final newMedication = newItem as MedicationSupply?;
 
-    SupplyItemManager(supplyItemProvider)
-        .switchDoses(previousItem, newItem, intake.dose, _takenDose);
+    SupplyItemManager(supplyItemProvider).switchDoses(
+        previousMedication, newMedication, intake.dose, _takenDose);
 
     String? timezoneIdentifier = intake.takenTimeZone;
     if (_takenDateChanged) {
@@ -118,7 +120,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
     }
   }
 
-  void _onSupplyItemChanged(MedicationSupplyItem? item) {
+  void _onSupplyItemChanged(Supply? item) {
     setState(() {
       _selectedSupplyItem = item;
     });
@@ -167,12 +169,12 @@ class _EditIntakePageState extends State<EditIntakePage> {
         );
 
         final supplyItemDropdownItems = [
-          DropdownMenuItem<MedicationSupplyItem?>(
+          DropdownMenuItem<MedicationSupply?>(
             value: null,
             child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<MedicationSupplyItem?>(
+            (item) => DropdownMenuItem<MedicationSupply?>(
               value: item,
               child: Text(item.name),
             ),
@@ -210,7 +212,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem case final supplyItem?)
+            if (_selectedSupplyItem case final MedicationSupply supplyItem)
               FormInfoText(
                 infoText: supplyItem.localizedSupplyAmount(
                   localizations,
@@ -219,7 +221,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
                 ),
               ),
             FormSpacer(),
-            FormDropdownField<MedicationSupplyItem?>(
+            FormDropdownField<Supply?>(
               value: _selectedSupplyItem,
               items: supplyItemDropdownItems,
               onChanged: _onSupplyItemChanged,
