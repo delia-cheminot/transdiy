@@ -101,7 +101,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get legacyDeprecationIntro =>
-      'Ця версія Mona застаріла. Щоб продовжувати користуватися Mona та отримувати оновлення, будь ласка, встановіть standalone-версію, виконавши наведені нижче кроки.';
+      'Ця версія Mona застаріла. Щоб продовжувати користуватися Mona та отримувати оновлення, будь ласка, встановіть нову версію, виконавши наведені нижче кроки.';
 
   @override
   String get legacyStep1Title => 'Експортуйте дані';

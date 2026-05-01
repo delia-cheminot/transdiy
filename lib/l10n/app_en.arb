@@ -35,7 +35,7 @@
   "goToSettings": "Go to Settings",
   "deprecated": "Deprecated",
   "legacyVersionMessage": "You are using a legacy version of Mona. Please update. Tap to learn more.",
-  "legacyDeprecationIntro": "This version of Mona is deprecated. To keep using Mona and receive updates, please install the standalone build by following the steps below.",
+  "legacyDeprecationIntro": "This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.",
   "legacyStep1Title": "Export your data",
   "legacyStep1Description": "In Settings, tap 'Export Data' to save a JSON backup of your data.",
   "legacyStep2Title": "Download the new version",

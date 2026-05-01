@@ -98,7 +98,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get legacyDeprecationIntro =>
-      'This version of Mona is deprecated. To keep using Mona and receive updates, please install the standalone build by following the steps below.';
+      'This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.';
 
   @override
   String get legacyStep1Title => 'Export your data';

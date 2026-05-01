@@ -248,7 +248,7 @@ abstract class AppLocalizations {
   /// No description provided for @legacyDeprecationIntro.
   ///
   /// In en, this message translates to:
-  /// **'This version of Mona is deprecated. To keep using Mona and receive updates, please install the standalone build by following the steps below.'**
+  /// **'This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.'**
   String get legacyDeprecationIntro;
 
   /// No description provided for @legacyStep1Title.

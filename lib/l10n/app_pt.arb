@@ -35,7 +35,7 @@
     "goToSettings": "Ir para Configurações",
     "deprecated": "Obsoleto",
     "legacyVersionMessage": "Está a utilizar uma versão obsoleta de Mona. Por favor, atualize-a. Toque para saber mais.",
-    "legacyDeprecationIntro": "Esta versão de Mona está obsoleta. Para continuar a usar Mona e receber atualizações, instale a versão standalone seguindo os passos abaixo.",
+    "legacyDeprecationIntro": "Esta versão de Mona está obsoleta. Para continuar a usar Mona e receber atualizações, instale a nova versão seguindo os passos abaixo.",
     "legacyStep1Title": "Exporte os seus dados",
     "legacyStep1Description": "Nas Configurações, toque em 'Exportar dados' para guardar uma cópia JSON dos seus dados.",
     "legacyStep2Title": "Descarregue a nova versão",

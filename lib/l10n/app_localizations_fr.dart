@@ -99,7 +99,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get legacyDeprecationIntro =>
-      'Cette version de Mona est obsolète. Pour continuer à utiliser Mona et recevoir des mises à jour, installez la version standalone en suivant les étapes ci-dessous.';
+      'Cette version de Mona est obsolète. Pour continuer à utiliser Mona et recevoir des mises à jour, installez la nouvelle version en suivant les étapes ci-dessous.';
 
   @override
   String get legacyStep1Title => 'Exportez vos données';
