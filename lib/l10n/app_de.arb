@@ -33,6 +33,8 @@
     "scheduleFrequencyEveryNDays": "Alle {days} Tage",
     "newUpdateAvailable": "Ein neues Update ist verfügbar!",
     "goToSettings": "Zu den Einstellungen",
+    "deprecated": "Veraltet",
+    "legacyVersionMessage": "Du verwendest eine veraltete Version von Mona. Bitte aktualisiere sie. Tippe für mehr Informationen.",
 
     "settingsTitle": "Einstellungen",
     "notifications": "Benachrichtigungen",

@@ -90,6 +90,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get goToSettings => 'Ir para Configurações';
 
   @override
+  String get deprecated => 'Obsoleto';
+
+  @override
+  String get legacyVersionMessage =>
+      'Está a utilizar uma versão obsoleta de Mona. Por favor, atualize-a. Toque para saber mais.';
+
+  @override
   String get settingsTitle => 'Configurações';
 
   @override
@@ -778,6 +785,13 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get goToSettings => 'Ir para Configurações';
+
+  @override
+  String get deprecated => 'Obsoleto';
+
+  @override
+  String get legacyVersionMessage =>
+      'Está a utilizar uma versão obsoleta de Mona. Por favor, atualize-a. Toque para saber mais.';
 
   @override
   String get settingsTitle => 'Configurações';

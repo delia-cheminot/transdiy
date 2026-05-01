@@ -33,6 +33,8 @@
   "scheduleFrequencyEveryNDays": "Кожні {days} днів",
   "newUpdateAvailable": "Нове оновлення!",
   "goToSettings": "Перейти в Налаштування",
+  "deprecated": "Застаріла версія",
+  "legacyVersionMessage": "Ви використовуєте застарілу версію Mona. Будь ласка, оновіть її. Торкніться, щоб дізнатися більше.",
 
   "settingsTitle": "Налаштування",
   "notifications": "Сповіщення",

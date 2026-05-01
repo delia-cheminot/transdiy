@@ -233,6 +233,18 @@ abstract class AppLocalizations {
   /// **'Go to Settings'**
   String get goToSettings;
 
+  /// No description provided for @deprecated.
+  ///
+  /// In en, this message translates to:
+  /// **'Deprecated'**
+  String get deprecated;
+
+  /// No description provided for @legacyVersionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You are using a legacy version of Mona. Please update. Tap to learn more.'**
+  String get legacyVersionMessage;
+
   /// No description provided for @settingsTitle.
   ///
   /// In en, this message translates to:

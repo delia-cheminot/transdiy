@@ -93,6 +93,13 @@ class AppLocalizationsUk extends AppLocalizations {
   String get goToSettings => 'Перейти в Налаштування';
 
   @override
+  String get deprecated => 'Застаріла версія';
+
+  @override
+  String get legacyVersionMessage =>
+      'Ви використовуєте застарілу версію Mona. Будь ласка, оновіть її. Торкніться, щоб дізнатися більше.';
+
+  @override
   String get settingsTitle => 'Налаштування';
 
   @override

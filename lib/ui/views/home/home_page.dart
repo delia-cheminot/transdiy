@@ -5,9 +5,11 @@ import 'package:mona/controllers/schedule_manager.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/medication_schedule_provider.dart';
+import 'package:mona/distribution.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
 import 'package:mona/ui/views/home/intake_tile.dart';
+import 'package:mona/ui/views/home/legacy_deprecation_card.dart';
 import 'package:mona/ui/widgets/main_page_wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +32,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (isLegacyDistribution) const LegacyDeprecationCard(),
               ..._buildTodaySection(context),
               ..._buildUpcomingSection(context),
             ],

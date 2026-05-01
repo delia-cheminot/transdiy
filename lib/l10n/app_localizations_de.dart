@@ -91,6 +91,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get goToSettings => 'Zu den Einstellungen';
 
   @override
+  String get deprecated => 'Veraltet';
+
+  @override
+  String get legacyVersionMessage =>
+      'Du verwendest eine veraltete Version von Mona. Bitte aktualisiere sie. Tippe für mehr Informationen.';
+
+  @override
   String get settingsTitle => 'Einstellungen';
 
   @override
