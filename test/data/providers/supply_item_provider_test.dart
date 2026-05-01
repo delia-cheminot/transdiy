@@ -2,8 +2,8 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'generic_repository_mock.dart';
 
@@ -102,7 +102,7 @@ void main() {
 
       await provider.updateItem(updatedItem);
 
-      final firstItem = provider.items.first;
+      final firstItem = provider.items.first as MedicationSupply;
       expect(
         [firstItem.name, firstItem.totalDose, firstItem.concentration],
         ['Updated Name', Decimal.parse('99'), Decimal.parse('9')],

@@ -4,21 +4,27 @@ import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
-class MedicationSupply {
+class MedicationSupply implements SupplyItem {
+  @override
   final int id;
+  @override
   final String name;
   final Decimal totalDose;
   final Decimal usedDose;
   final Decimal concentration;
   // TODO remove quantity
+  @override
   final int quantity;
   final Molecule molecule;
   final AdministrationRoute administrationRoute;
   final Ester? ester;
+  @override
+  final SupplyType type = SupplyType.medication;
 
   MedicationSupply({
     int? id,
@@ -70,6 +76,7 @@ class MedicationSupply {
         .toDouble();
   }
 
+  @override
   Map<String, Object?> toMap() {
     return {
       'id': id,

@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
-  List<MedicationSupply> _items = [];
+  List<SupplyItem> _items = [];
   bool _isLoading = true;
-  final Repository<MedicationSupply> repository;
+  final Repository<SupplyItem> repository;
 
-  static final defaultRepository = Repository<MedicationSupply>(
+  static final defaultRepository = Repository<SupplyItem>(
     tableName: 'supply_items',
     toMap: (item) => item.toMap(),
-    fromMap: (map) => MedicationSupply.fromMap(map),
+    fromMap: (map) => SupplyItem.fromMap(map),
   );
 
-  List<MedicationSupply> get items => _items;
+  List<SupplyItem> get items => _items;
+  List<MedicationSupply> get medicationItems =>
+      _items.where((item) => item.type == SupplyType.medication).toList()
+          as List<MedicationSupply>;
 
   bool get isLoading => _isLoading;
 
-  List<MedicationSupply> get orderedByRemainingDose => [..._items]..sort(
-      (a, b) => a.getRatio().compareTo(b.getRatio()),
-    );
+  List<MedicationSupply> get orderedByRemainingDose =>
+      [...medicationItems]..sort(
+          (a, b) => a.getRatio().compareTo(b.getRatio()),
+        );
 
   MedicationSupply? getItemById(int? id) {
     try {
-      return _items.firstWhere((item) => item.id == id);
+      return medicationItems.firstWhere((item) => item.id == id);
     } catch (e) {
       return null;
     }
@@ -50,7 +55,7 @@ class SupplyItemProvider extends ChangeNotifier {
 
   MedicationSupply? getMostUsedItemForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_items.isEmpty) return null;
+    if (medicationItems.isEmpty) return null;
 
     final filtered = orderedByRemainingDose.where(
       (item) =>
@@ -64,7 +69,7 @@ class SupplyItemProvider extends ChangeNotifier {
 
   List<MedicationSupply> getItemsForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
-    if (_items.isEmpty) return [];
+    if (medicationItems.isEmpty) return [];
 
     return orderedByRemainingDose
         .where(

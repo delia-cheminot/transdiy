@@ -15,15 +15,15 @@ class PharmacyPage extends StatelessWidget {
       builder: (context, supplyItemProvider, child) {
         return MainPageWrapper(
           isLoading: supplyItemProvider.isLoading,
-          isEmpty: supplyItemProvider.items.isEmpty,
+          isEmpty: supplyItemProvider.medicationItems.isEmpty,
           emptyMessage: context.l10n.empty_supplies,
           child: MasonryGridView.builder(
             padding: pagePadding - const EdgeInsets.symmetric(horizontal: 4),
             gridDelegate: SliverSimpleGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300),
-            itemCount: supplyItemProvider.items.length,
+            itemCount: supplyItemProvider.medicationItems.length,
             itemBuilder: (context, index) {
-              MedicationSupply item = supplyItemProvider.items[index];
+              MedicationSupply item = supplyItemProvider.medicationItems[index];
               return SupplyItemCard(item: item);
             },
           ),
