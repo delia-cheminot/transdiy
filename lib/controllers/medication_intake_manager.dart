@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/generic_supply.dart';
 import 'package:mona/data/model/medication_schedule.dart';
@@ -19,7 +20,6 @@ class MedicationIntakeManager {
     required Decimal dose,
     required DateTime scheduledDateTime,
     required DateTime takenDateTime,
-    required String takenTimeZone,
     Supply? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
@@ -29,11 +29,14 @@ class MedicationIntakeManager {
       throw ArgumentError('takenDateTime must be in UTC');
     }
 
+    final timezone = await FlutterTimezone.getLocalTimezone();
+    final tzName = timezone.identifier;
+
     await _medicationIntakeProvider.add(MedicationIntake(
       dose: dose,
       scheduledDateTime: scheduledDateTime,
       takenDateTime: takenDateTime,
-      takenTimeZone: takenTimeZone,
+      takenTimeZone: tzName,
       side: side,
       scheduleId: schedule.id,
       molecule: schedule.molecule,
@@ -42,34 +45,36 @@ class MedicationIntakeManager {
       supplyItemId: supplyItem?.id,
     ));
 
-    if (supplyItem == null) return;
+    final itemManager = SupplyItemManager(_supplyItemProvider);
 
-    if (supplyItem is GenericSupply) {
-      await SupplyItemManager(_supplyItemProvider).use(supplyItem);
-      return;
+    switch (supplyItem) {
+      case null:
+        return;
+      case GenericSupply _:
+        await itemManager.use(supplyItem);
+        return;
+      case MedicationSupply _:
+        if (deadSpace != null && deadSpace > Decimal.zero) {
+          final microlitersToMilliliters = Decimal.parse('0.001');
+          dose += (supplyItem).getDose(deadSpace * microlitersToMilliliters);
+        }
+        await itemManager.useDose(supplyItem, dose);
     }
-
-    if (supplyItem is! MedicationSupply) return;
-
-    if (deadSpace != null && deadSpace > Decimal.zero) {
-      final deadSpaceMl = deadSpace * Decimal.parse('0.001');
-      dose += supplyItem.getDose(deadSpaceMl);
-    }
-
-    await SupplyItemManager(_supplyItemProvider).useDose(supplyItem, dose);
   }
 
   void deleteIntake(MedicationIntake intake) {
     Supply? item = _supplyItemProvider.getItemById(intake.supplyItemId);
+    final itemManager = SupplyItemManager(_supplyItemProvider);
 
-    if (item == null) return;
-
-    if (item is GenericSupply) {
-      SupplyItemManager(_supplyItemProvider).putBack(item);
-    }
-
-    if (item is MedicationSupply) {
-      SupplyItemManager(_supplyItemProvider).useDose(item, -intake.dose);
+    switch (item) {
+      case null:
+        break;
+      case GenericSupply _:
+        itemManager.putBack(item);
+        break;
+      case MedicationSupply _:
+        itemManager.useDose(item, -intake.dose);
+        break;
     }
 
     _medicationIntakeProvider.deleteIntake(intake);
