@@ -2,18 +2,18 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'generic_repository_mock.dart';
 
 void main() {
   late SupplyItemProvider provider;
-  late GenericRepositoryMock<MedicationSupply> repo;
+  late GenericRepositoryMock<MedicationSupplyItem> repo;
 
   setUp(() async {
-    repo = GenericRepositoryMock<MedicationSupply>(
-      withId: (i, id) => MedicationSupply(
+    repo = GenericRepositoryMock<MedicationSupplyItem>(
+      withId: (i, id) => MedicationSupplyItem(
         id: id,
         name: i.name,
         totalDose: i.totalDose,
@@ -30,7 +30,7 @@ void main() {
   group('SupplyItemProvider Tests', () {
     test('initialization loads items', () async {
       await repo.insert(
-        MedicationSupply(
+        MedicationSupplyItem(
           id: 1,
           name: 'Test Item 1',
           totalDose: Decimal.parse('50'),
@@ -40,7 +40,7 @@ void main() {
         ),
       );
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 2,
         name: 'Test Item 2',
         totalDose: Decimal.parse('30'),
@@ -56,7 +56,7 @@ void main() {
 
     test('add inserts a new item', () async {
       // Arrange
-      final itemToAdd = MedicationSupply(
+      final itemToAdd = MedicationSupplyItem(
         name: 'New Item',
         totalDose: Decimal.parse('20'),
         concentration: Decimal.parse('2'),
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('updateItem updates an existing item', () async {
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 1,
         name: 'Test Item 1',
         totalDose: Decimal.parse('50'),
@@ -81,7 +81,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       ));
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 2,
         name: 'Test Item 2',
         totalDose: Decimal.parse('30'),
@@ -91,7 +91,7 @@ void main() {
       ));
 
       final itemToUpdate = repo.items.first;
-      final updatedItem = MedicationSupply(
+      final updatedItem = MedicationSupplyItem(
         id: itemToUpdate.id,
         name: 'Updated Name',
         totalDose: Decimal.parse('99'),
@@ -102,7 +102,7 @@ void main() {
 
       await provider.updateItem(updatedItem);
 
-      final firstItem = provider.items.first as MedicationSupply;
+      final firstItem = provider.items.first as MedicationSupplyItem;
       expect(
         [firstItem.name, firstItem.totalDose, firstItem.concentration],
         ['Updated Name', Decimal.parse('99'), Decimal.parse('9')],
@@ -110,7 +110,7 @@ void main() {
     });
 
     test('deleteItemFromId removes the item', () async {
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 1,
         name: 'Test Item 1',
         totalDose: Decimal.parse('50'),
@@ -119,7 +119,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       ));
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 2,
         name: 'Test Item 2',
         totalDose: Decimal.parse('30'),
@@ -137,7 +137,7 @@ void main() {
     });
 
     test('deleteItem removes the item by object', () async {
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 1,
         name: 'Test Item 1',
         totalDose: Decimal.parse('50'),
@@ -146,7 +146,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       ));
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 2,
         name: 'Test Item 2',
         totalDose: Decimal.parse('30'),
@@ -167,7 +167,7 @@ void main() {
 
     test('orderedByRemainingDose orders items with most used/total first',
         () async {
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 3,
         name: 'A',
         totalDose: Decimal.parse('100'),
@@ -177,7 +177,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       ));
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 4,
         name: 'B',
         totalDose: Decimal.parse('100'),
@@ -187,7 +187,7 @@ void main() {
         administrationRoute: AdministrationRoute.oral,
       ));
 
-      await repo.insert(MedicationSupply(
+      await repo.insert(MedicationSupplyItem(
         id: 5,
         name: 'C',
         totalDose: Decimal.parse('100'),
@@ -208,7 +208,7 @@ void main() {
         'getMostUsedItemForMedication returns the most used item for medication',
         () async {
       // Arrange
-      final baseItem = MedicationSupply(
+      final baseItem = MedicationSupplyItem(
         id: 1,
         name: 'E vial',
         totalDose: Decimal.parse('200'),
@@ -244,7 +244,7 @@ void main() {
     test('getMostUsedItemForMedication ignores other administration routes',
         () async {
       // Arrange
-      final injectionItem = MedicationSupply(
+      final injectionItem = MedicationSupplyItem(
         id: 1,
         name: 'Injection',
         totalDose: Decimal.parse('200'),
@@ -279,7 +279,7 @@ void main() {
     test('getMostUsedItemForMedication returns null if no matching item',
         () async {
       // Arrange
-      final oralItem = MedicationSupply(
+      final oralItem = MedicationSupplyItem(
         id: 1,
         name: 'Injection',
         totalDose: Decimal.parse('200'),
@@ -305,7 +305,7 @@ void main() {
     group('getItemsForMedication', () {
       test('returns matching items ordered by most used first', () async {
         // Arrange
-        final baseItem = MedicationSupply(
+        final baseItem = MedicationSupplyItem(
           id: 1,
           name: 'E vial A',
           totalDose: Decimal.parse('200'),
@@ -341,7 +341,7 @@ void main() {
 
       test('returns empty list when no matching item', () async {
         // Arrange
-        await repo.insert(MedicationSupply(
+        await repo.insert(MedicationSupplyItem(
           id: 1,
           name: 'Oral only',
           totalDose: Decimal.parse('50'),
@@ -380,7 +380,7 @@ void main() {
       test('returns single item when only one matches molecule route and ester',
           () async {
         // Arrange
-        final matchItem = MedicationSupply(
+        final matchItem = MedicationSupplyItem(
           id: 1,
           name: 'Match',
           totalDose: Decimal.parse('200'),
@@ -424,7 +424,7 @@ void main() {
           'returns the matching item when others differ by molecule route or ester',
           () async {
         // Arrange
-        final matchItem = MedicationSupply(
+        final matchItem = MedicationSupplyItem(
           id: 1,
           name: 'Match',
           totalDose: Decimal.parse('200'),

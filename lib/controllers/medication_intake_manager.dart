@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
-import 'package:mona/data/model/generic_supply.dart';
+import 'package:mona/data/model/generic_supply_item.dart';
 import 'package:mona/data/model/medication_schedule.dart';
-import 'package:mona/data/model/medication_supply.dart';
-import 'package:mona/data/model/supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import '../data/model/medication_intake.dart';
 import '../data/providers/medication_intake_provider.dart';
@@ -20,7 +20,7 @@ class MedicationIntakeManager {
     required Decimal dose,
     required DateTime scheduledDateTime,
     required DateTime takenDateTime,
-    Supply? supplyItem,
+    SupplyItem? supplyItem,
     required MedicationSchedule schedule,
     InjectionSide? side,
     Decimal? deadSpace, //in μL
@@ -53,7 +53,7 @@ class MedicationIntakeManager {
       case GenericSupply _:
         await itemManager.use(supplyItem);
         return;
-      case MedicationSupply _:
+      case MedicationSupplyItem _:
         if (deadSpace != null && deadSpace > Decimal.zero) {
           final microlitersToMilliliters = Decimal.parse('0.001');
           dose += (supplyItem).getDose(deadSpace * microlitersToMilliliters);
@@ -63,7 +63,7 @@ class MedicationIntakeManager {
   }
 
   void deleteIntake(MedicationIntake intake) {
-    Supply? item = _supplyItemProvider.getItemById(intake.supplyItemId);
+    SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId);
     final itemManager = SupplyItemManager(_supplyItemProvider);
 
     switch (item) {
@@ -72,7 +72,7 @@ class MedicationIntakeManager {
       case GenericSupply _:
         itemManager.putBack(item);
         break;
-      case MedicationSupply _:
+      case MedicationSupplyItem _:
         itemManager.useDose(item, -intake.dose);
         break;
     }

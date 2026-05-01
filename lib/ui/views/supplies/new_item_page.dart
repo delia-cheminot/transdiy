@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/administration_route_l10n.dart';
@@ -32,18 +33,18 @@ class _NewItemPageState extends State<NewItemPage> {
   late PreferencesService _preferencesService;
 
   String? get _nameError =>
-      MedicationSupply.validateName(context.l10n, _nameController.text);
-  String? get _totalAmountError => MedicationSupply.validateTotalAmount(
+      SupplyItem.validateName(context.l10n, _nameController.text);
+  String? get _totalAmountError => MedicationSupplyItem.validateTotalAmount(
       context.l10n, _totalAmountController.text);
-  String? get _concentrationError => MedicationSupply.validateConcentration(
+  String? get _concentrationError => MedicationSupplyItem.validateConcentration(
       context.l10n, _concentrationController.text);
   String? get _moleculeError =>
-      MedicationSupply.validateMolecule(context.l10n, _molecule);
+      MedicationSupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      MedicationSupply.validateAdministrationRoute(
+      MedicationSupplyItem.validateAdministrationRoute(
           context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator = MedicationSupply.esterValidator(
+    final validator = MedicationSupplyItem.esterValidator(
         context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
@@ -104,7 +105,7 @@ class _NewItemPageState extends State<NewItemPage> {
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
 
-    final item = MedicationSupply(
+    final item = MedicationSupplyItem(
       name: name,
       totalDose: totalDose,
       concentration: concentration,

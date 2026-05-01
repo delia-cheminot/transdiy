@@ -4,12 +4,12 @@ import 'package:decimal/decimal.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/string_parsing.dart';
 import 'package:mona/util/validators.dart';
 
-class MedicationSupply implements Supply {
+class MedicationSupplyItem implements SupplyItem {
   @override
   final int id;
   @override
@@ -26,7 +26,7 @@ class MedicationSupply implements Supply {
   @override
   final SupplyType type = SupplyType.medication;
 
-  MedicationSupply({
+  MedicationSupplyItem({
     int? id,
     required this.name,
     required this.totalDose,
@@ -39,8 +39,8 @@ class MedicationSupply implements Supply {
   })  : usedDose = usedDose ?? Decimal.zero,
         id = id ?? DateTime.now().millisecondsSinceEpoch;
 
-  factory MedicationSupply.fromMap(Map<String, Object?> map) {
-    return MedicationSupply(
+  factory MedicationSupplyItem.fromMap(Map<String, Object?> map) {
+    return MedicationSupplyItem(
       id: map['id'] as int?,
       name: map['name'] as String,
       totalDose: (map['totalDose'] as String).toDecimal,
@@ -98,7 +98,7 @@ class MedicationSupply implements Supply {
 
   Decimal getDose(Decimal amount) => amount * concentration;
 
-  MedicationSupply copyWith({
+  MedicationSupplyItem copyWith({
     int? id,
     String? name,
     Decimal? totalDose,
@@ -110,7 +110,7 @@ class MedicationSupply implements Supply {
     Ester? ester,
     bool clearEster = false,
   }) {
-    return MedicationSupply(
+    return MedicationSupplyItem(
       id: id ?? this.id,
       name: name ?? this.name,
       totalDose: totalDose ?? this.totalDose,
@@ -125,9 +125,6 @@ class MedicationSupply implements Supply {
 
   static String? validateTotalAmount(AppLocalizations l10n, String? value) =>
       requiredStrictlyPositiveDecimal(l10n, value);
-
-  static String? validateName(AppLocalizations l10n, String? value) =>
-      requiredString(l10n, value);
 
   static String? validateConcentration(AppLocalizations l10n, String? value) =>
       requiredStrictlyPositiveDecimal(l10n, value);
@@ -165,7 +162,7 @@ class MedicationSupply implements Supply {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is MedicationSupply && other.id == id;
+      identical(this, other) || other is MedicationSupplyItem && other.id == id;
 
   @override
   int get hashCode => id.hashCode;

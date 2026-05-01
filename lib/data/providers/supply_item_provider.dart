@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/services/repository.dart';
 
 class SupplyItemProvider extends ChangeNotifier {
-  List<Supply> _items = [];
+  List<SupplyItem> _items = [];
   bool _isLoading = true;
-  final Repository<Supply> repository;
+  final Repository<SupplyItem> repository;
 
-  static final defaultRepository = Repository<Supply>(
+  static final defaultRepository = Repository<SupplyItem>(
     tableName: 'supply_items',
     toMap: (item) => item.toMap(),
-    fromMap: (map) => Supply.fromMap(map),
+    fromMap: (map) => SupplyItem.fromMap(map),
   );
 
-  List<Supply> get items => _items;
-  List<MedicationSupply> get medicationItems =>
+  List<SupplyItem> get items => _items;
+  List<MedicationSupplyItem> get medicationItems =>
       _items.where((item) => item.type == SupplyType.medication).toList()
-          as List<MedicationSupply>;
+          as List<MedicationSupplyItem>;
 
   bool get isLoading => _isLoading;
 
-  List<MedicationSupply> get orderedByRemainingDose =>
+  List<MedicationSupplyItem> get orderedByRemainingDose =>
       [...medicationItems]..sort(
           (a, b) => a.getRatio().compareTo(b.getRatio()),
         );
 
-  Supply? getItemById(int? id) {
+  SupplyItem? getItemById(int? id) {
     try {
       return items.firstWhere((item) => item.id == id);
     } catch (e) {
@@ -37,7 +37,7 @@ class SupplyItemProvider extends ChangeNotifier {
     }
   }
 
-  SupplyItemProvider({Repository<Supply>? repository})
+  SupplyItemProvider({Repository<SupplyItem>? repository})
       : repository = repository ?? defaultRepository {
     _init();
   }
@@ -53,7 +53,7 @@ class SupplyItemProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  MedicationSupply? getMostUsedItemForMedication(Molecule molecule,
+  MedicationSupplyItem? getMostUsedItemForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
     if (medicationItems.isEmpty) return null;
 
@@ -67,7 +67,7 @@ class SupplyItemProvider extends ChangeNotifier {
     return filtered.isEmpty ? null : filtered.first;
   }
 
-  List<MedicationSupply> getItemsForMedication(Molecule molecule,
+  List<MedicationSupplyItem> getItemsForMedication(Molecule molecule,
       AdministrationRoute administrationRoute, Ester? ester) {
     if (medicationItems.isEmpty) return [];
 
@@ -86,17 +86,17 @@ class SupplyItemProvider extends ChangeNotifier {
     await fetchItems();
   }
 
-  Future<void> deleteItem(Supply item) async {
+  Future<void> deleteItem(SupplyItem item) async {
     await repository.delete(item.id);
     await fetchItems();
   }
 
-  Future<void> add(Supply supplyItem) async {
+  Future<void> add(SupplyItem supplyItem) async {
     await repository.insert(supplyItem);
     await fetchItems();
   }
 
-  Future<void> updateItem(Supply item) async {
+  Future<void> updateItem(SupplyItem item) async {
     await repository.update(item, item.id);
     await fetchItems();
   }

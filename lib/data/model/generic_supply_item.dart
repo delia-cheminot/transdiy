@@ -1,8 +1,8 @@
-import 'package:mona/data/model/supply.dart';
+import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/util/validators.dart';
 
-class GenericSupply implements Supply {
+class GenericSupply implements SupplyItem {
   @override
   final int id;
   @override
@@ -56,9 +56,6 @@ class GenericSupply implements Supply {
 
   static String? validateAmount(AppLocalizations l10n, String? value) =>
       requiredPositiveInt(l10n, value);
-
-  static String? validateName(AppLocalizations l10n, String? value) =>
-      requiredString(l10n, value);
 
   @override
   bool operator ==(Object other) =>

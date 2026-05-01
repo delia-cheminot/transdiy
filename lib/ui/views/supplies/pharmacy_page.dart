@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mona/data/model/medication_supply.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/ui/constants/dimensions.dart';
@@ -23,7 +23,8 @@ class PharmacyPage extends StatelessWidget {
                 maxCrossAxisExtent: 300),
             itemCount: supplyItemProvider.medicationItems.length,
             itemBuilder: (context, index) {
-              MedicationSupply item = supplyItemProvider.medicationItems[index];
+              MedicationSupplyItem item =
+                  supplyItemProvider.medicationItems[index];
               return SupplyItemCard(item: item);
             },
           ),
