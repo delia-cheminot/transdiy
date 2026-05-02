@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -18,6 +19,16 @@ import 'package:mona/data/providers/supply_item_provider.dart';
 import 'medication_intake_manager_test.mocks.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMethodCallHandler(
+    const MethodChannel('flutter_timezone'),
+    (MethodCall call) async {
+      if (call.method == 'getLocalTimezone') return 'UTC';
+      return null;
+    },
+  );
+
   late MockMedicationIntakeProvider mockMedicationIntakeProvider;
   late MockSupplyItemProvider mockSupplyItemProvider;
 
