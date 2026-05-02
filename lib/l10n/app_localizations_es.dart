@@ -79,7 +79,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get scheduleFrequencyDaily => 'Cada día';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
+  String scheduleFrequencyEveryNDays(num days) {
     return 'Cada $days días';
   }
 
@@ -108,7 +108,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noSchedules => 'Sin horarios';
 
   @override
-  String schedulesCreated(Object count) {
+  String schedulesCreated(num count) {
     return '$count creados';
   }
 
@@ -285,7 +285,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noNotifications => 'Sin notificaciones';
 
   @override
-  String notificationsCount(Object count) {
+  String notificationsCount(num count) {
     return '$count notificaciones';
   }
 
@@ -436,7 +436,7 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
+  String remaining(num amount, Object unit) {
     return '$amount $unit restantes';
   }
 

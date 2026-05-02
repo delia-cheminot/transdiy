@@ -24,8 +24,15 @@ extension SupplyItemL10n on MedicationSupplyItem {
     final headline =
         '${molecule.localizedNameWithEster(ester, localizations)} • '
         '$concentration ${molecule.unit}/${administrationRoute.localizedUnit(localizations, 1)}';
+
+    final amountRemainingFormatted =
+        amountRemaining % Decimal.one == Decimal.zero
+            ? amountRemaining.toDouble().toInt()
+            : amountRemaining.toDouble();
+    // int if whole number, otherwise double
+
     final remainingLine = localizations.remaining(
-      amountRemaining.toString(),
+      amountRemainingFormatted,
       routeUnitRemaining,
     );
     return '$headline\n$remainingLine';
