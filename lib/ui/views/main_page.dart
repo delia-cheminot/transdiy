@@ -5,6 +5,7 @@ import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
 import 'package:mona/ui/widgets/animated_floating_action_button.dart';
+import 'package:mona/ui/widgets/disappearing_app_bar.dart';
 import 'package:mona/ui/widgets/disappearing_bottom_navigation_bar.dart';
 import 'package:mona/ui/widgets/disappearing_navigation_rail.dart';
 import 'package:mona/ui/widgets/update_banner.dart';
@@ -71,7 +72,7 @@ class _MainPageState extends State<MainPage>
     final double width = MediaQuery.of(context).size.width;
 
     final AnimationStatus status = _controller.status;
-    if (width > 600) {
+    if (width > 700) {
       if (status != AnimationStatus.forward &&
           status != AnimationStatus.completed) {
         _controller.forward();
@@ -96,22 +97,20 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    final fab = currentTab.buildFab?.call(context);
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
         return Scaffold(
-            appBar: AppBar(
-              title: Text(currentTab.title),
-              centerTitle: true,
-              actions: currentTab.buildActions?.call(context),
-            ),
             body: Row(
               children: [
                 DisappearingNavigationRail(
                   railAnimation: _railAnimation,
                   railFabAnimation: _railFabAnimation,
                   selectedIndex: _selectedIndex,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  fab: fab,
                   onDestinationSelected: (index) {
                     setState(() {
                       _selectedIndex = index;
@@ -119,8 +118,21 @@ class _MainPageState extends State<MainPage>
                   },
                 ),
                 Expanded(
-                  child: SafeArea(
-                    child: currentTab.page,
+                  child: Column(
+                    children: [
+                      DisappearingAppBar(
+                        barAnimation: _barAnimation,
+                        title: Text(currentTab.title),
+                        centerTitle: true,
+                        actions: currentTab.buildActions?.call(context),
+                      ),
+                      Expanded(
+                        child: SafeArea(
+                          top: false,
+                          child: currentTab.page,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -132,7 +144,15 @@ class _MainPageState extends State<MainPage>
             // (\__/) ||
             // (•ㅅ•) ||
             // / 　 づ
-            floatingActionButton: currentTab.buildFab?.call(context),
+
+            floatingActionButton: fab == null
+                ? null
+                : AnimatedFloatingActionButton(
+                    animation: _barAnimation,
+                    onPressed: fab.onPressed,
+                    tooltip: fab.tooltip,
+                    child: fab.child,
+                  ),
             bottomNavigationBar: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

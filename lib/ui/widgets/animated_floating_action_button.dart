@@ -10,12 +10,14 @@ class AnimatedFloatingActionButton extends StatefulWidget {
     this.elevation,
     this.onPressed,
     this.child,
+    this.tooltip,
   });
 
   final Animation<double> animation;
   final VoidCallback? onPressed;
   final Widget? child;
   final double? elevation;
+  final String? tooltip;
 
   @override
   State<AnimatedFloatingActionButton> createState() =>
@@ -46,6 +48,7 @@ class _AnimatedFloatingActionButton
         backgroundColor: _colorScheme.tertiaryContainer,
         foregroundColor: _colorScheme.onTertiaryContainer,
         onPressed: widget.onPressed,
+        tooltip: widget.tooltip,
         child: widget.child,
       ),
     );

@@ -12,6 +12,7 @@ class DisappearingNavigationRail extends StatelessWidget {
     required this.backgroundColor,
     required this.selectedIndex,
     this.onDestinationSelected,
+    this.fab,
   });
 
   final RailAnimation railAnimation;
@@ -19,6 +20,7 @@ class DisappearingNavigationRail extends StatelessWidget {
   final Color backgroundColor;
   final int selectedIndex;
   final ValueChanged<int>? onDestinationSelected;
+  final FloatingActionButton? fab;
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +32,20 @@ class DisappearingNavigationRail extends StatelessWidget {
         selectedIndex: selectedIndex,
         backgroundColor: backgroundColor,
         onDestinationSelected: onDestinationSelected,
-        leading: Column(
-          children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-            const SizedBox(height: 8),
-            AnimatedFloatingActionButton(
-              animation: railFabAnimation,
-              elevation: 0,
-              onPressed: () {},
-              child: const Icon(Icons.add),
-            ),
-          ],
-        ),
-        groupAlignment: -0.85,
+        labelType: NavigationRailLabelType.all,
+        leading: fab == null
+            ? const SizedBox(
+                width: 45,
+                height: 45,
+              )
+            : AnimatedFloatingActionButton(
+                animation: railFabAnimation,
+                elevation: 0,
+                onPressed: fab!.onPressed,
+                tooltip: fab!.tooltip,
+                child: fab!.child,
+              ),
+        groupAlignment: 0,
         destinations: getMainTabs(context).map((d) {
           return NavigationRailDestination(
             icon: Icon(d.icon),

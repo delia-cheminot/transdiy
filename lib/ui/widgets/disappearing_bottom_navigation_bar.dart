@@ -19,10 +19,10 @@ class DisappearingBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomBarTransition(
       animation: barAnimation,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       child: NavigationBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         destinations: getMainTabs(context).map<NavigationDestination>((d) {
           return NavigationDestination(icon: Icon(d.icon), label: d.title);
         }).toList(),
