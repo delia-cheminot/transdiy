@@ -50,8 +50,7 @@ class LegacyDeprecationPage extends StatelessWidget {
               description: l10n.legacyStep2Description,
               action: FilledButton.tonalIcon(
                 onPressed: () {
-                  launchUrl(_releasesUri,
-                      mode: LaunchMode.externalApplication);
+                  launchUrl(_releasesUri, mode: LaunchMode.externalApplication);
                 },
                 icon: const Icon(Symbols.open_in_new),
                 label: Text(l10n.openLatestRelease),
