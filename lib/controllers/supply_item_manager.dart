@@ -25,4 +25,23 @@ class SupplyItemManager {
       usedDose: item.usedDose + doseToUse,
     ));
   }
+
+  /// Switch doses between two [SupplyItem]
+  void switchDoses(SupplyItem? previousItem, SupplyItem? nextItem,
+      Decimal previousDose, Decimal nextDose) {
+    bool sameItems = nextItem == previousItem;
+
+    if (previousItem != null) {
+      if (sameItems) {
+        Decimal doseDifference = nextDose - previousDose;
+        useDose(previousItem, doseDifference);
+      } else {
+        useDose(previousItem, -previousDose);
+      }
+    }
+
+    if (nextItem != null && !sameItems) {
+      useDose(nextItem, nextDose);
+    }
+  }
 }

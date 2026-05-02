@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
@@ -51,25 +52,28 @@ class _EditIntakePageState extends State<EditIntakePage> {
       MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider,
       MedicationIntake intake,
-      SupplyItem? supplyItem) async {
+      SupplyItem? newItem) async {
     if (!_isFormValid) return;
     if (!mounted) return;
 
-    // TODO create method in manager for this
-    if (supplyItem != null) {
-      Decimal doseDifference = intake.dose - _takenDose;
-      SupplyItemManager(supplyItemProvider)
-          .useDose(supplyItem, -doseDifference);
-    }
+    SupplyItem? previousItem =
+        supplyItemProvider.getItemById(intake.supplyItemId);
 
-    final timezone =
-        _takenDateChanged ? await FlutterTimezone.getLocalTimezone() : null;
+    SupplyItemManager(supplyItemProvider)
+        .switchDoses(previousItem, newItem, intake.dose, _takenDose);
+
+    String? timezoneIdentifier = intake.takenTimeZone;
+    if (_takenDateChanged) {
+      final TimezoneInfo timezone = await FlutterTimezone.getLocalTimezone();
+      timezoneIdentifier = timezone.identifier;
+    }
 
     MedicationIntake updatedIntake = intake.copyWith(
       takenDateTime: _takenDate.toUtc(),
-      takenTimeZone: timezone?.identifier,
+      takenTimeZone: timezoneIdentifier,
       dose: _takenDose,
       side: _selectedSide,
+      supplyItemId: newItem?.id,
     );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
@@ -82,16 +86,10 @@ class _EditIntakePageState extends State<EditIntakePage> {
     MedicationIntakeProvider medicationIntakeProvider,
     SupplyItemProvider supplyItemProvider,
     MedicationIntake intake,
-    SupplyItem? supplyItem,
   ) async {
     if (!mounted) return;
-
-    // TODO create method in manager for this
-    if (supplyItem != null) {
-      SupplyItemManager(supplyItemProvider).useDose(supplyItem, -intake.dose);
-    }
-
-    medicationIntakeProvider.deleteIntake(intake);
+    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+        .deleteIntake(intake);
     Navigator.of(context).pop();
   }
 
@@ -157,11 +155,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
         }
 
         if (!isLoading && !_hasInitializedSupplyItem) {
-          _selectedSupplyItem = supplyItemProvider.getMostUsedItemForMedication(
-            widget.intake.molecule,
-            widget.intake.administrationRoute,
-            widget.intake.ester,
-          );
+          _selectedSupplyItem =
+              supplyItemProvider.getItemById(widget.intake.supplyItemId);
           _hasInitializedSupplyItem = true;
         }
 
@@ -196,8 +191,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
           onDelete: () async {
             final confirmed = await IntakesPage.confirmDeleteIntake(context);
             if (confirmed == false) return;
-            _deleteIntake(medicationIntakeProvider, supplyItemProvider,
-                widget.intake, _selectedSupplyItem);
+            _deleteIntake(
+                medicationIntakeProvider, supplyItemProvider, widget.intake);
           },
           fields: [
             FormDateTimeField(

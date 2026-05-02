@@ -67,11 +67,13 @@ dependencies:
   file_picker: ^8.0.0
   share_plus: ^10.0.0
   material_color_utilities: ^0.13.0
+  dart_mappable: ^4.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.4.9
+  dart_mappable_builder: ^4.8.0
   flutter_lints: ^6.0.0
   mockito: ^5.4.4
 

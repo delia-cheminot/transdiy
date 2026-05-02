@@ -15,6 +15,8 @@ class LanguagePage extends StatelessWidget {
     ('de', 'German', 'Deutsch'),
     ('pt', 'Portuguese', 'Português'),
     ('pt-BR', 'Brazilian Portuguese', 'Português do Brasil'),
+    ('sk', 'Slovak', 'Slovenský'),
+    ('uk', 'Ukrainian', 'Українська')
   ];
 
   @override
