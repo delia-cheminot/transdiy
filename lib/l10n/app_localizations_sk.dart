@@ -97,6 +97,58 @@ class AppLocalizationsSk extends AppLocalizations {
   String get goToSettings => 'Ísť do nastavení';
 
   @override
+  String get deprecated => 'Zastarané';
+
+  @override
+  String get legacyVersionMessage =>
+      'Používaš staršiu verziu apky Mona. Prosím aktualizuj ju. Klikni a zisti viac.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'Táto verzia apky Mona je zastaraná. Pre pokračovanie jej používania a získavania aktualizácií prosím nainštaluj novú verziu pomocou nasledovných krokov.';
+
+  @override
+  String get legacyStep1Title => 'Exportovanie tvojich dát';
+
+  @override
+  String get legacyStep1Description =>
+      'V nastaveniach klikni \'Export dát\' pre vytvorenie zálohy tvojich dát do súboru JSON.';
+
+  @override
+  String get legacyStep2Title => 'Stiahnutie novej verzie';
+
+  @override
+  String get legacyStep2Description =>
+      'Stiahni cez Play Store. Alebo z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Odinštalácia tejto verzie';
+
+  @override
+  String get legacyStep3Description =>
+      'Vymaž túto apku zo svojho zariadenia. Tvoja záloha je v bezpečí.';
+
+  @override
+  String get legacyStep4Title => 'Inštalácia nového APK súboru';
+
+  @override
+  String get legacyStep4Description =>
+      'Otvor stiahnutý APK súbor a nasleduj inštrukcie Androidu pre jeho inštaláciu.';
+
+  @override
+  String get legacyStep5Title => 'Importovanie tvojich dát';
+
+  @override
+  String get legacyStep5Description =>
+      'Otvor novú apku Mona, choď do nastavení a klikni \'Import dát\' pre obnovenie tvojej zálohy.';
+
+  @override
+  String get openLatestRelease => 'Otvoriť na GitHube';
+
+  @override
+  String get openPlayStore => 'Otvoriť na Play Store';
+
+  @override
   String get settingsTitle => 'Nastavenia';
 
   @override

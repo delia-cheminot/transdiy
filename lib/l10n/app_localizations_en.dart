@@ -90,6 +90,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goToSettings => 'Go to Settings';
 
   @override
+  String get deprecated => 'Deprecated';
+
+  @override
+  String get legacyVersionMessage =>
+      'You are using a legacy version of Mona. Please update. Tap to learn more.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.';
+
+  @override
+  String get legacyStep1Title => 'Export your data';
+
+  @override
+  String get legacyStep1Description =>
+      'In Settings, tap \'Export Data\' to save a JSON backup of your data.';
+
+  @override
+  String get legacyStep2Title => 'Download the new version';
+
+  @override
+  String get legacyStep2Description =>
+      'Download on the Play Store. Or, from the latest release on GitHub, download the file named mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Uninstall this version';
+
+  @override
+  String get legacyStep3Description =>
+      'Remove this app from your device. Your backup file is safe.';
+
+  @override
+  String get legacyStep4Title => 'Install the new APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Open the APK file you downloaded and follow Android\'s prompts to install it.';
+
+  @override
+  String get legacyStep5Title => 'Import your data';
+
+  @override
+  String get legacyStep5Description =>
+      'Open the new Mona, go to Settings and tap \'Import Data\' to restore your backup.';
+
+  @override
+  String get openLatestRelease => 'View on GitHub';
+
+  @override
+  String get openPlayStore => 'View on Play Store';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override

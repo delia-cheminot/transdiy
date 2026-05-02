@@ -93,6 +93,58 @@ class AppLocalizationsUk extends AppLocalizations {
   String get goToSettings => 'Перейти в Налаштування';
 
   @override
+  String get deprecated => 'Застаріла версія';
+
+  @override
+  String get legacyVersionMessage =>
+      'Ви використовуєте застарілу версію Mona. Будь ласка, оновіть її. Торкніться, щоб дізнатися більше.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'Ця версія Mona застаріла. Щоб продовжувати користуватися Mona та отримувати оновлення, будь ласка, встановіть нову версію, виконавши наведені нижче кроки.';
+
+  @override
+  String get legacyStep1Title => 'Експортуйте дані';
+
+  @override
+  String get legacyStep1Description =>
+      'У Налаштуваннях торкніться \'Експортувати дані\', щоб зберегти JSON-резервну копію ваших даних.';
+
+  @override
+  String get legacyStep2Title => 'Завантажте нову версію';
+
+  @override
+  String get legacyStep2Description =>
+      'Завантажте з Play Store. Або з останнього випуску на GitHub завантажте файл з назвою mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Видаліть цю версію';
+
+  @override
+  String get legacyStep3Description =>
+      'Видаліть цю програму з вашого пристрою. Ваш файл резервної копії в безпеці.';
+
+  @override
+  String get legacyStep4Title => 'Встановіть новий APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Відкрийте завантажений APK-файл і дотримуйтесь інструкцій Android для його встановлення.';
+
+  @override
+  String get legacyStep5Title => 'Імпортуйте дані';
+
+  @override
+  String get legacyStep5Description =>
+      'Відкрийте новий Mona, перейдіть до Налаштувань і торкніться \'Імпортувати дані\', щоб відновити резервну копію.';
+
+  @override
+  String get openLatestRelease => 'Переглянути на GitHub';
+
+  @override
+  String get openPlayStore => 'Переглянути в Play Store';
+
+  @override
   String get settingsTitle => 'Налаштування';
 
   @override
