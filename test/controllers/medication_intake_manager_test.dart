@@ -395,6 +395,149 @@ void main() {
       });
     });
 
+    group('deleteIntake', () {
+      group('when supply lookup returns null', () {
+        final intake = _buildIntake(supplyItemId: 10);
+
+        setUp(() async {
+          // Act
+          await manager.deleteIntake(intake);
+        });
+
+        test('deletes the intake on the provider', () {
+          // Assert
+          verify(mockMedicationIntakeProvider.deleteIntake(intake)).called(1);
+        });
+
+        test('does not call updateItem', () {
+          // Assert
+          verifyNever(mockSupplyItemProvider.updateItem(any));
+        });
+      });
+
+      group('GenericSupply', () {
+        late GenericSupply updatedSupplyItem;
+        final supplyItem = _buildGenericSupply(id: 7, amount: 5);
+        final intake = _buildIntake(supplyItemId: supplyItem.id);
+
+        setUp(() async {
+          // Arrange
+          when(mockSupplyItemProvider.getItemById(supplyItem.id))
+              .thenReturn(supplyItem);
+          when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+            updatedSupplyItem = inv.positionalArguments.first as GenericSupply;
+          });
+
+          // Act
+          await manager.deleteIntake(intake);
+        });
+
+        test('increments amount by 1', () {
+          // Assert
+          expect(updatedSupplyItem.amount, supplyItem.amount + 1);
+        });
+
+        test('deletes the intake on the provider', () {
+          // Assert
+          verify(mockMedicationIntakeProvider.deleteIntake(intake)).called(1);
+        });
+      });
+
+      group('MedicationSupplyItem', () {
+        group('when intake.dose is within usedDose', () {
+          late MedicationSupplyItem updatedSupplyItem;
+          final supplyItem = _buildMedicationSupplyItem(
+            usedDose: Decimal.parse('5'),
+          );
+          final dose = Decimal.parse('2');
+          final intake = _buildIntake(supplyItemId: supplyItem.id, dose: dose);
+
+          setUp(() async {
+            // Arrange
+            when(mockSupplyItemProvider.getItemById(supplyItem.id))
+                .thenReturn(supplyItem);
+            when(mockSupplyItemProvider.updateItem(any))
+                .thenAnswer((inv) async {
+              updatedSupplyItem =
+                  inv.positionalArguments.first as MedicationSupplyItem;
+            });
+
+            // Act
+            await manager.deleteIntake(intake);
+          });
+
+          test('decreases usedDose by intake.dose', () {
+            // Assert
+            expect(updatedSupplyItem.usedDose, supplyItem.usedDose - dose);
+          });
+
+          test('deletes the intake on the provider', () {
+            // Assert
+            verify(mockMedicationIntakeProvider.deleteIntake(intake)).called(1);
+          });
+        });
+
+        group('when intake.dose exceeds usedDose', () {
+          late MedicationSupplyItem updatedSupplyItem;
+          final supplyItem = _buildMedicationSupplyItem(
+            usedDose: Decimal.parse('1'),
+          );
+          final intake = _buildIntake(
+            supplyItemId: supplyItem.id,
+            dose: Decimal.parse('5'),
+          );
+
+          setUp(() async {
+            // Arrange
+            when(mockSupplyItemProvider.getItemById(supplyItem.id))
+                .thenReturn(supplyItem);
+            when(mockSupplyItemProvider.updateItem(any))
+                .thenAnswer((inv) async {
+              updatedSupplyItem =
+                  inv.positionalArguments.first as MedicationSupplyItem;
+            });
+
+            // Act
+            await manager.deleteIntake(intake);
+          });
+
+          test('clamps usedDose to zero', () {
+            // Assert
+            expect(updatedSupplyItem.usedDose, Decimal.zero);
+          });
+        });
+
+        group('when intake.dose is zero', () {
+          final supplyItem = _buildMedicationSupplyItem(
+            usedDose: Decimal.parse('5'),
+          );
+          final intake = _buildIntake(
+            supplyItemId: supplyItem.id,
+            dose: Decimal.zero,
+          );
+
+          setUp(() async {
+            // Arrange
+            when(mockSupplyItemProvider.getItemById(supplyItem.id))
+                .thenReturn(supplyItem);
+
+            // Act
+            await manager.deleteIntake(intake);
+          });
+
+          test('does not call updateItem', () {
+            // Assert
+            verifyNever(mockSupplyItemProvider.updateItem(any));
+          });
+
+          test('deletes the intake on the provider', () {
+            // Assert
+            verify(mockMedicationIntakeProvider.deleteIntake(intake)).called(1);
+          });
+        });
+      });
+    });
+
     group('getNextSide', () {
       test('returns right when last side is left', () {
         // Arrange
@@ -518,5 +661,20 @@ GenericSupply _buildGenericSupply({
     id: id,
     name: name,
     amount: amount,
+  );
+}
+
+MedicationIntake _buildIntake({
+  int? id,
+  Decimal? dose,
+  int? supplyItemId,
+}) {
+  return MedicationIntake(
+    id: id,
+    scheduledDateTime: DateTime(2025, 9, 14, 10, 30),
+    dose: dose ?? Decimal.parse('2'),
+    molecule: KnownMolecules.estradiol,
+    administrationRoute: AdministrationRoute.oral,
+    supplyItemId: supplyItemId,
   );
 }
