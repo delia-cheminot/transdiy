@@ -79,7 +79,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get scheduleFrequencyDaily => 'Todos os dias';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
+  String scheduleFrequencyEveryNDays(num days) {
     return 'A cada $days dias';
   }
 
@@ -157,7 +157,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noSchedules => 'Sem cronogramas';
 
   @override
-  String schedulesCreated(Object count) {
+  String schedulesCreated(num count) {
     return '$count criados';
   }
 
@@ -333,7 +333,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noNotifications => 'Sem notificações';
 
   @override
-  String notificationsCount(Object count) {
+  String notificationsCount(num count) {
     return '$count notificações';
   }
 
@@ -482,7 +482,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
+  String remaining(num amount, Object unit) {
     return '$amount $unit restantes';
   }
 
@@ -818,7 +818,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get scheduleFrequencyDaily => 'Todos os dias';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
+  String scheduleFrequencyEveryNDays(num days) {
     return 'A cada $days dias';
   }
 
@@ -896,7 +896,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get noSchedules => 'Sem cronogramas';
 
   @override
-  String schedulesCreated(Object count) {
+  String schedulesCreated(num count) {
     return '$count criados';
   }
 
@@ -1072,7 +1072,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get noNotifications => 'Sem notificações';
 
   @override
-  String notificationsCount(Object count) {
+  String notificationsCount(num count) {
     return '$count notificações';
   }
 
@@ -1221,7 +1221,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
+  String remaining(num amount, Object unit) {
     return '$amount $unit restantes';
   }
 

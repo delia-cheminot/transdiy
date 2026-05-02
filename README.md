@@ -26,7 +26,7 @@
     <img alt="Get it on Google Play" title="Get it on Google Play" src="https://i.imgur.com/CQBpKeT.png" height="45">
   </a>
   -->
-  <a href="#introduction:~:text=(Available%20on%20Google%20Play%20soon.">
+  <a href="https://play.google.com/store/apps/details?id=com.deliacheminot.mona">
     <img alt="Get it on Google Play" title="Get it on Google Play" src="https://i.imgur.com/CQBpKeT.png" height="45">
   </a>
   <a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%22com.deliacheminot.mona%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fdelia-cheminot%2Fmona-hrt%22%2C%22author%22%3A%22delia-cheminot%22%2C%22name%22%3A%22Mona%22%2C%22preferredApkIndex%22%3A0%2C%22additionalSettings%22%3A%22%7B%5C%22includePrereleases%5C%22%3Afalse%2C%5C%22fallbackToOlderReleases%5C%22%3Atrue%2C%5C%22filterReleaseTitlesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22filterReleaseNotesByRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22verifyLatestTag%5C%22%3Atrue%2C%5C%22sortMethodChoice%5C%22%3A%5C%22date%5C%22%2C%5C%22useLatestAssetDateAsReleaseDate%5C%22%3Afalse%2C%5C%22releaseTitleAsVersion%5C%22%3Afalse%2C%5C%22trackOnly%5C%22%3Afalse%2C%5C%22versionExtractionRegEx%5C%22%3A%5C%22v(.*)%5C%22%2C%5C%22matchGroupToUse%5C%22%3A%5C%22%241%5C%22%2C%5C%22versionDetection%5C%22%3Atrue%2C%5C%22releaseDateAsVersion%5C%22%3Afalse%2C%5C%22useVersionCodeAsOSVersion%5C%22%3Afalse%2C%5C%22apkFilterRegEx%5C%22%3A%5C%22%5C%22%2C%5C%22invertAPKFilter%5C%22%3Afalse%2C%5C%22autoApkFilterByArch%5C%22%3Atrue%2C%5C%22appName%5C%22%3A%5C%22Mona%20-%20HRT%20journal%5C%22%2C%5C%22appAuthor%5C%22%3A%5C%22Délia%20Cheminot%5C%22%2C%5C%22shizukuPretendToBeGooglePlay%5C%22%3Atrue%2C%5C%22allowInsecure%5C%22%3Afalse%2C%5C%22exemptFromBackgroundUpdates%5C%22%3Afalse%2C%5C%22skipUpdateNotifications%5C%22%3Afalse%2C%5C%22about%5C%22%3A%5C%22Your%20hormonal%20journal%20%5C%22%2C%5C%22refreshBeforeDownload%5C%22%3Afalse%2C%5C%22includeZips%5C%22%3Afalse%2C%5C%22zippedApkFilterRegEx%5C%22%3A%5C%22%5C%22%7D%22%2C%22overrideSource%22%3A%22GitHub%22%7D">
@@ -93,7 +93,7 @@ Take control of your hormonal health with Mona, the fully local, open-source app
 
 We welcome pull requests from external contributors! The app is currently under development and any help is appreciated.
 
-Please see our **[Contributing Guidelines](CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
+Please see our **[Contributing Guidelines](https://github.com/mona-hrt/mona/blob/main/.github/CONTRIBUTING.md)** for full instructions on how to set up your local development environment using FVM, our branching strategy, and how to submit a Pull Request.
 
 # Support
 
