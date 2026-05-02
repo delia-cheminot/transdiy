@@ -19,8 +19,7 @@ class SupplyItemProvider extends ChangeNotifier {
 
   List<SupplyItem> get items => _items;
   List<MedicationSupplyItem> get medicationItems =>
-      _items.where((item) => item.type == SupplyType.medication).toList()
-          as List<MedicationSupplyItem>;
+      _items.whereType<MedicationSupplyItem>().toList();
 
   bool get isLoading => _isLoading;
 
