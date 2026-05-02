@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/generic_supply_item.dart';
 import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
 import '../mocks/mocks.mocks.dart';
@@ -107,6 +108,40 @@ void main() {
 
         expect(item.usedDose, Decimal.parse('5'));
         verifyNever(mockSupplyItemProvider.updateItem(item));
+      });
+    });
+
+    group('use', () {
+      test('decrements amount by 1', () async {
+        // Arrange
+        late GenericSupply updatedItem;
+        final item = GenericSupply(id: 7, name: 'Syringe', amount: 5);
+        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+          updatedItem = inv.positionalArguments.first as GenericSupply;
+        });
+
+        // Act
+        await manager.use(item);
+
+        // Assert
+        expect(updatedItem.amount, item.amount - 1);
+      });
+    });
+
+    group('putBack', () {
+      test('increments amount by 1', () async {
+        // Arrange
+        late GenericSupply updatedItem;
+        final item = GenericSupply(id: 7, name: 'Syringe', amount: 5);
+        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+          updatedItem = inv.positionalArguments.first as GenericSupply;
+        });
+
+        // Act
+        await manager.putBack(item);
+
+        // Assert
+        expect(updatedItem.amount, item.amount + 1);
       });
     });
 
