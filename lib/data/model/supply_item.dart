@@ -12,7 +12,6 @@ abstract class SupplyItem {
   int get id;
   String get name;
   int get quantity;
-  SupplyType get type;
 
   factory SupplyItem.fromMap(Map<String, Object?> map) {
     final SupplyType type = SupplyType.values.byName(map['type'] as String);

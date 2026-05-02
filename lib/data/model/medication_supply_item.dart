@@ -23,8 +23,6 @@ class MedicationSupplyItem implements SupplyItem {
   final Molecule molecule;
   final AdministrationRoute administrationRoute;
   final Ester? ester;
-  @override
-  final SupplyType type = SupplyType.medication;
 
   MedicationSupplyItem({
     int? id,
@@ -88,7 +86,7 @@ class MedicationSupplyItem implements SupplyItem {
       'moleculeJson': jsonEncode(molecule.toJson()),
       'administrationRouteName': administrationRoute.name,
       'esterName': ester?.name,
-      'type': type.name,
+      'type': SupplyType.medication.name,
     };
   }
 

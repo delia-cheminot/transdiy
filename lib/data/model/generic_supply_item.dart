@@ -10,8 +10,6 @@ class GenericSupply implements SupplyItem {
   @override
   final int quantity;
   final int amount;
-  @override
-  final SupplyType type = SupplyType.generic;
 
   GenericSupply({
     int? id,
@@ -36,7 +34,7 @@ class GenericSupply implements SupplyItem {
       'name': name,
       'quantity': quantity,
       'amount': amount,
-      'type': type.name,
+      'type': SupplyType.generic.name,
     };
   }
 
