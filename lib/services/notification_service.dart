@@ -50,10 +50,15 @@ class NotificationService {
       requestSoundPermission: false,
     );
 
+    const linuxSettings = LinuxInitializationSettings(
+      defaultActionName: 'Open notification',
+    );
+
     await _notificationsPlugin.initialize(
         settings: InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
+      linux: linuxSettings,
     ));
 
     _initialized = true;
@@ -156,15 +161,19 @@ class NotificationService {
         ? AndroidScheduleMode.exactAllowWhileIdle
         : AndroidScheduleMode.inexactAllowWhileIdle;
 
-    await _notificationsPlugin.zonedSchedule(
-      id: id,
-      title: title,
-      body: body,
-      scheduledDate: scheduledDate,
-      notificationDetails: _notificationDetails(),
-      androidScheduleMode: scheduleMode,
-      payload: payload,
-    );
+    try {
+      await _notificationsPlugin.zonedSchedule(
+        id: id,
+        title: title,
+        body: body,
+        scheduledDate: scheduledDate,
+        notificationDetails: _notificationDetails(),
+        androidScheduleMode: scheduleMode,
+        payload: payload,
+      );
+    } on UnimplementedError {
+      // Platform does not support scheduling notifications
+    }
   }
 
   Future<void> cancelAllNotifications() async {
@@ -172,25 +181,33 @@ class NotificationService {
   }
 
   Future<void> cancelPendingNotifications() async {
-    final pendingNotifications =
-        await _notificationsPlugin.pendingNotificationRequests();
+    try {
+      final pendingNotifications =
+          await _notificationsPlugin.pendingNotificationRequests();
 
-    for (final notification in pendingNotifications) {
-      await _notificationsPlugin.cancel(id: notification.id);
+      for (final notification in pendingNotifications) {
+        await _notificationsPlugin.cancel(id: notification.id);
+      }
+    } on UnimplementedError {
+      // Platform does not support retrieving pending notification requests
     }
   }
 
   Future<List<PendingNotificationRequest>> get _pastPendingNotifications async {
-    final pendingNotifications =
-        await _notificationsPlugin.pendingNotificationRequests();
+    try {
+      final pendingNotifications =
+          await _notificationsPlugin.pendingNotificationRequests();
 
-    return pendingNotifications.where((notification) {
-      final payload = jsonDecode(notification.payload ?? '{}');
-      final scheduledTime =
-          (payload['scheduledTime'] as String).toDateTimeOrNull;
-      if (scheduledTime == null) return false;
-      return scheduledTime.isBefore(DateTime.now());
-    }).toList();
+      return pendingNotifications.where((notification) {
+        final payload = jsonDecode(notification.payload ?? '{}');
+        final scheduledTime =
+            (payload['scheduledTime'] as String).toDateTimeOrNull;
+        if (scheduledTime == null) return false;
+        return scheduledTime.isBefore(DateTime.now());
+      }).toList();
+    } on UnimplementedError {
+      return [];
+    }
   }
 
   Future<void> triggerPastPendingNotifications() async {
