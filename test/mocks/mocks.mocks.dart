@@ -85,7 +85,7 @@ class MockSupplyItemProvider extends _i1.Mock
       ) as bool);
 
   @override
-  List<_i5.MedicationSupplyItem> get orderedByRemainingDose =>
+  List<_i5.MedicationSupplyItem> get medicationItemsOrderedByRatio =>
       (super.noSuchMethod(
         Invocation.getter(#orderedByRemainingDose),
         returnValue: <_i5.MedicationSupplyItem>[],
