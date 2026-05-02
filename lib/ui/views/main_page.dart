@@ -3,6 +3,8 @@ import 'package:mona/distribution.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
+import 'package:mona/ui/widgets/disappearing_bottom_navigation_bar.dart';
+import 'package:mona/ui/widgets/disappearing_navigation_rail.dart';
 import 'package:mona/ui/widgets/update_banner.dart';
 import 'package:provider/provider.dart';
 import 'main_tabs.dart';
@@ -46,50 +48,72 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  bool wideScreen = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final double width = MediaQuery.of(context).size.width;
+    wideScreen = width > 800;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(currentTab.title),
-        centerTitle: true,
-        actions: currentTab.buildActions?.call(context),
-      ),
-      body: SafeArea(
-        child: currentTab.page,
-      ),
-      //     |----------------------------------------------------|
-      //     |  TODO implement indexed stack + correct scroll bug |
-      //     |----------------------------------------------------|
-      //        ||
-      // (\__/) ||
-      // (•ㅅ•) ||
-      // / 　 づ
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (_isUpdateAvailable && !_hideUpdateBanner)
-            UpdateBanner(
-              onClose: () {
-                setState(() {
-                  _hideUpdateBanner = true;
-                });
-              },
+        appBar: AppBar(
+          title: Text(currentTab.title),
+          centerTitle: true,
+          actions: currentTab.buildActions?.call(context),
+        ),
+        body: Row(
+          children: [
+            if (wideScreen)
+              DisappearingNavigationRail(
+                selectedIndex: _selectedIndex,
+                backgroundColor: Colors.white,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+              ),
+            Expanded(
+              child: SafeArea(
+                child: currentTab.page,
+              ),
             ),
-          NavigationBar(
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: _selectIndex,
-            destinations: [
-              for (final tab in getMainTabs(context))
-                NavigationDestination(
-                  label: tab.title,
-                  icon: Icon(tab.icon),
-                  selectedIcon: Icon(tab.selectedIcon),
-                ),
-            ],
-          ),
-        ],
-      ),
-      floatingActionButton: currentTab.buildFab?.call(context),
-    );
+          ],
+        ),
+        //     |----------------------------------------------------|
+        //     |  TODO implement indexed stack + correct scroll bug |
+        //     |----------------------------------------------------|
+        //        ||
+        // (\__/) ||
+        // (•ㅅ•) ||
+        // / 　 づ
+        floatingActionButton: currentTab.buildFab?.call(context),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (_isUpdateAvailable && !_hideUpdateBanner)
+              UpdateBanner(
+                onClose: () {
+                  setState(() {
+                    _hideUpdateBanner = true;
+                  });
+                },
+              ),
+            if (!wideScreen)
+              DisappearingBottomNavigationBar(
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+              ),
+          ],
+        ));
   }
 }
