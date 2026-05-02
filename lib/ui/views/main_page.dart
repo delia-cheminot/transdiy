@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mona/animations.dart';
 import 'package:mona/distribution.dart';
 import 'package:mona/services/preferences_service.dart';
 import 'package:mona/services/update_service.dart';
 import 'package:mona/ui/views/main_tab_config.dart';
+import 'package:mona/ui/widgets/animated_floating_action_button.dart';
 import 'package:mona/ui/widgets/disappearing_bottom_navigation_bar.dart';
 import 'package:mona/ui/widgets/disappearing_navigation_rail.dart';
 import 'package:mona/ui/widgets/update_banner.dart';
@@ -14,7 +16,8 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
 
   bool _isUpdateAvailable = false;
@@ -48,72 +51,111 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  bool wideScreen = false;
+  late final _controller = AnimationController(
+    duration: const Duration(milliseconds: 1000),
+    reverseDuration: const Duration(milliseconds: 1250),
+    value: 0,
+    vsync: this,
+  );
+
+  late final _railAnimation = RailAnimation(parent: _controller);
+  late final _railFabAnimation = RailFabAnimation(parent: _controller);
+  late final _barAnimation = BarAnimation(parent: _controller);
+
+  bool controllerInitialized = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     final double width = MediaQuery.of(context).size.width;
-    wideScreen = width > 800;
+
+    final AnimationStatus status = _controller.status;
+    if (width > 600) {
+      if (status != AnimationStatus.forward &&
+          status != AnimationStatus.completed) {
+        _controller.forward();
+      }
+    } else {
+      if (status != AnimationStatus.reverse &&
+          status != AnimationStatus.dismissed) {
+        _controller.reverse();
+      }
+    }
+    if (!controllerInitialized) {
+      controllerInitialized = true;
+      _controller.value = width > 700 ? 1 : 0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(currentTab.title),
-          centerTitle: true,
-          actions: currentTab.buildActions?.call(context),
-        ),
-        body: Row(
-          children: [
-            if (wideScreen)
-              DisappearingNavigationRail(
-                selectedIndex: _selectedIndex,
-                backgroundColor: Colors.white,
-                onDestinationSelected: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-              ),
-            Expanded(
-              child: SafeArea(
-                child: currentTab.page,
-              ),
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(currentTab.title),
+              centerTitle: true,
+              actions: currentTab.buildActions?.call(context),
             ),
-          ],
-        ),
-        //     |----------------------------------------------------|
-        //     |  TODO implement indexed stack + correct scroll bug |
-        //     |----------------------------------------------------|
-        //        ||
-        // (\__/) ||
-        // (•ㅅ•) ||
-        // / 　 づ
-        floatingActionButton: currentTab.buildFab?.call(context),
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (_isUpdateAvailable && !_hideUpdateBanner)
-              UpdateBanner(
-                onClose: () {
-                  setState(() {
-                    _hideUpdateBanner = true;
-                  });
-                },
-              ),
-            if (!wideScreen)
-              DisappearingBottomNavigationBar(
-                selectedIndex: _selectedIndex,
-                onDestinationSelected: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-              ),
-          ],
-        ));
+            body: Row(
+              children: [
+                DisappearingNavigationRail(
+                  railAnimation: _railAnimation,
+                  railFabAnimation: _railFabAnimation,
+                  selectedIndex: _selectedIndex,
+                  backgroundColor: Colors.white,
+                  onDestinationSelected: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: SafeArea(
+                    child: currentTab.page,
+                  ),
+                ),
+              ],
+            ),
+            //     |----------------------------------------------------|
+            //     |  TODO implement indexed stack + correct scroll bug |
+            //     |----------------------------------------------------|
+            //        ||
+            // (\__/) ||
+            // (•ㅅ•) ||
+            // / 　 づ
+            floatingActionButton: currentTab.buildFab?.call(context),
+            bottomNavigationBar: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_isUpdateAvailable && !_hideUpdateBanner)
+                  UpdateBanner(
+                    onClose: () {
+                      setState(() {
+                        _hideUpdateBanner = true;
+                      });
+                    },
+                  ),
+                DisappearingBottomNavigationBar(
+                  barAnimation: _barAnimation,
+                  selectedIndex: _selectedIndex,
+                  onDestinationSelected: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                ),
+              ],
+            ));
+      },
+    );
   }
 }
