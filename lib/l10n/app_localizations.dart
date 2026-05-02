@@ -10,6 +10,7 @@ import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_pt.dart';
+import 'app_localizations_sk.dart';
 import 'app_localizations_uk.dart';
 
 // ignore_for_file: type=lint
@@ -104,6 +105,7 @@ abstract class AppLocalizations {
     Locale('fr'),
     Locale('pt'),
     Locale('pt', 'BR'),
+    Locale('sk'),
     Locale('uk')
   ];
 
@@ -219,7 +221,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Every {days} days'**
-  String scheduleFrequencyEveryNDays(Object days);
+  String scheduleFrequencyEveryNDays(num days);
 
   /// No description provided for @newUpdateAvailable.
   ///
@@ -273,7 +275,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count} created'**
-  String schedulesCreated(Object count);
+  String schedulesCreated(num count);
 
   /// No description provided for @language.
   ///
@@ -567,7 +569,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count} notifications'**
-  String notificationsCount(Object count);
+  String notificationsCount(num count);
 
   /// No description provided for @editSchedule.
   ///
@@ -831,7 +833,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{amount} {unit} remaining'**
-  String remaining(Object amount, Object unit);
+  String remaining(num amount, Object unit);
 
   /// No description provided for @add.
   ///
@@ -1246,6 +1248,7 @@ class _AppLocalizationsDelegate
         'es',
         'fr',
         'pt',
+        'sk',
         'uk'
       ].contains(locale.languageCode);
 
@@ -1278,6 +1281,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsFr();
     case 'pt':
       return AppLocalizationsPt();
+    case 'sk':
+      return AppLocalizationsSk();
     case 'uk':
       return AppLocalizationsUk();
   }
