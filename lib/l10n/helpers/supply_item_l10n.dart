@@ -25,7 +25,7 @@ extension SupplyItemL10n on SupplyItem {
         '${molecule.localizedNameWithEster(ester, localizations)} • '
         '$concentration ${molecule.unit}/${administrationRoute.localizedUnit(localizations, 1)}';
     final remainingLine = localizations.remaining(
-      int.parse(amountRemaining.toString()),
+      amountRemaining.toDouble(),
       routeUnitRemaining,
     );
     return '$headline\n$remainingLine';
