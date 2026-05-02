@@ -62,29 +62,31 @@ class MedicationIntakeManager {
     }
   }
 
-  void deleteIntake(MedicationIntake intake) {
-    SupplyItem? item = _supplyItemProvider.getItemById(intake.supplyItemId);
+  Future<void> deleteIntake(MedicationIntake intake) async {
+    await _medicationIntakeProvider.deleteIntake(intake);
+
+    final SupplyItem? item =
+        _supplyItemProvider.getItemById(intake.supplyItemId);
     final itemManager = SupplyItemManager(_supplyItemProvider);
 
     switch (item) {
       case null:
-        break;
+        return;
       case GenericSupply _:
-        itemManager.putBack(item);
-        break;
+        await itemManager.putBack(item);
+        return;
       case MedicationSupplyItem _:
-        itemManager.useDose(item, -intake.dose);
-        break;
+        await itemManager.useDose(item, -intake.dose);
     }
-
-    _medicationIntakeProvider.deleteIntake(intake);
   }
 
   InjectionSide getNextSide() {
     final lastIntake = _medicationIntakeProvider.getLastTakenIntake();
+
     if (lastIntake == null || lastIntake.side == null) {
       return InjectionSide.left;
     }
+
     return lastIntake.side == InjectionSide.left
         ? InjectionSide.right
         : InjectionSide.left;
