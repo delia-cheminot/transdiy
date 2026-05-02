@@ -26,10 +26,6 @@ class _MainPageState extends State<MainPage>
 
   MainTabConfig get currentTab => getMainTabs(context)[_selectedIndex];
 
-  void _selectIndex(int index) {
-    setState(() => _selectedIndex = index);
-  }
-
   @override
   void initState() {
     super.initState();

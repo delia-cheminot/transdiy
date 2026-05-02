@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../animations.dart';
-import '../../transitions/top_bar_transition.dart';
+import 'package:mona/animations.dart';
+import 'package:mona/transitions/top_bar_transition.dart';
 
 class DisappearingAppBar extends StatelessWidget {
   const DisappearingAppBar({

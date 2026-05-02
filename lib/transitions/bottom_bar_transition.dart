@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../animations.dart';
+import 'package:mona/animations.dart';
 
 class BottomBarTransition extends StatefulWidget {
   const BottomBarTransition({

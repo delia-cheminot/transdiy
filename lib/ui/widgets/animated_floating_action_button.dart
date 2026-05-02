@@ -1,7 +1,6 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import '../../animations.dart';
+import 'package:mona/animations.dart';
 
 class AnimatedFloatingActionButton extends StatefulWidget {
   const AnimatedFloatingActionButton({

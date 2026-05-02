@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../animations.dart';
-import '../../transitions/bottom_bar_transition.dart';
-import '../views/main_tabs.dart';
+import 'package:mona/animations.dart';
+import 'package:mona/transitions/bottom_bar_transition.dart';
+import 'package:mona/ui/views/main_tabs.dart';
 
 class DisappearingBottomNavigationBar extends StatelessWidget {
   const DisappearingBottomNavigationBar({

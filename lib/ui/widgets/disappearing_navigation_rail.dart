@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../animations.dart';
-import '../../transitions/nav_rail_transition.dart';
-import '../views/main_tabs.dart';
+import 'package:mona/animations.dart';
+import 'package:mona/transitions/nav_rail_transition.dart';
+import 'package:mona/ui/views/main_tabs.dart';
 import 'animated_floating_action_button.dart';
 
 class DisappearingNavigationRail extends StatelessWidget {
@@ -24,7 +24,6 @@ class DisappearingNavigationRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return NavRailTransition(
       animation: railAnimation,
       backgroundColor: backgroundColor,
