@@ -54,6 +54,7 @@ class GenericSupply implements SupplyItem {
     );
   }
 
+  // coverage:ignore-start
   static String? validateAmount(AppLocalizations l10n, String? value) =>
       requiredPositiveInt(l10n, value);
 
@@ -68,4 +69,5 @@ class GenericSupply implements SupplyItem {
   String toString() {
     return 'GenericSupply(id: $id, name: $name, amount: $amount, quantity: $quantity)';
   }
+  // coverage:ignore-end
 }

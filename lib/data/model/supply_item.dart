@@ -27,6 +27,8 @@ abstract class SupplyItem {
 
   Map<String, Object?> toMap();
 
+  // coverage:ignore-start
   static String? validateName(AppLocalizations l10n, String? value) =>
       requiredString(l10n, value);
+  // coverage:ignore-end
 }

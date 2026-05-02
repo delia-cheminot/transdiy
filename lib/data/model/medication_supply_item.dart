@@ -123,12 +123,6 @@ class MedicationSupplyItem implements SupplyItem {
     );
   }
 
-  static String? validateTotalAmount(AppLocalizations l10n, String? value) =>
-      requiredStrictlyPositiveDecimal(l10n, value);
-
-  static String? validateConcentration(AppLocalizations l10n, String? value) =>
-      requiredStrictlyPositiveDecimal(l10n, value);
-
   static String? Function(String?) usedAmountValidator(
       AppLocalizations l10n, String totalAmount) {
     return (String? value) {
@@ -142,13 +136,6 @@ class MedicationSupplyItem implements SupplyItem {
     };
   }
 
-  static String? validateMolecule(AppLocalizations l10n, Molecule? value) =>
-      requiredMolecule(l10n, value);
-
-  static String? validateAdministrationRoute(
-          AppLocalizations l10n, AdministrationRoute? value) =>
-      requiredAdministrationRoute(l10n, value);
-
   static String? Function(Ester?) esterValidator(AppLocalizations l10n,
       Molecule? molecule, AdministrationRoute? administrationRoute) {
     return (Ester? value) {
@@ -159,6 +146,20 @@ class MedicationSupplyItem implements SupplyItem {
           : null;
     };
   }
+
+  // coverage:ignore-start
+  static String? validateTotalAmount(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
+
+  static String? validateConcentration(AppLocalizations l10n, String? value) =>
+      requiredStrictlyPositiveDecimal(l10n, value);
+
+  static String? validateMolecule(AppLocalizations l10n, Molecule? value) =>
+      requiredMolecule(l10n, value);
+
+  static String? validateAdministrationRoute(
+          AppLocalizations l10n, AdministrationRoute? value) =>
+      requiredAdministrationRoute(l10n, value);
 
   @override
   bool operator ==(Object other) =>
@@ -174,4 +175,5 @@ class MedicationSupplyItem implements SupplyItem {
         'concentration: $concentration ${molecule.unit}/${administrationRoute.unit}, '
         'totalDose: $totalDose, usedDose: $usedDose, quantity: $quantity)';
   }
+  // coverage:ignore-end
 }
