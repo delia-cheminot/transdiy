@@ -39,7 +39,7 @@
   "legacyStep1Title": "Експортуйте дані",
   "legacyStep1Description": "У Налаштуваннях торкніться 'Експортувати дані', щоб зберегти JSON-резервну копію ваших даних.",
   "legacyStep2Title": "Завантажте нову версію",
-  "legacyStep2Description": "З останнього випуску на GitHub завантажте файл з назвою mona-<version>.apk.",
+  "legacyStep2Description": "Завантажте з Play Store. Або з останнього випуску на GitHub завантажте файл з назвою mona-<version>.apk.",
   "legacyStep3Title": "Видаліть цю версію",
   "legacyStep3Description": "Видаліть цю програму з вашого пристрою. Ваш файл резервної копії в безпеці.",
   "legacyStep4Title": "Встановіть новий APK",
@@ -47,6 +47,7 @@
   "legacyStep5Title": "Імпортуйте дані",
   "legacyStep5Description": "Відкрийте новий Mona, перейдіть до Налаштувань і торкніться 'Імпортувати дані', щоб відновити резервну копію.",
   "openLatestRelease": "Переглянути на GitHub",
+  "openPlayStore": "Переглянути в Play Store",
 
   "settingsTitle": "Налаштування",
   "notifications": "Сповіщення",

@@ -119,7 +119,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get legacyStep2Description =>
-      'Z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.';
+      'Stiahni cez Play Store. Alebo z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.';
 
   @override
   String get legacyStep3Title => 'Odinštalácia tejto verzie';
@@ -144,6 +144,9 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get openLatestRelease => 'Otvoriť na GitHube';
+
+  @override
+  String get openPlayStore => 'Otvoriť na Play Store';
 
   @override
   String get settingsTitle => 'Nastavenia';

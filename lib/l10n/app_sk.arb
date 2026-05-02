@@ -39,7 +39,7 @@
   "legacyStep1Title": "Exportovanie tvojich dát",
   "legacyStep1Description": "V nastaveniach klikni 'Export dát' pre vytvorenie zálohy tvojich dát do súboru JSON.",
   "legacyStep2Title": "Stiahnutie novej verzie",
-  "legacyStep2Description": "Z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.",
+  "legacyStep2Description": "Stiahni cez Play Store. Alebo z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.",
   "legacyStep3Title": "Odinštalácia tejto verzie",
   "legacyStep3Description": "Vymaž túto apku zo svojho zariadenia. Tvoja záloha je v bezpečí.",
   "legacyStep4Title": "Inštalácia nového APK súboru",
@@ -47,6 +47,7 @@
   "legacyStep5Title": "Importovanie tvojich dát",
   "legacyStep5Description": "Otvor novú apku Mona, choď do nastavení a klikni 'Import dát' pre obnovenie tvojej zálohy.",
   "openLatestRelease": "Otvoriť na GitHube",
+  "openPlayStore": "Otvoriť na Play Store",
 
   "settingsTitle": "Nastavenia",
   "notifications": "Notifikácie",

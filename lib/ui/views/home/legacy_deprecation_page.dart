@@ -10,6 +10,9 @@ class LegacyDeprecationPage extends StatelessWidget {
 
   static final Uri _releasesUri =
       Uri.parse('https://github.com/mona-hrt/mona/releases/latest');
+  static final Uri _playStoreUri = Uri.parse(
+    'https://play.google.com/store/apps/details?id=com.deliacheminot.mona',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +51,27 @@ class LegacyDeprecationPage extends StatelessWidget {
               number: 2,
               title: l10n.legacyStep2Title,
               description: l10n.legacyStep2Description,
-              action: FilledButton.tonalIcon(
-                onPressed: () {
-                  launchUrl(_releasesUri, mode: LaunchMode.externalApplication);
-                },
-                icon: const Icon(Symbols.open_in_new),
-                label: Text(l10n.openLatestRelease),
+              action: Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  FilledButton.tonalIcon(
+                    onPressed: () {
+                      launchUrl(_playStoreUri,
+                          mode: LaunchMode.externalApplication);
+                    },
+                    icon: const Icon(Symbols.shop),
+                    label: Text(l10n.openPlayStore),
+                  ),
+                  FilledButton.tonalIcon(
+                    onPressed: () {
+                      launchUrl(_releasesUri,
+                          mode: LaunchMode.externalApplication);
+                    },
+                    icon: const Icon(Symbols.open_in_new),
+                    label: Text(l10n.openLatestRelease),
+                  ),
+                ],
               ),
             ),
             _Step(

@@ -39,7 +39,7 @@
   "legacyStep1Title": "Exportez vos données",
   "legacyStep1Description": "Dans les paramètres, touchez « Exporter les données » pour sauvegarder vos données dans un fichier JSON.",
   "legacyStep2Title": "Téléchargez la nouvelle version",
-  "legacyStep2Description": "Depuis la dernière version sur GitHub, téléchargez le fichier nommé mona-<version>.apk.",
+  "legacyStep2Description": "Téléchargez sur le Play Store. Ou, depuis la dernière version sur GitHub, téléchargez le fichier nommé mona-<version>.apk.",
   "legacyStep3Title": "Désinstallez cette version",
   "legacyStep3Description": "Supprimez cette application de votre appareil. Votre fichier de sauvegarde est conservé.",
   "legacyStep4Title": "Installez le nouvel APK",
@@ -47,6 +47,7 @@
   "legacyStep5Title": "Importez vos données",
   "legacyStep5Description": "Ouvrez le nouveau Mona, allez dans les paramètres et touchez « Importer des données » pour restaurer votre sauvegarde.",
   "openLatestRelease": "Voir sur GitHub",
+  "openPlayStore": "Voir sur le Play Store",
 
   "settingsTitle": "Paramètres",
   "notifications": "Notifications",

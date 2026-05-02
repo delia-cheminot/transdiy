@@ -112,7 +112,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get legacyStep2Description =>
-      'Da última versão no GitHub, descarregue o ficheiro chamado mona-<version>.apk.';
+      'Descarregue na Play Store. Ou, da última versão no GitHub, descarregue o ficheiro chamado mona-<version>.apk.';
 
   @override
   String get legacyStep3Title => 'Desinstale esta versão';
@@ -137,6 +137,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get openLatestRelease => 'Ver no GitHub';
+
+  @override
+  String get openPlayStore => 'Ver na Play Store';
 
   @override
   String get settingsTitle => 'Configurações';
@@ -851,7 +854,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get legacyStep2Description =>
-      'Da última versão no GitHub, baixe o arquivo chamado mona-<version>.apk.';
+      'Baixe na Play Store. Ou, da última versão no GitHub, baixe o arquivo chamado mona-<version>.apk.';
 
   @override
   String get legacyStep3Title => 'Desinstale esta versão';
@@ -876,6 +879,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get openLatestRelease => 'Ver no GitHub';
+
+  @override
+  String get openPlayStore => 'Ver na Play Store';
 
   @override
   String get settingsTitle => 'Configurações';

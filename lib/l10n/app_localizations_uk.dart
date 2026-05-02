@@ -115,7 +115,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get legacyStep2Description =>
-      'З останнього випуску на GitHub завантажте файл з назвою mona-<version>.apk.';
+      'Завантажте з Play Store. Або з останнього випуску на GitHub завантажте файл з назвою mona-<version>.apk.';
 
   @override
   String get legacyStep3Title => 'Видаліть цю версію';
@@ -140,6 +140,9 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get openLatestRelease => 'Переглянути на GitHub';
+
+  @override
+  String get openPlayStore => 'Переглянути в Play Store';
 
   @override
   String get settingsTitle => 'Налаштування';

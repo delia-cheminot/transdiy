@@ -274,7 +274,7 @@ abstract class AppLocalizations {
   /// No description provided for @legacyStep2Description.
   ///
   /// In en, this message translates to:
-  /// **'From the latest release on GitHub, download the file named mona-<version>.apk.'**
+  /// **'Download on the Play Store. Or, from the latest release on GitHub, download the file named mona-<version>.apk.'**
   String get legacyStep2Description;
 
   /// No description provided for @legacyStep3Title.
@@ -318,6 +318,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View on GitHub'**
   String get openLatestRelease;
+
+  /// No description provided for @openPlayStore.
+  ///
+  /// In en, this message translates to:
+  /// **'View on Play Store'**
+  String get openPlayStore;
 
   /// No description provided for @settingsTitle.
   ///

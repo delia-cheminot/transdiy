@@ -113,7 +113,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get legacyStep2Description =>
-      'Lade aus dem neuesten Release auf GitHub die Datei mit dem Namen mona-<version>.apk herunter.';
+      'Lade Mona aus dem Play Store herunter. Oder lade aus dem neuesten Release auf GitHub die Datei mit dem Namen mona-<version>.apk herunter.';
 
   @override
   String get legacyStep3Title => 'Diese Version deinstallieren';
@@ -138,6 +138,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get openLatestRelease => 'Auf GitHub anzeigen';
+
+  @override
+  String get openPlayStore => 'Im Play Store anzeigen';
 
   @override
   String get settingsTitle => 'Einstellungen';
