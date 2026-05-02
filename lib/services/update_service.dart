@@ -97,6 +97,15 @@ class UpdateService {
         assets.where((a) => a['name'].toString().endsWith('.apk')).toList();
     if (apkAssets.isEmpty) return null;
 
+    if (isStandaloneDistribution) {
+      for (var asset in apkAssets) {
+        if (asset['name'].toString().toLowerCase().contains('mona-')) {
+          return asset;
+        }
+      }
+      return null;
+    }
+
     final deviceInfo = DeviceInfoPlugin();
     final androidInfo = await deviceInfo.androidInfo;
     final supportedAbis = androidInfo.supportedAbis;
@@ -112,12 +121,9 @@ class UpdateService {
       }
     }
 
-    final universalAssets = apkAssets.where((a) {
-      final name = a['name'].toString().toLowerCase();
-      return !name.contains('arm64') &&
-          !name.contains('armeabi') &&
-          !name.contains('x86');
-    }).toList();
+    final universalAssets = apkAssets
+        .where((a) => a['name'].toString().toLowerCase().contains('universal'))
+        .toList();
 
     if (universalAssets.isNotEmpty) return universalAssets.first;
 

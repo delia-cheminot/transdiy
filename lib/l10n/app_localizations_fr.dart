@@ -91,6 +91,58 @@ class AppLocalizationsFr extends AppLocalizations {
   String get goToSettings => 'Aller aux paramètres';
 
   @override
+  String get deprecated => 'Obsolète';
+
+  @override
+  String get legacyVersionMessage =>
+      'Vous utilisez une version obsolète de Mona. Veuillez la mettre à jour. Touchez pour en savoir plus.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'Cette version de Mona est obsolète. Pour continuer à utiliser Mona et recevoir des mises à jour, installez la nouvelle version en suivant les étapes ci-dessous.';
+
+  @override
+  String get legacyStep1Title => 'Exportez vos données';
+
+  @override
+  String get legacyStep1Description =>
+      'Dans les paramètres, touchez « Exporter les données » pour sauvegarder vos données dans un fichier JSON.';
+
+  @override
+  String get legacyStep2Title => 'Téléchargez la nouvelle version';
+
+  @override
+  String get legacyStep2Description =>
+      'Téléchargez sur le Play Store. Ou, depuis la dernière version sur GitHub, téléchargez le fichier nommé mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Désinstallez cette version';
+
+  @override
+  String get legacyStep3Description =>
+      'Supprimez cette application de votre appareil. Votre fichier de sauvegarde est conservé.';
+
+  @override
+  String get legacyStep4Title => 'Installez le nouvel APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Ouvrez le fichier APK téléchargé et suivez les instructions d\'Android pour l\'installer.';
+
+  @override
+  String get legacyStep5Title => 'Importez vos données';
+
+  @override
+  String get legacyStep5Description =>
+      'Ouvrez le nouveau Mona, allez dans les paramètres et touchez « Importer des données » pour restaurer votre sauvegarde.';
+
+  @override
+  String get openLatestRelease => 'Voir sur GitHub';
+
+  @override
+  String get openPlayStore => 'Voir sur le Play Store';
+
+  @override
   String get settingsTitle => 'Paramètres';
 
   @override

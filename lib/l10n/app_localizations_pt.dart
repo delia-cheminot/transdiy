@@ -90,6 +90,58 @@ class AppLocalizationsPt extends AppLocalizations {
   String get goToSettings => 'Ir para Configurações';
 
   @override
+  String get deprecated => 'Obsoleto';
+
+  @override
+  String get legacyVersionMessage =>
+      'Está a utilizar uma versão obsoleta de Mona. Por favor, atualize-a. Toque para saber mais.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'Esta versão de Mona está obsoleta. Para continuar a usar Mona e receber atualizações, instale a nova versão seguindo os passos abaixo.';
+
+  @override
+  String get legacyStep1Title => 'Exporte os seus dados';
+
+  @override
+  String get legacyStep1Description =>
+      'Nas Configurações, toque em \'Exportar dados\' para guardar uma cópia JSON dos seus dados.';
+
+  @override
+  String get legacyStep2Title => 'Descarregue a nova versão';
+
+  @override
+  String get legacyStep2Description =>
+      'Descarregue na Play Store. Ou, da última versão no GitHub, descarregue o ficheiro chamado mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Desinstale esta versão';
+
+  @override
+  String get legacyStep3Description =>
+      'Remova esta aplicação do seu dispositivo. O seu ficheiro de cópia de segurança está seguro.';
+
+  @override
+  String get legacyStep4Title => 'Instale o novo APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Abra o ficheiro APK descarregado e siga as instruções do Android para instalá-lo.';
+
+  @override
+  String get legacyStep5Title => 'Importe os seus dados';
+
+  @override
+  String get legacyStep5Description =>
+      'Abra o novo Mona, vá às Configurações e toque em \'Importar dados\' para restaurar a sua cópia de segurança.';
+
+  @override
+  String get openLatestRelease => 'Ver no GitHub';
+
+  @override
+  String get openPlayStore => 'Ver na Play Store';
+
+  @override
   String get settingsTitle => 'Configurações';
 
   @override
@@ -778,6 +830,58 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get goToSettings => 'Ir para Configurações';
+
+  @override
+  String get deprecated => 'Obsoleto';
+
+  @override
+  String get legacyVersionMessage =>
+      'Você está usando uma versão obsoleta do Mona. Por favor, atualize-o. Toque para saber mais.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'Esta versão do Mona está obsoleta. Para continuar usando o Mona e receber atualizações, instale a nova versão seguindo os passos abaixo.';
+
+  @override
+  String get legacyStep1Title => 'Exporte seus dados';
+
+  @override
+  String get legacyStep1Description =>
+      'Nas Configurações, toque em \'Exportar dados\' para salvar uma cópia JSON dos seus dados.';
+
+  @override
+  String get legacyStep2Title => 'Baixe a nova versão';
+
+  @override
+  String get legacyStep2Description =>
+      'Baixe na Play Store. Ou, da última versão no GitHub, baixe o arquivo chamado mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Desinstale esta versão';
+
+  @override
+  String get legacyStep3Description =>
+      'Remova este aplicativo do seu dispositivo. Seu arquivo de backup está seguro.';
+
+  @override
+  String get legacyStep4Title => 'Instale o novo APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Abra o arquivo APK baixado e siga as instruções do Android para instalá-lo.';
+
+  @override
+  String get legacyStep5Title => 'Importe seus dados';
+
+  @override
+  String get legacyStep5Description =>
+      'Abra o novo Mona, vá às Configurações e toque em \'Importar dados\' para restaurar seu backup.';
+
+  @override
+  String get openLatestRelease => 'Ver no GitHub';
+
+  @override
+  String get openPlayStore => 'Ver na Play Store';
 
   @override
   String get settingsTitle => 'Configurações';
