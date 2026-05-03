@@ -35,13 +35,11 @@ GenericSupply defaultGenericItem({
   int? id,
   String name = 'Generic',
   int amount = 1,
-  int quantity = 1,
 }) {
   return GenericSupply(
     id: id,
     name: name,
     amount: amount,
-    quantity: quantity,
   );
 }
 

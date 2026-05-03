@@ -7,14 +7,11 @@ class GenericSupply implements SupplyItem {
   final int id;
   @override
   final String name;
-  @override
-  final int quantity;
   final int amount;
 
   GenericSupply({
     int? id,
     required this.name,
-    this.quantity = 1,
     required this.amount,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
 
@@ -22,7 +19,6 @@ class GenericSupply implements SupplyItem {
     return GenericSupply(
       id: map['id'] as int?,
       name: map['name'] as String,
-      quantity: map['quantity'] as int,
       amount: map['amount'] as int,
     );
   }
@@ -32,7 +28,6 @@ class GenericSupply implements SupplyItem {
     return {
       'id': id,
       'name': name,
-      'quantity': quantity,
       'amount': amount,
       'type': SupplyType.generic.name,
     };
@@ -41,13 +36,11 @@ class GenericSupply implements SupplyItem {
   GenericSupply copyWith({
     int? id,
     String? name,
-    int? quantity,
     int? amount,
   }) {
     return GenericSupply(
       id: id ?? this.id,
       name: name ?? this.name,
-      quantity: quantity ?? this.quantity,
       amount: amount ?? this.amount,
     );
   }
@@ -65,7 +58,7 @@ class GenericSupply implements SupplyItem {
 
   @override
   String toString() {
-    return 'GenericSupply(id: $id, name: $name, amount: $amount, quantity: $quantity)';
+    return 'GenericSupply(id: $id, name: $name, amount: $amount)';
   }
   // coverage:ignore-end
 }

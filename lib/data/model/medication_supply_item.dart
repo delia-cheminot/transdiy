@@ -17,9 +17,6 @@ class MedicationSupplyItem implements SupplyItem {
   final Decimal totalDose;
   final Decimal usedDose;
   final Decimal concentration;
-  // TODO remove quantity
-  @override
-  final int quantity;
   final Molecule molecule;
   final AdministrationRoute administrationRoute;
   final Ester? ester;
@@ -30,7 +27,6 @@ class MedicationSupplyItem implements SupplyItem {
     required this.totalDose,
     required this.concentration,
     Decimal? usedDose,
-    this.quantity = 1,
     required this.molecule,
     required this.administrationRoute,
     this.ester,
@@ -44,7 +40,6 @@ class MedicationSupplyItem implements SupplyItem {
       totalDose: (map['totalDose'] as String).toDecimal,
       usedDose: (map['usedDose'] as String).toDecimal,
       concentration: (map['concentration'] as String).toDecimal,
-      quantity: map['quantity'] as int,
       molecule: Molecule.fromJson(jsonDecode(map['moleculeJson'] as String)),
       administrationRoute: AdministrationRoute.fromName(
           map['administrationRouteName'] as String),
@@ -53,7 +48,6 @@ class MedicationSupplyItem implements SupplyItem {
   }
 
   bool get isUsed => usedDose > Decimal.zero;
-  bool get isInStock => quantity > 0;
   Decimal get remainingDose => totalDose - usedDose;
 
   bool isValid() {
@@ -82,7 +76,6 @@ class MedicationSupplyItem implements SupplyItem {
       'totalDose': totalDose.toString(),
       'usedDose': usedDose.toString(),
       'concentration': concentration.toString(),
-      'quantity': quantity,
       'moleculeJson': jsonEncode(molecule.toJson()),
       'administrationRouteName': administrationRoute.name,
       'esterName': ester?.name,
@@ -102,7 +95,6 @@ class MedicationSupplyItem implements SupplyItem {
     Decimal? totalDose,
     Decimal? usedDose,
     Decimal? concentration,
-    int? quantity,
     Molecule? molecule,
     AdministrationRoute? administrationRoute,
     Ester? ester,
@@ -114,7 +106,6 @@ class MedicationSupplyItem implements SupplyItem {
       totalDose: totalDose ?? this.totalDose,
       usedDose: usedDose ?? this.usedDose,
       concentration: concentration ?? this.concentration,
-      quantity: quantity ?? this.quantity,
       molecule: molecule ?? this.molecule,
       administrationRoute: administrationRoute ?? this.administrationRoute,
       ester: clearEster ? null : (ester ?? this.ester),
@@ -171,7 +162,7 @@ class MedicationSupplyItem implements SupplyItem {
     return 'SupplyItem(id: $id, name: $name, molecule: ${molecule.name}, '
         'ester: ${ester?.name}, route: ${administrationRoute.name}, '
         'concentration: $concentration ${molecule.unit}/${administrationRoute.unit}, '
-        'totalDose: $totalDose, usedDose: $usedDose, quantity: $quantity)';
+        'totalDose: $totalDose, usedDose: $usedDose)';
   }
   // coverage:ignore-end
 }

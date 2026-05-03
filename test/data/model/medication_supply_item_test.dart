@@ -12,7 +12,6 @@ MedicationSupplyItem makeMed({
   String totalDose = '100',
   String usedDose = '0',
   String concentration = '1',
-  int quantity = 1,
   Molecule? molecule,
   AdministrationRoute route = AdministrationRoute.oral,
   Ester? ester,
@@ -23,7 +22,6 @@ MedicationSupplyItem makeMed({
     totalDose: Decimal.parse(totalDose),
     usedDose: Decimal.parse(usedDose),
     concentration: Decimal.parse(concentration),
-    quantity: quantity,
     molecule: molecule ?? KnownMolecules.estradiol,
     administrationRoute: route,
     ester: ester,
@@ -43,7 +41,6 @@ void main() {
           totalDose: Decimal.parse('100'),
           usedDose: Decimal.parse('20'),
           concentration: Decimal.parse('10'),
-          quantity: 2,
           molecule: KnownMolecules.estradiol,
           administrationRoute: AdministrationRoute.injection,
           ester: Ester.undecylate,
@@ -62,7 +59,6 @@ void main() {
               .having((s) => s.usedDose, 'usedDose', original.usedDose)
               .having((s) => s.concentration, 'concentration',
                   original.concentration)
-              .having((s) => s.quantity, 'quantity', original.quantity)
               .having((s) => s.molecule, 'molecule', original.molecule)
               .having((s) => s.administrationRoute, 'administrationRoute',
                   original.administrationRoute)
@@ -113,30 +109,6 @@ void main() {
 
         // Act
         final result = item.isUsed;
-
-        // Assert
-        expect(result, isFalse);
-      });
-    });
-
-    group('isInStock', () {
-      test('is true when quantity is greater than zero', () {
-        // Arrange
-        final item = makeMed(quantity: 1);
-
-        // Act
-        final result = item.isInStock;
-
-        // Assert
-        expect(result, isTrue);
-      });
-
-      test('is false when quantity is zero', () {
-        // Arrange
-        final item = makeMed(quantity: 0);
-
-        // Act
-        final result = item.isInStock;
 
         // Assert
         expect(result, isFalse);
@@ -354,7 +326,6 @@ void main() {
           totalDose: '100',
           usedDose: '20',
           concentration: '5',
-          quantity: 3,
           ester: Ester.valerate,
         );
 
@@ -371,7 +342,6 @@ void main() {
               .having((s) => s.usedDose, 'usedDose', original.usedDose)
               .having((s) => s.concentration, 'concentration',
                   original.concentration)
-              .having((s) => s.quantity, 'quantity', original.quantity)
               .having((s) => s.molecule, 'molecule', original.molecule)
               .having((s) => s.administrationRoute, 'administrationRoute',
                   original.administrationRoute)

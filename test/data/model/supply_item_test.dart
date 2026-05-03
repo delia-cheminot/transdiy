@@ -12,7 +12,6 @@ MedicationSupplyItem makeMed({
   String totalDose = '100',
   String usedDose = '0',
   String concentration = '1',
-  int quantity = 1,
   Molecule? molecule,
   AdministrationRoute route = AdministrationRoute.oral,
 }) {
@@ -22,7 +21,6 @@ MedicationSupplyItem makeMed({
     totalDose: Decimal.parse(totalDose),
     usedDose: Decimal.parse(usedDose),
     concentration: Decimal.parse(concentration),
-    quantity: quantity,
     molecule: molecule ?? KnownMolecules.estradiol,
     administrationRoute: route,
   );
@@ -32,13 +30,11 @@ GenericSupply makeGeneric({
   int id = 1,
   String name = 'Generic',
   int amount = 1,
-  int quantity = 1,
 }) {
   return GenericSupply(
     id: id,
     name: name,
     amount: amount,
-    quantity: quantity,
   );
 }
 

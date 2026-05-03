@@ -5,13 +5,11 @@ GenericSupply makeGeneric({
   int id = 1,
   String name = 'Generic',
   int amount = 1,
-  int quantity = 1,
 }) {
   return GenericSupply(
     id: id,
     name: name,
     amount: amount,
-    quantity: quantity,
   );
 }
 
@@ -24,7 +22,6 @@ void main() {
           id: 42,
           name: 'Syringes',
           amount: 10,
-          quantity: 3,
         );
 
         // Act
@@ -36,8 +33,7 @@ void main() {
           isA<GenericSupply>()
               .having((s) => s.id, 'id', original.id)
               .having((s) => s.name, 'name', original.name)
-              .having((s) => s.amount, 'amount', original.amount)
-              .having((s) => s.quantity, 'quantity', original.quantity),
+              .having((s) => s.amount, 'amount', original.amount),
         );
       });
     });
@@ -61,7 +57,6 @@ void main() {
           id: 7,
           name: 'Original',
           amount: 5,
-          quantity: 2,
         );
 
         // Act
@@ -73,8 +68,7 @@ void main() {
           isA<GenericSupply>()
               .having((s) => s.id, 'id', original.id)
               .having((s) => s.name, 'name', original.name)
-              .having((s) => s.amount, 'amount', original.amount)
-              .having((s) => s.quantity, 'quantity', original.quantity),
+              .having((s) => s.amount, 'amount', original.amount),
         );
       });
     });

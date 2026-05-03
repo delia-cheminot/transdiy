@@ -3,7 +3,6 @@ const String createSupplyItemsTable = '''
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       type TEXT NOT NULL,
       name TEXT NOT NULL,
-      quantity INTEGER NOT NULL,
       totalDose TEXT,
       usedDose TEXT,
       concentration TEXT,

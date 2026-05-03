@@ -42,7 +42,6 @@ void main() {
         'totalDose': '100',
         'usedDose': '0',
         'concentration': '10',
-        'quantity': 1,
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
       });
@@ -72,7 +71,6 @@ void main() {
         'totalDose': '100',
         'usedDose': '10',
         'concentration': '200',
-        'quantity': 1,
         'moleculeJson': '{"name":"progesterone","unit":"mg"}',
         'administrationRouteName': 'oral',
       });
@@ -139,7 +137,6 @@ void main() {
         'totalDose': '100',
         'usedDose': '10',
         'concentration': '200',
-        'quantity': 1,
         'moleculeJson': '{"name":"progesterone","unit":"mg"}',
         'administrationRouteName': 'oral',
       });

@@ -11,7 +11,6 @@ enum SupplyType {
 abstract class SupplyItem {
   int get id;
   String get name;
-  int get quantity;
 
   factory SupplyItem.fromMap(Map<String, Object?> map) {
     final SupplyType type = SupplyType.values.byName(map['type'] as String);
