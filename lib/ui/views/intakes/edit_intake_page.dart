@@ -5,6 +5,7 @@ import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -58,9 +59,11 @@ class _EditIntakePageState extends State<EditIntakePage> {
 
     SupplyItem? previousItem =
         supplyItemProvider.getItemById(intake.supplyItemId);
+    final previousMedication = previousItem as MedicationSupplyItem?;
+    final newMedication = newItem as MedicationSupplyItem?;
 
-    SupplyItemManager(supplyItemProvider)
-        .switchDoses(previousItem, newItem, intake.dose, _takenDose);
+    SupplyItemManager(supplyItemProvider).switchDoses(
+        previousMedication, newMedication, intake.dose, _takenDose);
 
     String? timezoneIdentifier = intake.takenTimeZone;
     if (_takenDateChanged) {
@@ -167,12 +170,12 @@ class _EditIntakePageState extends State<EditIntakePage> {
         );
 
         final supplyItemDropdownItems = [
-          DropdownMenuItem<SupplyItem?>(
+          DropdownMenuItem<MedicationSupplyItem?>(
             value: null,
             child: Text(localizations.none),
           ),
           ...supplyItemOptions.map(
-            (item) => DropdownMenuItem<SupplyItem?>(
+            (item) => DropdownMenuItem<MedicationSupplyItem?>(
               value: item,
               child: Text(item.name),
             ),
@@ -210,7 +213,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem case final supplyItem?)
+            if (_selectedSupplyItem case final MedicationSupplyItem supplyItem)
               FormInfoText(
                 infoText: supplyItem.localizedSupplyAmount(
                   localizations,

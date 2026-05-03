@@ -37,11 +37,11 @@ void main() {
 
     test('can insert and query supply_items', () async {
       final id = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '0',
         'concentration': '10',
-        'quantity': 1,
         'moleculeJson': '{"name":"estradiol","unit":"mg"}',
         'administrationRouteName': 'oral',
       });
@@ -66,11 +66,11 @@ void main() {
 
     test('can insert and query medication_intakes', () async {
       final supplyItemId = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '10',
         'concentration': '200',
-        'quantity': 1,
         'moleculeJson': '{"name":"progesterone","unit":"mg"}',
         'administrationRouteName': 'oral',
       });
@@ -132,11 +132,11 @@ void main() {
         "deleting a supplyItem sets the field supplyItemId in medication_intakes NULL",
         () async {
       final supplyItemId = await db.insert('supply_items', {
+        'type': 'medication',
         'name': 'Test Item',
         'totalDose': '100',
         'usedDose': '10',
         'concentration': '200',
-        'quantity': 1,
         'moleculeJson': '{"name":"progesterone","unit":"mg"}',
         'administrationRouteName': 'oral',
       });

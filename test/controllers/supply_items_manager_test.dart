@@ -3,8 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mona/controllers/supply_item_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
+import 'package:mona/data/model/generic_supply_item.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
-import 'package:mona/data/model/supply_item.dart';
 import '../mocks/mocks.mocks.dart';
 
 void main() {
@@ -19,7 +20,7 @@ void main() {
   group('SupplyItemManager', () {
     group('useDose', () {
       test('should use amount correctly', () async {
-        final item = SupplyItem(
+        final item = MedicationSupplyItem(
           name: 'h',
           totalDose: Decimal.parse('20'),
           usedDose: Decimal.parse('5'),
@@ -28,10 +29,11 @@ void main() {
           administrationRoute: AdministrationRoute.oral,
         );
 
-        late SupplyItem updatedItem;
+        late MedicationSupplyItem updatedItem;
         when(mockSupplyItemProvider.updateItem(any))
             .thenAnswer((invocation) async {
-          updatedItem = invocation.positionalArguments.first as SupplyItem;
+          updatedItem =
+              invocation.positionalArguments.first as MedicationSupplyItem;
           return Future.value();
         });
 
@@ -43,7 +45,7 @@ void main() {
       test(
           'should clamp dose when using more than available and update provider',
           () async {
-        final item = SupplyItem(
+        final item = MedicationSupplyItem(
           name: 'h',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('5'),
@@ -52,10 +54,11 @@ void main() {
           administrationRoute: AdministrationRoute.oral,
         );
 
-        late SupplyItem updatedItem;
+        late MedicationSupplyItem updatedItem;
         when(mockSupplyItemProvider.updateItem(any))
             .thenAnswer((invocation) async {
-          updatedItem = invocation.positionalArguments.first as SupplyItem;
+          updatedItem =
+              invocation.positionalArguments.first as MedicationSupplyItem;
           return Future.value();
         });
 
@@ -68,7 +71,7 @@ void main() {
       test(
           'should clamp dose when putting back more than the maximum quantity of a supply and update provider',
           () async {
-        final item = SupplyItem(
+        final item = MedicationSupplyItem(
           name: 'h',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('5'),
@@ -77,10 +80,11 @@ void main() {
           administrationRoute: AdministrationRoute.oral,
         );
 
-        late SupplyItem updatedItem;
+        late MedicationSupplyItem updatedItem;
         when(mockSupplyItemProvider.updateItem(any))
             .thenAnswer((invocation) async {
-          updatedItem = invocation.positionalArguments.first as SupplyItem;
+          updatedItem =
+              invocation.positionalArguments.first as MedicationSupplyItem;
           return Future.value();
         });
 
@@ -91,7 +95,7 @@ void main() {
       });
 
       test('use zero amount', () async {
-        final item = SupplyItem(
+        final item = MedicationSupplyItem(
           name: 'h',
           totalDose: Decimal.parse('10'),
           usedDose: Decimal.parse('5'),
@@ -107,18 +111,52 @@ void main() {
       });
     });
 
+    group('use', () {
+      test('decrements amount by 1', () async {
+        // Arrange
+        late GenericSupply updatedItem;
+        final item = GenericSupply(id: 7, name: 'Syringe', amount: 5);
+        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+          updatedItem = inv.positionalArguments.first as GenericSupply;
+        });
+
+        // Act
+        await manager.use(item);
+
+        // Assert
+        expect(updatedItem.amount, item.amount - 1);
+      });
+    });
+
+    group('putBack', () {
+      test('increments amount by 1', () async {
+        // Arrange
+        late GenericSupply updatedItem;
+        final item = GenericSupply(id: 7, name: 'Syringe', amount: 5);
+        when(mockSupplyItemProvider.updateItem(any)).thenAnswer((inv) async {
+          updatedItem = inv.positionalArguments.first as GenericSupply;
+        });
+
+        // Act
+        await manager.putBack(item);
+
+        // Assert
+        expect(updatedItem.amount, item.amount + 1);
+      });
+    });
+
     group('switchItems', () {
-      late final SupplyItem baseItem;
+      late final MedicationSupplyItem baseItem;
 
-      SupplyItem? previousItem;
-      SupplyItem? nextItem;
+      MedicationSupplyItem? previousItem;
+      MedicationSupplyItem? nextItem;
 
-      SupplyItem? updatedItem;
-      SupplyItem? updatedPreviousItem;
-      SupplyItem? updatedNextItem;
+      MedicationSupplyItem? updatedItem;
+      MedicationSupplyItem? updatedPreviousItem;
+      MedicationSupplyItem? updatedNextItem;
 
       setUpAll(() {
-        baseItem = SupplyItem(
+        baseItem = MedicationSupplyItem(
           id: 0,
           name: 'progesterone',
           totalDose: Decimal.parse('30'),
@@ -137,7 +175,8 @@ void main() {
 
         when(mockSupplyItemProvider.updateItem(any))
             .thenAnswer((invocation) async {
-          final item = invocation.positionalArguments.first as SupplyItem;
+          final item =
+              invocation.positionalArguments.first as MedicationSupplyItem;
           updatedItem = item;
           if (item == previousItem) {
             updatedPreviousItem = item;

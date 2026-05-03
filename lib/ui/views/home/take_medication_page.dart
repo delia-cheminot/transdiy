@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:mona/controllers/medication_intake_manager.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/medication_intake.dart';
 import 'package:mona/data/model/medication_schedule.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -49,31 +49,20 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   bool get _isFormValid => _takenDoseError == null && _deadSpaceError == null;
 
-  bool get _isInjection =>
-      widget.schedule.administrationRoute == AdministrationRoute.injection;
-
   void _takeIntake(MedicationIntakeProvider medicationIntakeProvider,
       SupplyItemProvider supplyItemProvider) async {
-    if (!_isFormValid) return;
+    if (!_isFormValid || !mounted) return;
 
-    final timezone = await FlutterTimezone.getLocalTimezone();
-    final tzName = timezone.identifier;
-
-    if (!mounted) return;
-
-    await MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
+    MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
       scheduledDateTime: widget.scheduledDate,
       takenDateTime: _takenDate.toUtc(),
-      takenTimeZone: tzName,
       supplyItem: _selectedSupplyItem,
       schedule: widget.schedule,
       side: _selectedSide,
       deadSpace: _deadSpace,
     );
-
-    if (!mounted) return;
 
     Navigator.of(context).pop();
   }
@@ -137,13 +126,16 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isInjection =
+        widget.schedule.administrationRoute == AdministrationRoute.injection;
+
     return Consumer2<MedicationIntakeProvider, SupplyItemProvider>(
       builder: (context, medicationIntakeProvider, supplyItemProvider, child) {
         final bool isLoading =
             medicationIntakeProvider.isLoading || supplyItemProvider.isLoading;
         final localizations = context.l10n;
 
-        if (!isLoading && !_hasInitializedSide && _isInjection) {
+        if (!isLoading && !_hasInitializedSide && isInjection) {
           _selectedSide = MedicationIntakeManager(
             medicationIntakeProvider,
             supplyItemProvider,
@@ -202,7 +194,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
             ),
-            if (_selectedSupplyItem case final supplyItem?)
+            if (_selectedSupplyItem case final MedicationSupplyItem supplyItem)
               FormInfoText(
                 infoText: supplyItem.localizedSupplyAmount(
                   localizations,
@@ -217,7 +209,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
               onChanged: _onSupplyItemChanged,
               label: localizations.supplyItem,
             ),
-            if (_isInjection) ...[
+            if (isInjection) ...[
               FormDropdownField<InjectionSide>(
                 value: _selectedSide,
                 items: injectionSideDropdownMenuItems(localizations),

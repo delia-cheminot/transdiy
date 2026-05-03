@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -33,17 +34,17 @@ class _NewItemPageState extends State<NewItemPage> {
 
   String? get _nameError =>
       SupplyItem.validateName(context.l10n, _nameController.text);
-  String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(context.l10n, _totalAmountController.text);
-  String? get _concentrationError => SupplyItem.validateConcentration(
+  String? get _totalAmountError => MedicationSupplyItem.validateTotalAmount(
+      context.l10n, _totalAmountController.text);
+  String? get _concentrationError => MedicationSupplyItem.validateConcentration(
       context.l10n, _concentrationController.text);
   String? get _moleculeError =>
-      SupplyItem.validateMolecule(context.l10n, _molecule);
+      MedicationSupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      SupplyItem.validateAdministrationRoute(
+      MedicationSupplyItem.validateAdministrationRoute(
           context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator = SupplyItem.esterValidator(
+    final validator = MedicationSupplyItem.esterValidator(
         context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
@@ -104,7 +105,7 @@ class _NewItemPageState extends State<NewItemPage> {
     final supplyItemProvider =
         Provider.of<SupplyItemProvider>(context, listen: false);
 
-    final item = SupplyItem(
+    final item = MedicationSupplyItem(
       name: name,
       totalDose: totalDose,
       concentration: concentration,

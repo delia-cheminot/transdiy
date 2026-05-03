@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
-import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/helpers/administration_route_l10n.dart';
 import 'package:mona/l10n/helpers/molecule_l10n.dart';
 
-extension SupplyItemL10n on SupplyItem {
+extension SupplyItemL10n on MedicationSupplyItem {
   String localizedSupplyAmount(
     AppLocalizations localizations,
     Decimal dose,
