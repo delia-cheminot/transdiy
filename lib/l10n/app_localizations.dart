@@ -10,6 +10,8 @@ import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_pt.dart';
+import 'app_localizations_sk.dart';
+import 'app_localizations_uk.dart';
 
 // ignore_for_file: type=lint
 
@@ -102,7 +104,9 @@ abstract class AppLocalizations {
     Locale('es'),
     Locale('fr'),
     Locale('pt'),
-    Locale('pt', 'BR')
+    Locale('pt', 'BR'),
+    Locale('sk'),
+    Locale('uk')
   ];
 
   /// No description provided for @appTitle.
@@ -217,7 +221,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Every {days} days'**
-  String scheduleFrequencyEveryNDays(Object days);
+  String scheduleFrequencyEveryNDays(num days);
 
   /// No description provided for @newUpdateAvailable.
   ///
@@ -230,6 +234,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to Settings'**
   String get goToSettings;
+
+  /// No description provided for @deprecated.
+  ///
+  /// In en, this message translates to:
+  /// **'Deprecated'**
+  String get deprecated;
+
+  /// No description provided for @legacyVersionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You are using a legacy version of Mona. Please update. Tap to learn more.'**
+  String get legacyVersionMessage;
+
+  /// No description provided for @legacyDeprecationIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.'**
+  String get legacyDeprecationIntro;
+
+  /// No description provided for @legacyStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Export your data'**
+  String get legacyStep1Title;
+
+  /// No description provided for @legacyStep1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'In Settings, tap \'Export Data\' to save a JSON backup of your data.'**
+  String get legacyStep1Description;
+
+  /// No description provided for @legacyStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the new version'**
+  String get legacyStep2Title;
+
+  /// No description provided for @legacyStep2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Download on the Play Store. Or, from the latest release on GitHub, download the file named mona-<version>.apk.'**
+  String get legacyStep2Description;
+
+  /// No description provided for @legacyStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Uninstall this version'**
+  String get legacyStep3Title;
+
+  /// No description provided for @legacyStep3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this app from your device. Your backup file is safe.'**
+  String get legacyStep3Description;
+
+  /// No description provided for @legacyStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Install the new APK'**
+  String get legacyStep4Title;
+
+  /// No description provided for @legacyStep4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the APK file you downloaded and follow Android\'s prompts to install it.'**
+  String get legacyStep4Description;
+
+  /// No description provided for @legacyStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Import your data'**
+  String get legacyStep5Title;
+
+  /// No description provided for @legacyStep5Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the new Mona, go to Settings and tap \'Import Data\' to restore your backup.'**
+  String get legacyStep5Description;
+
+  /// No description provided for @openLatestRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'View on GitHub'**
+  String get openLatestRelease;
+
+  /// No description provided for @openPlayStore.
+  ///
+  /// In en, this message translates to:
+  /// **'View on Play Store'**
+  String get openPlayStore;
 
   /// No description provided for @settingsTitle.
   ///
@@ -271,7 +365,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count} created'**
-  String schedulesCreated(Object count);
+  String schedulesCreated(num count);
 
   /// No description provided for @language.
   ///
@@ -565,7 +659,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{count} notifications'**
-  String notificationsCount(Object count);
+  String notificationsCount(num count);
 
   /// No description provided for @editSchedule.
   ///
@@ -624,7 +718,7 @@ abstract class AppLocalizations {
   /// No description provided for @empty_intakes.
   ///
   /// In en, this message translates to:
-  /// **'Taken instakes will appear here'**
+  /// **'Taken intakes will appear here'**
   String get empty_intakes;
 
   /// No description provided for @chooseSchedule.
@@ -829,7 +923,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{amount} {unit} remaining'**
-  String remaining(Object amount, Object unit);
+  String remaining(num amount, Object unit);
 
   /// No description provided for @add.
   ///
@@ -1238,8 +1332,15 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'es', 'fr', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+        'de',
+        'en',
+        'es',
+        'fr',
+        'pt',
+        'sk',
+        'uk'
+      ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1270,6 +1371,10 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsFr();
     case 'pt':
       return AppLocalizationsPt();
+    case 'sk':
+      return AppLocalizationsSk();
+    case 'uk':
+      return AppLocalizationsUk();
   }
 
   throw FlutterError(

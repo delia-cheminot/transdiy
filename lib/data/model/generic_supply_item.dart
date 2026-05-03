@@ -1,0 +1,64 @@
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/l10n/app_localizations.dart';
+import 'package:mona/util/validators.dart';
+
+class GenericSupply implements SupplyItem {
+  @override
+  final int id;
+  @override
+  final String name;
+  final int amount;
+
+  GenericSupply({
+    int? id,
+    required this.name,
+    required this.amount,
+  }) : id = id ?? DateTime.now().millisecondsSinceEpoch;
+
+  factory GenericSupply.fromMap(Map<String, Object?> map) {
+    return GenericSupply(
+      id: map['id'] as int?,
+      name: map['name'] as String,
+      amount: map['amount'] as int,
+    );
+  }
+
+  @override
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'amount': amount,
+      'type': SupplyType.generic.name,
+    };
+  }
+
+  GenericSupply copyWith({
+    int? id,
+    String? name,
+    int? amount,
+  }) {
+    return GenericSupply(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+    );
+  }
+
+  // coverage:ignore-start
+  static String? validateAmount(AppLocalizations l10n, String? value) =>
+      requiredPositiveInt(l10n, value);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is GenericSupply && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'GenericSupply(id: $id, name: $name, amount: $amount)';
+  }
+  // coverage:ignore-end
+}

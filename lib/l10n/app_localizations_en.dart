@@ -79,7 +79,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduleFrequencyDaily => 'Every day';
 
   @override
-  String scheduleFrequencyEveryNDays(Object days) {
+  String scheduleFrequencyEveryNDays(num days) {
     return 'Every $days days';
   }
 
@@ -88,6 +88,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToSettings => 'Go to Settings';
+
+  @override
+  String get deprecated => 'Deprecated';
+
+  @override
+  String get legacyVersionMessage =>
+      'You are using a legacy version of Mona. Please update. Tap to learn more.';
+
+  @override
+  String get legacyDeprecationIntro =>
+      'This version of Mona is deprecated. To keep using Mona and receive updates, please install the new version by following the steps below.';
+
+  @override
+  String get legacyStep1Title => 'Export your data';
+
+  @override
+  String get legacyStep1Description =>
+      'In Settings, tap \'Export Data\' to save a JSON backup of your data.';
+
+  @override
+  String get legacyStep2Title => 'Download the new version';
+
+  @override
+  String get legacyStep2Description =>
+      'Download on the Play Store. Or, from the latest release on GitHub, download the file named mona-<version>.apk.';
+
+  @override
+  String get legacyStep3Title => 'Uninstall this version';
+
+  @override
+  String get legacyStep3Description =>
+      'Remove this app from your device. Your backup file is safe.';
+
+  @override
+  String get legacyStep4Title => 'Install the new APK';
+
+  @override
+  String get legacyStep4Description =>
+      'Open the APK file you downloaded and follow Android\'s prompts to install it.';
+
+  @override
+  String get legacyStep5Title => 'Import your data';
+
+  @override
+  String get legacyStep5Description =>
+      'Open the new Mona, go to Settings and tap \'Import Data\' to restore your backup.';
+
+  @override
+  String get openLatestRelease => 'View on GitHub';
+
+  @override
+  String get openPlayStore => 'View on Play Store';
 
   @override
   String get settingsTitle => 'Settings';
@@ -108,7 +160,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSchedules => 'No schedules';
 
   @override
-  String schedulesCreated(Object count) {
+  String schedulesCreated(num count) {
     return '$count created';
   }
 
@@ -282,7 +334,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noNotifications => 'No notifications';
 
   @override
-  String notificationsCount(Object count) {
+  String notificationsCount(num count) {
     return '$count notifications';
   }
 
@@ -319,7 +371,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scheduleSettings => 'Schedule settings';
 
   @override
-  String get empty_intakes => 'Taken instakes will appear here';
+  String get empty_intakes => 'Taken intakes will appear here';
 
   @override
   String get chooseSchedule => 'Choose a schedule';
@@ -430,7 +482,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String remaining(Object amount, Object unit) {
+  String remaining(num amount, Object unit) {
     return '$amount $unit remaining';
   }
 

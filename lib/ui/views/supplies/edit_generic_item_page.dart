@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:mona/data/model/generic_supply_item.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
+import 'package:mona/data/model/supply_item.dart';
+import 'package:mona/data/providers/supply_item_provider.dart';
+import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/ui/widgets/dialogs.dart';
+import 'package:mona/ui/widgets/forms/form_spacer.dart';
+import 'package:mona/ui/widgets/forms/form_text_field.dart';
+import 'package:mona/ui/widgets/forms/model_form.dart';
+import 'package:mona/util/string_parsing.dart';
+import 'package:provider/provider.dart';
+
+class EditItemPage extends StatefulWidget {
+  final GenericSupply item;
+
+  EditItemPage({required this.item});
+
+  @override
+  State<EditItemPage> createState() => _EditItemPageState();
+}
+
+class _EditItemPageState extends State<EditItemPage> {
+  late TextEditingController _nameController;
+  late TextEditingController _amountController;
+  late SupplyItemProvider _supplyItemProvider;
+
+  String? get _nameError =>
+      SupplyItem.validateName(context.l10n, _nameController.text);
+
+  String? get _amountError => MedicationSupplyItem.validateTotalAmount(
+      context.l10n, _amountController.text);
+
+  bool get _isFormValid => _nameError == null && _amountError == null;
+
+  void _refresh() => setState(() {});
+
+  void _saveChanges() {
+    if (!_isFormValid) return;
+    if (!mounted) return;
+
+    final updatedItem = widget.item.copyWith(
+      name: _nameController.text,
+      amount: _amountController.text.toInt,
+    );
+    _supplyItemProvider.updateItem(updatedItem);
+
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _confirmDelete() async {
+    final localizations = context.l10n;
+    final confirmed = await Dialogs.confirmDeleteDialog(
+      context: context,
+      title: localizations.deleteItem(widget.item.name),
+    );
+
+    if (confirmed == true) {
+      if (!mounted) return;
+      _supplyItemProvider.deleteItem(widget.item);
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _amountController =
+        TextEditingController(text: widget.item.amount.toString());
+    _nameController = TextEditingController(text: widget.item.name);
+    _supplyItemProvider =
+        Provider.of<SupplyItemProvider>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = context.l10n;
+
+    return ModelForm(
+      title: localizations.editItem,
+      submitButtonLabel: localizations.save,
+      isFormValid: _isFormValid,
+      saveChanges: _saveChanges,
+      onDelete: _confirmDelete,
+      fields: [
+        FormTextField(
+          controller: _nameController,
+          label: localizations.name,
+          onChanged: _refresh,
+          inputType: TextInputType.text,
+          errorText: _nameError,
+        ),
+        FormSpacer(),
+        FormTextField(
+          controller: _amountController,
+          label: 'amount', // TODO localize
+          onChanged: _refresh,
+          inputType: TextInputType.numberWithOptions(decimal: true),
+          errorText: _amountError,
+          regexFormatter: r'[0-9.,]',
+        ),
+      ],
+    );
+  }
+}

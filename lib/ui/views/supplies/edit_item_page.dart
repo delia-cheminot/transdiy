@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mona/data/model/administration_route.dart';
 import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/medication_supply_item.dart';
 import 'package:mona/data/model/molecule.dart';
 import 'package:mona/data/model/supply_item.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
@@ -19,7 +20,7 @@ import 'package:mona/util/string_parsing.dart';
 import 'package:provider/provider.dart';
 
 class EditItemPage extends StatefulWidget {
-  final SupplyItem item;
+  final MedicationSupplyItem item;
 
   EditItemPage({required this.item});
 
@@ -41,25 +42,25 @@ class _EditItemPageState extends State<EditItemPage> {
   String? get _nameError =>
       SupplyItem.validateName(context.l10n, _nameController.text);
 
-  String? get _totalAmountError =>
-      SupplyItem.validateTotalAmount(context.l10n, _totalAmountController.text);
+  String? get _totalAmountError => MedicationSupplyItem.validateTotalAmount(
+      context.l10n, _totalAmountController.text);
 
   String? get _usedAmountError {
-    final validator = SupplyItem.usedAmountValidator(
+    final validator = MedicationSupplyItem.usedAmountValidator(
         context.l10n, _totalAmountController.text);
     return validator(_usedAmountController.text);
   }
 
-  String? get _concentrationError => SupplyItem.validateConcentration(
+  String? get _concentrationError => MedicationSupplyItem.validateConcentration(
       context.l10n, _concentrationController.text);
 
   String? get _moleculeError =>
-      SupplyItem.validateMolecule(context.l10n, _molecule);
+      MedicationSupplyItem.validateMolecule(context.l10n, _molecule);
   String? get _administrationRouteError =>
-      SupplyItem.validateAdministrationRoute(
+      MedicationSupplyItem.validateAdministrationRoute(
           context.l10n, _administrationRoute);
   String? get _esterError {
-    final validator = SupplyItem.esterValidator(
+    final validator = MedicationSupplyItem.esterValidator(
         context.l10n, _molecule, _administrationRoute);
     return validator(_ester);
   }
