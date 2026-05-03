@@ -14,7 +14,7 @@ import 'package:pub_semver/pub_semver.dart';
 
 class UpdateService {
   static const String _releaseUrl =
-      'https://api.github.com/repos/delia-cheminot/mona-hrt/releases/latest';
+      'https://api.github.com/repos/mona-hrt/mona/releases/latest';
 
   Future<Map<String, dynamic>?> _fetchLatestRelease() async {
     final response = await http.get(Uri.parse(_releaseUrl));
