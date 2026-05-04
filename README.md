@@ -60,7 +60,7 @@
 
 Take control of your hormonal health with Mona, the fully local, open-source app designed to help you track, understand, and manage your hormone journey.
 
-**Available for both iOS and Android. Available on Google Play soon.**
+**Available for both iOS and Android.**
 
 <p align="center">
     <img alt="Download on the App Store" title="App Store" src="https://i.imgur.com/zt5bNgg.png">
