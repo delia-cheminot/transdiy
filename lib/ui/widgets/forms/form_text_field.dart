@@ -7,6 +7,7 @@ class FormTextField extends BaseFormField {
   final TextInputType inputType;
   final VoidCallback onChanged;
   final bool readonly;
+  final bool multiline;
 
   FormTextField({
     required this.controller,
@@ -17,13 +18,14 @@ class FormTextField extends BaseFormField {
     super.errorText,
     super.regexFormatter,
     this.readonly = false,
+    this.multiline = false,
   });
 
   @override
   Widget buildField(BuildContext context) {
     return TextField(
       controller: controller,
-      keyboardType: inputType,
+      keyboardType: multiline ? TextInputType.multiline : inputType,
       inputFormatters: regexFormatter != null
           ? <TextInputFormatter>[
               FilteringTextInputFormatter.allow(
@@ -40,6 +42,7 @@ class FormTextField extends BaseFormField {
       ),
       onChanged: (value) => onChanged(),
       readOnly: readonly,
+      minLines: multiline ? 3 : null,
     );
   }
 }

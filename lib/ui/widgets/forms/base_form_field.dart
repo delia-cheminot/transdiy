@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class BaseFormField extends StatelessWidget {
+  // TODO is this useful ?
   final String label;
   final String? suffixText;
   final String? errorText;
