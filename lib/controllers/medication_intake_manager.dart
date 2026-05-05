@@ -24,6 +24,7 @@ class MedicationIntakeManager {
     required MedicationSchedule schedule,
     InjectionSide? side,
     Decimal? deadSpace, //in μL
+    String? notes,
   }) async {
     if (!takenDateTime.isUtc) {
       throw ArgumentError('takenDateTime must be in UTC');
@@ -43,6 +44,7 @@ class MedicationIntakeManager {
       administrationRoute: schedule.administrationRoute,
       ester: schedule.ester,
       supplyItemId: supplyItem?.id,
+      notes: notes,
     ));
 
     final itemManager = SupplyItemManager(_supplyItemProvider);
