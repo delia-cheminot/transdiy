@@ -47,12 +47,12 @@ class AdministrationRoute {
     unit: 'suppository',
     icon: Symbols.pill,
   );
-  static const transdermal = AdministrationRoute(
+  static const transdermalSpray = AdministrationRoute(
     name: 'transdermal spray',
     unit: 'spray',
     icon: Symbols.fragrance,
   );
-  static const drops = AdministrationRoute(
+  static const transdermalDrops = AdministrationRoute(
     name: 'transdermal drops',
     unit: 'mL',
     icon: Symbols.colorize,
@@ -66,8 +66,8 @@ class AdministrationRoute {
     gel,
     implant,
     suppository,
-    transdermal,
-    drops,
+    transdermalSpray,
+    transdermalDrops,
   ];
 
   static AdministrationRoute fromName(String name) {

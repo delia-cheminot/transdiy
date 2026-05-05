@@ -18,7 +18,7 @@ abstract final class _AdministrationRouteDisplayNames {
     AdministrationRoute.gel.name: (l) => l.gel,
     AdministrationRoute.implant.name: (l) => l.implant,
     AdministrationRoute.suppository.name: (l) => l.suppository,
-    AdministrationRoute.transdermal.name: (l) => l.transdermal,
+    AdministrationRoute.transdermalSpray.name: (l) => l.transdermal,
   };
 
   static String resolve(
@@ -48,7 +48,7 @@ abstract final class _AdministrationRouteUnits {
         l.administrationRouteUnitImplant(c),
     AdministrationRoute.suppository.name: (l, c) =>
         l.administrationRouteUnitSuppository(c),
-    AdministrationRoute.transdermal.name: (l, c) =>
+    AdministrationRoute.transdermalSpray.name: (l, c) =>
         l.administrationRouteUnitSpray(c),
   };
 
