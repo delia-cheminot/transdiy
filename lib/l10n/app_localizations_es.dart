@@ -645,7 +645,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get suppository => 'Supositorio';
 
   @override
-  String get transdermal => 'Spray transdérmico';
+  String get transdermalSpray => 'Spray transdérmico';
+
+  @override
+  String get transdermalDrops => 'Gotas transdérmicas';
 
   @override
   String administrationRouteUnitMl(num count) {

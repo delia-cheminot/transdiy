@@ -642,7 +642,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get suppository => 'Supositório';
 
   @override
-  String get transdermal => 'Spray transdérmico';
+  String get transdermalSpray => 'Spray transdérmico';
+
+  @override
+  String get transdermalDrops => 'Gotas transdérmicas';
 
   @override
   String administrationRouteUnitMl(num count) {
@@ -1384,7 +1387,10 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get suppository => 'Supositório';
 
   @override
-  String get transdermal => 'Spray transdérmico';
+  String get transdermalSpray => 'Spray transdérmico';
+
+  @override
+  String get transdermalDrops => 'Gotas transdérmicas';
 
   @override
   String administrationRouteUnitMl(num count) {

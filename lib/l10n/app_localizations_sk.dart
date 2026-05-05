@@ -666,7 +666,10 @@ class AppLocalizationsSk extends AppLocalizations {
   String get suppository => 'Čapík';
 
   @override
-  String get transdermal => 'Transdermálny sprej';
+  String get transdermalSpray => 'Transdermálny sprej';
+
+  @override
+  String get transdermalDrops => 'Transdermálne kvapky';
 
   @override
   String administrationRouteUnitMl(num count) {

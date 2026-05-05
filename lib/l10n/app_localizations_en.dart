@@ -639,7 +639,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppository => 'Suppository';
 
   @override
-  String get transdermal => 'Transdermal spray';
+  String get transdermalSpray => 'Transdermal spray';
+
+  @override
+  String get transdermalDrops => 'Transdermal drops';
 
   @override
   String administrationRouteUnitMl(num count) {

@@ -641,7 +641,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get suppository => 'Супозиторій';
 
   @override
-  String get transdermal => 'Трансдермальний спрей';
+  String get transdermalSpray => 'Трансдермальний спрей';
+
+  @override
+  String get transdermalDrops => 'Трансдермальні краплі';
 
   @override
   String administrationRouteUnitMl(num count) {

@@ -212,7 +212,8 @@
     "gel": "Gel",
     "implant": "Implante",
     "suppository": "Supositório",
-    "transdermal": "Spray transdérmico",
+    "transdermalSpray": "Spray transdérmico",
+    "transdermalDrops": "Gotas transdérmicas",
 
     "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
     "administrationRouteUnitPill": "{count, plural, =1{comprimido} other{comprimidos}}",
