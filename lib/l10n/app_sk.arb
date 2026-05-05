@@ -212,6 +212,7 @@
   "implant": "Implantát",
   "suppository": "Čapík",
   "transdermal": "Transdermálny sprej",
+  "transdermalDrops": "Transdermálne kvapky",
 
   "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
   "administrationRouteUnitPill": "{count, plural, =1{pilulka} other{piluliek} few{pilulky}}",

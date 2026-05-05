@@ -100,47 +100,40 @@ class AppLocalizationsSk extends AppLocalizations {
   String get deprecated => 'Zastarané';
 
   @override
-  String get legacyVersionMessage =>
-      'Používaš staršiu verziu apky Mona. Prosím aktualizuj ju. Klikni a zisti viac.';
+  String get legacyVersionMessage => 'Používaš staršiu verziu apky Mona. Prosím aktualizuj ju. Klikni a zisti viac.';
 
   @override
-  String get legacyDeprecationIntro =>
-      'Táto verzia apky Mona je zastaraná. Pre pokračovanie jej používania a získavania aktualizácií prosím nainštaluj novú verziu pomocou nasledovných krokov.';
+  String get legacyDeprecationIntro => 'Táto verzia apky Mona je zastaraná. Pre pokračovanie jej používania a získavania aktualizácií prosím nainštaluj novú verziu pomocou nasledovných krokov.';
 
   @override
   String get legacyStep1Title => 'Exportovanie tvojich dát';
 
   @override
-  String get legacyStep1Description =>
-      'V nastaveniach klikni \'Export dát\' pre vytvorenie zálohy tvojich dát do súboru JSON.';
+  String get legacyStep1Description => 'V nastaveniach klikni \'Export dát\' pre vytvorenie zálohy tvojich dát do súboru JSON.';
 
   @override
   String get legacyStep2Title => 'Stiahnutie novej verzie';
 
   @override
-  String get legacyStep2Description =>
-      'Stiahni cez Play Store. Alebo z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.';
+  String get legacyStep2Description => 'Stiahni cez Play Store. Alebo z najnovšieho releaseu na GitHube stiahni súbor nazvaný mona-<verzia>.apk.';
 
   @override
   String get legacyStep3Title => 'Odinštalácia tejto verzie';
 
   @override
-  String get legacyStep3Description =>
-      'Vymaž túto apku zo svojho zariadenia. Tvoja záloha je v bezpečí.';
+  String get legacyStep3Description => 'Vymaž túto apku zo svojho zariadenia. Tvoja záloha je v bezpečí.';
 
   @override
   String get legacyStep4Title => 'Inštalácia nového APK súboru';
 
   @override
-  String get legacyStep4Description =>
-      'Otvor stiahnutý APK súbor a nasleduj inštrukcie Androidu pre jeho inštaláciu.';
+  String get legacyStep4Description => 'Otvor stiahnutý APK súbor a nasleduj inštrukcie Androidu pre jeho inštaláciu.';
 
   @override
   String get legacyStep5Title => 'Importovanie tvojich dát';
 
   @override
-  String get legacyStep5Description =>
-      'Otvor novú apku Mona, choď do nastavení a klikni \'Import dát\' pre obnovenie tvojej zálohy.';
+  String get legacyStep5Description => 'Otvor novú apku Mona, choď do nastavení a klikni \'Import dát\' pre obnovenie tvojej zálohy.';
 
   @override
   String get openLatestRelease => 'Otvoriť na GitHube';
@@ -203,22 +196,19 @@ class AppLocalizationsSk extends AppLocalizations {
   String get exactRemindersDisabled => 'Presné časy pripomienok sú vypnuté';
 
   @override
-  String get remindersDelayed =>
-      'Pripomienky môžu byť jemne oneskorené. Klikni pre otvorenie nastavení.';
+  String get remindersDelayed => 'Pripomienky môžu byť jemne oneskorené. Klikni pre otvorenie nastavení.';
 
   @override
   String get autoUpdate => 'Automatické aktualizácie';
 
   @override
-  String get autoUpdateDescription =>
-      'Automaticky skontrolovať najnovšie aktualizácie pre otvorení apky';
+  String get autoUpdateDescription => 'Automaticky skontrolovať najnovšie aktualizácie pre otvorení apky';
 
   @override
   String get checkForUpdates => 'Skontrolovať aktualizácie';
 
   @override
-  String get checkForUpdatesDescription =>
-      'Skontrolovať najnovšiu verziu manuálne\nTáto akcia ťa pripojí na internet.\n(Žiadne dáta nebudú odoslané)';
+  String get checkForUpdatesDescription => 'Skontrolovať najnovšiu verziu manuálne\nTáto akcia ťa pripojí na internet.\n(Žiadne dáta nebudú odoslané)';
 
   @override
   String appVersion(Object version) {
@@ -242,8 +232,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get importDataSubtitle => 'Obnoviť dáta pomocou JSON zálohy';
 
   @override
-  String get importDataOverwriteWarning =>
-      'Týmto sa všetky tvoje dáta prepíšu zálohou. Túto akciu nie je možné vrátiť späť. Chceš pokračovať?';
+  String get importDataOverwriteWarning => 'Týmto sa všetky tvoje dáta prepíšu zálohou. Túto akciu nie je možné vrátiť späť. Chceš pokračovať?';
 
   @override
   String get importConfirm => 'Import';
@@ -252,8 +241,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get importSuccessfulTitle => 'Import úspešný';
 
   @override
-  String get importRestartRequired =>
-      'Prosím reštartuj apku pre načítanie importovaných dát.';
+  String get importRestartRequired => 'Prosím reštartuj apku pre načítanie importovaných dát.';
 
   @override
   String get closeApp => 'Zavrieť apku';
@@ -276,15 +264,13 @@ class AppLocalizationsSk extends AppLocalizations {
   String get exportDataSubtitle => 'Ulož svoje dáta do JSON súboru';
 
   @override
-  String get updateNoCompatibleApk =>
-      'Pre tvoje zariadenie nebola nájdená kompatibilná aktualizácia.';
+  String get updateNoCompatibleApk => 'Pre tvoje zariadenie nebola nájdená kompatibilná aktualizácia.';
 
   @override
   String get updateAppUpToDate => 'Tvoja apka má najnovšiu aktualizáciu!';
 
   @override
-  String get updateCheckNetworkError =>
-      'Nebolo možné skontrolovať aktualizácie.';
+  String get updateCheckNetworkError => 'Nebolo možné skontrolovať aktualizácie.';
 
   @override
   String get updateDialogTitle => 'Dostupná aktualizácia';
@@ -298,8 +284,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get updateDownloadAndInstall => 'Stiahni & nainštaluj';
 
   @override
-  String get updateInstallPermissionRequired =>
-      'Pre inštaláciu aktualizácií je potrebné povolenie.';
+  String get updateInstallPermissionRequired => 'Pre inštaláciu aktualizácií je potrebné povolenie.';
 
   @override
   String get updateDownloadingTitle => 'Sťahovanie aktualizácie...';
@@ -310,8 +295,7 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get updateDownloadFailed =>
-      'Sťahovanie sa nepodarilo. Prosím skontroluj svoje pripojenie.';
+  String get updateDownloadFailed => 'Sťahovanie sa nepodarilo. Prosím skontroluj svoje pripojenie.';
 
   @override
   String notificationMedicationReminderTitle(Object scheduleName) {
@@ -382,8 +366,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get notificationsUpdated => 'Notifikácie boli aktualizované!';
 
   @override
-  String get notificationsUpdatedDescription =>
-      'Každý plán má teraz vlastné notifikácie.\n\nZapni si notifikácie pre svoje plány, aby ti nič neušlo.';
+  String get notificationsUpdatedDescription => 'Každý plán má teraz vlastné notifikácie.\n\nZapni si notifikácie pre svoje plány, aby ti nič neušlo.';
 
   @override
   String get dontShowAgain => 'Nezobrazovať znovu';
@@ -442,8 +425,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get bloodTestsTitle => 'Krvné testy';
 
   @override
-  String get empty_blood_tests =>
-      'Krvné testy sa zobrazia tu. Začni tlačidlom Pridať!';
+  String get empty_blood_tests => 'Krvné testy sa zobrazia tu. Začni tlačidlom Pridať!';
 
   @override
   String get addBloodTest => 'Pridaj krvný test';
@@ -622,8 +604,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get medicationEstradiolBenzoate => 'Estradiol benzoát';
 
   @override
-  String get medicationEstradiolCypionateSuspension =>
-      'Estradiolová suspenzia cypionátu';
+  String get medicationEstradiolCypionateSuspension => 'Estradiolová suspenzia cypionátu';
 
   @override
   String get medicationTestosteroneEnanthate => 'Testosterón enantát';
@@ -641,8 +622,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get medicationTestosteroneBenzoate => 'Testosterón benzoát';
 
   @override
-  String get medicationTestosteroneCypionateSuspension =>
-      'Testosterónová suspenzia cypionátu';
+  String get medicationTestosteroneCypionateSuspension => 'Testosterónová suspenzia cypionátu';
 
   @override
   String get injection => 'Injekcia';
@@ -667,6 +647,9 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get transdermal => 'Transdermálny sprej';
+
+  @override
+  String get transdermalDrops => 'Transdermálne kvapky';
 
   @override
   String administrationRouteUnitMl(num count) {

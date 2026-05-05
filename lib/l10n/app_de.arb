@@ -213,6 +213,7 @@
     "implant": "Implantat",
     "suppository": "Zäpfchen",
     "transdermal": "Transdermales Spray",
+    "transdermalDrops": "Transdermale Tropfen",
 
     "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
     "administrationRouteUnitPill": "{count, plural, =1{Tablette} other{Tabletten}}",

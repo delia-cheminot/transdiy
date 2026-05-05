@@ -213,6 +213,7 @@
   "implant": "Implant",
   "suppository": "Suppositoire",
   "transdermal": "Spray transdermique",
+  "transdermalDrops": "Gouttes transdermiques",
 
   "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",
   "administrationRouteUnitPill": "{count, plural, =1{comprimé} other{comprimés}}",
