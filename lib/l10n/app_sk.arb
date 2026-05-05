@@ -211,7 +211,7 @@
   "gel": "Gél",
   "implant": "Implantát",
   "suppository": "Čapík",
-  "transdermal": "Transdermálny sprej",
+  "transdermalSpray": "Transdermálny sprej",
   "transdermalDrops": "Transdermálne kvapky",
 
   "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",

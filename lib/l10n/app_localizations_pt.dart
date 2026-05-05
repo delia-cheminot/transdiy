@@ -619,7 +619,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get suppository => 'Supositório';
 
   @override
-  String get transdermal => 'Spray transdérmico';
+  String get transdermalSpray => 'Spray transdérmico';
 
   @override
   String get transdermalDrops => 'Gotas transdérmicas';
@@ -1341,7 +1341,7 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
   String get suppository => 'Supositório';
 
   @override
-  String get transdermal => 'Spray transdérmico';
+  String get transdermalSpray => 'Spray transdérmico';
 
   @override
   String get transdermalDrops => 'Gotas transdérmicas';

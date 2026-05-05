@@ -18,7 +18,7 @@ abstract final class _AdministrationRouteDisplayNames {
     AdministrationRoute.gel.name: (l) => l.gel,
     AdministrationRoute.implant.name: (l) => l.implant,
     AdministrationRoute.suppository.name: (l) => l.suppository,
-    AdministrationRoute.transdermalSpray.name: (l) => l.transdermal,
+    AdministrationRoute.transdermalSpray.name: (l) => l.transdermalSpray,
     AdministrationRoute.transdermalDrops.name: (l) => l.transdermalDrops,
   };
 

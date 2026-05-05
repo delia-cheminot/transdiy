@@ -212,7 +212,7 @@
   "gel": "Гель",
   "implant": "Імплант",
   "suppository": "Супозиторій",
-  "transdermal": "Трансдермальний спрей",
+  "transdermalSpray": "Трансдермальний спрей",
   "transdermalDrops": "Трансдермальні краплі",
 
   "administrationRouteUnitMl": "{count, plural, =1{ml} other{ml}}",

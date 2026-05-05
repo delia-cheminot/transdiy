@@ -1222,11 +1222,11 @@ abstract class AppLocalizations {
   /// **'Suppository'**
   String get suppository;
 
-  /// No description provided for @transdermal.
+  /// No description provided for @transdermalSpray.
   ///
   /// In en, this message translates to:
   /// **'Transdermal spray'**
-  String get transdermal;
+  String get transdermalSpray;
 
   /// No description provided for @transdermalDrops.
   ///

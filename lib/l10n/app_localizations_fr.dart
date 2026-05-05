@@ -619,7 +619,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppository => 'Suppositoire';
 
   @override
-  String get transdermal => 'Spray transdermique';
+  String get transdermalSpray => 'Spray transdermique';
 
   @override
   String get transdermalDrops => 'Gouttes transdermiques';
