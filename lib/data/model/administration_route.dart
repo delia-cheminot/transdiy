@@ -14,7 +14,7 @@ class AdministrationRoute {
 
   static const injection = AdministrationRoute(
     name: 'injection',
-    unit: 'ml',
+    unit: 'mL',
     icon: Symbols.syringe,
   );
   static const oral = AdministrationRoute(
@@ -52,6 +52,11 @@ class AdministrationRoute {
     unit: 'spray',
     icon: Symbols.fragrance,
   );
+  static const drops = AdministrationRoute(
+    name: 'transdermal drops',
+    unit: 'mL',
+    icon: Symbols.colorize,
+  );
 
   static const List<AdministrationRoute> all = [
     injection,
@@ -62,6 +67,7 @@ class AdministrationRoute {
     implant,
     suppository,
     transdermal,
+    drops,
   ];
 
   static AdministrationRoute fromName(String name) {
