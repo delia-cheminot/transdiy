@@ -40,6 +40,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   bool _hasInitializedSide = false;
   SupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
+  late TextEditingController _notesController;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(context.l10n, _takenDoseController.text);
@@ -71,12 +72,16 @@ class _EditIntakePageState extends State<EditIntakePage> {
       timezoneIdentifier = timezone.identifier;
     }
 
+    final String? notes =
+        _notesController.text.isEmpty ? null : _notesController.text;
+
     MedicationIntake updatedIntake = intake.copyWith(
       takenDateTime: _takenDate.toUtc(),
       takenTimeZone: timezoneIdentifier,
       dose: _takenDose,
       side: _selectedSide,
       supplyItemId: newItem?.id,
+      notes: notes,
     );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
@@ -127,6 +132,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
     });
   }
 
+  void _refresh() => setState(() {});
+
   @override
   void initState() {
     super.initState();
@@ -135,11 +142,13 @@ class _EditIntakePageState extends State<EditIntakePage> {
     _takenDose = widget.intake.dose;
     _takenDoseController =
         TextEditingController(text: widget.intake.dose.toString());
+    _notesController = TextEditingController(text: widget.intake.notes ?? '');
   }
 
   @override
   void dispose() {
     _takenDoseController.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -235,6 +244,14 @@ class _EditIntakePageState extends State<EditIntakePage> {
                 onChanged: _onInjectionSideChanged,
                 label: localizations.injectionSide,
               ),
+            FormSpacer(),
+            FormTextField(
+              controller: _notesController,
+              label: "Notes", // TODO localize
+              onChanged: _refresh,
+              inputType: TextInputType.multiline,
+              multiline: true,
+            )
           ],
         );
       },

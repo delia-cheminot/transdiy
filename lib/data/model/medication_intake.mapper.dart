@@ -140,6 +140,12 @@ class MedicationIntakeMapper extends ClassMapperBase<MedicationIntake> {
     _$supplyItemId,
     opt: true,
   );
+  static String? _$notes(MedicationIntake v) => v.notes;
+  static const Field<MedicationIntake, String> _f$notes = Field(
+    'notes',
+    _$notes,
+    opt: true,
+  );
 
   @override
   final MappableFields<MedicationIntake> fields = const {
@@ -154,6 +160,7 @@ class MedicationIntakeMapper extends ClassMapperBase<MedicationIntake> {
     #administrationRoute: _f$administrationRoute,
     #ester: _f$ester,
     #supplyItemId: _f$supplyItemId,
+    #notes: _f$notes,
   };
 
   static MedicationIntake _instantiate(DecodingData data) {
@@ -169,6 +176,7 @@ class MedicationIntakeMapper extends ClassMapperBase<MedicationIntake> {
       administrationRoute: data.dec(_f$administrationRoute),
       ester: data.dec(_f$ester),
       supplyItemId: data.dec(_f$supplyItemId),
+      notes: data.dec(_f$notes),
     );
   }
 
@@ -246,6 +254,7 @@ abstract class MedicationIntakeCopyWith<$R, $In extends MedicationIntake, $Out>
     AdministrationRoute? administrationRoute,
     Ester? ester,
     int? supplyItemId,
+    String? notes,
   });
   MedicationIntakeCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
@@ -273,6 +282,7 @@ class _MedicationIntakeCopyWithImpl<$R, $Out>
     AdministrationRoute? administrationRoute,
     Object? ester = $none,
     Object? supplyItemId = $none,
+    Object? notes = $none,
   }) =>
       $apply(
         FieldCopyWithData({
@@ -288,6 +298,7 @@ class _MedicationIntakeCopyWithImpl<$R, $Out>
             #administrationRoute: administrationRoute,
           if (ester != $none) #ester: ester,
           if (supplyItemId != $none) #supplyItemId: supplyItemId,
+          if (notes != $none) #notes: notes,
         }),
       );
   @override
@@ -309,6 +320,7 @@ class _MedicationIntakeCopyWithImpl<$R, $Out>
         ),
         ester: data.get(#ester, or: $value.ester),
         supplyItemId: data.get(#supplyItemId, or: $value.supplyItemId),
+        notes: data.get(#notes, or: $value.notes),
       );
 
   @override
