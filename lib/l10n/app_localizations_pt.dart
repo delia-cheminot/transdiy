@@ -414,6 +414,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get needleDeadSpace => 'Espaço morto da agulha';
 
   @override
+  String get notes => 'Notas';
+
+  @override
   String get microliters => 'μL';
 
   @override
@@ -1157,6 +1160,9 @@ class AppLocalizationsPtBr extends AppLocalizationsPt {
 
   @override
   String get needleDeadSpace => 'Espaço morto da agulha';
+
+  @override
+  String get notes => 'Notas';
 
   @override
   String get microliters => 'μL';

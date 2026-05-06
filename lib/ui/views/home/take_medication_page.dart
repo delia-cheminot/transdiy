@@ -40,6 +40,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
   bool _hasInitializedSupplyItem = false;
   late TextEditingController _deadSpaceController;
   Decimal? _deadSpace;
+  late TextEditingController _notesController;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(context.l10n, _takenDoseController.text);
@@ -53,6 +54,9 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       SupplyItemProvider supplyItemProvider) async {
     if (!_isFormValid || !mounted) return;
 
+    final String? notes =
+        _notesController.text.isEmpty ? null : _notesController.text;
+
     MedicationIntakeManager(medicationIntakeProvider, supplyItemProvider)
         .takeMedication(
       dose: _takenDose,
@@ -62,6 +66,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
       schedule: widget.schedule,
       side: _selectedSide,
       deadSpace: _deadSpace,
+      notes: notes,
     );
 
     Navigator.of(context).pop();
@@ -107,6 +112,8 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     });
   }
 
+  void _refresh() => setState(() {});
+
   @override
   void initState() {
     super.initState();
@@ -115,12 +122,14 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
     _takenDoseController =
         TextEditingController(text: widget.schedule.dose.toString());
     _deadSpaceController = TextEditingController(text: '0');
+    _notesController = TextEditingController();
   }
 
   @override
   void dispose() {
     _takenDoseController.dispose();
     _deadSpaceController.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -226,6 +235,14 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 regexFormatter: r'[0-9.,]',
               ),
             ],
+            FormSpacer(),
+            FormTextField(
+              controller: _notesController,
+              label: localizations.notes,
+              onChanged: _refresh,
+              inputType: TextInputType.multiline,
+              multiline: true,
+            )
           ],
         );
       },

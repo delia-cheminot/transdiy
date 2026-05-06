@@ -417,6 +417,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get needleDeadSpace => 'Espace mort de l\'aiguille';
 
   @override
+  String get notes => 'Notes';
+
+  @override
   String get microliters => 'μL';
 
   @override

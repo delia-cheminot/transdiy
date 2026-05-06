@@ -11,7 +11,7 @@ import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/data/providers/supply_item_provider.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
 import 'package:mona/l10n/helpers/supply_item_l10n.dart';
-import 'package:mona/ui/views/intakes/intakes_page.dart';
+import 'package:mona/ui/widgets/dialogs.dart';
 import 'package:mona/ui/widgets/dropdowns/injection_side_dropdown.dart';
 import 'package:mona/ui/widgets/forms/form_datetime_field.dart';
 import 'package:mona/ui/widgets/forms/form_dropdown_field.dart';
@@ -40,6 +40,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
   bool _hasInitializedSide = false;
   SupplyItem? _selectedSupplyItem;
   bool _hasInitializedSupplyItem = false;
+  late TextEditingController _notesController;
 
   String? get _takenDoseError =>
       MedicationIntake.validateDose(context.l10n, _takenDoseController.text);
@@ -71,12 +72,16 @@ class _EditIntakePageState extends State<EditIntakePage> {
       timezoneIdentifier = timezone.identifier;
     }
 
+    final String? notes =
+        _notesController.text.isEmpty ? null : _notesController.text;
+
     MedicationIntake updatedIntake = intake.copyWith(
       takenDateTime: _takenDate.toUtc(),
       takenTimeZone: timezoneIdentifier,
       dose: _takenDose,
       side: _selectedSide,
       supplyItemId: newItem?.id,
+      notes: notes,
     );
 
     medicationIntakeProvider.updateIntake(updatedIntake);
@@ -118,6 +123,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
       setState(() {
         _takenDose = dose;
       });
+    } else {
+      setState(() {});
     }
   }
 
@@ -125,6 +132,13 @@ class _EditIntakePageState extends State<EditIntakePage> {
     setState(() {
       _selectedSupplyItem = item;
     });
+  }
+
+  void _refresh() => setState(() {});
+
+  Future<bool?> confirmDeleteIntake(BuildContext context) {
+    return Dialogs.confirmDeleteDialog(
+        context: context, title: context.l10n.deleteIntake);
   }
 
   @override
@@ -135,11 +149,13 @@ class _EditIntakePageState extends State<EditIntakePage> {
     _takenDose = widget.intake.dose;
     _takenDoseController =
         TextEditingController(text: widget.intake.dose.toString());
+    _notesController = TextEditingController(text: widget.intake.notes ?? '');
   }
 
   @override
   void dispose() {
     _takenDoseController.dispose();
+    _notesController.dispose();
     super.dispose();
   }
 
@@ -192,7 +208,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
                   widget.intake, _selectedSupplyItem)
               : () {},
           onDelete: () async {
-            final confirmed = await IntakesPage.confirmDeleteIntake(context);
+            final confirmed = await confirmDeleteIntake(context);
             if (confirmed == false) return;
             _deleteIntake(
                 medicationIntakeProvider, supplyItemProvider, widget.intake);
@@ -208,7 +224,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
               controller: _takenDoseController,
               label: localizations.amount,
               onChanged: _onTakenDoseChanged,
-              inputType: TextInputType.number,
+              inputType: TextInputType.numberWithOptions(decimal: true),
               suffixText: widget.intake.molecule.unit,
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
@@ -235,6 +251,14 @@ class _EditIntakePageState extends State<EditIntakePage> {
                 onChanged: _onInjectionSideChanged,
                 label: localizations.injectionSide,
               ),
+            FormSpacer(),
+            FormTextField(
+              controller: _notesController,
+              label: localizations.notes,
+              onChanged: _refresh,
+              inputType: TextInputType.multiline,
+              multiline: true,
+            )
           ],
         );
       },

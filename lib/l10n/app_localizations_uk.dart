@@ -414,6 +414,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get needleDeadSpace => 'Мертва зона голки';
 
   @override
+  String get notes => 'Примітки';
+
+  @override
   String get microliters => 'μL';
 
   @override

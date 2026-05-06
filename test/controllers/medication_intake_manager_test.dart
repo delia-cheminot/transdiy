@@ -108,16 +108,19 @@ void main() {
         final dose = Decimal.parse('3');
         final scheduledDate = DateTime(2025, 9, 14, 10, 30);
         final takenDate = DateTime.utc(2025, 9, 14, 12, 0);
+        final notes = 'yummy';
+        final supplyItemId = 99;
+        final scheduleId = 42;
 
         setUp(() async {
           // Arrange
           final supplyItem = _buildMedicationSupplyItem(
-            id: 99,
+            id: supplyItemId,
             administrationRoute: AdministrationRoute.injection,
             ester: Ester.enanthate,
           );
           final schedule = _buildSchedule(
-            id: 42,
+            id: scheduleId,
             dose: dose,
             administrationRoute: AdministrationRoute.injection,
             ester: Ester.enanthate,
@@ -135,6 +138,7 @@ void main() {
             supplyItem: supplyItem,
             schedule: schedule,
             side: InjectionSide.right,
+            notes: notes,
           );
         });
 
@@ -170,7 +174,7 @@ void main() {
 
         test('propagates scheduleId from the schedule', () {
           // Assert
-          expect(addedIntake.scheduleId, 42);
+          expect(addedIntake.scheduleId, scheduleId);
         });
 
         test('propagates molecule from the schedule', () {
@@ -191,7 +195,12 @@ void main() {
 
         test('sets supplyItemId from the supplyItem', () {
           // Assert
-          expect(addedIntake.supplyItemId, 99);
+          expect(addedIntake.supplyItemId, supplyItemId);
+        });
+
+        test('sets notes on the intake', () {
+          // Assert
+          expect(addedIntake.notes, notes);
         });
       });
 

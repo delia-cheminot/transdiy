@@ -46,6 +46,7 @@ class MedicationIntake with MedicationIntakeMappable {
   @MappableField(key: 'esterName')
   final Ester? ester;
   final int? supplyItemId;
+  final String? notes;
 
   MedicationIntake({
     int? id,
@@ -59,6 +60,7 @@ class MedicationIntake with MedicationIntakeMappable {
     required this.administrationRoute,
     this.ester,
     this.supplyItemId,
+    this.notes,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch {
     if (takenDateTime != null && !takenDateTime!.isUtc) {
       throw ArgumentError('takenDateTime must be UTC');

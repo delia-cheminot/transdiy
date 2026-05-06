@@ -433,6 +433,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get needleDeadSpace => 'Mŕtvy priestor ihly';
 
   @override
+  String get notes => 'Poznámky';
+
+  @override
   String get microliters => 'μL';
 
   @override

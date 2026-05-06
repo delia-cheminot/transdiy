@@ -132,6 +132,7 @@
     "takeMedication": "{scheduleName} einnehmen",
     "takeIntake": "Einnahme erfassen",
     "needleDeadSpace": "Totraum der Nadel",
+    "notes": "Notizen",
     "microliters": "μL",
 
     "empty_levels": "Estradiol-Injektionen werden in diesem Tab angezeigt",

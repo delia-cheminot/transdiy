@@ -793,6 +793,12 @@ abstract class AppLocalizations {
   /// **'Needle dead space'**
   String get needleDeadSpace;
 
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
   /// No description provided for @microliters.
   ///
   /// In en, this message translates to:
