@@ -42,6 +42,7 @@ class FormTextField extends BaseFormField {
       ),
       onChanged: (value) => onChanged(),
       readOnly: readonly,
+      maxLines: multiline ? null : 1,
       minLines: multiline ? 3 : null,
     );
   }

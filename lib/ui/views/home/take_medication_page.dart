@@ -235,6 +235,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
                 regexFormatter: r'[0-9.,]',
               ),
             ],
+            FormSpacer(),
             FormTextField(
               controller: _notesController,
               label: "Notes", // TODO localize
