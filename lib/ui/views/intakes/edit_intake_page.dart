@@ -123,6 +123,8 @@ class _EditIntakePageState extends State<EditIntakePage> {
       setState(() {
         _takenDose = dose;
       });
+    } else {
+      setState(() {});
     }
   }
 
@@ -222,7 +224,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
               controller: _takenDoseController,
               label: localizations.amount,
               onChanged: _onTakenDoseChanged,
-              inputType: TextInputType.number,
+              inputType: TextInputType.numberWithOptions(decimal: true),
               suffixText: widget.intake.molecule.unit,
               errorText: _takenDoseError,
               regexFormatter: r'[0-9.,]',
