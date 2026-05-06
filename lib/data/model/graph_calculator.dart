@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:mona/data/model/ester.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 
 class GraphCalculator {
@@ -79,14 +80,16 @@ class GraphCalculator {
   }
 
   double totalConcentrationAtTime(
-      double t, Map<int, GraphIntake> daysAndIntakes) {
+      double t, Map<int, GraphIntake> daysAndIntakes, EstradiolUnit unit) {
     if (daysAndIntakes.isEmpty) return 0.0;
-    return daysAndIntakes.entries
+    final concentration = daysAndIntakes.entries
         .map((e) => _singleInjectionConcentration(t, e.key, e.value))
         .fold(0.0, (sum, val) => sum + val);
+    return EstradiolUnit.pg_mL.convert(concentration, unit).toDouble();
   }
 
-  List<FlSpot> generateFlSpots(Map<int, GraphIntake> daysAndIntakes,
+  List<FlSpot> generateFlSpots(
+      Map<int, GraphIntake> daysAndIntakes, EstradiolUnit unit,
       {double tMin = 0, int numPoints = 1000}) {
     if (daysAndIntakes.isEmpty) return <FlSpot>[];
 
@@ -96,7 +99,7 @@ class GraphCalculator {
 
     for (int i = 0; i <= numPoints; i++) {
       double t = tMin + ((tMax - tMin) / numPoints) * i;
-      double concentration = totalConcentrationAtTime(t, daysAndIntakes);
+      double concentration = totalConcentrationAtTime(t, daysAndIntakes, unit);
       points.add(math.Point(t, concentration));
     }
 

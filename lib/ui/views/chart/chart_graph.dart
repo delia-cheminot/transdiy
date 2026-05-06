@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mona/data/model/date.dart';
 import 'package:mona/data/model/graph_calculator.dart';
+import 'package:mona/data/model/units.dart';
 import 'package:mona/data/providers/blood_test_provider.dart';
 import 'package:mona/data/providers/medication_intake_provider.dart';
 import 'package:mona/l10n/app_localizations.dart';
 import 'package:mona/l10n/build_context_extensions.dart';
+import 'package:mona/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 
 class _ChartConstants {
@@ -30,21 +32,23 @@ class MainGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medicationIntakeProvider = context.watch<MedicationIntakeProvider>();
+    final preferencesProvider = context.watch<PreferencesService>();
     final bloodTestProvider = context.watch<BloodTestProvider>();
     final theme = Theme.of(context);
     final l10n = context.l10n;
     final Date firstDay = medicationIntakeProvider.getFirstIntakeLocalDate()!;
+    final unit = preferencesProvider.units.estradiol;
 
     Map<int, GraphIntake> daysAndIntakes =
         medicationIntakeProvider.getDaysAndIntakes();
 
     Map<int, double> daysAndBloodTests =
-        bloodTestProvider.getDaysAndBloodTests(firstDay);
+        bloodTestProvider.getDaysAndBloodTests(firstDay, unit);
 
     if (daysAndIntakes.isEmpty) return SizedBox.shrink();
 
     final List<FlSpot> spots =
-        GraphCalculator().generateFlSpots(daysAndIntakes);
+        GraphCalculator().generateFlSpots(daysAndIntakes, unit);
 
     final List<FlSpot> bloodSpots = daysAndBloodTests.entries
         .map((e) => FlSpot(e.key.toDouble(), e.value))
@@ -59,7 +63,7 @@ class MainGraph extends StatelessWidget {
     FlSpot? todaySpot;
     if (daysSinceStart <= totalDays + GraphCalculator.tMaxOffset) {
       final todayConcentration = GraphCalculator()
-          .totalConcentrationAtTime(daysSinceStart, daysAndIntakes);
+          .totalConcentrationAtTime(daysSinceStart, daysAndIntakes, unit);
       todaySpot = FlSpot(daysSinceStart, todayConcentration);
     }
 
@@ -79,7 +83,7 @@ class MainGraph extends StatelessWidget {
                   const EdgeInsets.only(right: _ChartConstants.axesPadding),
               child: RotatedBox(
                 quarterTurns: -1,
-                child: Text('${l10n.concentration} (pg/ml)',
+                child: Text('${l10n.concentration} ($unit)',
                     style: const TextStyle(
                         fontSize: _ChartConstants.titleFontSize)),
               ),
@@ -99,9 +103,9 @@ class MainGraph extends StatelessWidget {
                     _buildBloodTestData(bloodSpots, theme),
                   ],
                   lineTouchData:
-                      _buildLineTouchData(context, theme, firstDay, l10n),
+                      _buildLineTouchData(context, theme, firstDay, l10n, unit),
                   extraLinesData: _buildTodayVerticalLine(
-                      theme, todaySpot, daysSinceStart, l10n),
+                      theme, todaySpot, daysSinceStart, l10n, unit),
                 ),
               ),
             ),
@@ -112,11 +116,11 @@ class MainGraph extends StatelessWidget {
   }
 
   ExtraLinesData? _buildTodayVerticalLine(ThemeData theme, FlSpot? todaySpot,
-      double daysSinceStart, AppLocalizations l10n) {
+      double daysSinceStart, AppLocalizations l10n, EstradiolUnit unit) {
     if (todaySpot == null) return null;
 
     final nowLabel =
-        '${l10n.chartNowConcentration(todaySpot.y.toStringAsFixed(0))} pg/ml';
+        '${l10n.chartNowConcentration(todaySpot.y.toStringAsFixed(0))} $unit';
 
     return ExtraLinesData(
       verticalLines: [
@@ -162,7 +166,7 @@ class MainGraph extends StatelessWidget {
   }
 
   LineTouchData _buildLineTouchData(BuildContext context, ThemeData theme,
-      Date firstDay, AppLocalizations l10n) {
+      Date firstDay, AppLocalizations l10n, EstradiolUnit unit) {
     return LineTouchData(
       touchTooltipData: LineTouchTooltipData(
         getTooltipColor: (touchedSpots) => theme.colorScheme.tertiaryContainer,
@@ -177,7 +181,7 @@ class MainGraph extends StatelessWidget {
               text = t.y.toStringAsFixed(1);
             } else {
               text =
-                  '${l10n.chartBloodTestLevelTooltip(_getDateLabel(t.x, firstDay, context), t.y.toStringAsFixed(1))} pg/ml';
+                  '${l10n.chartBloodTestLevelTooltip(_getDateLabel(t.x, firstDay, context), t.y.toStringAsFixed(1))} $unit';
             }
             return LineTooltipItem(
                 text,

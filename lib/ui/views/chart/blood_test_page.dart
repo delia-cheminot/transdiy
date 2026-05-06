@@ -56,9 +56,9 @@ class BloodTestPage extends StatelessWidget {
       subtitle: Text(
         [
           if (bloodtest.estradiolLevels != null)
-            '${l10n.estradiol} : ${bloodtest.estradiolLevels} pg/mL',
+            '${l10n.estradiol} : ${bloodtest.estradiolLevels}',
           if (bloodtest.testosteroneLevels != null)
-            '${l10n.testosterone} : ${bloodtest.testosteroneLevels} ng/dL',
+            '${l10n.testosterone} : ${bloodtest.testosteroneLevels}',
         ].join('\n'),
       ),
       onTap: () {

@@ -1326,6 +1326,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cannot exceed total capacity'**
   String get cannotExceedTotalCapacity;
+
+  /// No description provided for @units.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get units;
 }
 
 class _AppLocalizationsDelegate

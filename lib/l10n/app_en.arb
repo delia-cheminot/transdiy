@@ -231,5 +231,6 @@
   "requiredField": "Required field",
   "mustBePositiveNumber": "Must be a positive number",
   "invalidTotalAmount": "Invalid total amount",
-  "cannotExceedTotalCapacity": "Cannot exceed total capacity"
+  "cannotExceedTotalCapacity": "Cannot exceed total capacity",
+  "units": "Units"
 }

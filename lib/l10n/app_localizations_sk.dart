@@ -777,4 +777,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get cannotExceedTotalCapacity => 'Nemôže presahovať celkové množstvo';
+
+  @override
+  String get units => 'Units';
 }
