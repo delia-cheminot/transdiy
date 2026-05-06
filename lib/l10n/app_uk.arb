@@ -132,6 +132,7 @@
   "takeMedication": "Прийняти {scheduleName}",
   "takeIntake": "Прийняти препарат",
   "needleDeadSpace": "Мертва зона голки",
+  "notes": "Примітки",
   "microliters": "μL",
 
   "empty_levels": "Ін'єкції відображатимуться тут",

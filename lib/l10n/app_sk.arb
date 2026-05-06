@@ -132,6 +132,7 @@
   "takeMedication": "Vezmi {scheduleName}",
   "takeIntake": "Vezmi dávku",
   "needleDeadSpace": "Mŕtvy priestor ihly",
+  "notes": "Poznámky",
   "microliters": "μL",
 
   "empty_levels": "Estradiolové injekcie sa zobrazia na tejto karte",

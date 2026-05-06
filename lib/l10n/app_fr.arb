@@ -132,6 +132,7 @@
   "takeMedication": "Prendre {scheduleName}",
   "takeIntake": "Prendre",
   "needleDeadSpace": "Espace mort de l'aiguille",
+  "notes": "Notes",
   "microliters": "μL",
 
   "empty_levels": "Les injections d’estradiol s’afficheront dans cet onglet",

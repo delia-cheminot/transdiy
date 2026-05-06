@@ -418,6 +418,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get needleDeadSpace => 'Totraum der Nadel';
 
   @override
+  String get notes => 'Notizen';
+
+  @override
   String get microliters => 'μL';
 
   @override

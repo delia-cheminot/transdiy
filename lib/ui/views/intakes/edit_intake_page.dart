@@ -252,7 +252,7 @@ class _EditIntakePageState extends State<EditIntakePage> {
             FormSpacer(),
             FormTextField(
               controller: _notesController,
-              label: "Notes", // TODO localize
+              label: localizations.notes,
               onChanged: _refresh,
               inputType: TextInputType.multiline,
               multiline: true,

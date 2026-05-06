@@ -416,6 +416,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get needleDeadSpace => 'Espacio muerto de la aguja';
 
   @override
+  String get notes => 'Notas';
+
+  @override
   String get microliters => 'μL';
 
   @override

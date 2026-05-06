@@ -238,7 +238,7 @@ class _TakeMedicationPageState extends State<TakeMedicationPage> {
             FormSpacer(),
             FormTextField(
               controller: _notesController,
-              label: "Notes", // TODO localize
+              label: localizations.notes,
               onChanged: _refresh,
               inputType: TextInputType.multiline,
               multiline: true,

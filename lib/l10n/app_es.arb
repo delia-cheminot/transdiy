@@ -132,6 +132,7 @@
     "takeMedication": "Tomar {scheduleName}",
     "takeIntake": "Registrar toma",
     "needleDeadSpace": "Espacio muerto de la aguja",
+    "notes": "Notas",
     "microliters": "μL",
 
     "empty_levels": "Las inyecciones de estradiol se mostrarán en esta pestaña",
